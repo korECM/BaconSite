@@ -4,6 +4,8 @@
 
 ### 폴더
 
+* src/styles
+  * scss에서 사용하는 style util scss 작성하는 곳
 * src/pages
   * 라우터에서 렌더링하는 페이지들
 * src/modules
