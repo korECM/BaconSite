@@ -56,6 +56,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
@@ -154,6 +155,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",
+    "@types/react-icons": "^3.0.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.2"
   }
