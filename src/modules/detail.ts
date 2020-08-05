@@ -39,7 +39,7 @@ export const getShopThunk = createAsyncThunk(getShopAsync, getShop);
 export const getReviewThunk = createAsyncThunk(getReviewAsync, getReview);
 export const postImageThunk = createAsyncThunk(postImagesAsync, imageUpload);
 
-interface ShopUIInterface {
+export interface ShopUIInterface {
   name: string;
   location: string;
   address: string;

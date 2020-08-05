@@ -1,16 +1,17 @@
 import React, { useEffect, useRef } from 'react';
-import Container from '../components/layout/Container';
-import Header from '../components/layout/Header';
+import Container from '../../components/layout/Container';
+import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
-import useDetail from '../hooks/useDetail';
-import { MdPhone, MdLocationOn, MdRestaurantMenu, MdBusiness, MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit } from 'react-icons/md';
-import { Radar } from 'react-chartjs-2';
+import useDetail from '../../hooks/useDetail';
+import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit } from 'react-icons/md';
 import { ClockLoader } from 'react-spinners';
-import RoundContainer from '../components/common/RoundContainer';
-import palette, { hexToRGB } from '../styles/palette';
-import Flag from '../components/common/Flag';
-import Loader from '../components/common/Loader';
+import RoundContainer from '../../components/common/RoundContainer';
+import palette from '../../styles/palette';
+import Flag from '../../components/common/Flag';
+import Loader from '../../components/common/Loader';
+import ShopInformation from './ShopInformation';
+import Radar from './Radar';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -91,30 +92,6 @@ const ShopAction = styled.button`
 const Divider = styled.div`
   border-bottom: 0.1px solid rgba(138, 138, 138, 0.5);
   margin-bottom: 30px;
-`;
-
-const ShopInformationContainer = styled.div`
-  font-weight: 100;
-  font-size: 14px;
-`;
-
-const ShopInformation = styled.div`
-  display: flex;
-  margin: 10px 0;
-  span {
-    margin-left: 10px;
-  }
-`;
-
-const RadarContainer = styled.div`
-  background-color: white;
-  border-radius: 20px;
-  padding: 15px;
-  margin: 30px 0;
-
-  -webkit-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
-  box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
 `;
 
 const CommentContainer = styled.div``;
@@ -225,67 +202,8 @@ function DetailPage({ match }: DetailPageProps) {
         </ShopAction>
       </ShopActionContainer>
       <Divider />
-      <ShopInformationContainer>
-        {shop.data.contact && (
-          <ShopInformation>
-            <MdPhone />
-            <span>{shop.data.contact}</span>
-          </ShopInformation>
-        )}
-        {shop.data.address && (
-          <ShopInformation>
-            <MdLocationOn />
-            <span>{shop.data.address}</span>
-          </ShopInformation>
-        )}
-        {shop.data.category && (
-          <ShopInformation>
-            <MdRestaurantMenu />
-            <span>{shop.data.category}</span>
-          </ShopInformation>
-        )}
-        {shop.data.location && (
-          <ShopInformation>
-            <MdBusiness />
-            <span>{shop.data.location}</span>
-          </ShopInformation>
-        )}
-      </ShopInformationContainer>
-      <RadarContainer>
-        <Radar
-          height={220}
-          data={{
-            labels: ['분위기', '가성비', '단체', '혼밥', '밥약', '매워요'],
-            datasets: [
-              {
-                data: [
-                  shop.data.keyword.atmosphere,
-                  shop.data.keyword.costRatio,
-                  shop.data.keyword.group,
-                  shop.data.keyword.individual,
-                  shop.data.keyword.riceAppointment,
-                  shop.data.keyword.spicy,
-                ],
-                borderColor: hexToRGB(palette.mainRed, 0.8),
-                borderWidth: 1.5,
-                backgroundColor: hexToRGB(palette.mainRed, 0.2),
-                pointRadius: 2.5,
-                pointBackgroundColor: hexToRGB(palette.mainRed, 0.8),
-              },
-            ],
-          }}
-          options={{
-            legend: {
-              display: false,
-            },
-            scale: {
-              ticks: {
-                display: false,
-              },
-            },
-          }}
-        />
-      </RadarContainer>
+      <ShopInformation shop={shop.data} />
+      <Radar shop={shop.data} />
       <CommentContainer>
         {reviews.data &&
           reviews.data.map((review) => (
