@@ -5,8 +5,9 @@ import styled, { css } from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import useDetail from '../hooks/useDetail';
 import { MdPhone, MdLocationOn, MdRestaurantMenu, MdBusiness, MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit } from 'react-icons/md';
+import { Radar } from 'react-chartjs-2';
 import RoundContainer from '../components/common/RoundContainer';
-import palette from '../styles/palette';
+import palette, { hexToRGB } from '../styles/palette';
 import Flag from '../components/common/Flag';
 import Loader from '../components/common/Loader';
 
@@ -92,6 +93,17 @@ const ShopInformation = styled.div`
   span {
     margin-left: 10px;
   }
+`;
+
+const RadarContainer = styled.div`
+  background-color: white;
+  border-radius: 20px;
+  padding: 15px;
+  margin: 30px 0;
+
+  -webkit-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
 `;
 
 const CommentContainer = styled.div``;
@@ -205,7 +217,41 @@ function DetailPage({ match }: DetailPageProps) {
           </ShopInformation>
         )}
       </ShopInformationContainer>
-      <div></div>
+      <RadarContainer>
+        <Radar
+          height={220}
+          data={{
+            labels: ['분위기', '가성비', '단체', '혼밥', '밥약', '매워요'],
+            datasets: [
+              {
+                data: [
+                  shop.keyword.atmosphere,
+                  shop.keyword.costRatio,
+                  shop.keyword.group,
+                  shop.keyword.individual,
+                  shop.keyword.riceAppointment,
+                  shop.keyword.spicy,
+                ],
+                borderColor: hexToRGB(palette.mainRed, 0.8),
+                borderWidth: 1.5,
+                backgroundColor: hexToRGB(palette.mainRed, 0.2),
+                pointRadius: 2.5,
+                pointBackgroundColor: hexToRGB(palette.mainRed, 0.8),
+              },
+            ],
+          }}
+          options={{
+            legend: {
+              display: false,
+            },
+            scale: {
+              ticks: {
+                display: false,
+              },
+            },
+          }}
+        />
+      </RadarContainer>
       <CommentContainer>
         {reviews &&
           reviews.map((review) => (
