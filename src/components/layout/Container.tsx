@@ -6,11 +6,13 @@ const ContainerBlock = styled.div`
   padding: 0 7.5%;
   padding-top: 35px;
 
+  padding-bottom: 50px;
+
   height: 100%;
 
   ${(props: ContainerProps) =>
     css`
-      background-color: ${props.color === 'red' ? palette.mainRed : palette.white};
+      background-color: ${props.color === 'red' ? palette.mainRed : palette.lightGray};
     `}
 `;
 
