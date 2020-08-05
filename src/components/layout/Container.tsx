@@ -9,11 +9,15 @@ const ContainerBlock = styled.div`
   padding-bottom: 50px;
 
   height: 100%;
+  ${(props: ContainerProps) =>
+    css`
+      color: ${props.color === 'red' ? palette.white : palette.mainRed};
+    `}
 
   ${(props: ContainerProps) =>
     css`
       background-color: ${props.color === 'red' ? palette.mainRed : palette.lightGray};
-    `}
+    `};
 `;
 
 type Color = 'red' | 'white';
