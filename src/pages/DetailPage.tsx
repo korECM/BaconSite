@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Container from '../components/layout/Container';
 import Header from '../components/layout/Header';
 import styled, { css } from 'styled-components';
@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import useDetail from '../hooks/useDetail';
 import { MdPhone, MdLocationOn, MdRestaurantMenu, MdBusiness, MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit } from 'react-icons/md';
 import { Radar } from 'react-chartjs-2';
+import { ClockLoader } from 'react-spinners';
 import RoundContainer from '../components/common/RoundContainer';
 import palette, { hexToRGB } from '../styles/palette';
 import Flag from '../components/common/Flag';
@@ -63,7 +64,13 @@ const ShopActionContainer = styled.div`
   height: 80px;
 `;
 
-const ShopAction = styled.div`
+const ShopAction = styled.button`
+  outline: none;
+  border: none;
+  background-color: transparent;
+
+  color: inherit;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,7 +80,10 @@ const ShopAction = styled.div`
     font-size: 1.8rem;
     stroke-width: 0.1%;
     vector-effect: non-scaling-stroke;
-    margin-bottom: 5px;
+  }
+
+  span {
+    margin-top: 5px;
   }
 `;
 
@@ -128,14 +138,36 @@ interface DetailPageProps extends RouteComponentProps {}
 function DetailPage({ match }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const { error, loading, onShopRequest, onReviewRequest, shop, reviews } = useDetail(shopId);
+  const { onShopRequest, onReviewRequest, onImageUploadRequest, shop, reviews, images } = useDetail(shopId);
+
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const onImageUploadButtonClick = () => {
+    fileRef.current?.click();
+  };
+
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = fileRef.current?.files;
+    if (files?.length) {
+      for (let index = 0; index < files.length; index++) {
+        const file = files.item(index);
+        if (file && file.size > 5 * 1024 * 1024) {
+          alert('사진의 크기가 5MB보다 큽니다');
+          fileRef.current!.value = '';
+          return;
+        }
+      }
+      onImageUploadRequest(files!);
+      fileRef.current!.value = '';
+    }
+  };
 
   useEffect(() => {
     onShopRequest();
     onReviewRequest();
   }, [onShopRequest, onReviewRequest]);
 
-  if (loading) {
+  if (shop.loading) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
@@ -144,7 +176,7 @@ function DetailPage({ match }: DetailPageProps) {
     );
   }
 
-  if (!shop || error === 400) {
+  if (!shop.data || shop.error === 400) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
@@ -156,13 +188,13 @@ function DetailPage({ match }: DetailPageProps) {
     );
   }
 
-  if (error === 404) {
+  if (shop.error === 404) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
-        <ShopTitle>{shop.name}</ShopTitle>
+        <ShopTitle>{shop.data.name}</ShopTitle>
         <ShopImageContainer>
-          <ShopImage imageLink={shop.image.length > 0 ? shop.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
+          <ShopImage imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
         </ShopImageContainer>
       </Container>
     );
@@ -171,19 +203,20 @@ function DetailPage({ match }: DetailPageProps) {
   return (
     <Container color="white">
       <Header category="modal" headerColor="white" />
-      <ShopTitle>{shop.name}</ShopTitle>
+      <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
-        <ShopImage imageLink={shop.image.length > 0 ? shop.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
-        <Flag titleColor={palette.white} descColor={palette.white} titleText={'A+'} descText={`${shop.scoreAverage}학점`} flagColor={palette.mainRed} />
+        <ShopImage imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
+        <Flag titleColor={palette.white} descColor={palette.white} titleText={'A+'} descText={`${shop.data.scoreAverage}학점`} flagColor={palette.mainRed} />
       </ShopImageContainer>
       <ShopActionContainer>
         <ShopAction>
-          {shop.didLike ? <MdFavorite /> : <MdFavoriteBorder />}
-          <span>{shop.likerCount}</span>
+          {shop.data.didLike ? <MdFavorite /> : <MdFavoriteBorder />}
+          <span>{shop.data.likerCount}</span>
         </ShopAction>
-        <ShopAction>
-          <MdAddAPhoto />
-          <span>사진 올리기</span>
+        <ShopAction onClick={onImageUploadButtonClick}>
+          <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={fileRef} onChange={onFileChange} />
+          {images.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
+          <span>{images.loading ? '사진 올리는 중' : '사진 올리기'}</span>
         </ShopAction>
         <ShopAction>
           <MdEdit />
@@ -192,28 +225,28 @@ function DetailPage({ match }: DetailPageProps) {
       </ShopActionContainer>
       <Divider />
       <ShopInformationContainer>
-        {shop.contact && (
+        {shop.data.contact && (
           <ShopInformation>
             <MdPhone />
-            <span>{shop.contact}</span>
+            <span>{shop.data.contact}</span>
           </ShopInformation>
         )}
-        {shop.address && (
+        {shop.data.address && (
           <ShopInformation>
             <MdLocationOn />
-            <span>{shop.address}</span>
+            <span>{shop.data.address}</span>
           </ShopInformation>
         )}
-        {shop.category && (
+        {shop.data.category && (
           <ShopInformation>
             <MdRestaurantMenu />
-            <span>{shop.category}</span>
+            <span>{shop.data.category}</span>
           </ShopInformation>
         )}
-        {shop.location && (
+        {shop.data.location && (
           <ShopInformation>
             <MdBusiness />
-            <span>{shop.location}</span>
+            <span>{shop.data.location}</span>
           </ShopInformation>
         )}
       </ShopInformationContainer>
@@ -225,12 +258,12 @@ function DetailPage({ match }: DetailPageProps) {
             datasets: [
               {
                 data: [
-                  shop.keyword.atmosphere,
-                  shop.keyword.costRatio,
-                  shop.keyword.group,
-                  shop.keyword.individual,
-                  shop.keyword.riceAppointment,
-                  shop.keyword.spicy,
+                  shop.data.keyword.atmosphere,
+                  shop.data.keyword.costRatio,
+                  shop.data.keyword.group,
+                  shop.data.keyword.individual,
+                  shop.data.keyword.riceAppointment,
+                  shop.data.keyword.spicy,
                 ],
                 borderColor: hexToRGB(palette.mainRed, 0.8),
                 borderWidth: 1.5,
@@ -253,8 +286,8 @@ function DetailPage({ match }: DetailPageProps) {
         />
       </RadarContainer>
       <CommentContainer>
-        {reviews &&
-          reviews.map((review) => (
+        {reviews.data &&
+          reviews.data.map((review) => (
             <Comment theme="gray">
               <div>{review.user.name}</div>
               <div>{review.comment}</div>

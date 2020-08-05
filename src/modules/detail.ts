@@ -4,6 +4,7 @@ import { ShopInterface, getShop, Location, ShopCategory, Keyword } from '../api/
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { ReviewInterface, getReview } from '../api/getReview';
+import { ImageUploadResponseInterface, imageUpload } from '../api/uploadImage';
 
 const GET_SHOP_INFO = 'detail/GET_SHOP_INFO' as const;
 const GET_SHOP_INFO_SUCCESS = 'detail/GET_SHOP_INFO_SUCCESS' as const;
@@ -13,9 +14,15 @@ const GET_REVIEW = 'detail/GET_REVIEW' as const;
 const GET_REVIEW_SUCCESS = 'detail/GET_REVIEW_SUCCESS' as const;
 const GET_REVIEW_ERROR = 'detail/GET_REVIEW_ERROR' as const;
 
+const POST_IMAGES = 'detail/POST_IMAGES' as const;
+const POST_IMAGES_SUCCESS = 'detail/POST_IMAGES_SUCCESS' as const;
+const POST_IMAGES_ERROR = 'detail/POST_IMAGES_ERROR' as const;
+
 export const getShopAsync = createAsyncAction(GET_SHOP_INFO, GET_SHOP_INFO_SUCCESS, GET_SHOP_INFO_ERROR)<void, ShopInterface, AxiosError>();
 
 export const getReviewAsync = createAsyncAction(GET_REVIEW, GET_REVIEW_SUCCESS, GET_REVIEW_ERROR)<void, ReviewInterface[], AxiosError>();
+
+export const postImagesAsync = createAsyncAction(POST_IMAGES, POST_IMAGES_SUCCESS, POST_IMAGES_ERROR)<void, ImageUploadResponseInterface, AxiosError>();
 
 type DetailAction =
   | ReturnType<typeof getShopAsync.request>
@@ -23,10 +30,14 @@ type DetailAction =
   | ReturnType<typeof getShopAsync.failure>
   | ReturnType<typeof getReviewAsync.request>
   | ReturnType<typeof getReviewAsync.success>
-  | ReturnType<typeof getReviewAsync.failure>;
+  | ReturnType<typeof getReviewAsync.failure>
+  | ReturnType<typeof postImagesAsync.request>
+  | ReturnType<typeof postImagesAsync.success>
+  | ReturnType<typeof postImagesAsync.failure>;
 
 export const getShopThunk = createAsyncThunk(getShopAsync, getShop);
 export const getReviewThunk = createAsyncThunk(getReviewAsync, getReview);
+export const postImageThunk = createAsyncThunk(postImagesAsync, imageUpload);
 
 interface ShopUIInterface {
   name: string;
@@ -47,6 +58,7 @@ interface ShopUIInterface {
 type DetailState = {
   shop: AsyncState<ShopUIInterface, number>;
   reviews: AsyncState<ReviewInterface[], number>;
+  images: AsyncState<ImageUploadResponseInterface, number>;
 };
 
 const initialState: DetailState = {
@@ -73,6 +85,7 @@ const initialState: DetailState = {
     },
   }),
   reviews: asyncState.initial(new Array<ReviewInterface>()),
+  images: asyncState.initial(),
 };
 
 const categoryToString = (category: ShopCategory) => {
@@ -139,6 +152,18 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
   [GET_REVIEW_ERROR]: (state, { payload: error }) => ({
     ...state,
     reviews: asyncState.error(error.response?.status || 404),
+  }),
+  [POST_IMAGES]: (state) => ({
+    ...state,
+    images: asyncState.load(),
+  }),
+  [POST_IMAGES_SUCCESS]: (state, { payload: locations }) => ({
+    ...state,
+    images: asyncState.success(locations),
+  }),
+  [POST_IMAGES_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    images: asyncState.error(error.response?.status || 404),
   }),
 });
 export default detail;
