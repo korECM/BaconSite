@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { MdClear, MdKeyboardArrowLeft } from 'react-icons/md';
 import palette from '../../styles/palette';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -37,7 +38,7 @@ const HeaderContainer = styled.div`
 type HeaderColor = 'red' | 'white';
 type Category = 'main' | 'modal';
 
-interface HeaderProps {
+interface HeaderProps extends RouteComponentProps {
   category: Category;
   headerColor: HeaderColor;
   onBack?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -46,6 +47,18 @@ interface HeaderProps {
 }
 
 function Header(props: HeaderProps) {
+  const onLeftButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (props.category === 'modal') {
+      props.history.goBack();
+    }
+  };
+
+  const onRightButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (props.category === 'modal') {
+      props.history.push('/');
+    }
+  };
+
   return (
     <HeaderBlock>
       {props.category === 'main' ? (
@@ -57,10 +70,10 @@ function Header(props: HeaderProps) {
         </HeaderContainer>
       ) : (
         <HeaderContainer {...props}>
-          <button>
+          <button onClick={onLeftButtonClick}>
             <MdKeyboardArrowLeft />
           </button>
-          <button>
+          <button onClick={onRightButtonClick}>
             <MdClear />
           </button>
         </HeaderContainer>
@@ -69,4 +82,4 @@ function Header(props: HeaderProps) {
   );
 }
 
-export default Header;
+export default withRouter(Header);

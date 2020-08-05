@@ -3,20 +3,19 @@ import styled, { css } from 'styled-components';
 import palette from '../../styles/palette';
 
 const RoundContainerBlock = styled.div`
-  width: 100%;
-  min-height: 85px;
+  min-height: 60px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  margin: 20px 0;
+  margin: 15px 0;
 
-  border-radius: 20px;
+  border-radius: 12.5px;
 
-  -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-  box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 5px 5px 5px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 5px 5px 5px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 5px -1px rgba(0, 0, 0, 0.1);
 
   ${(props: RoundContainerProps) =>
     props.theme &&
