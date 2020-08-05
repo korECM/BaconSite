@@ -16,6 +16,7 @@ const ShopTitle = styled.h1`
   font-size: 31px;
   font-weight: 900;
   margin-top: 10px;
+  margin-bottom: 20px;
 `;
 
 interface ShopImageProps {
