@@ -3,20 +3,30 @@ import { AxiosError } from 'axios';
 import { ShopInterface, getShop, Location, ShopCategory, Keyword } from '../api/getShop';
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
+import { ReviewInterface, getReview } from '../api/getReview';
 
 const GET_SHOP_INFO = 'detail/GET_SHOP_INFO' as const;
 const GET_SHOP_INFO_SUCCESS = 'detail/GET_SHOP_INFO_SUCCESS' as const;
 const GET_SHOP_INFO_ERROR = 'detail/GET_SHOP_INFO_ERROR' as const;
 
-// export const getShopInfo = createAction(GET_SHOP_INFO);
-// export const getShopInfoSuccess = createAction(GET_SHOP_INFO_SUCCESS);
-// export const getShopInfoError = createAction(GET_SHOP_INFO_ERROR);
+const GET_REVIEW = 'detail/GET_REVIEW' as const;
+const GET_REVIEW_SUCCESS = 'detail/GET_REVIEW_SUCCESS' as const;
+const GET_REVIEW_ERROR = 'detail/GET_REVIEW_ERROR' as const;
 
 export const getShopAsync = createAsyncAction(GET_SHOP_INFO, GET_SHOP_INFO_SUCCESS, GET_SHOP_INFO_ERROR)<void, ShopInterface, AxiosError>();
 
-type DetailAction = ReturnType<typeof getShopAsync.request> | ReturnType<typeof getShopAsync.success> | ReturnType<typeof getShopAsync.failure>;
+export const getReviewAsync = createAsyncAction(GET_REVIEW, GET_REVIEW_SUCCESS, GET_REVIEW_ERROR)<void, ReviewInterface[], AxiosError>();
+
+type DetailAction =
+  | ReturnType<typeof getShopAsync.request>
+  | ReturnType<typeof getShopAsync.success>
+  | ReturnType<typeof getShopAsync.failure>
+  | ReturnType<typeof getReviewAsync.request>
+  | ReturnType<typeof getReviewAsync.success>
+  | ReturnType<typeof getReviewAsync.failure>;
 
 export const getShopThunk = createAsyncThunk(getShopAsync, getShop);
+export const getReviewThunk = createAsyncThunk(getReviewAsync, getReview);
 
 interface ShopUIInterface {
   name: string;
@@ -36,6 +46,7 @@ interface ShopUIInterface {
 
 type DetailState = {
   shop: AsyncState<ShopUIInterface, number>;
+  reviews: AsyncState<ReviewInterface[], number>;
 };
 
 const initialState: DetailState = {
@@ -61,6 +72,7 @@ const initialState: DetailState = {
       spicy: 0,
     },
   }),
+  reviews: asyncState.initial(new Array<ReviewInterface>()),
 };
 
 const categoryToString = (category: ShopCategory) => {
@@ -102,7 +114,7 @@ const locationToString = (location: Location) => {
 const detail = createReducer<DetailState, DetailAction>(initialState, {
   [GET_SHOP_INFO]: (state) => ({
     ...state,
-    loading: true,
+    shop: asyncState.load(),
   }),
   [GET_SHOP_INFO_SUCCESS]: (state, { payload: shop }) => ({
     ...state,
@@ -115,6 +127,18 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
   [GET_SHOP_INFO_ERROR]: (state, { payload: error }) => ({
     ...state,
     shop: asyncState.error(error.response?.status || 404),
+  }),
+  [GET_REVIEW]: (state) => ({
+    ...state,
+    shop: asyncState.load(),
+  }),
+  [GET_REVIEW_SUCCESS]: (state, { payload: reviews }) => ({
+    ...state,
+    reviews: asyncState.success(reviews),
+  }),
+  [GET_REVIEW_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    reviews: asyncState.error(error.response?.status || 404),
   }),
 });
 export default detail;

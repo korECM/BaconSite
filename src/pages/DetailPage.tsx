@@ -116,11 +116,12 @@ interface DetailPageProps extends RouteComponentProps {}
 function DetailPage({ match }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const { error, loading, onRequest, shop } = useDetail(shopId);
+  const { error, loading, onShopRequest, onReviewRequest, shop, reviews } = useDetail(shopId);
 
   useEffect(() => {
-    onRequest();
-  }, [onRequest]);
+    onShopRequest();
+    onReviewRequest();
+  }, [onShopRequest, onReviewRequest]);
 
   if (loading) {
     return (
@@ -206,14 +207,13 @@ function DetailPage({ match }: DetailPageProps) {
       </ShopInformationContainer>
       <div></div>
       <CommentContainer>
-        <Comment theme="gray">
-          <div>스타벅스</div>
-          <div>여기 너무 분위기가 좋아여 흑석스럽지않음</div>
-        </Comment>
-        <Comment theme="gray">
-          <div>스타벅스</div>
-          <div>흑석역쪽에 숨어있는 맛집</div>
-        </Comment>
+        {reviews &&
+          reviews.map((review) => (
+            <Comment theme="gray">
+              <div>{review.user.name}</div>
+              <div>{review.comment}</div>
+            </Comment>
+          ))}
       </CommentContainer>
     </Container>
   );
