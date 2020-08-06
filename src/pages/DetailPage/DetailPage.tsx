@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
@@ -113,12 +113,16 @@ const Comment = styled(RoundContainer)`
 
 interface DetailPageProps extends RouteComponentProps {}
 
-function DetailPage({ match }: DetailPageProps) {
+function DetailPage({ match, history }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
   const { onShopRequest, onReviewRequest, onImageUploadRequest, shop, reviews, images } = useDetail(shopId);
 
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const onWriteReviewButtonClick = useCallback(() => {
+    history.push(`comment/${(match.params as any).shopId}`);
+  }, [history, match.params]);
 
   const onImageUploadButtonClick = () => {
     fileRef.current?.click();
@@ -196,7 +200,7 @@ function DetailPage({ match }: DetailPageProps) {
           {images.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
           <span>{images.loading ? '사진 올리는 중' : '사진 올리기'}</span>
         </ShopAction>
-        <ShopAction>
+        <ShopAction onClick={onWriteReviewButtonClick}>
           <MdEdit />
           <span>리뷰 작성</span>
         </ShopAction>
