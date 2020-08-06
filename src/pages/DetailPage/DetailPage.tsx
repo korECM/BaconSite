@@ -116,7 +116,7 @@ interface DetailPageProps extends RouteComponentProps {}
 function DetailPage({ match, history }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const { onShopRequest, onReviewRequest, onImageUploadRequest, shop, reviews, images } = useDetail(shopId);
+  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, shop, reviews, images } = useDetail(shopId);
 
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -143,6 +143,12 @@ function DetailPage({ match, history }: DetailPageProps) {
       fileRef.current!.value = '';
     }
   };
+
+  useEffect(() => {
+    return () => {
+      resetDataAction();
+    };
+  }, [resetDataAction]);
 
   useEffect(() => {
     onShopRequest();
