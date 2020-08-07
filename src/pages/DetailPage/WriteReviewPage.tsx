@@ -4,6 +4,8 @@ import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import Button from '../../components/common/Button';
 import DropBox from '../../components/common/DropBox';
+import useWriteReview from '../../hooks/useWriteReview';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 const Title = styled.div`
   font-size: 20px;
@@ -79,9 +81,17 @@ const ScoreOptions = [
   { value: '1.0', label: 'D0' },
 ];
 
-function WriteReviewPage() {
+function WriteReviewPage({ match }: RouteComponentProps) {
+  const shopId = (match.params as any).shopId;
+
+  const { keywords, onChangeInputDispatch, onSubmit, onClick, review } = useWriteReview(shopId);
+
+  const onChangeEvent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    onChangeInputDispatch(event.target.name, event.target.value);
+  };
+
   const onDropBoxChange = (data: string) => {
-    console.log(data);
+    onChangeInputDispatch('score', data);
   };
 
   return (
@@ -90,20 +100,26 @@ function WriteReviewPage() {
       <Title>이 식당의 특징은?</Title>
       <ButtonGroup>
         <ButtonSubGroup>
-          <Button theme="white">가성비</Button>
-          <Button theme="white" selected>
+          <Button theme="white" onClick={() => onClick('costRatio')} selected={keywords.costRatio}>
+            가성비
+          </Button>
+          <Button theme="white" onClick={() => onClick('atmosphere')} selected={keywords.atmosphere}>
             분위기
           </Button>
-          <Button theme="white" selected>
+          <Button theme="white" onClick={() => onClick('group')} selected={keywords.group}>
             단체
           </Button>
         </ButtonSubGroup>
         <ButtonSubGroup>
-          <Button theme="white">혼밥</Button>
-          <Button theme="white" selected>
+          <Button theme="white" onClick={() => onClick('individual')} selected={keywords.individual}>
+            혼밥
+          </Button>
+          <Button theme="white" onClick={() => onClick('riceAppointment')} selected={keywords.riceAppointment}>
             밥약
           </Button>
-          <Button theme="white">안매워요</Button>
+          <Button theme="white" onClick={() => onClick('spicy')} selected={keywords.spicy}>
+            안매워요
+          </Button>
         </ButtonSubGroup>
       </ButtonGroup>
       <ScoreContainer>
@@ -114,13 +130,17 @@ function WriteReviewPage() {
 
       <Title>리뷰를 공유해주세요!</Title>
       <FlexContainer>
-        <TextAreaBlock rows={16} placeholder="내용을 작성해주세요."></TextAreaBlock>
+        <TextAreaBlock rows={16} placeholder="내용을 작성해주세요." name="review" onChange={onChangeEvent}>
+          {review}
+        </TextAreaBlock>
       </FlexContainer>
       <FlexContainer>
-        <SubmitButton theme="white">작성하기</SubmitButton>
+        <SubmitButton theme="white" onClick={onSubmit}>
+          작성하기
+        </SubmitButton>
       </FlexContainer>
     </Container>
   );
 }
 
-export default WriteReviewPage;
+export default withRouter(WriteReviewPage);
