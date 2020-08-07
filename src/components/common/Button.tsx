@@ -13,8 +13,10 @@ const ButtonBlock = styled.button`
     margin : 10px;
 
     -webkit-box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
--moz-box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
-box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
+    -moz-box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
+    box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
+
+  transition : background-color 0.2s ease;
 
 ${(props: ButtonProps) =>
   props.big &&
