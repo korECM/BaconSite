@@ -17,6 +17,8 @@ interface RequestInterface {
 }
 
 export async function writeReviewAPI(shopId: string, data: RequestInterface) {
-  const response = await axios.post<ReviewWriteInterface>(apiLink() + `/shop/review/${shopId}`, data);
+  const response = await axios.post<ReviewWriteInterface>(apiLink() + `/shop/review/${shopId}`, data, {
+    withCredentials: true,
+  });
   return response.data;
 }

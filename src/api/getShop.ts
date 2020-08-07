@@ -46,6 +46,8 @@ export interface Keyword {
 }
 
 export async function getShop(shopId: string) {
-  const response = await axios.get<ShopInterface>(apiLink() + `/shop/${shopId}`);
+  const response = await axios.get<ShopInterface>(apiLink() + `/shop/${shopId}`, {
+    withCredentials: true,
+  });
   return response.data;
 }

@@ -5,11 +5,31 @@ import * as serviceWorker from './serviceWorker';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import Thunk from 'redux-thunk';
-import rootReducer from './modules';
+import Thunk, { ThunkDispatch } from 'redux-thunk';
+import rootReducer, { RootState } from './modules';
 import { BrowserRouter } from 'react-router-dom';
+import { setUser, checkThunk, checkAsync } from './modules/user';
+import { UserInterface } from './api/auth';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(Thunk)));
+
+function loadUser() {
+  try {
+    const user = localStorage.getItem('user');
+    if (!user) return;
+
+    store.dispatch(setUser(JSON.parse(user) as UserInterface));
+    (store.dispatch as ThunkDispatch<
+      RootState,
+      void,
+      ReturnType<typeof checkAsync.request> | ReturnType<typeof checkAsync.success> | ReturnType<typeof checkAsync.failure>
+    >)(checkThunk());
+  } catch (error) {
+    console.error('localStorage 작동 안함');
+  }
+}
+
+loadUser();
 
 ReactDOM.render(
   <Provider store={store}>

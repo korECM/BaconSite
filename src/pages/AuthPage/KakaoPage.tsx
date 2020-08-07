@@ -6,10 +6,11 @@ import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import Loader from 'react-spinners/PacmanLoader';
 import palette from '../../styles/palette';
+import useCheck from '../../hooks/useCheck';
 
 const KakaoPageBlock = styled.div``;
 
-function KakaoPage({ location }: RouteComponentProps) {
+function KakaoPage({ location, history }: RouteComponentProps) {
   const code = location.search
     .split('?')
     .filter((data) => data)
@@ -17,13 +18,35 @@ function KakaoPage({ location }: RouteComponentProps) {
 
   const { kakao, name, kakaoName, onKakaoInit, onChangeInput, onKakaoRequestWithName } = useKakao(code);
 
+  const { check, user } = useCheck();
+
   const onButtonClick = (id: string, name: string) => {
     onKakaoRequestWithName(id, name);
+    check();
   };
 
   useEffect(() => {
     onKakaoInit();
   }, [onKakaoInit]);
+
+  useEffect(() => {
+    if (!kakao.data) {
+      check();
+    }
+  }, [kakao.data, check]);
+
+  useEffect(() => {
+    if (user) {
+      console.log('check 성공');
+      console.log(user);
+      history.push('/');
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (error) {
+        console.error('localStorage 사용 불가');
+      }
+    }
+  }, [user, history]);
 
   if (kakao.loading || kakaoName.loading) {
     return (
@@ -33,8 +56,6 @@ function KakaoPage({ location }: RouteComponentProps) {
       </Container>
     );
   }
-
-  console.log(kakao.data);
 
   if (kakao.data === null) {
     return (

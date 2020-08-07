@@ -21,6 +21,7 @@ export async function imageUpload(shopId: string, files: FileList) {
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
     },
+    withCredentials: true,
   });
   console.log(response.data);
   return response.data;

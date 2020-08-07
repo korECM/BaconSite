@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { MdClear, MdKeyboardArrowLeft } from 'react-icons/md';
 import palette from '../../styles/palette';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import useCheck from '../../hooks/useCheck';
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -46,6 +47,8 @@ interface HeaderProps extends RouteComponentProps {
 }
 
 function Header(props: HeaderProps) {
+  const { user } = useCheck();
+
   const onLeftButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (props.category === 'modal') {
       props.history.goBack();
@@ -56,7 +59,11 @@ function Header(props: HeaderProps) {
     if (props.category === 'modal') {
       props.history.push('/');
     } else {
-      props.history.push('/auth/login');
+      if (user) {
+        console.log('마이 페이지로 가자');
+      } else {
+        props.history.push('/auth/login');
+      }
     }
   };
 
@@ -67,7 +74,7 @@ function Header(props: HeaderProps) {
           <button>
             <img src="https://avatars3.githubusercontent.com/u/69138035?s=60&v=4" alt="logo" />
           </button>
-          <button onClick={onRightButtonClick}>my</button>
+          {user ? <button onClick={onRightButtonClick}>my</button> : <button onClick={onRightButtonClick}>로그인</button>}
         </HeaderContainer>
       ) : (
         <HeaderContainer {...props}>
