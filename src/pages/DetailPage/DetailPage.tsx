@@ -217,7 +217,7 @@ function DetailPage({ match, history }: DetailPageProps) {
       <CommentContainer>
         {reviews.data &&
           reviews.data.map((review) => (
-            <Comment theme="gray">
+            <Comment theme="gray" key={review._id}>
               <div>{review.user.name}</div>
               <div>{review.comment}</div>
             </Comment>
