@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { apiLink } from '../../lib/getAPILink';
+import Container from '../../components/layout/Container';
+import Header from '../../components/layout/Header';
 
 const LoginPageBlock = styled.div``;
 
 function LoginPage({ history }: RouteComponentProps) {
   return (
-    <LoginPageBlock>
+    <Container color="white">
+      <Header category="modal" headerColor="white" />
       <a
         href={`https://kauth.kakao.com/oauth/authorize?client_id=${
           process.env.REACT_APP_KAKAO_REST_API_KEY
@@ -16,7 +19,7 @@ function LoginPage({ history }: RouteComponentProps) {
       >
         카카오 로그인
       </a>
-    </LoginPageBlock>
+    </Container>
   );
 }
 

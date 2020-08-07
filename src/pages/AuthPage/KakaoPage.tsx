@@ -3,6 +3,10 @@ import classNames from 'classnames/bind';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import useKakao from '../../hooks/useKakao';
+import Container from '../../components/layout/Container';
+import Header from '../../components/layout/Header';
+import Loader from 'react-spinners/PacmanLoader';
+import palette from '../../styles/palette';
 
 const KakaoPageBlock = styled.div``;
 
@@ -23,21 +27,32 @@ function KakaoPage({ location }: RouteComponentProps) {
   }, [onKakaoInit]);
 
   if (kakao.loading || kakaoName.loading) {
-    return <div>로딩중</div>;
+    return (
+      <Container color="white">
+        <Header category="modal" headerColor="white" />
+        <Loader color={palette.mainRed} />
+      </Container>
+    );
   }
 
   console.log(kakao.data);
 
   if (kakao.data!.status === 303) {
     return (
-      <div>
+      <Container color="white">
+        <Header category="modal" headerColor="white" />
         <input onChange={onChangeInput} value={name} />
         <button onClick={() => onButtonClick(kakao.data!.id, name)}>닉네임 직성</button>
-      </div>
+      </Container>
     );
   }
 
-  return <KakaoPageBlock>카카오 로그인 성공</KakaoPageBlock>;
+  return (
+    <Container color="white">
+      <Header category="modal" headerColor="white" />
+      카카오 로그인 성공
+    </Container>
+  );
 }
 
 export default KakaoPage;
