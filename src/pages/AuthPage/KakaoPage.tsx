@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import classNames from 'classnames/bind';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import useKakao from '../../hooks/useKakao';
@@ -36,6 +35,15 @@ function KakaoPage({ location }: RouteComponentProps) {
   }
 
   console.log(kakao.data);
+
+  if (kakao.data === null) {
+    return (
+      <Container color="white">
+        <Header category="modal" headerColor="white" />
+        <div>기술상의 문제로 현재 로그인할 수 없습니다</div>
+      </Container>
+    );
+  }
 
   if (kakao.data!.status === 303) {
     return (
