@@ -34,7 +34,6 @@ const user = createReducer<UserState, UserAction>(initialState, {
   [SET_USER]: (state, { payload: user }) => ({ ...state, user: asyncState.success(user) }),
   [CHECK]: (state) => ({
     ...state,
-    user: asyncState.load(),
   }),
   [CHECK_SUCCESS]: (state, { payload: user }) => ({
     ...state,
