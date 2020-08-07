@@ -20,6 +20,10 @@ interface RadarProps {
 }
 
 function Radar({ shop }: RadarProps) {
+  let max =
+    Math.max(shop.keyword.atmosphere, shop.keyword.costRatio, shop.keyword.group, shop.keyword.individual, shop.keyword.riceAppointment, shop.keyword.spicy) |
+    1;
+
   return (
     <RadarContainer>
       <RadarChart
@@ -29,17 +33,17 @@ function Radar({ shop }: RadarProps) {
           datasets: [
             {
               data: [
-                shop.keyword.atmosphere,
-                shop.keyword.costRatio,
-                shop.keyword.group,
-                shop.keyword.individual,
-                shop.keyword.riceAppointment,
-                shop.keyword.spicy,
+                shop.keyword.atmosphere / max,
+                shop.keyword.costRatio / max,
+                shop.keyword.group / max,
+                shop.keyword.individual / max,
+                shop.keyword.riceAppointment / max,
+                shop.keyword.spicy / max,
               ],
               borderColor: hexToRGB(palette.mainRed, 0.8),
               borderWidth: 1.5,
               backgroundColor: hexToRGB(palette.mainRed, 0.2),
-              pointRadius: 2.5,
+              pointRadius: 0,
               pointBackgroundColor: hexToRGB(palette.mainRed, 0.8),
             },
           ],
@@ -51,6 +55,13 @@ function Radar({ shop }: RadarProps) {
           scale: {
             ticks: {
               display: false,
+              stepSize: 0.2,
+            },
+            gridLines: {
+              // color: 'transparent',
+            },
+            angleLines: {
+              // color: 'transparent',
             },
           },
         }}
