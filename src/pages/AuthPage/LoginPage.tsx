@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { apiLink } from '../../lib/getAPILink';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 

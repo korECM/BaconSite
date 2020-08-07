@@ -1,7 +1,7 @@
 import { createAction, createReducer, createAsyncAction } from 'typesafe-actions';
 import { AxiosError } from 'axios';
 import createAsyncThunk from '../lib/createAsyncThunk';
-import { AsyncState, asyncState, transformToArray, createAsyncReducer } from '../lib/reducerUtils';
+import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { check, UserInterface } from '../api/auth';
 
 const CHECK = 'user/CHECK' as const;
