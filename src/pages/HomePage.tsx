@@ -1,10 +1,12 @@
 import React from 'react';
+import Container from '../components/layout/Container';
+import Header from '../components/layout/Header';
 
 function HomePage() {
   return (
-    <div>
-      <div>Home</div>
-    </div>
+    <Container color="white">
+      <Header category="main" headerColor="white" />
+    </Container>
   );
 }
 

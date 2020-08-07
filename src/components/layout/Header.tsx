@@ -43,7 +43,6 @@ interface HeaderProps extends RouteComponentProps {
   headerColor: HeaderColor;
   onBack?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onClose?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onMenu?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 function Header(props: HeaderProps) {
@@ -56,6 +55,8 @@ function Header(props: HeaderProps) {
   const onRightButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (props.category === 'modal') {
       props.history.push('/');
+    } else {
+      props.history.push('/auth/login');
     }
   };
 
@@ -66,7 +67,7 @@ function Header(props: HeaderProps) {
           <button>
             <img src="https://avatars3.githubusercontent.com/u/69138035?s=60&v=4" alt="logo" />
           </button>
-          <button onClick={props.onMenu}>my</button>
+          <button onClick={onRightButtonClick}>my</button>
         </HeaderContainer>
       ) : (
         <HeaderContainer {...props}>
