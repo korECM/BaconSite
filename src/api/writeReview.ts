@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { apiLink } from '../lib/getAPILink';
 
-export interface ReviewWriteInterface {}
+export interface ReviewWriteInterface {
+  message: string;
+}
 
 interface RequestInterface {
   score: string;

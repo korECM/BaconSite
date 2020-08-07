@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import Button from '../../components/common/Button';
 import DropBox from '../../components/common/DropBox';
 import useWriteReview from '../../hooks/useWriteReview';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
+import useCheck from '../../hooks/useCheck';
 
 const Title = styled.div`
   font-size: 20px;
@@ -81,10 +82,12 @@ const ScoreOptions = [
   { value: '1.0', label: 'D0' },
 ];
 
-function WriteReviewPage({ match }: RouteComponentProps) {
+function WriteReviewPage({ match, history }: RouteComponentProps) {
   const shopId = (match.params as any).shopId;
 
-  const { keywords, onChangeInputDispatch, onSubmit, onClick, review } = useWriteReview(shopId);
+  const { keywords, onChangeInputDispatch, onSubmit, onClick, reset, review, reviewRequest } = useWriteReview(shopId);
+
+  const { user } = useCheck();
 
   const onChangeEvent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChangeInputDispatch(event.target.name, event.target.value);
@@ -93,6 +96,26 @@ function WriteReviewPage({ match }: RouteComponentProps) {
   const onDropBoxChange = (data: string) => {
     onChangeInputDispatch('score', data);
   };
+
+  useEffect(() => {
+    reset();
+  }, [reset]);
+  useEffect(() => {
+    onDropBoxChange('4.5');
+    return () => {
+      reset();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (reviewRequest.data !== null) {
+      history.push(`/shop/${shopId}`);
+    }
+  }, [reviewRequest.data, shopId, history]);
+
+  if (!user) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container color="red">
