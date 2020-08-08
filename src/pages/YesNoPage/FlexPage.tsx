@@ -22,7 +22,7 @@ const ImageContainer = styled.div`
   vertical-align: middle;
 
   height: 42vw;
-  width: 40vw;
+  width: 42vw;
   margin: auto;
   margin-top: 30px;
   margin-bottom: 50px;
@@ -64,7 +64,7 @@ const Divider = styled.div`
   margin-bottom: 30px;
 `;
 
-function YesNoPage() {
+function FlexPage() {
   // const onWriteReviewButtonClick = useCallback(() => {
   //   history.push(`comment/${(match.params as any).shopId}`);
   // }, [history, match.params];
@@ -84,43 +84,41 @@ function YesNoPage() {
 
   return (
     <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-      <Fade>
-        <Container color="red">
-          <Header category="modal" headerColor="red" />
-          <Fade>
-            <Bounce>
-              <ImageContainer>
-                <Image imageLink={'https://ifh.cc/g/6onhGJ.png'} />
-              </ImageContainer>
-            </Bounce>
-          </Fade>
-          <Fade>
-            <Bounce>
-              <Link to="/yesno/flex">
-                <Button theme="white" big onClick={moveHref}>
-                  매운 거
-                </Button>
-              </Link>
-            </Bounce>
-          </Fade>
-          <Fade>
-            <Bounce>
-              <Link to="/yesno/flex">
-                <Button theme="white" big>
-                  안 매운 거
-                </Button>
-              </Link>
-            </Bounce>
-          </Fade>
+      <Container color="red">
+        <Header category="modal" headerColor="red" />
+        <Fade>
+          <Bounce>
+            <ImageContainer>
+              <Image imageLink={'https://ifh.cc/g/6ZlXcR.png'} />
+            </ImageContainer>
+          </Bounce>
+        </Fade>
+        <Fade>
+          <Bounce>
+            <Link to="/">
+              <Button theme="white" big onClick={moveHref}>
+                FLEX 가능!
+              </Button>
+            </Link>
+          </Bounce>
+        </Fade>
+        <Fade>
+          <Bounce>
+            <Link to="/">
+              <Button theme="white" big>
+                FLEX 불가능 ㅠㅠ
+              </Button>
+            </Link>
+          </Bounce>
+        </Fade>
 
-          <ActionContainer></ActionContainer>
-          <Divider />
-        </Container>
-      </Fade>
+        <ActionContainer></ActionContainer>
+        <Divider />
+      </Container>
     </Animated>
   );
 
   // beClicked = false;
 }
 
-export default YesNoPage;
+export default FlexPage;
