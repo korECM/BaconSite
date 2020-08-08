@@ -12,6 +12,7 @@ import Flag from '../../components/common/Flag';
 import Loader from '../../components/common/Loader';
 import ShopInformation from './ShopInformation';
 import Radar from './Radar';
+import useCheck from '../../hooks/useCheck';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -118,6 +119,8 @@ function DetailPage({ match, history }: DetailPageProps) {
 
   const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, shop, reviews, images } = useDetail(shopId);
 
+  const { user } = useCheck();
+
   const [likeOffset, setLikeOffset] = useState(0);
 
   const fileRef = useRef<HTMLInputElement>(null);
@@ -147,6 +150,10 @@ function DetailPage({ match, history }: DetailPageProps) {
   };
 
   const onLikeButton = () => {
+    if (!user) {
+      alert('로그인을 해야합니다');
+      return;
+    }
     if (shop.data) {
       if (likeOffset === 0) {
         if (shop.data.didLike) {
