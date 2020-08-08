@@ -9,7 +9,7 @@ const LoaderBlock = styled.div`
   justify-content: center;
 
   margin-top: -100px;
-  margin-left: -100px;
+  /* margin-left: -100px; */
   /* width: 200px; */
   width: 100%;
   height: 100vh;
