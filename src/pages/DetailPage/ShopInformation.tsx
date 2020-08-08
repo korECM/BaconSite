@@ -13,7 +13,7 @@ const ShopInformationContainer = styled.div`
 const ShopInformationBlock = styled.div`
   display: flex;
   margin: 20px 0;
-  span {
+  a {
     margin-left: 10px;
   }
 `;
@@ -28,25 +28,25 @@ function ShopInformation({ shop }: ShopInformationProps) {
       {shop.contact && (
         <ShopInformationBlock>
           <MdPhone />
-          <span>{shop.contact}</span>
+          <a href={`tel:${shop.contact}`}>{shop.contact}</a>
         </ShopInformationBlock>
       )}
       {shop.address && (
         <ShopInformationBlock>
           <MdLocationOn />
-          <span>{shop.address}</span>
+          <a>{shop.address}</a>
         </ShopInformationBlock>
       )}
       {shop.category && (
         <ShopInformationBlock>
           <MdRestaurantMenu />
-          <span>{shop.category}</span>
+          <a>{shop.category}</a>
         </ShopInformationBlock>
       )}
       {shop.location && (
         <ShopInformationBlock>
           <MdBusiness />
-          <span>{shop.location}</span>
+          <a>{shop.location}</a>
         </ShopInformationBlock>
       )}
     </ShopInformationContainer>
