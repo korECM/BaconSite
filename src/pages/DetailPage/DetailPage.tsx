@@ -166,7 +166,7 @@ function DetailPage({ match, history }: DetailPageProps) {
 
   if (!shop.data || shop.error === 400) {
     return (
-      <Container color="white">
+      <Container color="white" notFullHeight>
         <Header category="modal" headerColor="white" />
         <ShopTitle>존재하지 않는 가게에요</ShopTitle>
         <ShopImageContainer>
@@ -178,7 +178,7 @@ function DetailPage({ match, history }: DetailPageProps) {
 
   if (shop.error === 404) {
     return (
-      <Container color="white">
+      <Container color="white" notFullHeight>
         <Header category="modal" headerColor="white" />
         <ShopTitle>{shop.data.name}</ShopTitle>
         <ShopImageContainer>
@@ -189,7 +189,7 @@ function DetailPage({ match, history }: DetailPageProps) {
   }
 
   return (
-    <Container color="white">
+    <Container color="white" notFullHeight>
       <Header category="modal" headerColor="white" />
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
