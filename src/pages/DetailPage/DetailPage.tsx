@@ -177,6 +177,7 @@ function DetailPage({ match, history }: DetailPageProps) {
 
   useEffect(() => {
     return () => {
+      setLikeOffset(0);
       resetDataAction();
     };
   }, [resetDataAction]);
