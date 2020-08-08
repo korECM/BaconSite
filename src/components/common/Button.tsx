@@ -19,6 +19,12 @@ const ButtonBlock = styled.button`
 
   transition : background-color 0.2s ease;
 
+  :hover {
+    background-color: ${palette.mainRed}; 
+		color: ${palette.white};
+		cursor: pointer;
+	}
+
 ${(props: ButtonProps) =>
   props.big &&
   css`
@@ -44,6 +50,8 @@ ${(props: ButtonProps) =>
 `;
 
 type Theme = 'white' | 'gray';
+// type Selected = 'true' | 'false';
+// let Selected = 'false';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -51,6 +59,7 @@ interface ButtonProps {
   selected?: boolean;
   theme: Theme;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onMouseOver?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 function Button(props: ButtonProps) {
