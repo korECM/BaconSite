@@ -255,8 +255,8 @@ function DetailPage({ match, history }: DetailPageProps) {
       <Radar shop={shop.data} />
       <CommentContainer>
         {reviews.data &&
-          reviews.data.map((review) => (
-            <Comment theme="gray" key={review._id}>
+          reviews.data.map((review, index) => (
+            <Comment theme="gray" key={review._id} delay={index * 150}>
               <div>{review.user.name}</div>
               <div>{review.comment}</div>
             </Comment>

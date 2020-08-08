@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../styles/palette';
+import { useSpring, animated } from 'react-spring';
 
 const RoundContainerBlock = styled.div`
   min-height: 60px;
@@ -39,16 +40,52 @@ const RoundContainerBlock = styled.div`
     `}
 `;
 
+const AnimatedRoundContainerBlock = animated(RoundContainerBlock);
+
 type Theme = 'gray' | 'image';
 
 interface RoundContainerProps {
   children: React.ReactNode;
   theme: Theme;
   imageLink?: string;
+  delay?: number;
 }
 
 function RoundContainer(props: RoundContainerProps) {
-  return <RoundContainerBlock {...props} />;
+  // const slideUpTransition = useTransition(true, null, {
+  //   from: {
+  //     transform: `translateY(50px) scale(0.9)`,
+  //     opacity: 0,
+  //   },
+  //   enter: {
+  //     transform: `translateY(0px) scale(1)`,
+  //     opacity: 1,
+  //   },
+  //   config: {
+  //     tension: 350,
+  //     friction: 25,
+  //   },
+  // });
+
+  const appear = useSpring({
+    from: {
+      transform: `translateY(50px) scale(0.9)`,
+      opacity: 0,
+    },
+    to: {
+      transform: `translateY(0px) scale(1)`,
+      opacity: 1,
+    },
+    config: {
+      tension: 350,
+      friction: 25,
+    },
+    delay: props.delay || 0,
+  });
+
+  return <AnimatedRoundContainerBlock style={appear} {...props} />;
+
+  // return <div>{slideUpTransition.map(({ item, key, props }) => (item ? <AnimatedRoundContainerBlock style={props} {...p} /> : null))}</div>;
 }
 
 export default RoundContainer;
