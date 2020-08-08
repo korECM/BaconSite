@@ -5,6 +5,7 @@ import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { ReviewInterface, getReview } from '../api/getReview';
 import { ImageUploadResponseInterface, imageUpload } from '../api/uploadImage';
+import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 
 const RESET_DATA = 'detail/RESET_DATA' as const;
 
@@ -20,6 +21,14 @@ const POST_IMAGES = 'detail/POST_IMAGES' as const;
 const POST_IMAGES_SUCCESS = 'detail/POST_IMAGES_SUCCESS' as const;
 const POST_IMAGES_ERROR = 'detail/POST_IMAGES_ERROR' as const;
 
+const LIKE_SHOP = 'detail/LIKE_SHOP' as const;
+const LIKE_SHOP_SUCCESS = 'detail/LIKE_SHOP_SUCCESS' as const;
+const LIKE_SHOP_ERROR = 'detail/LIKE_SHOP_ERROR' as const;
+
+const UNLIKE_SHOP = 'detail/UNLIKE_SHOP' as const;
+const UNLIKE_SHOP_SUCCESS = 'detail/UNLIKE_SHOP_SUCCESS' as const;
+const UNLIKE_SHOP_ERROR = 'detail/UNLIKE_SHOP_ERROR' as const;
+
 export const resetData = createAction(RESET_DATA)();
 
 export const getShopAsync = createAsyncAction(GET_SHOP_INFO, GET_SHOP_INFO_SUCCESS, GET_SHOP_INFO_ERROR)<void, ShopInterface, AxiosError>();
@@ -27,6 +36,10 @@ export const getShopAsync = createAsyncAction(GET_SHOP_INFO, GET_SHOP_INFO_SUCCE
 export const getReviewAsync = createAsyncAction(GET_REVIEW, GET_REVIEW_SUCCESS, GET_REVIEW_ERROR)<void, ReviewInterface[], AxiosError>();
 
 export const postImagesAsync = createAsyncAction(POST_IMAGES, POST_IMAGES_SUCCESS, POST_IMAGES_ERROR)<void, ImageUploadResponseInterface, AxiosError>();
+
+export const likeShopAsync = createAsyncAction(LIKE_SHOP, LIKE_SHOP_SUCCESS, LIKE_SHOP_ERROR)<void, LikeInterface, AxiosError>();
+
+export const unlikeShopAsync = createAsyncAction(UNLIKE_SHOP, UNLIKE_SHOP_SUCCESS, UNLIKE_SHOP_ERROR)<void, LikeInterface, AxiosError>();
 
 type DetailAction =
   | ReturnType<typeof resetData>
@@ -38,11 +51,19 @@ type DetailAction =
   | ReturnType<typeof getReviewAsync.failure>
   | ReturnType<typeof postImagesAsync.request>
   | ReturnType<typeof postImagesAsync.success>
-  | ReturnType<typeof postImagesAsync.failure>;
+  | ReturnType<typeof postImagesAsync.failure>
+  | ReturnType<typeof likeShopAsync.request>
+  | ReturnType<typeof likeShopAsync.success>
+  | ReturnType<typeof likeShopAsync.failure>
+  | ReturnType<typeof unlikeShopAsync.request>
+  | ReturnType<typeof unlikeShopAsync.success>
+  | ReturnType<typeof unlikeShopAsync.failure>;
 
 export const getShopThunk = createAsyncThunk(getShopAsync, getShop);
 export const getReviewThunk = createAsyncThunk(getReviewAsync, getReview);
 export const postImageThunk = createAsyncThunk(postImagesAsync, imageUpload);
+export const likeShopThunk = createAsyncThunk(likeShopAsync, likeShopAPI);
+export const unlikeShopThunk = createAsyncThunk(unlikeShopAsync, unlikeShopAPI);
 
 export interface ShopUIInterface {
   name: string;
@@ -64,6 +85,7 @@ type DetailState = {
   shop: AsyncState<ShopUIInterface, number>;
   reviews: AsyncState<ReviewInterface[], number>;
   images: AsyncState<ImageUploadResponseInterface, number>;
+  like: AsyncState<LikeInterface, number>;
 };
 
 const initialState: DetailState = {
@@ -91,6 +113,7 @@ const initialState: DetailState = {
   }),
   reviews: asyncState.initial(new Array<ReviewInterface>()),
   images: asyncState.initial(),
+  like: asyncState.initial(),
 };
 
 const categoryToString = (category: ShopCategory) => {
@@ -178,6 +201,30 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
   [POST_IMAGES_ERROR]: (state, { payload: error }) => ({
     ...state,
     images: asyncState.error(error.response?.status || 404),
+  }),
+  [LIKE_SHOP]: (state) => ({
+    ...state,
+    like: asyncState.load(),
+  }),
+  [LIKE_SHOP_SUCCESS]: (state, { payload: like }) => ({
+    ...state,
+    like: asyncState.success(like),
+  }),
+  [LIKE_SHOP_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    like: asyncState.error(error.response?.status || 404),
+  }),
+  [UNLIKE_SHOP]: (state) => ({
+    ...state,
+    like: asyncState.load(),
+  }),
+  [UNLIKE_SHOP_SUCCESS]: (state, { payload: like }) => ({
+    ...state,
+    like: asyncState.success(like),
+  }),
+  [UNLIKE_SHOP_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    like: asyncState.error(error.response?.status || 404),
   }),
 });
 export default detail;

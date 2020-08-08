@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules';
 import { useCallback } from 'react';
-import { getShopThunk, getReviewThunk, postImageThunk, resetData } from '../modules/detail';
+import { getShopThunk, getReviewThunk, postImageThunk, resetData, likeShopThunk, unlikeShopThunk } from '../modules/detail';
 
 export default function useDetail(shopId: string) {
   const { shop, reviews, images } = useSelector((state: RootState) => state.detail);
@@ -13,6 +13,9 @@ export default function useDetail(shopId: string) {
 
   const onImageUploadRequest = useCallback((files: FileList) => dispatch(postImageThunk(shopId, files)), [shopId, dispatch]);
 
+  const onLike = useCallback(() => dispatch(likeShopThunk(shopId)), [dispatch, shopId]);
+  const onUnlike = useCallback(() => dispatch(unlikeShopThunk(shopId)), [dispatch, shopId]);
+
   return {
     shop,
     reviews,
@@ -21,5 +24,7 @@ export default function useDetail(shopId: string) {
     onReviewRequest,
     onImageUploadRequest,
     resetDataAction,
+    onLike,
+    onUnlike,
   };
 }
