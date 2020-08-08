@@ -30,9 +30,13 @@ const HeaderContainer = styled.div`
     color: inherit;
     font-size: 2.5rem;
   }
+  button:nth-child(1) {
+    padding-left: 0;
+  }
 
   button:nth-child(2) {
     margin-left: auto;
+    padding-right: 0;
   }
 `;
 
