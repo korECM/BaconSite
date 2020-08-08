@@ -4,9 +4,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import useKakao from '../../hooks/useKakao';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
-import Loader from 'react-spinners/PacmanLoader';
 import palette from '../../styles/palette';
 import useCheck from '../../hooks/useCheck';
+import Loader from '../../components/common/Loader';
 
 const KakaoPageBlock = styled.div``;
 
@@ -52,7 +52,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
-        <Loader color={palette.mainRed} />
+        <Loader />
       </Container>
     );
   }
