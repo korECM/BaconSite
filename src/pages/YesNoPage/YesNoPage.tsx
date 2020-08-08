@@ -8,6 +8,7 @@ import Flag from '../../components/common/Flag';
 // import Button from '../../components/common/Button';
 import Loader from '../../components/common/Loader';
 import Button from './button';
+import { Fade, Bounce } from 'react-awesome-reveal';
 
 interface ShopImageProps {
   imageLink: string;
@@ -66,9 +67,13 @@ function YesNoPage({ match, history }: DetailPageProps) {
   return (
     <Container color="red">
       <Header category="modal" headerColor="red" />
-      <ImageContainer>
-        <Image imageLink={'https://ifh.cc/g/6onhGJ.png'} />
-      </ImageContainer>
+      <Fade>
+        <Bounce>
+          <ImageContainer>
+            <Image imageLink={'https://ifh.cc/g/6onhGJ.png'} />
+          </ImageContainer>
+        </Bounce>
+      </Fade>
       <Button />
       <ActionContainer></ActionContainer>
       <Divider />

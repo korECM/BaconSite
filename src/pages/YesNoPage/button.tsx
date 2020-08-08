@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import { Fade, Bounce } from 'react-awesome-reveal';
 
 const ButtonWindow = styled.div`
   width: 100%;
@@ -46,16 +47,24 @@ const ButtonBlock = styled.div`
 function Button() {
   return (
     <ButtonWindow>
-      <ButtonContainer>
-        <ButtonBlock>
-          <span>매운 거</span>
-        </ButtonBlock>
-      </ButtonContainer>
-      <ButtonContainer>
-        <ButtonBlock>
-          <span>안매운 거</span>
-        </ButtonBlock>
-      </ButtonContainer>
+      <Fade>
+        <Bounce>
+          <ButtonContainer>
+            <ButtonBlock>
+              <span>매운 거</span>
+            </ButtonBlock>
+          </ButtonContainer>
+        </Bounce>
+      </Fade>
+      <Fade>
+        <Bounce>
+          <ButtonContainer>
+            <ButtonBlock>
+              <span>안매운 거</span>
+            </ButtonBlock>
+          </ButtonContainer>
+        </Bounce>
+      </Fade>
     </ButtonWindow>
   );
 }
