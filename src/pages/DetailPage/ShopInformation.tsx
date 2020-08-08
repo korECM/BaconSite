@@ -2,16 +2,18 @@ import styled from 'styled-components';
 import React from 'react';
 import { ShopUIInterface } from '../../modules/detail';
 import { MdPhone, MdLocationOn, MdRestaurantMenu, MdBusiness } from 'react-icons/md';
+import palette from '../../styles/palette';
 
 const ShopInformationContainer = styled.div`
   font-weight: 100;
   font-size: 14px;
+  color: ${palette.middleGray};
 `;
 
 const ShopInformationBlock = styled.div`
   display: flex;
-  margin: 10px 0;
-  span {
+  margin: 20px 0;
+  a {
     margin-left: 10px;
   }
 `;
@@ -26,25 +28,25 @@ function ShopInformation({ shop }: ShopInformationProps) {
       {shop.contact && (
         <ShopInformationBlock>
           <MdPhone />
-          <span>{shop.contact}</span>
+          <a href={`tel:${shop.contact}`}>{shop.contact}</a>
         </ShopInformationBlock>
       )}
       {shop.address && (
         <ShopInformationBlock>
           <MdLocationOn />
-          <span>{shop.address}</span>
+          <a>{shop.address}</a>
         </ShopInformationBlock>
       )}
       {shop.category && (
         <ShopInformationBlock>
           <MdRestaurantMenu />
-          <span>{shop.category}</span>
+          <a>{shop.category}</a>
         </ShopInformationBlock>
       )}
       {shop.location && (
         <ShopInformationBlock>
           <MdBusiness />
-          <span>{shop.location}</span>
+          <a>{shop.location}</a>
         </ShopInformationBlock>
       )}
     </ShopInformationContainer>

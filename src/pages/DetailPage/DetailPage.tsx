@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
@@ -12,6 +12,7 @@ import Flag from '../../components/common/Flag';
 import Loader from '../../components/common/Loader';
 import ShopInformation from './ShopInformation';
 import Radar from './Radar';
+import useCheck from '../../hooks/useCheck';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -116,7 +117,11 @@ interface DetailPageProps extends RouteComponentProps {}
 function DetailPage({ match, history }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, shop, reviews, images } = useDetail(shopId);
+  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, shop, reviews, images } = useDetail(shopId);
+
+  const { user } = useCheck();
+
+  const [likeOffset, setLikeOffset] = useState(0);
 
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -144,6 +149,32 @@ function DetailPage({ match, history }: DetailPageProps) {
     }
   };
 
+  const onLikeButton = () => {
+    if (!user) {
+      alert('로그인을 해야합니다');
+      return;
+    }
+    if (shop.data) {
+      if (likeOffset === 0) {
+        if (shop.data.didLike) {
+          onUnlike();
+          setLikeOffset(-1);
+        } else {
+          onLike();
+          setLikeOffset(1);
+        }
+      } else {
+        if (likeOffset === 1) {
+          onUnlike();
+          setLikeOffset(0);
+        } else {
+          onLike();
+          setLikeOffset(0);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     return () => {
       resetDataAction();
@@ -153,6 +184,7 @@ function DetailPage({ match, history }: DetailPageProps) {
   useEffect(() => {
     onShopRequest();
     onReviewRequest();
+    setLikeOffset(0);
   }, [onShopRequest, onReviewRequest]);
 
   if (shop.loading) {
@@ -189,7 +221,7 @@ function DetailPage({ match, history }: DetailPageProps) {
   }
 
   return (
-    <Container color="white">
+    <Container color="white" notFullHeight>
       <Header category="modal" headerColor="white" />
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
@@ -197,10 +229,17 @@ function DetailPage({ match, history }: DetailPageProps) {
         <Flag titleColor={palette.white} descColor={palette.white} titleText={'A+'} descText={`${shop.data.scoreAverage}학점`} flagColor={palette.mainRed} />
       </ShopImageContainer>
       <ShopActionContainer>
-        <ShopAction>
-          {shop.data.didLike ? <MdFavorite /> : <MdFavoriteBorder />}
-          <span>{shop.data.likerCount}</span>
-        </ShopAction>
+        {likeOffset === 0 ? (
+          <ShopAction onClick={onLikeButton}>
+            {shop.data.didLike ? <MdFavorite /> : <MdFavoriteBorder />}
+            <span>{shop.data.likerCount}</span>
+          </ShopAction>
+        ) : (
+          <ShopAction onClick={onLikeButton}>
+            {likeOffset === 1 ? <MdFavorite /> : <MdFavoriteBorder />}
+            <span>{shop.data.likerCount + likeOffset}</span>
+          </ShopAction>
+        )}
         <ShopAction onClick={onImageUploadButtonClick}>
           <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={fileRef} onChange={onFileChange} />
           {images.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
@@ -216,8 +255,8 @@ function DetailPage({ match, history }: DetailPageProps) {
       <Radar shop={shop.data} />
       <CommentContainer>
         {reviews.data &&
-          reviews.data.map((review) => (
-            <Comment theme="gray" key={review._id}>
+          reviews.data.map((review, index) => (
+            <Comment theme="gray" key={review._id} delay={index * 150}>
               <div>{review.user.name}</div>
               <div>{review.comment}</div>
             </Comment>

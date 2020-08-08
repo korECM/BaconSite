@@ -8,13 +8,12 @@ const LoaderBlock = styled.div`
   align-items: center;
   justify-content: center;
 
-  position: absolute;
-  top: 50%;
-  left: 50%;
   margin-top: -100px;
-  margin-left: -100px;
-  width: 200px;
-  height: 200px;
+  /* margin-left: -100px; */
+  /* width: 200px; */
+  width: 100%;
+  height: 100vh;
+  /* height: 200px; */
   transform: translateX(-30px);
 `;
 
