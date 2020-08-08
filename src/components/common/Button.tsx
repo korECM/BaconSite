@@ -10,7 +10,8 @@ const ButtonBlock = styled.button`
     border-radius : 12.5px;
     padding : 8.5px 27.5px;
 
-    margin : 10px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 
     -webkit-box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
     -moz-box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
