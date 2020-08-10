@@ -30,7 +30,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
   }, [onKakaoInit]);
 
   useEffect(() => {
-    if (!kakao.data) {
+    if (kakao.data) {
       check();
     }
   }, [kakao.data, check]);
