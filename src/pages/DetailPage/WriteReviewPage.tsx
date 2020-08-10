@@ -118,7 +118,7 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
   }
 
   return (
-    <Container color="red" notFullHeight>
+    <Container color="red">
       <Header category="modal" headerColor="red" />
       <Title>이 식당의 특징은?</Title>
       <ButtonGroup>
