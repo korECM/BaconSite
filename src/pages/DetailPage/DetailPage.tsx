@@ -26,8 +26,6 @@ interface ShopImageProps {
 }
 
 const ShopImageContainer = styled.div`
-  position: relative;
-
   height: 60vw;
   max-height: 400px;
   width: 100%;
@@ -40,12 +38,10 @@ const ShopImageContainer = styled.div`
 `;
 
 const ShopImage = styled.div`
-  position: absolute;
+  display: flex;
 
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  height: 100%;
+
   border-radius: 10px;
 
   background-repeat: no-repeat;
@@ -197,11 +193,23 @@ function DetailPage({ match, history }: DetailPageProps) {
     );
   }
 
-  if (!shop.data || shop.error === 400) {
+  if (shop.error === 406) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
         <ShopTitle>존재하지 않는 가게에요</ShopTitle>
+        <ShopImageContainer>
+          <ShopImage imageLink={'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
+        </ShopImageContainer>
+      </Container>
+    );
+  }
+
+  if (!shop.data) {
+    return (
+      <Container color="white">
+        <Header category="modal" headerColor="white" />
+        <ShopTitle>서버로부터 데이터를 받아오는데 실패했어요</ShopTitle>
         <ShopImageContainer>
           <ShopImage imageLink={'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
         </ShopImageContainer>
@@ -226,8 +234,9 @@ function DetailPage({ match, history }: DetailPageProps) {
       <Header category="modal" headerColor="white" />
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
-        <ShopImage imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
-        <Flag titleColor={palette.white} descColor={palette.white} titleText={'A+'} descText={`${shop.data.scoreAverage}학점`} flagColor={palette.mainRed} />
+        <ShopImage imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}>
+          <Flag titleColor={palette.white} descColor={palette.white} titleText={'A+'} descText={`${shop.data.scoreAverage}학점`} flagColor={palette.mainRed} />
+        </ShopImage>
       </ShopImageContainer>
       <ShopActionContainer>
         {likeOffset === 0 ? (
