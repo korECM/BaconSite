@@ -114,7 +114,6 @@ function YesNoPage() {
           </Fade>
 
           <ActionContainer></ActionContainer>
-          <Divider />
         </Container>
       </Fade>
     </Animated>
