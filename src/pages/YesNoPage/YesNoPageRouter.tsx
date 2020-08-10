@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withRouter, RouteComponentProps, Route } from 'react-router-dom';
-import DetailPage from './YesNoPage';
+import YesNoPage from './YesNoPage';
+import FlexPage from './FlexPage';
 
 const YesNoPageRouterBlock = styled.div`
   height: 100%;
@@ -10,7 +11,8 @@ const YesNoPageRouterBlock = styled.div`
 function YesNoPageRouter({ match }: RouteComponentProps) {
   return (
     <YesNoPageRouterBlock>
-      <Route exact path={`${match.path}`} component={DetailPage} />
+      <Route exact path={`${match.path}`} component={YesNoPage} />
+      <Route exact path={`${match.path}/flex`} component={FlexPage} />
     </YesNoPageRouterBlock>
   );
 }

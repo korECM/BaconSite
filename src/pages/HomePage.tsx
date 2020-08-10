@@ -11,6 +11,9 @@ function HomePage() {
       <Button theme="white">
         <Link to="/shop/5f26b992555be6865ede4e28">테스트 가게</Link>
       </Button>
+      <Button theme="white">
+        <Link to="/yesno">선택 장애</Link>
+      </Button>
     </Container>
   );
 }
