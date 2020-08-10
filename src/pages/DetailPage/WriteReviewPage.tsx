@@ -20,12 +20,17 @@ const ButtonGroup = styled.div``;
 
 const ButtonSubGroup = styled.div`
   display: flex;
+  margin-bottom: 20px;
   button {
     flex: 1;
     font-weight: 500;
     font-size: 12.5px;
     padding: 12.5px 10px;
   }
+`;
+
+const ButtonWithMargin = styled(Button)`
+  margin: 0 5px;
 `;
 
 const ScoreContainer = styled.div`
@@ -123,26 +128,26 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
       <Title>이 식당의 특징은?</Title>
       <ButtonGroup>
         <ButtonSubGroup>
-          <Button theme="white" onClick={() => onClick('costRatio')} selected={keywords.costRatio}>
+          <ButtonWithMargin theme="white" onClick={() => onClick('costRatio')} selected={keywords.costRatio}>
             가성비
-          </Button>
-          <Button theme="white" onClick={() => onClick('atmosphere')} selected={keywords.atmosphere}>
+          </ButtonWithMargin>
+          <ButtonWithMargin theme="white" onClick={() => onClick('atmosphere')} selected={keywords.atmosphere}>
             분위기
-          </Button>
-          <Button theme="white" onClick={() => onClick('group')} selected={keywords.group}>
+          </ButtonWithMargin>
+          <ButtonWithMargin theme="white" onClick={() => onClick('group')} selected={keywords.group}>
             단체
-          </Button>
+          </ButtonWithMargin>
         </ButtonSubGroup>
         <ButtonSubGroup>
-          <Button theme="white" onClick={() => onClick('individual')} selected={keywords.individual}>
+          <ButtonWithMargin theme="white" onClick={() => onClick('individual')} selected={keywords.individual}>
             혼밥
-          </Button>
-          <Button theme="white" onClick={() => onClick('riceAppointment')} selected={keywords.riceAppointment}>
+          </ButtonWithMargin>
+          <ButtonWithMargin theme="white" onClick={() => onClick('riceAppointment')} selected={keywords.riceAppointment}>
             밥약
-          </Button>
-          <Button theme="white" onClick={() => onClick('spicy')} selected={keywords.spicy}>
+          </ButtonWithMargin>
+          <ButtonWithMargin theme="white" onClick={() => onClick('spicy')} selected={keywords.spicy}>
             안매워요
-          </Button>
+          </ButtonWithMargin>
         </ButtonSubGroup>
       </ButtonGroup>
       <ScoreContainer>
