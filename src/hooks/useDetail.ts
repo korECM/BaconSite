@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules';
 import { useCallback } from 'react';
-import { getShopThunk, getReviewThunk, postImageThunk, resetData, likeShopThunk, unlikeShopThunk } from '../modules/detail';
+import { getShopThunk, getReviewThunk, postImageThunk, resetData, likeShopThunk, unlikeShopThunk, getLocationThunk } from '../modules/detail';
 
 export default function useDetail(shopId: string) {
   const { shop, reviews, images } = useSelector((state: RootState) => state.detail);
@@ -16,6 +16,8 @@ export default function useDetail(shopId: string) {
   const onLike = useCallback(() => dispatch(likeShopThunk(shopId)), [dispatch, shopId]);
   const onUnlike = useCallback(() => dispatch(unlikeShopThunk(shopId)), [dispatch, shopId]);
 
+  const getLocation = useCallback((keyword: string) => dispatch(getLocationThunk(keyword)), [dispatch]);
+
   return {
     shop,
     reviews,
@@ -26,5 +28,6 @@ export default function useDetail(shopId: string) {
     resetDataAction,
     onLike,
     onUnlike,
+    getLocation,
   };
 }

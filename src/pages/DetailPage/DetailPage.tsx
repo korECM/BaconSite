@@ -114,7 +114,7 @@ interface DetailPageProps extends RouteComponentProps {}
 function DetailPage({ match, history }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, shop, reviews, images } = useDetail(shopId);
+  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, getLocation, shop, reviews, images } = useDetail(shopId);
 
   const { user } = useCheck();
 
@@ -203,6 +203,10 @@ function DetailPage({ match, history }: DetailPageProps) {
     onReviewRequest();
     setLikeOffset(0);
   }, [onShopRequest, onReviewRequest]);
+
+  useEffect(() => {
+    if (shop.data && shop.data.address) getLocation(shop.data.address);
+  }, [shop.data, getLocation]);
 
   if (shop.loading) {
     return (
