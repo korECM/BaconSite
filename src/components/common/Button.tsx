@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import palette from '../../styles/palette';
+import palette, { hexToRGB } from '../../styles/palette';
 
 const ButtonBlock = styled.button`
 
@@ -13,17 +13,31 @@ const ButtonBlock = styled.button`
     margin-bottom: 15px;
     margin-top: 15px;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0,0,0,0.1);
+
 
   transition : background-color 0.2s ease;
 
-  :hover {
-    background-color: ${palette.mainRed}; 
-		color: ${palette.white};
-		cursor: pointer;
-	}
+  ${(props: ButtonProps) =>
+    props.theme !== 'text' &&
+    css`
+      -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+      -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+      :hover {
+        background-color: ${palette.mainRed};
+        color: ${palette.white};
+        cursor: pointer;
+      }
+    `}
+
+    ${(props: ButtonProps) =>
+      props.theme === 'red' &&
+      css`
+        :hover {
+          background-color: ${hexToRGB(palette.mainRed, 0.7)};
+          color: ${palette.white};
+        }
+      `}
 
 ${(props: ButtonProps) =>
   props.big &&
@@ -35,11 +49,29 @@ ${(props: ButtonProps) =>
   `}
 
   ${(props: ButtonProps) =>
-    props.theme &&
+    props.theme === 'white' &&
     css`
-      background-color: ${props.theme === 'white' ? palette.white : palette.gray};
-      color: ${props.theme === 'white' ? palette.mainRed : palette.darkGray};
+      background-color: ${palette.white};
+      color: ${palette.mainRed};
     `}
+    ${(props: ButtonProps) =>
+      props.theme === 'red' &&
+      css`
+        background-color: ${palette.mainRed};
+        color: ${palette.white};
+      `}
+    ${(props: ButtonProps) =>
+      props.theme === 'gray' &&
+      css`
+        background-color: ${palette.gray};
+        color: ${palette.darkGray};
+      `}
+    ${(props: ButtonProps) =>
+      props.theme === 'text' &&
+      css`
+        background-color: transparent;
+        color: ${palette.mainRed};
+      `}
 
   ${(props: ButtonProps) =>
     props.selected &&
@@ -49,7 +81,7 @@ ${(props: ButtonProps) =>
     `}
 `;
 
-type Theme = 'white' | 'gray';
+type Theme = 'white' | 'gray' | 'text' | 'red';
 // type Selected = 'true' | 'false';
 // let Selected = 'false';
 
