@@ -29,10 +29,14 @@ const DialogBackground = styled(animated.div)`
 const WhiteBox = styled.div`
   box-sizing: border-box;
   border-radius: 4px;
-  width: 25rem;
+  width: 20rem;
   background: white;
   box-shadow: 0px 4px 8px 8px rgba(0, 0, 0, 0.05);
   padding: 2rem;
+
+  @media only screen and (min-width: 1000px) {
+    width: 25rem;
+  }
 
   h3 {
     font-size: 1.5rem;
