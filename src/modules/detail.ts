@@ -97,7 +97,7 @@ type DetailState = {
   reviews: AsyncState<ReviewInterface[], number>;
   images: AsyncState<ImageUploadResponseInterface, number>;
   like: AsyncState<LikeInterface, number>;
-  mapAddress: AsyncState<{ x: string; y: string }, number>;
+  mapAddress: AsyncState<{ x: number; y: number }, number>;
 };
 
 const initialState: DetailState = {
@@ -245,7 +245,7 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
   }),
   [GET_LOCATION_SUCCESS]: (state, { payload: data }) => ({
     ...state,
-    mapAddress: data.documents.length ? asyncState.success({ x: data.documents[0].x, y: data.documents[0].y }) : asyncState.error(406),
+    mapAddress: data.documents.length ? asyncState.success({ x: Number(data.documents[0].x), y: Number(data.documents[0].y) }) : asyncState.error(406),
   }),
   [GET_LOCATION_ERROR]: (state, { payload: error }) => ({
     ...state,

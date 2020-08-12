@@ -14,6 +14,8 @@ import ShopInformation from './ShopInformation';
 import Radar from './Radar';
 import useCheck from '../../hooks/useCheck';
 import Dialog from '../../components/common/Dialog';
+import KakaoMap from '../../components/common/KakaoMap';
+import { BounceLoader } from 'react-spinners';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -92,6 +94,29 @@ const Divider = styled.div`
   margin-bottom: 30px;
 `;
 
+const KakaoMapBlock = styled.div`
+  background-color: white;
+  border-radius: 20px;
+  padding: 15px;
+  margin: 30px 0;
+
+  height: 200px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+
+  p {
+    margin-top: 20px;
+  }
+
+  -webkit-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
+`;
+
 const CommentContainer = styled.div``;
 
 const Comment = styled(RoundContainer)`
@@ -114,7 +139,9 @@ interface DetailPageProps extends RouteComponentProps {}
 function DetailPage({ match, history }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, getLocation, shop, reviews, images } = useDetail(shopId);
+  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, getLocation, shop, reviews, images, mapAddress } = useDetail(
+    shopId,
+  );
 
   const { user } = useCheck();
 
@@ -285,6 +312,18 @@ function DetailPage({ match, history }: DetailPageProps) {
         </ShopAction>
       </ShopActionContainer>
       <Divider />
+      <KakaoMapBlock>
+        {mapAddress.loading ? (
+          <>
+            <BounceLoader color={palette.mainRed} size="30" />
+            <p>지도 로딩중</p>
+          </>
+        ) : mapAddress.data ? (
+          <KakaoMap latitude={mapAddress.data.y} longitude={mapAddress.data.x} />
+        ) : (
+          <p>식당 주소로 지도에서 찾을 수 없어요ㅠ</p>
+        )}
+      </KakaoMapBlock>
       <ShopInformation shop={shop.data} />
       <Radar shop={shop.data} />
       <CommentContainer>

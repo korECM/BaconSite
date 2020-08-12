@@ -24,5 +24,6 @@ export async function getLocation(keyword: string) {
   const response = await axios.get<LocationInterface>(`https://dapi.kakao.com/v2/local/search/address.json?query=${keyword}`, {
     headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` },
   });
+  console.log(response.data);
   return response.data;
 }
