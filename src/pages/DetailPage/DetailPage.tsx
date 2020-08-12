@@ -13,6 +13,7 @@ import Loader from '../../components/common/Loader';
 import ShopInformation from './ShopInformation';
 import Radar from './Radar';
 import useCheck from '../../hooks/useCheck';
+import Dialog from '../../components/common/Dialog';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -121,11 +122,25 @@ function DetailPage({ match, history }: DetailPageProps) {
 
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const [loginAlert, setLoginAlert] = useState(false);
+
+  const [loginMessage, setLoginMessage] = useState('');
+
   const onWriteReviewButtonClick = useCallback(() => {
+    if (!user) {
+      setLoginMessage('리뷰를 남기려면 로그인을 해야합니다');
+      setLoginAlert(true);
+      return;
+    }
     history.push(`comment/${(match.params as any).shopId}`);
-  }, [history, match.params]);
+  }, [history, match.params, user]);
 
   const onImageUploadButtonClick = () => {
+    if (!user) {
+      setLoginMessage('이미지를 올리려면 로그인을 해야합니다');
+      setLoginAlert(true);
+      return;
+    }
     fileRef.current?.click();
   };
 
@@ -147,7 +162,8 @@ function DetailPage({ match, history }: DetailPageProps) {
 
   const onLikeButton = () => {
     if (!user) {
-      alert('로그인을 해야합니다');
+      setLoginMessage('좋아요를 누르려면 로그인을 해야합니다');
+      setLoginAlert(true);
       return;
     }
     if (shop.data) {
@@ -170,6 +186,10 @@ function DetailPage({ match, history }: DetailPageProps) {
       }
     }
   };
+
+  const goLogin = useCallback(() => {
+    history.push('/auth/login');
+  }, [history]);
 
   useEffect(() => {
     return () => {
@@ -272,6 +292,16 @@ function DetailPage({ match, history }: DetailPageProps) {
             </Comment>
           ))}
       </CommentContainer>
+      <Dialog
+        cancelText="닫기"
+        confirmText="로그인 하러 가기"
+        desc={loginMessage}
+        title="로그인"
+        mode="cancel"
+        onCancel={() => setLoginAlert(false)}
+        onConfirm={() => goLogin()}
+        visible={loginAlert}
+      />
     </Container>
   );
 }
