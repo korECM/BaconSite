@@ -39,9 +39,10 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     if (user) {
       console.log('check 성공');
       console.log(user);
-      history.push('/');
       try {
         localStorage.setItem('user', JSON.stringify(user));
+        let redir = localStorage.getItem('redir');
+        history.push(redir || '/');
       } catch (error) {
         console.error('localStorage 사용 불가');
       }

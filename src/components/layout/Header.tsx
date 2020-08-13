@@ -66,6 +66,7 @@ function Header(props: HeaderProps) {
       if (user) {
         console.log('마이 페이지로 가자');
       } else {
+        localStorage.setItem('redir', props.match.url);
         props.history.push('/auth/login');
       }
     }

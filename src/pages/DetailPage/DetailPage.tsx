@@ -136,7 +136,7 @@ const Comment = styled(RoundContainer)`
 
 interface DetailPageProps extends RouteComponentProps {}
 
-function DetailPage({ match, history }: DetailPageProps) {
+function DetailPage({ match, history, location }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
   const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, getLocation, shop, reviews, images, mapAddress } = useDetail(
@@ -215,6 +215,11 @@ function DetailPage({ match, history }: DetailPageProps) {
   };
 
   const goLogin = useCallback(() => {
+    try {
+      localStorage.setItem('redir', match.url);
+    } catch (error) {
+      console.error('LocalStorage 사용 불가');
+    }
     history.push('/auth/login');
   }, [history]);
 
