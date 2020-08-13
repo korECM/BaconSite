@@ -307,7 +307,13 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
         <ShopImage imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}>
-          <Flag titleColor={palette.white} descColor={palette.white} titleText={'A+'} descText={`${shop.data.scoreAverage}학점`} flagColor={palette.mainRed} />
+          <Flag
+            titleColor={palette.white}
+            descColor={palette.white}
+            titleText={'A+'}
+            descText={`${shop.data.scoreAverage.toPrecision(3)}학점`}
+            flagColor={palette.mainRed}
+          />
         </ShopImage>
       </ShopImageContainer>
       <ShopActionContainer>
