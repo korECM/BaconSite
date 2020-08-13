@@ -18,7 +18,13 @@ const ButtonBlock = styled.button`
   transition : background-color 0.2s ease;
 
   ${(props: ButtonProps) =>
-    props.theme !== 'text' &&
+    props.fullWidth &&
+    css`
+      width: 100%;
+    `}
+
+  ${(props: ButtonProps) =>
+    !['text', 'border'].includes(props.theme) &&
     css`
       -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
       -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
@@ -73,6 +79,14 @@ ${(props: ButtonProps) =>
         color: ${palette.mainRed};
       `}
 
+      ${(props: ButtonProps) =>
+        props.theme === 'border' &&
+        css`
+          background-color: transparent;
+          color: ${palette.mainRed};
+          border: 0.5px solid ${palette.mainRed};
+        `}
+
   ${(props: ButtonProps) =>
     props.selected &&
     css`
@@ -81,7 +95,7 @@ ${(props: ButtonProps) =>
     `}
 `;
 
-type Theme = 'white' | 'gray' | 'text' | 'red';
+type Theme = 'white' | 'gray' | 'text' | 'red' | 'border';
 // type Selected = 'true' | 'false';
 // let Selected = 'false';
 
@@ -90,6 +104,7 @@ interface ButtonProps {
   big?: boolean;
   selected?: boolean;
   theme: Theme;
+  fullWidth?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onMouseOver?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
