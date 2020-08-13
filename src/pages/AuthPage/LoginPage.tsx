@@ -6,7 +6,7 @@ import Header from '../../components/layout/Header';
 
 const LoginPageBlock = styled.div``;
 
-const redirectionURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/auth/kakao/callback' : 'https://epic-brown-de1e48.netlify.app/auth/kakao/callback';
+const redirectionURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/auth/kakao/callback' : 'http://221.149.10.240:5000/auth/kakao/callback';
 
 function LoginPage({ history }: RouteComponentProps) {
   return (
