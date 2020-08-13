@@ -29,6 +29,8 @@ export interface ShopInterface {
   open: string;
   closed: string;
   location: Location;
+  latitude: number;
+  longitude: number;
   registerDate: string;
   scoreAverage: number;
   reviewCount: number;

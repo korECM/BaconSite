@@ -79,6 +79,8 @@ export const getLocationThunk = createAsyncThunk(getLocationAsync, getLocation);
 export interface ShopUIInterface {
   name: string;
   location: string;
+  latitude: number;
+  longitude: number;
   address: string;
   contact: string;
   open: string;
@@ -104,6 +106,8 @@ const initialState: DetailState = {
   shop: asyncState.initial({
     name: '',
     location: '',
+    latitude: 0,
+    longitude: 0,
     contact: '',
     address: '',
     category: '',

@@ -237,7 +237,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   }, [onShopRequest, onReviewRequest]);
 
   useEffect(() => {
-    if (shop.data && shop.data.address) getLocation(shop.data.address);
+    if (shop.data && shop.data.address) {
+      if (shop.data.latitude && shop.data.longitude) return;
+      getLocation(shop.data.address);
+    }
   }, [shop.data, getLocation]);
 
   if (shop.loading) {
@@ -323,6 +326,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <BounceLoader color={palette.mainRed} size="30" />
             <p>지도 로딩중</p>
           </>
+        ) : shop.data.latitude && shop.data.longitude ? (
+          <KakaoMap latitude={shop.data.latitude} longitude={shop.data.longitude} />
         ) : mapAddress.data ? (
           <KakaoMap latitude={mapAddress.data.y} longitude={mapAddress.data.x} />
         ) : (
