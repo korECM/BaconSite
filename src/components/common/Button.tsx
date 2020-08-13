@@ -84,7 +84,7 @@ ${(props: ButtonProps) =>
         css`
           background-color: transparent;
           color: ${palette.mainRed};
-          border: 0.5px solid ${palette.mainRed};
+          border: 1px solid ${palette.mainRed};
         `}
 
   ${(props: ButtonProps) =>
