@@ -16,6 +16,7 @@ import useCheck from '../../hooks/useCheck';
 import Dialog from '../../components/common/Dialog';
 import KakaoMap from '../../components/common/KakaoMap';
 import { BounceLoader } from 'react-spinners';
+import Button from '../../components/common/Button';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -100,7 +101,7 @@ const KakaoMapBlock = styled.div`
   padding: 15px;
   margin: 30px 0;
 
-  height: 200px;
+  height: 265px;
 
   display: flex;
   justify-content: center;
@@ -117,13 +118,24 @@ const KakaoMapBlock = styled.div`
   box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const ButtonWithNoMargin = styled(Button)`
+  flex: 1;
+  margin: 0 10px;
+  margin-top: 10px;
+`;
+
 const CommentContainer = styled.div``;
 
 const Comment = styled(RoundContainer)`
   flex-direction: column;
   text-align: left;
   align-items: flex-start;
-  padding-left: 20px;
+  padding: 5px 20px;
 
   div:nth-child(1) {
     font-size: 12px;
@@ -131,6 +143,7 @@ const Comment = styled(RoundContainer)`
   }
   div:nth-child(2) {
     font-size: 10px;
+    line-height: 1.5;
   }
 `;
 
@@ -327,9 +340,27 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <p>지도 로딩중</p>
           </>
         ) : shop.data.latitude && shop.data.longitude ? (
-          <KakaoMap latitude={shop.data.latitude} longitude={shop.data.longitude} />
+          <>
+            <KakaoMap latitude={shop.data.latitude} longitude={shop.data.longitude} />
+            <ButtonContainer>
+              <ButtonWithNoMargin theme="border" onClick={() => (window.location.href = `kakaomap://look?p=${shop.data?.latitude},${shop.data?.longitude}`)}>
+                카카오 맵
+              </ButtonWithNoMargin>
+              <ButtonWithNoMargin
+                theme="border"
+                onClick={() =>
+                  (window.location.href = `nmap://place?lat=${shop.data?.latitude}&lng=${shop.data?.longitude}&name=${shop.data?.name}&appname=bacon`)
+                }
+              >
+                네이버 맵
+              </ButtonWithNoMargin>
+            </ButtonContainer>
+          </>
         ) : mapAddress.data ? (
-          <KakaoMap latitude={mapAddress.data.y} longitude={mapAddress.data.x} />
+          <>
+            <KakaoMap latitude={mapAddress.data.y} longitude={mapAddress.data.x} />
+            <div></div>
+          </>
         ) : (
           <p>식당 주소로 지도에서 찾을 수 없어요ㅠ</p>
         )}
