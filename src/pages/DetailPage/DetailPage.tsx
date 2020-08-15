@@ -311,7 +311,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             titleColor={palette.white}
             descColor={palette.white}
             titleText={'A+'}
-            descText={`${shop.data.scoreAverage.toPrecision(3)}학점`}
+            descText={shop.data.scoreAverage ? `${shop.data.scoreAverage.toPrecision(3)}학점` : ''}
             flagColor={palette.mainRed}
           />
         </ShopImage>
