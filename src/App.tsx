@@ -5,6 +5,7 @@ import DetailPageRouter from './pages/DetailPage/DetailPageRouter';
 import LoginPageRouter from './pages/AuthPage/LoginPageRouter';
 import YesNoPageRouter from './pages/YesNoPage/YesNoPageRouter';
 import ResultPageRouter from './pages/ResultPage/ResultPageRouter';
+import AdminRouter from './pages/AdminPage/AdminRouter';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route component={LoginPageRouter} path="/auth" />
         <Route component={YesNoPageRouter} path="/yesno" />
         <Route component={ResultPageRouter} path="/result" />
+        <Route component={AdminRouter} path="/admin" />
       </Switch>
     </>
   );
