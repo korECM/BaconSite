@@ -4,6 +4,7 @@ import writeReview from './writeReview';
 import kakao from './kakao';
 import user from './user';
 import shops from './shops';
+import auth from './auth';
 
 const rootReducer = combineReducers({
   detail,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   kakao,
   user,
   shops,
+  auth,
 });
 
 export default rootReducer;
