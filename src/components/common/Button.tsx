@@ -45,6 +45,15 @@ const ButtonBlock = styled.button`
         }
       `}
 
+  ${(props: ButtonProps) =>
+    props.middle &&
+    css`
+      padding: 15px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 900;
+    `}
+
 ${(props: ButtonProps) =>
   props.big &&
   css`
@@ -102,6 +111,7 @@ type Theme = 'white' | 'gray' | 'text' | 'red' | 'border';
 interface ButtonProps {
   children: React.ReactNode;
   big?: boolean;
+  middle?: boolean;
   selected?: boolean;
   theme: Theme;
   fullWidth?: boolean;
