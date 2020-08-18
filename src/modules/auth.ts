@@ -61,6 +61,14 @@ const auth = createReducer<AuthState, AuthAction>(initialState, {
   [SET_MODE]: (state, { payload: mode }) => ({
     ...state,
     mode,
+    form: {
+      email: '',
+      name: '',
+      password: '',
+      passwordConfirm: '',
+    },
+    errorMessage: '',
+    valid: false,
   }),
   [SET_ERROR_MESSAGE]: (state, { payload: errorMessage }) => ({
     ...state,
