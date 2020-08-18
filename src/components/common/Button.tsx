@@ -102,6 +102,18 @@ ${(props: ButtonProps) =>
       background-color: ${palette.mainRed};
       color: ${palette.white};
     `}
+
+  ${(props: ButtonProps) =>
+    props.disabled &&
+    css`
+      background-color: ${palette.middleGray};
+      color: ${palette.white};
+      &:hover {
+        background-color: ${palette.middleGray};
+        color: ${palette.white};
+        cursor: default;
+      }
+    `}
 `;
 
 type Theme = 'white' | 'gray' | 'text' | 'red' | 'border';
@@ -113,6 +125,7 @@ interface ButtonProps {
   big?: boolean;
   middle?: boolean;
   selected?: boolean;
+  disabled?: boolean;
   theme: Theme;
   fullWidth?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
