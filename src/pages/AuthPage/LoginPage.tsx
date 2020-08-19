@@ -294,7 +294,7 @@ function LoginPage({ history }: RouteComponentProps) {
                   window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${redirectionURL}&response_type=code`;
                 }}
               >
-                <img src={kakaotalk} />
+                <img src={kakaotalk} alt="카카오 로고" />
                 <span>카카오톡 계정으로 로그인</span>
               </KakaoLogin>
             </>
