@@ -11,6 +11,7 @@ import gender from './gender.png';
 import { AiOutlineUser, AiOutlineLock, AiOutlineIdcard } from 'react-icons/ai';
 import useAuth from '../../hooks/useAuth';
 import DropBox from '../../components/common/DropBox';
+import useCheck from '../../hooks/useCheck';
 
 const AuthPageBlock = styled.div`
   padding: 0 5%;
@@ -137,13 +138,18 @@ function LoginPage({ history }: RouteComponentProps) {
     mode,
     errorMessage,
     valid,
+    loading,
+    success,
     changeInputDispatch,
     setModeDispatch,
     resetFormDispatch,
     setErrorMessageDispatch,
     setValidDispatch,
     setGenderDispatch,
+    registerDispatch,
   } = useAuth();
+
+  const { check, user } = useCheck();
 
   useEffect(() => {
     if (mode === 'login') {
@@ -171,7 +177,7 @@ function LoginPage({ history }: RouteComponentProps) {
         setErrorMessageDispatch('비밀번호와 비밀번호 확인이 일치하지 않습니다');
         return;
       }
-      if (form.gender === '') {
+      if (!form.email.length || !form.name.length || !form.password.length || !form.passwordConfirm.length || form.gender === '') {
         setValidDispatch(false);
         setErrorMessageDispatch('');
         return;
@@ -186,6 +192,26 @@ function LoginPage({ history }: RouteComponentProps) {
       resetFormDispatch();
     };
   }, [resetFormDispatch]);
+
+  useEffect(() => {
+    if (success) {
+      check();
+    }
+  }, [success, check]);
+
+  useEffect(() => {
+    if (user) {
+      console.log('check 성공');
+      console.log(user);
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+        let redir = localStorage.getItem('redir');
+        history.push(redir || '/');
+      } catch (error) {
+        console.error('localStorage 사용 불가');
+      }
+    }
+  }, [user, history]);
 
   return (
     <Container color="white">
@@ -261,7 +287,20 @@ function LoginPage({ history }: RouteComponentProps) {
             </>
           )}
           {mode === 'register' && (
-            <Button theme="red" fullWidth middle disabled={!valid}>
+            <Button
+              theme="red"
+              fullWidth
+              middle
+              disabled={!valid}
+              onClick={() =>
+                registerDispatch({
+                  email: form.email,
+                  gender: form.gender,
+                  name: form.name,
+                  password: form.password,
+                })
+              }
+            >
               회원가입
             </Button>
           )}

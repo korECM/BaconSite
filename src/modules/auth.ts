@@ -2,6 +2,7 @@ import { createAction, createReducer, createAsyncAction } from 'typesafe-actions
 import { AxiosError } from 'axios';
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
+import { register } from '../api/auth';
 
 const CHANGE_INPUT = 'auth/CHANGE_INPUT' as const;
 
@@ -15,6 +16,10 @@ const RESET_FORM = 'auth/RESET_FORM' as const;
 
 const SET_GENDER = 'auth/SET_GENDER' as const;
 
+const REGISTER = 'auth/REGISTER' as const;
+const REGISTER_SUCCESS = 'auth/REGISTER_SUCCESS' as const;
+const REGISTER_ERROR = 'auth/REGISTER_ERROR' as const;
+
 export const changeInput = createAction(CHANGE_INPUT)<{ target: string; value: string }>();
 export const setMode = createAction(SET_MODE)<'login' | 'register'>();
 export const setErrorMessage = createAction(SET_ERROR_MESSAGE)<string>();
@@ -22,12 +27,19 @@ export const setValid = createAction(SET_VALID)<boolean>();
 export const resetForm = createAction(RESET_FORM)();
 export const setGender = createAction(SET_GENDER)<'f' | 'm' | ''>();
 
+export const registerAsync = createAsyncAction(REGISTER, REGISTER_SUCCESS, REGISTER_ERROR)<void, void, AxiosError>();
+
+export const registerThunk = createAsyncThunk(registerAsync, register);
+
 type AuthAction =
   | ReturnType<typeof changeInput>
   | ReturnType<typeof setMode>
   | ReturnType<typeof setErrorMessage>
   | ReturnType<typeof setValid>
   | ReturnType<typeof resetForm>
+  | ReturnType<typeof registerAsync.request>
+  | ReturnType<typeof registerAsync.success>
+  | ReturnType<typeof registerAsync.failure>
   | ReturnType<typeof setGender>;
 
 interface AuthState {
@@ -41,6 +53,8 @@ interface AuthState {
   mode: 'login' | 'register';
   errorMessage: string;
   valid: boolean;
+  loading: boolean;
+  success: boolean;
 }
 
 const initialState: AuthState = {
@@ -54,6 +68,8 @@ const initialState: AuthState = {
   mode: 'login',
   errorMessage: '',
   valid: false,
+  loading: false,
+  success: false,
 };
 
 const auth = createReducer<AuthState, AuthAction>(initialState, {
@@ -76,6 +92,8 @@ const auth = createReducer<AuthState, AuthAction>(initialState, {
     },
     errorMessage: '',
     valid: false,
+    loading: false,
+    success: false,
   }),
   [SET_ERROR_MESSAGE]: (state, { payload: errorMessage }) => ({
     ...state,
@@ -97,6 +115,8 @@ const auth = createReducer<AuthState, AuthAction>(initialState, {
     mode: 'login',
     errorMessage: '',
     valid: false,
+    loading: false,
+    success: false,
   }),
   [SET_GENDER]: (state, { payload: gender }) => ({
     ...state,
@@ -104,6 +124,22 @@ const auth = createReducer<AuthState, AuthAction>(initialState, {
       ...state.form,
       gender,
     },
+  }),
+  [REGISTER]: (state) => ({
+    ...state,
+    loading: true,
+    success: false,
+  }),
+  [REGISTER_SUCCESS]: (state) => ({
+    ...state,
+    loading: false,
+    success: true,
+  }),
+  [REGISTER_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    errorMessage: error.response?.data || '회원가입 도중 문제가 생겼습니다',
+    loading: false,
+    success: false,
   }),
 });
 

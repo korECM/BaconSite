@@ -39,3 +39,21 @@ export async function check() {
   });
   return response.data;
 }
+
+export interface RegisterInterface {
+  name: string;
+  email: string;
+  password: string;
+  gender: string;
+}
+
+export async function register(data: RegisterInterface) {
+  const response = await axios.post(
+    apiLink() + `/auth/signUp`,
+    { ...data, provider: 'local' },
+    {
+      withCredentials: true,
+    },
+  );
+  return response.data;
+}
