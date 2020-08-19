@@ -13,18 +13,22 @@ const SET_VALID = 'auth/SET_VALID' as const;
 
 const RESET_FORM = 'auth/RESET_FORM' as const;
 
+const SET_GENDER = 'auth/SET_GENDER' as const;
+
 export const changeInput = createAction(CHANGE_INPUT)<{ target: string; value: string }>();
 export const setMode = createAction(SET_MODE)<'login' | 'register'>();
 export const setErrorMessage = createAction(SET_ERROR_MESSAGE)<string>();
 export const setValid = createAction(SET_VALID)<boolean>();
 export const resetForm = createAction(RESET_FORM)();
+export const setGender = createAction(SET_GENDER)<'f' | 'm' | ''>();
 
 type AuthAction =
   | ReturnType<typeof changeInput>
   | ReturnType<typeof setMode>
   | ReturnType<typeof setErrorMessage>
   | ReturnType<typeof setValid>
-  | ReturnType<typeof resetForm>;
+  | ReturnType<typeof resetForm>
+  | ReturnType<typeof setGender>;
 
 interface AuthState {
   form: {
@@ -32,6 +36,7 @@ interface AuthState {
     password: string;
     name: string;
     passwordConfirm: string;
+    gender: 'f' | 'm' | '';
   };
   mode: 'login' | 'register';
   errorMessage: string;
@@ -44,6 +49,7 @@ const initialState: AuthState = {
     name: '',
     password: '',
     passwordConfirm: '',
+    gender: '',
   },
   mode: 'login',
   errorMessage: '',
@@ -66,6 +72,7 @@ const auth = createReducer<AuthState, AuthAction>(initialState, {
       name: '',
       password: '',
       passwordConfirm: '',
+      gender: '',
     },
     errorMessage: '',
     valid: false,
@@ -85,10 +92,18 @@ const auth = createReducer<AuthState, AuthAction>(initialState, {
       name: '',
       password: '',
       passwordConfirm: '',
+      gender: '',
     },
     mode: 'login',
     errorMessage: '',
     valid: false,
+  }),
+  [SET_GENDER]: (state, { payload: gender }) => ({
+    ...state,
+    form: {
+      ...state.form,
+      gender,
+    },
   }),
 });
 
