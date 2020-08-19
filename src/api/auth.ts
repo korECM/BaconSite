@@ -57,3 +57,15 @@ export async function register(data: RegisterInterface) {
   );
   return response.data;
 }
+
+export interface LoginInterface {
+  email: string;
+  password: string;
+}
+
+export async function login(data: LoginInterface) {
+  const response = await axios.post(apiLink() + `/auth/signIn`, data, {
+    withCredentials: true,
+  });
+  return response.data;
+}

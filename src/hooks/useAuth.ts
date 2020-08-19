@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules';
 import { useCallback } from 'react';
-import { changeInput, setMode, setErrorMessage, setValid, resetForm, setGender, registerThunk } from '../modules/auth';
-import { RegisterInterface } from '../api/auth';
+import { changeInput, setMode, setErrorMessage, setValid, resetForm, setGender, registerThunk, loginThunk } from '../modules/auth';
+import { RegisterInterface, LoginInterface } from '../api/auth';
 
 export default function useAuth() {
   const { form, mode, errorMessage, valid, loading, success } = useSelector((state: RootState) => state.auth);
@@ -25,6 +25,8 @@ export default function useAuth() {
   const setGenderDispatch = useCallback((gender: 'f' | 'm' | '') => dispatch(setGender(gender)), [dispatch]);
 
   const registerDispatch = useCallback((data: RegisterInterface) => dispatch(registerThunk(data)), [dispatch]);
+
+  const loginDispatch = useCallback((data: LoginInterface) => dispatch(loginThunk(data)), [dispatch]);
 
   const setValidDispatch = useCallback(
     (valid: boolean) => {
@@ -51,5 +53,6 @@ export default function useAuth() {
     setValidDispatch,
     setGenderDispatch,
     registerDispatch,
+    loginDispatch,
   };
 }

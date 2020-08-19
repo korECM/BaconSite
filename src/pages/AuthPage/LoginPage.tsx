@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
@@ -10,13 +10,12 @@ import kakaotalk from './kakaotalk.png';
 import gender from './gender.png';
 import { AiOutlineUser, AiOutlineLock, AiOutlineIdcard } from 'react-icons/ai';
 import useAuth from '../../hooks/useAuth';
-import DropBox from '../../components/common/DropBox';
 import useCheck from '../../hooks/useCheck';
 
 const AuthPageBlock = styled.div`
   padding: 0 5%;
 `;
-const AuthContainer = styled.div``;
+const AuthContainer = styled.form``;
 
 const Logo = styled.div`
   margin: 50px 0;
@@ -147,6 +146,7 @@ function LoginPage({ history }: RouteComponentProps) {
     setValidDispatch,
     setGenderDispatch,
     registerDispatch,
+    loginDispatch,
   } = useAuth();
 
   const { check, user } = useCheck();
@@ -213,17 +213,38 @@ function LoginPage({ history }: RouteComponentProps) {
     }
   }, [user, history]);
 
+  const onSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      console.log(loading);
+      if (!valid) return;
+      if (loading) return;
+      console.log('if 통과');
+      if (mode === 'login') {
+        loginDispatch({ email: form.email, password: form.password });
+      } else if (mode === 'register') {
+        registerDispatch({
+          email: form.email,
+          gender: form.gender,
+          name: form.name,
+          password: form.password,
+        });
+      }
+    },
+    [mode, valid, loginDispatch, registerDispatch, form, loading],
+  );
+
   return (
     <Container color="white">
       <Header category="modal" headerColor="white" />
       <AuthPageBlock>
         <Logo>로고 들어가는 자리</Logo>
-        <AuthContainer>
+        <AuthContainer onSubmit={onSubmit}>
           <AuthSelectBlock>
-            <button className={cx({ select: mode === 'login' })} onClick={() => setModeDispatch('login')}>
+            <button type="button" className={cx({ select: mode === 'login' })} onClick={() => setModeDispatch('login')}>
               로그인
             </button>
-            <button className={cx({ select: mode === 'register' })} onClick={() => setModeDispatch('register')}>
+            <button type="button" className={cx({ select: mode === 'register' })} onClick={() => setModeDispatch('register')}>
               회원가입
             </button>
           </AuthSelectBlock>
@@ -252,20 +273,12 @@ function LoginPage({ history }: RouteComponentProps) {
                 </StyledInputWrapper>
                 <GenderWrapper>
                   <img src={gender} />
-                  <button className={cx({ selected: form.gender === 'm' })} onClick={() => setGenderDispatch('m')}>
+                  <button type="button" className={cx({ selected: form.gender === 'm' })} onClick={() => setGenderDispatch('m')}>
                     남자
                   </button>
-                  <button className={cx({ selected: form.gender === 'f' })} onClick={() => setGenderDispatch('f')}>
+                  <button type="button" className={cx({ selected: form.gender === 'f' })} onClick={() => setGenderDispatch('f')}>
                     여자
                   </button>
-                  {/* <DropBox */}
-                  {/* //   fullWidth
-                  //   dataSet={[
-                  //     { label: '여성', value: 'f' },
-                  //     { label: '남성', value: 'm' },
-                  //   ]}
-                  //   onChange={(data: string) => {}}
-                  // /> */}
                 </GenderWrapper>
               </>
             )}
@@ -273,8 +286,8 @@ function LoginPage({ history }: RouteComponentProps) {
           <ErrorMessage>{errorMessage}</ErrorMessage>
           {mode === 'login' && (
             <>
-              <Button theme="red" fullWidth middle disabled={!valid} onClick={() => alert('Asdfasdf')}>
-                로그인
+              <Button theme="red" fullWidth middle disabled={!valid}>
+                {loading ? '로딩중' : '로그인'}
               </Button>
               <a
                 href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${redirectionURL}&response_type=code`}
@@ -287,21 +300,8 @@ function LoginPage({ history }: RouteComponentProps) {
             </>
           )}
           {mode === 'register' && (
-            <Button
-              theme="red"
-              fullWidth
-              middle
-              disabled={!valid}
-              onClick={() =>
-                registerDispatch({
-                  email: form.email,
-                  gender: form.gender,
-                  name: form.name,
-                  password: form.password,
-                })
-              }
-            >
-              회원가입
+            <Button theme="red" fullWidth middle disabled={!valid}>
+              {loading ? '로딩중' : '회원가입'}
             </Button>
           )}
         </AuthContainer>

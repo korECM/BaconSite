@@ -2,7 +2,7 @@ import { createAction, createReducer, createAsyncAction } from 'typesafe-actions
 import { AxiosError } from 'axios';
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
-import { register } from '../api/auth';
+import { register, login } from '../api/auth';
 
 const CHANGE_INPUT = 'auth/CHANGE_INPUT' as const;
 
@@ -20,6 +20,10 @@ const REGISTER = 'auth/REGISTER' as const;
 const REGISTER_SUCCESS = 'auth/REGISTER_SUCCESS' as const;
 const REGISTER_ERROR = 'auth/REGISTER_ERROR' as const;
 
+const LOGIN = 'auth/LOGIN' as const;
+const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS' as const;
+const LOGIN_ERROR = 'auth/LOGIN_ERROR' as const;
+
 export const changeInput = createAction(CHANGE_INPUT)<{ target: string; value: string }>();
 export const setMode = createAction(SET_MODE)<'login' | 'register'>();
 export const setErrorMessage = createAction(SET_ERROR_MESSAGE)<string>();
@@ -28,8 +32,10 @@ export const resetForm = createAction(RESET_FORM)();
 export const setGender = createAction(SET_GENDER)<'f' | 'm' | ''>();
 
 export const registerAsync = createAsyncAction(REGISTER, REGISTER_SUCCESS, REGISTER_ERROR)<void, void, AxiosError>();
+export const loginAsync = createAsyncAction(LOGIN, LOGIN_SUCCESS, LOGIN_ERROR)<void, void, AxiosError>();
 
 export const registerThunk = createAsyncThunk(registerAsync, register);
+export const loginThunk = createAsyncThunk(loginAsync, login);
 
 type AuthAction =
   | ReturnType<typeof changeInput>
@@ -40,6 +46,9 @@ type AuthAction =
   | ReturnType<typeof registerAsync.request>
   | ReturnType<typeof registerAsync.success>
   | ReturnType<typeof registerAsync.failure>
+  | ReturnType<typeof loginAsync.request>
+  | ReturnType<typeof loginAsync.success>
+  | ReturnType<typeof loginAsync.failure>
   | ReturnType<typeof setGender>;
 
 interface AuthState {
@@ -138,6 +147,22 @@ const auth = createReducer<AuthState, AuthAction>(initialState, {
   [REGISTER_ERROR]: (state, { payload: error }) => ({
     ...state,
     errorMessage: error.response?.data || '회원가입 도중 문제가 생겼습니다',
+    loading: false,
+    success: false,
+  }),
+  [LOGIN]: (state) => ({
+    ...state,
+    loading: true,
+    success: false,
+  }),
+  [LOGIN_SUCCESS]: (state) => ({
+    ...state,
+    loading: false,
+    success: true,
+  }),
+  [LOGIN_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    errorMessage: error.response?.status === 400 ? '가입되지 않은 이메일이거나, 잘못된 비밀번호입니다.' : error.response?.data || '로그인 중 문제가 생겼습니다',
     loading: false,
     success: false,
   }),
