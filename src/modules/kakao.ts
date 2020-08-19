@@ -1,7 +1,7 @@
 import { createAction, createReducer, createAsyncAction } from 'typesafe-actions';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import createAsyncThunk from '../lib/createAsyncThunk';
-import { getKakaoCallback, KakaoInterface, setName } from '../api/auth';
+import { getKakaoCallback, KakaoInterface, setName, KakaoNameInterface } from '../api/auth';
 import { AxiosError } from 'axios';
 
 const KAKAO = 'kakao/KAKAO' as const;
@@ -14,9 +14,20 @@ const KAKAO_SET_NAME_ERROR = 'kakao/KAKAO_SET_NAME_ERROR' as const;
 
 const ON_CHANGE_INPUT = 'kakao/ON_CHANGE_INPUT' as const;
 
-export const onChange = createAction(ON_CHANGE_INPUT)<string>();
+const SET_GENDER = 'auth/SET_GENDER' as const;
 
-export const kakaoSetNameAsync = createAsyncAction(KAKAO_SET_NAME, KAKAO_SET_NAME_SUCCESS, KAKAO_SET_NAME_ERROR)<void, void, AxiosError>();
+const SET_VALID = 'kakao/SET_VALID' as const;
+
+const SET_ERROR_MESSAGE = 'kakao/SET_ERROR_MESSAGE' as const;
+
+export const onChange = createAction(ON_CHANGE_INPUT)<string>();
+export const setGender = createAction(SET_GENDER)<'f' | 'm' | ''>();
+
+export const setValid = createAction(SET_VALID)<boolean>();
+
+export const setErrorMessage = createAction(SET_ERROR_MESSAGE)<string>();
+
+export const kakaoSetNameAsync = createAsyncAction(KAKAO_SET_NAME, KAKAO_SET_NAME_SUCCESS, KAKAO_SET_NAME_ERROR)<void, KakaoNameInterface, AxiosError>();
 export const kakaoAsync = createAsyncAction(KAKAO, KAKAO_SUCCESS, KAKAO_ERROR)<void, KakaoInterface, AxiosError>();
 
 export const kakaoThunk = createAsyncThunk(kakaoAsync, getKakaoCallback);
@@ -29,12 +40,17 @@ type KakaoAction =
   | ReturnType<typeof kakaoSetNameAsync.request>
   | ReturnType<typeof kakaoSetNameAsync.success>
   | ReturnType<typeof kakaoSetNameAsync.failure>
+  | ReturnType<typeof setGender>
+  | ReturnType<typeof setValid>
+  | ReturnType<typeof setErrorMessage>
   | ReturnType<typeof onChange>;
 
 interface KakaoState {
   kakao: AsyncState<KakaoInterface, number>;
-  kakaoName: AsyncState<null, number>;
+  kakaoName: AsyncState<KakaoNameInterface, string>;
   name: string;
+  gender: 'm' | 'f' | '';
+  valid: boolean;
 }
 
 const initialState: KakaoState = {
@@ -44,6 +60,8 @@ const initialState: KakaoState = {
   }),
   kakaoName: asyncState.initial(),
   name: '',
+  gender: '',
+  valid: false,
 };
 
 const kakao = createReducer<KakaoState, KakaoAction>(initialState, {
@@ -67,13 +85,28 @@ const kakao = createReducer<KakaoState, KakaoAction>(initialState, {
     ...state,
     kakaoName: asyncState.load(),
   }),
-  [KAKAO_SET_NAME_SUCCESS]: (state) => ({
+  [KAKAO_SET_NAME_SUCCESS]: (state, { payload }) => ({
     ...state,
-    kakaoName: asyncState.success(null),
+    kakaoName: asyncState.success(payload),
   }),
   [KAKAO_SET_NAME_ERROR]: (state, { payload: error }) => ({
     ...state,
-    kakaoName: asyncState.error(error.response?.status || 404),
+    kakaoName: asyncState.error(error.response?.data),
+  }),
+  [SET_GENDER]: (state, { payload: gender }) => ({
+    ...state,
+    gender,
+  }),
+  [SET_VALID]: (state, { payload: valid }) => ({
+    ...state,
+    valid,
+  }),
+  [SET_ERROR_MESSAGE]: (state, { payload: errorMessage }) => ({
+    ...state,
+    kakaoName: {
+      ...state.kakaoName,
+      error: errorMessage,
+    },
   }),
 });
 

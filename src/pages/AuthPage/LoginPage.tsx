@@ -45,25 +45,6 @@ const InputBlock = styled.div`
   margin-bottom: 40px;
 `;
 
-const StyledInputWrapper = styled.div`
-  border-bottom: 1px solid black;
-  display: flex;
-  align-items: center;
-  padding-bottom: 5px;
-  & + & {
-    margin-top: 15px;
-  }
-`;
-
-const StyledInputTemp = styled.input`
-  border: none;
-  outline: none;
-  background-color: transparent;
-  flex: 1;
-  font-size: 14px;
-  padding: 5px 12.5px;
-`;
-
 const GenderWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -109,7 +90,7 @@ const FooterText = styled.a`
 const ErrorMessage = styled.div`
   color: ${palette.mainRed};
   text-align: center;
-  font-size: 15px;
+  font-size: 12.5px;
   height: 16px;
   font-weight: lighter;
   margin-bottom: 20px;

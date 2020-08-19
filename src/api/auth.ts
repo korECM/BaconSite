@@ -12,6 +12,11 @@ export interface UserInterface {
   email: string;
 }
 
+export interface KakaoNameInterface {
+  user: any | null;
+  error: string | null;
+}
+
 export async function getKakaoCallback(code: string) {
   const response = await axios.get<KakaoInterface>(apiLink() + `/auth/signIn/kakao/callback?code=${code}`, {
     withCredentials: true,
@@ -19,12 +24,13 @@ export async function getKakaoCallback(code: string) {
   return response.data;
 }
 
-export async function setName(id: string, name: string) {
-  const response = await axios.post(
+export async function setName(id: string, name: string, gender: string) {
+  const response = await axios.post<KakaoNameInterface>(
     apiLink() + `/auth/kakao/name`,
     {
       id,
       name,
+      gender,
     },
     {
       withCredentials: true,
