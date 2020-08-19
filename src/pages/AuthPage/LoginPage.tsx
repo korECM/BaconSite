@@ -11,6 +11,7 @@ import gender from './gender.png';
 import { AiOutlineUser, AiOutlineLock, AiOutlineIdcard } from 'react-icons/ai';
 import useAuth from '../../hooks/useAuth';
 import useCheck from '../../hooks/useCheck';
+import StyledInput from '../../components/common/StyledInput';
 
 const AuthPageBlock = styled.div`
   padding: 0 5%;
@@ -54,7 +55,7 @@ const StyledInputWrapper = styled.div`
   }
 `;
 
-const StyledInput = styled.input`
+const StyledInputTemp = styled.input`
   border: none;
   outline: none;
   background-color: transparent;
@@ -249,28 +250,23 @@ function LoginPage({ history }: RouteComponentProps) {
             </button>
           </AuthSelectBlock>
           <InputBlock>
-            <StyledInputWrapper>
-              <AiOutlineUser />
-              <StyledInput placeholder="이메일" type="email" onChange={changeInputDispatch} name="email" value={form.email} />
-            </StyledInputWrapper>
+            <StyledInput name="email" type="email" placeholder="이메일" onChange={changeInputDispatch} value={form.email} icon={<AiOutlineUser />} />
             {mode === 'register' && (
-              <StyledInputWrapper>
-                <AiOutlineIdcard />
-                <StyledInput placeholder="닉네임" onChange={changeInputDispatch} name="name" value={form.name} />
-              </StyledInputWrapper>
+              <StyledInput name="name" type="text" placeholder="닉네임" onChange={changeInputDispatch} value={form.name} icon={<AiOutlineIdcard />} />
             )}
-            <StyledInputWrapper>
-              <AiOutlineLock />
-              <StyledInput placeholder="비밀번호" type="password" onChange={changeInputDispatch} name="password" value={form.password} />
-            </StyledInputWrapper>
+            <StyledInput name="password" type="password" placeholder="비밀번호" onChange={changeInputDispatch} value={form.password} icon={<AiOutlineLock />} />
             {mode === 'login' ? (
               <FooterText>비밀번호 찾기</FooterText>
             ) : (
               <>
-                <StyledInputWrapper>
-                  <AiOutlineLock />
-                  <StyledInput placeholder="비밀번호 확인" type="password" onChange={changeInputDispatch} name="passwordConfirm" value={form.passwordConfirm} />
-                </StyledInputWrapper>
+                <StyledInput
+                  name="passwordConfirm"
+                  type="password"
+                  placeholder="비밀번호 확인"
+                  onChange={changeInputDispatch}
+                  value={form.passwordConfirm}
+                  icon={<AiOutlineLock />}
+                />
                 <GenderWrapper>
                   <img src={gender} alt="gender 이미지" />
                   <button type="button" className={cx({ selected: form.gender === 'm' })} onClick={() => setGenderDispatch('m')}>
