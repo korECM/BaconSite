@@ -289,14 +289,14 @@ function LoginPage({ history }: RouteComponentProps) {
               <Button theme="red" fullWidth middle disabled={!valid}>
                 {loading ? '로딩중' : '로그인'}
               </Button>
-              <a
-                href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${redirectionURL}&response_type=code`}
+              <KakaoLogin
+                onClick={() => {
+                  window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${redirectionURL}&response_type=code`;
+                }}
               >
-                <KakaoLogin>
-                  <img src={kakaotalk} />
-                  <span>카카오톡 계정으로 로그인</span>
-                </KakaoLogin>
-              </a>
+                <img src={kakaotalk} />
+                <span>카카오톡 계정으로 로그인</span>
+              </KakaoLogin>
             </>
           )}
           {mode === 'register' && (
