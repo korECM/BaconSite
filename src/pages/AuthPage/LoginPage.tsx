@@ -272,7 +272,7 @@ function LoginPage({ history }: RouteComponentProps) {
                   <StyledInput placeholder="비밀번호 확인" type="password" onChange={changeInputDispatch} name="passwordConfirm" value={form.passwordConfirm} />
                 </StyledInputWrapper>
                 <GenderWrapper>
-                  <img src={gender} />
+                  <img src={gender} alt="gender 이미지" />
                   <button type="button" className={cx({ selected: form.gender === 'm' })} onClick={() => setGenderDispatch('m')}>
                     남자
                   </button>
