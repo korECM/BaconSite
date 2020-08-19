@@ -366,12 +366,14 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           <>
             <KakaoMap latitude={mapAddress.data.y} longitude={mapAddress.data.x} />
             <ButtonContainer>
-              <ButtonWithNoMargin theme="border" onClick={() => (window.location.href = `kakaomap://look?p=${mapAddress.data.y},${mapAddress.data.x}`)}>
+              <ButtonWithNoMargin theme="border" onClick={() => (window.location.href = `kakaomap://look?p=${mapAddress.data?.y},${mapAddress.data?.x}`)}>
                 카카오 맵
               </ButtonWithNoMargin>
               <ButtonWithNoMargin
                 theme="border"
-                onClick={() => (window.location.href = `nmap://place?lat=${mapAddress.data.y}&lng=${mapAddress.data.x}&name=${shop.data?.name}&appname=bacon`)}
+                onClick={() =>
+                  (window.location.href = `nmap://place?lat=${mapAddress.data?.y}&lng=${mapAddress.data?.x}&name=${shop.data?.name}&appname=bacon`)
+                }
               >
                 네이버 맵
               </ButtonWithNoMargin>
