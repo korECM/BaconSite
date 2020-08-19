@@ -99,7 +99,7 @@ const GenderWrapper = styled.div`
 const FooterText = styled.a`
   color: ${palette.middleGray};
   text-decoration: underline;
-  font-size: 12px;
+  font-size: 10px;
   margin-top: 12.5px;
   display: block;
   float: right;
@@ -111,6 +111,7 @@ const ErrorMessage = styled.div`
   font-size: 15px;
   height: 16px;
   font-weight: lighter;
+  margin-bottom: 20px;
 `;
 
 const KakaoLogin = styled.button`
@@ -149,10 +150,36 @@ function LoginPage({ history }: RouteComponentProps) {
       if (form.email.length && form.password.length) setValidDispatch(true);
       else setValidDispatch(false);
     } else if (mode === 'register') {
-      if (form.email.length && form.password.length) setValidDispatch(true);
-      else setValidDispatch(false);
+      let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+      if (form.email.length && (emailRegex.test(form.email) === false || form.email.length > 50)) {
+        setValidDispatch(false);
+        setErrorMessageDispatch('유효한 이메일 형식이 아닙니다');
+        return;
+      }
+      if (form.name.length && (form.name.length < 2 || form.name.length > 10)) {
+        setValidDispatch(false);
+        setErrorMessageDispatch('닉네임은 2글자 이상, 10글자 이하로 이루어져야 합니다');
+        return;
+      }
+      if (form.password.length && form.password.length > 20) {
+        setValidDispatch(false);
+        setErrorMessageDispatch('비밀번호는 20글자 이하로 이루어져야 합니다');
+        return;
+      }
+      if (form.password.length && form.passwordConfirm.length && form.password !== form.passwordConfirm) {
+        setValidDispatch(false);
+        setErrorMessageDispatch('비밀번호와 비밀번호 확인이 일치하지 않습니다');
+        return;
+      }
+      if (form.gender === '') {
+        setValidDispatch(false);
+        setErrorMessageDispatch('');
+        return;
+      }
+      setValidDispatch(true);
+      setErrorMessageDispatch('');
     }
-  }, [form, mode, setValidDispatch]);
+  }, [form, mode, setValidDispatch, setErrorMessageDispatch]);
 
   useEffect(() => {
     return () => {
@@ -234,7 +261,7 @@ function LoginPage({ history }: RouteComponentProps) {
             </>
           )}
           {mode === 'register' && (
-            <Button theme="red" fullWidth middle>
+            <Button theme="red" fullWidth middle disabled={!valid}>
               회원가입
             </Button>
           )}
