@@ -111,7 +111,7 @@ const KakaoLogin = styled.button`
   }
 `;
 
-const redirectionURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/auth/kakao/callback' : 'https://api.caufooding.com/auth/kakao/callback';
+const redirectionURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/auth/kakao/callback' : 'https://caufooding.com/auth/kakao/callback';
 
 function LoginPage({ history }: RouteComponentProps) {
   const {
