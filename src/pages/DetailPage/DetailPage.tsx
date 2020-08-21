@@ -217,6 +217,26 @@ const Comment = styled(RoundContainer)`
   }
 `;
 
+const getScore = (score: number): string => {
+  if (score >= 4.25) {
+    return 'A+';
+  } else if (score >= 3.75) {
+    return 'A';
+  } else if (score >= 3.25) {
+    return 'B+';
+  } else if (score >= 2.75) {
+    return 'B';
+  } else if (score >= 2.25) {
+    return 'C+';
+  } else if (score >= 1.75) {
+    return 'C';
+  } else if (score >= 1.25) {
+    return 'D+';
+  } else {
+    return 'D';
+  }
+};
+
 interface DetailPageProps extends RouteComponentProps {}
 
 function DetailPage({ match, history, location }: DetailPageProps) {
@@ -422,7 +442,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           <Flag
             titleColor={palette.white}
             descColor={palette.white}
-            titleText={'A+'}
+            titleText={getScore(shop.data.scoreAverage)}
             descText={shop.data.scoreAverage ? `${shop.data.scoreAverage.toPrecision(3)}학점` : ''}
             flagColor={palette.mainRed}
           />
