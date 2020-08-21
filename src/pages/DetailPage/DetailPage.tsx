@@ -533,7 +533,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <p>대표 메뉴</p>
           </div>
           {shop.data.menus.map((menu) => (
-            <div className="menu">
+            <div className="menu" key={menu._id}>
               <p className="title">{menu.title}</p>
               <p className="horizontal" />
               <p className="price">{menu.price}원</p>
