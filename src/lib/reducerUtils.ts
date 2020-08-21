@@ -9,8 +9,8 @@ export type AsyncState<T, E = any> = {
 
 export const asyncState = {
   // 다음 코드는 화살표 함수에 Generic 을 설정 한 것입니다.
-  initial: <T, E = any>(initialData?: T): AsyncState<T, E> => ({
-    loading: false,
+  initial: <T, E = any>(initialData?: T, loading: boolean = false): AsyncState<T, E> => ({
+    loading,
     data: initialData || null,
     error: null,
   }),
