@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import classNames from 'classnames/bind';
 import styled from 'styled-components';
 import useShops from '../../hooks/useShops';
 import palette, { hexToRGB } from '../../styles/palette';

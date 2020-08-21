@@ -362,7 +362,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       console.error('LocalStorage 사용 불가');
     }
     history.push('/auth/login');
-  }, [history]);
+  }, [history, match]);
 
   useEffect(() => {
     return () => {

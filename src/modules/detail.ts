@@ -1,6 +1,6 @@
 import { createAction, createReducer, createAsyncAction } from 'typesafe-actions';
 import { AxiosError } from 'axios';
-import { ShopInterface, getShop, Location, ShopCategory, Keyword } from '../api/getShop';
+import { ShopInterface, getShop, Location, ShopCategory } from '../api/getShop';
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { ReviewInterface, getReview } from '../api/getReview';

@@ -1,7 +1,6 @@
-import { createAction, createReducer, createAsyncAction } from 'typesafe-actions';
+import { createReducer, createAsyncAction } from 'typesafe-actions';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import createAsyncThunk from '../lib/createAsyncThunk';
-import { getKakaoCallback, KakaoInterface, setName } from '../api/auth';
 import { AxiosError } from 'axios';
 import { ShopsInterface, getShops } from '../api/getShops';
 
