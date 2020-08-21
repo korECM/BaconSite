@@ -4,7 +4,7 @@ import { ShopInterface, getShop, Location, ShopCategory, Keyword } from '../api/
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { ReviewInterface, getReview } from '../api/getReview';
-import { ImageUploadResponseInterface, imageUpload } from '../api/uploadImage';
+import { ImageUploadResponseInterface, shopImageUpload } from '../api/uploadImage';
 import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
 
@@ -71,28 +71,21 @@ type DetailAction =
 
 export const getShopThunk = createAsyncThunk(getShopAsync, getShop);
 export const getReviewThunk = createAsyncThunk(getReviewAsync, getReview);
-export const postImageThunk = createAsyncThunk(postImagesAsync, imageUpload);
+export const postImageThunk = createAsyncThunk(postImagesAsync, shopImageUpload);
 export const likeShopThunk = createAsyncThunk(likeShopAsync, likeShopAPI);
 export const unlikeShopThunk = createAsyncThunk(unlikeShopAsync, unlikeShopAPI);
 export const getLocationThunk = createAsyncThunk(getLocationAsync, getLocation);
 
-export interface ShopUIInterface {
-  name: string;
-  location: string;
-  latitude: number;
-  longitude: number;
-  address: string;
-  contact: string;
-  open: string;
-  closed: string;
-  category: string;
-  keyword: Keyword;
-  image: string[];
-  scoreAverage: number;
-  reviewCount: number;
-  likerCount: number;
-  didLike: boolean;
-}
+type Modify<T, R> = Omit<T, keyof R> & R;
+
+export interface ShopUIInterface
+  extends Modify<
+    ShopInterface,
+    {
+      location: string;
+      category: string;
+    }
+  > {}
 
 type DetailState = {
   shop: AsyncState<ShopUIInterface, number>;
@@ -104,6 +97,7 @@ type DetailState = {
 
 const initialState: DetailState = {
   shop: asyncState.initial({
+    _id: '',
     name: '',
     location: '',
     latitude: 0,
@@ -113,7 +107,9 @@ const initialState: DetailState = {
     category: '',
     open: '',
     closed: '',
-    image: [],
+    shopImage: [],
+    menuImage: [],
+    menus: [],
     didLike: false,
     likerCount: 0,
     reviewCount: 0,
@@ -126,6 +122,7 @@ const initialState: DetailState = {
       riceAppointment: 0,
       spicy: 0,
     },
+    registerDate: '',
   }),
   reviews: asyncState.initial(new Array<ReviewInterface>()),
   images: asyncState.initial(),

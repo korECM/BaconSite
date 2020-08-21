@@ -295,7 +295,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         <Header category="modal" headerColor="white" />
         <ShopTitle>{shop.data.name}</ShopTitle>
         <ShopImageContainer>
-          <ShopImage imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
+          <ShopImage
+            imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
+          />
         </ShopImageContainer>
       </Container>
     );
@@ -306,7 +308,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       <Header category="modal" headerColor="white" />
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
-        <ShopImage imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}>
+        <ShopImage
+          imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
+        >
           <Flag
             titleColor={palette.white}
             descColor={palette.white}

@@ -19,8 +19,10 @@ export enum Location {
 }
 
 export interface ShopInterface {
-  image: string[];
   _id: string;
+  shopImage: Image[];
+  menuImage: Image[];
+  menus: Menu[];
   name: string;
   contact: string;
   address: string;
@@ -36,6 +38,17 @@ export interface ShopInterface {
   reviewCount: number;
   likerCount: number;
   didLike: boolean;
+}
+
+export interface Menu {
+  _id: string;
+  title: string;
+  price: number;
+}
+
+export interface Image {
+  _id: string;
+  imageLink: string;
 }
 
 export interface Keyword {

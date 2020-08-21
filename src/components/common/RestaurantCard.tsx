@@ -233,7 +233,9 @@ function RestaurantCard({ match, history, location }: RestaurantCardProps) {
         <Header category="modal" headerColor="white" />
         <ShopTitle>{shop.data.name}</ShopTitle>
         <ShopImageContainer>
-          <ShopImage imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
+          <ShopImage
+            imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
+          />
         </ShopImageContainer>
       </Container>
     );
@@ -252,7 +254,7 @@ function RestaurantCard({ match, history, location }: RestaurantCardProps) {
       <FullContainer>
         <ShopImageContainer>
           <ShopImage
-            imageLink={shop.data.image.length > 0 ? shop.data.image[0] : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
+            imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
           ></ShopImage>
         </ShopImageContainer>
         {/* <ShopTitle>{shop.data.name}</ShopTitle> */}
