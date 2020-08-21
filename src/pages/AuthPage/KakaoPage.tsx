@@ -13,8 +13,6 @@ import { AiOutlineIdcard } from 'react-icons/ai';
 import gender from './gender.png';
 import Button from '../../components/common/Button';
 
-const KakaoPageBlock = styled.div``;
-
 const InputBlock = styled.div`
   padding: 0 5%;
 

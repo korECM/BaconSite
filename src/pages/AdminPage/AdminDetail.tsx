@@ -6,8 +6,6 @@ import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import palette from '../../styles/palette';
 
-const AdminDetailBlock = styled.div``;
-
 const ShopTitle = styled.h1`
   font-size: 31px;
   font-weight: 900;
@@ -85,20 +83,7 @@ const Comment = styled.div`
 function AdminDetail({ match }: RouteComponentProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const {
-    onShopRequest,
-    onReviewRequest,
-    onShopImageUploadRequest,
-    resetDataAction,
-    onLike,
-    onUnlike,
-    getLocation,
-    shop,
-    reviews,
-    shopImage,
-    menuImage,
-    mapAddress,
-  } = useDetail(shopId);
+  const { onShopRequest, onReviewRequest, shop, reviews } = useDetail(shopId);
 
   useEffect(() => {
     onShopRequest();

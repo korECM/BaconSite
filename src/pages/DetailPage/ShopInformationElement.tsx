@@ -5,7 +5,8 @@ import { useSpring, animated } from 'react-spring';
 const ShopInformationBlock = styled(animated.div)`
   display: flex;
   margin: 20px 0;
-  a {
+  a,
+  span {
     margin-left: 10px;
   }
 `;

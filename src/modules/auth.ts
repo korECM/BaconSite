@@ -1,7 +1,6 @@
 import { createAction, createReducer, createAsyncAction } from 'typesafe-actions';
 import { AxiosError } from 'axios';
 import createAsyncThunk from '../lib/createAsyncThunk';
-import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { register, login } from '../api/auth';
 
 const CHANGE_INPUT = 'auth/CHANGE_INPUT' as const;
