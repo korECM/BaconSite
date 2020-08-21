@@ -124,7 +124,7 @@ const ReportBlock = styled.div`
   padding: 20px 10px;
   margin: 30px 0;
   color: ${palette.darkGray};
-  font-size: 15px;
+  font-size: 12.5px;
   display: flex;
   align-items: center;
 
