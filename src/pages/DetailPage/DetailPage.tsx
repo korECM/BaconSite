@@ -119,8 +119,8 @@ const KakaoMapBlock = styled.div`
 `;
 
 const ReportBlock = styled.div`
-  border-top: 1px solid ${palette.middleGray};
-  border-bottom: 1px solid ${palette.middleGray};
+  border-top: 1px solid ${hexToRGB(palette.middleGray, 0.5)};
+  border-bottom: 1px solid ${hexToRGB(palette.middleGray, 0.5)};
   padding: 20px 10px;
   margin: 30px 0;
   color: ${palette.darkGray};
