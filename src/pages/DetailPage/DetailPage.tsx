@@ -4,7 +4,7 @@ import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import useDetail from '../../hooks/useDetail';
-import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit } from 'react-icons/md';
+import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit, MdInfoOutline, MdKeyboardArrowRight } from 'react-icons/md';
 import { ClockLoader } from 'react-spinners';
 import RoundContainer from '../../components/common/RoundContainer';
 import palette from '../../styles/palette';
@@ -116,6 +116,26 @@ const KakaoMapBlock = styled.div`
   -webkit-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
   box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
+`;
+
+const ReportBlock = styled.div`
+  border-top: 1px solid ${palette.middleGray};
+  border-bottom: 1px solid ${palette.middleGray};
+  padding: 20px 10px;
+  margin: 30px 0;
+  color: ${palette.darkGray};
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+
+  p {
+    margin-left: 10px;
+  }
+
+  svg.right {
+    margin-left: auto;
+    font-size: 1.5rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -431,6 +451,11 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         )}
       </KakaoMapBlock>
       <ShopInformation shop={shop.data} />
+      <ReportBlock>
+        <MdInfoOutline />
+        <p>잘못된 정보가 있나요? 푸딩에게 알려주세요!</p>
+        <MdKeyboardArrowRight className="right" />
+      </ReportBlock>
       <Radar shop={shop.data} />
       <CommentContainer>
         {reviews.data &&
