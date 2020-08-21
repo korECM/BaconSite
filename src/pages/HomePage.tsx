@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
-import { Fade, Bounce } from 'react-awesome-reveal';
+import FullHeightFade from '../components/common/FullHeightFade';
 
 const ServiceTitle = styled.h1`
   font-size: 25px;
@@ -63,7 +63,7 @@ const Divider = styled.div`
 
 function HomePage() {
   return (
-    <Fade>
+    <FullHeightFade>
       <Container color="white">
         <Header category="main" headerColor="none" />
         <ServiceTitle>CAU Fooding</ServiceTitle>
@@ -88,7 +88,7 @@ function HomePage() {
           </Link>
         </ButtonBlock>
       </Container>
-    </Fade>
+    </FullHeightFade>
   );
 }
 

@@ -12,6 +12,7 @@ import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import FullHeightFade from '../../components/common/FullHeightFade';
 
 interface ShopImageProps {
   imageLink: string;
@@ -83,18 +84,18 @@ function YesNoPage() {
   // }
 
   return (
-    <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-      <Fade>
+    <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
+      <FullHeightFade>
         <Container color="red">
           <Header category="modal" headerColor="red" />
-          <Fade>
+          <FullHeightFade>
             <Bounce>
               <ImageContainer>
                 <Image imageLink={'https://ifh.cc/g/6onhGJ.png'} />
               </ImageContainer>
             </Bounce>
-          </Fade>
-          <Fade>
+          </FullHeightFade>
+          <FullHeightFade>
             <Bounce>
               <Link to="/yesno/flex">
                 <Button theme="white" big onClick={moveHref}>
@@ -102,8 +103,8 @@ function YesNoPage() {
                 </Button>
               </Link>
             </Bounce>
-          </Fade>
-          <Fade>
+          </FullHeightFade>
+          <FullHeightFade>
             <Bounce>
               <Link to="/yesno/flex">
                 <Button theme="white" big>
@@ -111,11 +112,11 @@ function YesNoPage() {
                 </Button>
               </Link>
             </Bounce>
-          </Fade>
+          </FullHeightFade>
 
           <ActionContainer></ActionContainer>
         </Container>
-      </Fade>
+      </FullHeightFade>
     </Animated>
   );
 
