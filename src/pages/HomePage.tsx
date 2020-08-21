@@ -87,6 +87,19 @@ function HomePage() {
             <TextBox>돌림판</TextBox>
           </Link>
         </ButtonBlock>
+        <Divider></Divider>
+        <ButtonBlock>
+          <Link to="/rouletteList">
+            <TextBox>돌림판</TextBox>
+            <TextBox>리스트 받기</TextBox>
+          </Link>
+        </ButtonBlock>
+        <ButtonBlock>
+          <Link to="/result">
+            <TextBox>필터링</TextBox>
+            <TextBox>결과</TextBox>
+          </Link>
+        </ButtonBlock>
       </Container>
     </FullHeightFade>
   );
