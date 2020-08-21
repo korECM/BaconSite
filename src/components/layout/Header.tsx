@@ -4,10 +4,11 @@ import { MdClear, MdKeyboardArrowLeft } from 'react-icons/md';
 import palette from '../../styles/palette';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
+import MypageButton from '../common/MypageButton';
 
 const HeaderBlock = styled.div`
   width: 100%;
-  height: 50px;
+  height: 60px;
 `;
 
 const HeaderContainer = styled.div`
@@ -15,12 +16,14 @@ const HeaderContainer = styled.div`
   height: 100%;
   ${(props: HeaderProps) =>
     css`
-      color: ${props.headerColor === 'red' ? palette.white : palette.mainRed};
+      if(props.headerColor !== 'none') {
+        color: ${props.headerColor === 'red' ? palette.white : palette.mainRed};
+      }
     `}
 
   img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
   }
 
   button {
@@ -38,9 +41,10 @@ const HeaderContainer = styled.div`
     margin-left: auto;
     padding-right: 0;
   }
+
 `;
 
-type HeaderColor = 'red' | 'white';
+type HeaderColor = 'red' | 'white' | 'none';
 type Category = 'main' | 'modal';
 
 interface HeaderProps extends RouteComponentProps {
@@ -79,7 +83,15 @@ function Header(props: HeaderProps) {
           <button>
             <img src="https://avatars3.githubusercontent.com/u/69138035?s=60&v=4" alt="logo" />
           </button>
-          {user ? <button onClick={onRightButtonClick}>my</button> : <button onClick={onRightButtonClick}>로그인</button>}
+          {user ? (
+            <button onClick={onRightButtonClick}>
+              <img src="https://ifh.cc/g/aVLW50.png" alt="mypage"/>
+            </button>
+          ) : (
+            <button onClick={onRightButtonClick}>
+              <img src="https://ifh.cc/g/eMtxxz.png" alt="login"/>
+            </button>
+          )}
         </HeaderContainer>
       ) : (
         <HeaderContainer {...props}>
