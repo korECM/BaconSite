@@ -9,6 +9,7 @@ import Header from './components/layout/Header';
 const DetailPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/DetailPage/DetailPageRouter'));
 const AdminRouter = React.lazy(() => import('./pages/AdminPage/AdminRouter'));
 const RouletteRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/RoulettePage/RoulettePageRouter'));
+const RouletteListRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/RoulettePage/RouletteListRouter'));
 const LoginPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/AuthPage/LoginPageRouter'));
 const YesNoPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/YesNoPage/YesNoPageRouter'));
 
@@ -31,6 +32,7 @@ function App() {
           <Route component={ResultPageRouter} path="/result" />
           <Route component={AdminRouter} path="/admin" />
           <Route component={RouletteRouter} path="/roulette" />
+          <Route component={RouletteListRouter} path="/rouletteList" />
         </Switch>
       </Suspense>
     </>
