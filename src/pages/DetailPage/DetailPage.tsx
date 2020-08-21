@@ -542,7 +542,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         </div>
         <div className="menuImages">
           {shop.data.menuImage.map((menu) => (
-            <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" />
+            <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" key={menu._id} />
           ))}
         </div>
       </MenuBlock>
