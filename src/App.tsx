@@ -6,11 +6,11 @@ import ResultPageRouter from './pages/ResultPage/ResultPageRouter';
 import Container from './components/layout/Container';
 import Header from './components/layout/Header';
 
-const DetailPageRouter = React.lazy(() => import('./pages/DetailPage/DetailPageRouter'));
+const DetailPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/DetailPage/DetailPageRouter'));
 const AdminRouter = React.lazy(() => import('./pages/AdminPage/AdminRouter'));
-const RouletteRouter = React.lazy(() => import('./pages/RoulettePage/RoulettePageRouter'));
-const LoginPageRouter = React.lazy(() => import('./pages/AuthPage/LoginPageRouter'));
-const YesNoPageRouter = React.lazy(() => import('./pages/YesNoPage/YesNoPageRouter'));
+const RouletteRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/RoulettePage/RoulettePageRouter'));
+const LoginPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/AuthPage/LoginPageRouter'));
+const YesNoPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/YesNoPage/YesNoPageRouter'));
 
 function App() {
   return (
