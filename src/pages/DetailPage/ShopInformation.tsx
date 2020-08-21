@@ -25,17 +25,17 @@ function ShopInformation({ shop }: ShopInformationProps) {
     {
       data: shop.address,
       icon: <MdLocationOn />,
-      tag: <a>{shop.address}</a>,
+      tag: <span>{shop.address}</span>,
     },
     {
       data: shop.category,
       icon: <MdRestaurantMenu />,
-      tag: <a>{shop.category}</a>,
+      tag: <span>{shop.category}</span>,
     },
     {
       data: shop.location,
       icon: <MdBusiness />,
-      tag: <a>{shop.location}</a>,
+      tag: <span>{shop.location}</span>,
     },
   ].filter((e) => e.data);
 
