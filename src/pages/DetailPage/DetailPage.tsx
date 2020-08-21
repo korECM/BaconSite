@@ -4,10 +4,10 @@ import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import useDetail from '../../hooks/useDetail';
-import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit, MdInfoOutline, MdKeyboardArrowRight } from 'react-icons/md';
+import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit, MdInfoOutline, MdKeyboardArrowRight, MdRestaurantMenu } from 'react-icons/md';
 import { ClockLoader } from 'react-spinners';
 import RoundContainer from '../../components/common/RoundContainer';
-import palette from '../../styles/palette';
+import palette, { hexToRGB } from '../../styles/palette';
 import Flag from '../../components/common/Flag';
 import Loader from '../../components/common/Loader';
 import ShopInformation from './ShopInformation';
@@ -135,6 +135,56 @@ const ReportBlock = styled.div`
   svg.right {
     margin-left: auto;
     font-size: 1.5rem;
+  }
+`;
+
+const MenuBlock = styled.div`
+  color: ${palette.middleGray};
+
+  padding-bottom: 30px;
+  margin: 30px 0;
+
+  border-bottom: 1px solid ${hexToRGB(palette.middleGray, 0.5)};
+
+  .menuHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    svg {
+      margin-right: 10px;
+    }
+  }
+
+  div.menus {
+    font-size: 14px;
+    .menu {
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      .title {
+        margin-left: 25px;
+      }
+      .horizontal {
+        flex: 1;
+        border-bottom: 1px solid ${hexToRGB(palette.middleGray, 0.3)};
+        margin: 0 15px;
+      }
+      .price {
+        margin-right: 15px;
+      }
+    }
+  }
+  .menuImages {
+    margin-top: 30px;
+    .menuImage {
+      width: 30%;
+      height: 30vw;
+      max-width: 200px;
+      max-height: 200px;
+    }
+    .menuImage + .menuImage {
+      margin-left: 10px;
+    }
   }
 `;
 
@@ -456,6 +506,26 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         <p>잘못된 정보가 있나요? 푸딩에게 알려주세요!</p>
         <MdKeyboardArrowRight className="right" />
       </ReportBlock>
+      <MenuBlock>
+        <div className="menus">
+          <div className="menuHeader">
+            <MdRestaurantMenu />
+            <p>대표 메뉴</p>
+          </div>
+          {shop.data.menus.map((menu) => (
+            <div className="menu">
+              <p className="title">{menu.title}</p>
+              <p className="horizontal" />
+              <p className="price">{menu.price}원</p>
+            </div>
+          ))}
+        </div>
+        <div className="menuImages">
+          {shop.data.menuImage.map((menu) => (
+            <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" />
+          ))}
+        </div>
+      </MenuBlock>
       <Radar shop={shop.data} />
       <CommentContainer>
         {reviews.data &&
