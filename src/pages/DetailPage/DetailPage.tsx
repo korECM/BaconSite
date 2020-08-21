@@ -536,7 +536,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <div className="menu" key={menu._id}>
               <p className="title">{menu.title}</p>
               <p className="horizontal" />
-              <p className="price">{menu.price}원</p>
+              <p className="price">{menu.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
             </div>
           ))}
         </div>
