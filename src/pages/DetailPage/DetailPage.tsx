@@ -152,15 +152,28 @@ interface DetailPageProps extends RouteComponentProps {}
 function DetailPage({ match, history, location }: DetailPageProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, getLocation, shop, reviews, images, mapAddress } = useDetail(
-    shopId,
-  );
+  const {
+    onShopRequest,
+    onReviewRequest,
+    onShopImageUploadRequest,
+    onMenuImageUploadRequest,
+    resetDataAction,
+    onLike,
+    onUnlike,
+    getLocation,
+    shop,
+    reviews,
+    shopImage,
+    menuImage,
+    mapAddress,
+  } = useDetail(shopId);
 
   const { user } = useCheck();
 
   const [likeOffset, setLikeOffset] = useState(0);
 
-  const fileRef = useRef<HTMLInputElement>(null);
+  const shopFileRef = useRef<HTMLInputElement>(null);
+  const menuFileRef = useRef<HTMLInputElement>(null);
 
   const [loginAlert, setLoginAlert] = useState(false);
 
@@ -175,28 +188,53 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     history.push(`comment/${(match.params as any).shopId}`);
   }, [history, match.params, user]);
 
-  const onImageUploadButtonClick = () => {
+  const onShopImageUploadButtonClick = () => {
     if (!user) {
       setLoginMessage('이미지를 올리려면 로그인을 해야합니다');
       setLoginAlert(true);
       return;
     }
-    fileRef.current?.click();
+    shopFileRef.current?.click();
   };
 
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = fileRef.current?.files;
+  const onMenuImageUploadButtonClick = () => {
+    if (!user) {
+      setLoginMessage('이미지를 올리려면 로그인을 해야합니다');
+      setLoginAlert(true);
+      return;
+    }
+    menuFileRef.current?.click();
+  };
+
+  const onShopFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = shopFileRef.current?.files;
     if (files?.length) {
       for (let index = 0; index < files.length; index++) {
         const file = files.item(index);
         if (file && file.size > 5 * 1024 * 1024) {
           alert('사진의 크기가 5MB보다 큽니다');
-          fileRef.current!.value = '';
+          shopFileRef.current!.value = '';
           return;
         }
       }
-      onImageUploadRequest(files!);
-      fileRef.current!.value = '';
+      onShopImageUploadRequest(files!);
+      shopFileRef.current!.value = '';
+    }
+  };
+
+  const onMenuFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = menuFileRef.current?.files;
+    if (files?.length) {
+      for (let index = 0; index < files.length; index++) {
+        const file = files.item(index);
+        if (file && file.size > 5 * 1024 * 1024) {
+          alert('사진의 크기가 5MB보다 큽니다');
+          menuFileRef.current!.value = '';
+          return;
+        }
+      }
+      onMenuImageUploadRequest(files!);
+      menuFileRef.current!.value = '';
     }
   };
 
@@ -332,10 +370,15 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <span>{shop.data.likerCount + likeOffset}</span>
           </ShopAction>
         )}
-        <ShopAction onClick={onImageUploadButtonClick}>
-          <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={fileRef} onChange={onFileChange} />
-          {images.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
-          <span>{images.loading ? '사진 올리는 중' : '사진 올리기'}</span>
+        <ShopAction onClick={onShopImageUploadButtonClick}>
+          <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={shopFileRef} onChange={onShopFileChange} />
+          {shopImage.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
+          <span>{shopImage.loading ? '사진 올리는 중' : '사진 올리기'}</span>
+        </ShopAction>
+        <ShopAction onClick={onMenuImageUploadButtonClick}>
+          <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={menuFileRef} onChange={onMenuFileChange} />
+          {menuImage.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
+          <span>{menuImage.loading ? '사진 올리는 중' : '메뉴판 올리기'}</span>
         </ShopAction>
         <ShopAction onClick={onWriteReviewButtonClick}>
           <MdEdit />

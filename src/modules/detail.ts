@@ -4,7 +4,7 @@ import { ShopInterface, getShop, Location, ShopCategory, Keyword } from '../api/
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { ReviewInterface, getReview } from '../api/getReview';
-import { ImageUploadResponseInterface, shopImageUpload } from '../api/uploadImage';
+import { ImageUploadResponseInterface, shopImageUpload, menuImageUpload } from '../api/uploadImage';
 import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
 
@@ -18,9 +18,13 @@ const GET_REVIEW = 'detail/GET_REVIEW' as const;
 const GET_REVIEW_SUCCESS = 'detail/GET_REVIEW_SUCCESS' as const;
 const GET_REVIEW_ERROR = 'detail/GET_REVIEW_ERROR' as const;
 
-const POST_IMAGES = 'detail/POST_IMAGES' as const;
-const POST_IMAGES_SUCCESS = 'detail/POST_IMAGES_SUCCESS' as const;
-const POST_IMAGES_ERROR = 'detail/POST_IMAGES_ERROR' as const;
+const POST_SHOP_IMAGES = 'detail/POST_SHOP_IMAGES' as const;
+const POST_SHOP_IMAGES_SUCCESS = 'detail/POST_SHOP_IMAGES_SUCCESS' as const;
+const POST_SHOP_IMAGES_ERROR = 'detail/POST_SHOP_IMAGES_ERROR' as const;
+
+const POST_MENU_IMAGES = 'detail/POST_MENU_IMAGES' as const;
+const POST_MENU_IMAGES_SUCCESS = 'detail/POST_MENU_IMAGES_SUCCESS' as const;
+const POST_MENU_IMAGES_ERROR = 'detail/POST_MENU_IMAGES_ERROR' as const;
 
 const LIKE_SHOP = 'detail/LIKE_SHOP' as const;
 const LIKE_SHOP_SUCCESS = 'detail/LIKE_SHOP_SUCCESS' as const;
@@ -40,7 +44,17 @@ export const getShopAsync = createAsyncAction(GET_SHOP_INFO, GET_SHOP_INFO_SUCCE
 
 export const getReviewAsync = createAsyncAction(GET_REVIEW, GET_REVIEW_SUCCESS, GET_REVIEW_ERROR)<void, ReviewInterface[], AxiosError>();
 
-export const postImagesAsync = createAsyncAction(POST_IMAGES, POST_IMAGES_SUCCESS, POST_IMAGES_ERROR)<void, ImageUploadResponseInterface, AxiosError>();
+export const postShopImagesAsync = createAsyncAction(POST_SHOP_IMAGES, POST_SHOP_IMAGES_SUCCESS, POST_SHOP_IMAGES_ERROR)<
+  void,
+  ImageUploadResponseInterface,
+  AxiosError
+>();
+
+export const postMenuImagesAsync = createAsyncAction(POST_MENU_IMAGES, POST_MENU_IMAGES_SUCCESS, POST_MENU_IMAGES_ERROR)<
+  void,
+  ImageUploadResponseInterface,
+  AxiosError
+>();
 
 export const likeShopAsync = createAsyncAction(LIKE_SHOP, LIKE_SHOP_SUCCESS, LIKE_SHOP_ERROR)<void, LikeInterface, AxiosError>();
 
@@ -56,9 +70,12 @@ type DetailAction =
   | ReturnType<typeof getReviewAsync.request>
   | ReturnType<typeof getReviewAsync.success>
   | ReturnType<typeof getReviewAsync.failure>
-  | ReturnType<typeof postImagesAsync.request>
-  | ReturnType<typeof postImagesAsync.success>
-  | ReturnType<typeof postImagesAsync.failure>
+  | ReturnType<typeof postShopImagesAsync.request>
+  | ReturnType<typeof postShopImagesAsync.success>
+  | ReturnType<typeof postShopImagesAsync.failure>
+  | ReturnType<typeof postMenuImagesAsync.request>
+  | ReturnType<typeof postMenuImagesAsync.success>
+  | ReturnType<typeof postMenuImagesAsync.failure>
   | ReturnType<typeof likeShopAsync.request>
   | ReturnType<typeof likeShopAsync.success>
   | ReturnType<typeof likeShopAsync.failure>
@@ -71,7 +88,8 @@ type DetailAction =
 
 export const getShopThunk = createAsyncThunk(getShopAsync, getShop);
 export const getReviewThunk = createAsyncThunk(getReviewAsync, getReview);
-export const postImageThunk = createAsyncThunk(postImagesAsync, shopImageUpload);
+export const postShopImageThunk = createAsyncThunk(postShopImagesAsync, shopImageUpload);
+export const postMenuImageThunk = createAsyncThunk(postMenuImagesAsync, menuImageUpload);
 export const likeShopThunk = createAsyncThunk(likeShopAsync, likeShopAPI);
 export const unlikeShopThunk = createAsyncThunk(unlikeShopAsync, unlikeShopAPI);
 export const getLocationThunk = createAsyncThunk(getLocationAsync, getLocation);
@@ -90,7 +108,8 @@ export interface ShopUIInterface
 type DetailState = {
   shop: AsyncState<ShopUIInterface, number>;
   reviews: AsyncState<ReviewInterface[], number>;
-  images: AsyncState<ImageUploadResponseInterface, number>;
+  shopImage: AsyncState<ImageUploadResponseInterface, number>;
+  menuImage: AsyncState<ImageUploadResponseInterface, number>;
   like: AsyncState<LikeInterface, number>;
   mapAddress: AsyncState<{ x: number; y: number }, number>;
 };
@@ -125,7 +144,8 @@ const initialState: DetailState = {
     registerDate: '',
   }),
   reviews: asyncState.initial(new Array<ReviewInterface>()),
-  images: asyncState.initial(),
+  shopImage: asyncState.initial(),
+  menuImage: asyncState.initial(),
   like: asyncState.initial(),
   mapAddress: asyncState.initial(),
 };
@@ -174,7 +194,7 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
       loading: true,
     },
     reviews: asyncState.initial(new Array<ReviewInterface>()),
-    images: asyncState.initial(),
+    shopImage: asyncState.initial(),
   }),
   [GET_SHOP_INFO]: (state) => ({
     ...state,
@@ -204,17 +224,29 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
     ...state,
     reviews: asyncState.error(error.response?.status || 404),
   }),
-  [POST_IMAGES]: (state) => ({
+  [POST_SHOP_IMAGES]: (state) => ({
     ...state,
-    images: asyncState.load(),
+    shopImage: asyncState.load(),
   }),
-  [POST_IMAGES_SUCCESS]: (state, { payload: locations }) => ({
+  [POST_SHOP_IMAGES_SUCCESS]: (state, { payload: locations }) => ({
     ...state,
-    images: asyncState.success(locations),
+    shopImage: asyncState.success(locations),
   }),
-  [POST_IMAGES_ERROR]: (state, { payload: error }) => ({
+  [POST_SHOP_IMAGES_ERROR]: (state, { payload: error }) => ({
     ...state,
-    images: asyncState.error(error.response?.status || 404),
+    shopImage: asyncState.error(error.response?.status || 404),
+  }),
+  [POST_MENU_IMAGES]: (state) => ({
+    ...state,
+    menuImage: asyncState.load(),
+  }),
+  [POST_MENU_IMAGES_SUCCESS]: (state, { payload: locations }) => ({
+    ...state,
+    menuImage: asyncState.success(locations),
+  }),
+  [POST_MENU_IMAGES_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    menuImage: asyncState.error(error.response?.status || 404),
   }),
   [LIKE_SHOP]: (state) => ({
     ...state,

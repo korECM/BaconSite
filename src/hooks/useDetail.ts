@@ -1,17 +1,27 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules';
 import { useCallback } from 'react';
-import { getShopThunk, getReviewThunk, postImageThunk, resetData, likeShopThunk, unlikeShopThunk, getLocationThunk } from '../modules/detail';
+import {
+  getShopThunk,
+  getReviewThunk,
+  postShopImageThunk,
+  resetData,
+  likeShopThunk,
+  unlikeShopThunk,
+  getLocationThunk,
+  postMenuImageThunk,
+} from '../modules/detail';
 
 export default function useDetail(shopId: string) {
-  const { shop, reviews, images, mapAddress } = useSelector((state: RootState) => state.detail);
+  const { shop, reviews, shopImage, menuImage, mapAddress } = useSelector((state: RootState) => state.detail);
   const dispatch = useDispatch();
 
   const onShopRequest = useCallback(() => dispatch(getShopThunk(shopId)), [shopId, dispatch]);
   const onReviewRequest = useCallback(() => dispatch(getReviewThunk(shopId)), [shopId, dispatch]);
   const resetDataAction = useCallback(() => dispatch(resetData()), [dispatch]);
 
-  const onImageUploadRequest = useCallback((files: FileList) => dispatch(postImageThunk(shopId, files)), [shopId, dispatch]);
+  const onShopImageUploadRequest = useCallback((files: FileList) => dispatch(postShopImageThunk(shopId, files)), [shopId, dispatch]);
+  const onMenuImageUploadRequest = useCallback((files: FileList) => dispatch(postMenuImageThunk(shopId, files)), [shopId, dispatch]);
 
   const onLike = useCallback(() => dispatch(likeShopThunk(shopId)), [dispatch, shopId]);
   const onUnlike = useCallback(() => dispatch(unlikeShopThunk(shopId)), [dispatch, shopId]);
@@ -21,11 +31,13 @@ export default function useDetail(shopId: string) {
   return {
     shop,
     reviews,
-    images,
+    shopImage,
+    menuImage,
     mapAddress,
     onShopRequest,
     onReviewRequest,
-    onImageUploadRequest,
+    onShopImageUploadRequest,
+    onMenuImageUploadRequest,
     resetDataAction,
     onLike,
     onUnlike,

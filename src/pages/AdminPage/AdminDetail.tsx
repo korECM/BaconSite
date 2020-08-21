@@ -85,9 +85,20 @@ const Comment = styled.div`
 function AdminDetail({ match }: RouteComponentProps) {
   const shopId: string = (match.params as any).shopId;
 
-  const { onShopRequest, onReviewRequest, onImageUploadRequest, resetDataAction, onLike, onUnlike, getLocation, shop, reviews, images, mapAddress } = useDetail(
-    shopId,
-  );
+  const {
+    onShopRequest,
+    onReviewRequest,
+    onShopImageUploadRequest,
+    resetDataAction,
+    onLike,
+    onUnlike,
+    getLocation,
+    shop,
+    reviews,
+    shopImage,
+    menuImage,
+    mapAddress,
+  } = useDetail(shopId);
 
   useEffect(() => {
     onShopRequest();

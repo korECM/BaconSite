@@ -5,7 +5,7 @@ export interface ImageUploadResponseInterface {
   locations: string[];
 }
 
-export async function imageUpload(shopId: string, files: FileList) {
+export async function shopImageUpload(shopId: string, files: FileList) {
   const formData = new FormData();
 
   for (let index = 0; index < files.length; index++) {
@@ -16,6 +16,28 @@ export async function imageUpload(shopId: string, files: FileList) {
   const response = await axios({
     method: 'post',
     url: apiLink() + '/shop/image/' + shopId,
+    data: formData,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+    },
+    withCredentials: true,
+  });
+  console.log(response.data);
+  return response.data;
+}
+
+export async function menuImageUpload(shopId: string, files: FileList) {
+  const formData = new FormData();
+
+  for (let index = 0; index < files.length; index++) {
+    const file = files.item(index);
+    if (file) formData.append('imgFile', file);
+  }
+
+  const response = await axios({
+    method: 'post',
+    url: apiLink() + '/shop/menuImage/' + shopId,
     data: formData,
     headers: {
       Accept: 'application/json',
