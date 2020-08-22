@@ -6,6 +6,7 @@ import Button from '../components/common/Button';
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
 import FullHeightFade from '../components/common/FullHeightFade';
+import titlelogo from './fooding_titlelogo.png';
 
 const TitleSlogan = styled.h1`
   font-size: 14px;
@@ -20,7 +21,7 @@ const TitleSlogan = styled.h1`
 const TitleLogo = styled.h1`
   width: flex;
 
-  img{
+  img {
     width: 100%;
   }
 `;
@@ -76,7 +77,9 @@ function HomePage() {
       <Container color="white">
         <Header category="main" headerColor="none" />
         <TitleSlogan>뭐 먹을지 고민될 땐?</TitleSlogan>
-        <TitleLogo><img src="https://ifh.cc/g/IuQdZS.png" alt="titleLogo"/></TitleLogo>
+        <TitleLogo>
+          <img src={titlelogo} alt="titlelogo" />
+        </TitleLogo>
         <Caregories>Caregories</Caregories>
         <Divider></Divider>
         <ButtonBlock>
