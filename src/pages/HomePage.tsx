@@ -35,16 +35,26 @@ const Caregories = styled.h1`
   color: black;
 `;
 
+const ButtonLine = styled.h1`
+  display: 100%;
+  font-family: 'Nanum Gothic';
+  font-weight: 200;
+  color: white;
+  padding-bottom: 3px;
+
+  vertical-align: center;
+`;
+
 const ButtonBlock = styled.button`
   outline: none;
   border: none;
 
   border-radius: 10px;
 
-  width: 70px;
-  height: 70px;
+  width: 27%;
+  height: 90px;
 
-  margin: 10px;
+  margin: 3%;
 
   background-color: ${palette.mainRed};
   color: ${palette.white};
@@ -82,37 +92,41 @@ function HomePage() {
         </TitleLogo>
         <Caregories>Caregories</Caregories>
         <Divider></Divider>
-        <ButtonBlock>
-          <Link to="/shop/5f26b992555be6865ede4e28">
-            <TextBox>테스트</TextBox>
-            <TextBox>가게</TextBox>
-          </Link>
-        </ButtonBlock>
-        <ButtonBlock>
-          <Link to="/yesno">
-            <TextBox>선택장애</TextBox>
-            <TextBox>Yes or No</TextBox>
-          </Link>
-        </ButtonBlock>
-        <ButtonBlock>
-          <Link to="/roulette">
-            <TextBox>돌려돌려</TextBox>
-            <TextBox>돌림판</TextBox>
-          </Link>
-        </ButtonBlock>
+        <ButtonLine>
+          <ButtonBlock>
+            <Link to="/shop/5f26b992555be6865ede4e28">
+              <TextBox>테스트</TextBox>
+              <TextBox>가게</TextBox>
+            </Link>
+          </ButtonBlock>
+          <ButtonBlock>
+            <Link to="/yesno">
+              <TextBox>선택장애</TextBox>
+              <TextBox>Yes or No</TextBox>
+            </Link>
+          </ButtonBlock>
+          <ButtonBlock>
+            <Link to="/roulette">
+              <TextBox>돌려돌려</TextBox>
+              <TextBox>돌림판</TextBox>
+            </Link>
+          </ButtonBlock>
+        </ButtonLine>
         <Divider></Divider>
-        <ButtonBlock>
-          <Link to="/rouletteList">
-            <TextBox>돌림판</TextBox>
-            <TextBox>리스트 받기</TextBox>
-          </Link>
-        </ButtonBlock>
-        <ButtonBlock>
-          <Link to="/result">
-            <TextBox>필터링</TextBox>
-            <TextBox>결과</TextBox>
-          </Link>
-        </ButtonBlock>
+        <ButtonLine>
+          <ButtonBlock>
+            <Link to="/rouletteList">
+              <TextBox>돌림판</TextBox>
+              <TextBox>리스트 받기</TextBox>
+            </Link>
+          </ButtonBlock>
+          <ButtonBlock>
+            <Link to="/result">
+              <TextBox>필터링</TextBox>
+              <TextBox>결과</TextBox>
+            </Link>
+          </ButtonBlock>
+        </ButtonLine>
       </Container>
     </FullHeightFade>
   );
