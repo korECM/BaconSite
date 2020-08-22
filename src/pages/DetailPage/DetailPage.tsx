@@ -17,6 +17,7 @@ import Dialog from '../../components/common/Dialog';
 import KakaoMap from '../../components/common/KakaoMap';
 import { BounceLoader } from 'react-spinners';
 import Button from '../../components/common/Button';
+import { Helmet } from 'react-helmet-async';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -412,20 +413,6 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         <ShopTitle>서버로부터 데이터를 받아오는데 실패했어요</ShopTitle>
         <ShopImageContainer>
           <ShopImage imageLink={'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
-        </ShopImageContainer>
-      </Container>
-    );
-  }
-
-  if (shop.error === 404) {
-    return (
-      <Container color="white">
-        <Header category="modal" headerColor="white" />
-        <ShopTitle>{shop.data.name}</ShopTitle>
-        <ShopImageContainer>
-          <ShopImage
-            imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
-          />
         </ShopImageContainer>
       </Container>
     );
