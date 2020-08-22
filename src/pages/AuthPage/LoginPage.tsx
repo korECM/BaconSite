@@ -12,6 +12,7 @@ import { AiOutlineUser, AiOutlineLock, AiOutlineIdcard } from 'react-icons/ai';
 import useAuth from '../../hooks/useAuth';
 import useCheck from '../../hooks/useCheck';
 import StyledInput from '../../components/common/StyledInput';
+import { Helmet } from 'react-helmet-async';
 
 const AuthPageBlock = styled.div`
   padding: 0 5%;
@@ -218,6 +219,9 @@ function LoginPage({ history }: RouteComponentProps) {
 
   return (
     <Container color="white">
+      <Helmet>
+        <title>{mode === 'login' ? '로그인' : '회원가입'} - 푸딩</title>
+      </Helmet>
       <Header category="modal" headerColor="white" />
       <AuthPageBlock>
         <Logo>로고 들어가는 자리</Logo>

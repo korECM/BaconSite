@@ -10,6 +10,7 @@ import rootReducer, { RootState } from './modules';
 import { BrowserRouter } from 'react-router-dom';
 import { setUser, checkThunk, checkAsync } from './modules/user';
 import { UserInterface } from './api/auth';
+import { HelmetProvider } from 'react-helmet-async';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(Thunk)));
 
@@ -34,7 +35,9 @@ loadUser();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'),

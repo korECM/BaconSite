@@ -388,6 +388,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   if (shop.loading) {
     return (
       <Container color="white">
+        <Helmet>
+          <title>로딩 중</title>
+        </Helmet>
         <Header category="modal" headerColor="white" />
         <Loader />
       </Container>
@@ -397,6 +400,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   if (shop.error === 406) {
     return (
       <Container color="white">
+        <Helmet>
+          <title>존재하지 않는 가게</title>
+        </Helmet>
         <Header category="modal" headerColor="white" />
         <ShopTitle>존재하지 않는 가게에요</ShopTitle>
         <ShopImageContainer>
@@ -409,6 +415,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   if (!shop.data) {
     return (
       <Container color="white">
+        <Helmet>
+          <title>서버가 이상해요</title>
+        </Helmet>
         <Header category="modal" headerColor="white" />
         <ShopTitle>서버로부터 데이터를 받아오는데 실패했어요</ShopTitle>
         <ShopImageContainer>
@@ -420,6 +429,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   return (
     <Container color="white" notFullHeight>
+      <Helmet>
+        <title>{shop.data.name} - 푸딩</title>
+      </Helmet>
       <Header category="modal" headerColor="white" />
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>

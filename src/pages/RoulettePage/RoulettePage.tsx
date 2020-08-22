@@ -9,6 +9,8 @@ import { Animated } from 'react-animated-css';
 import React from 'react';
 import { Wheel } from 'react-custom-roulette';
 import Button from '../../components/common/Button';
+import { Helmet } from 'react-helmet-async';
+
 // import Roulette from 'react-native-casino-roulette';
 
 // const Roulette = require('react-native-casino-roulette');
@@ -53,6 +55,9 @@ function RoulettePage() {
     <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
       <Fade>
         <Container color="red">
+          <Helmet>
+            <title>돌려돌려 돌림판 - 푸딩</title>
+          </Helmet>
           <Header category="modal" headerColor="red" />
           <Fade>
             <Bounce>

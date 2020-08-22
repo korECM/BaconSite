@@ -10,6 +10,7 @@ import Loader from '../../components/common/Loader';
 import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -26,6 +27,9 @@ function ResultPage({ match }: RouteComponentProps) {
     <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
       <Fade>
         <Container color="red">
+          <Helmet>
+            <title>당신만을 위한 식당 - 푸딩</title>
+          </Helmet>
           <Header category="modal" headerColor="red" />
           <Fade>
             <Bounce>

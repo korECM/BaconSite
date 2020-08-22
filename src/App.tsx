@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import ResultPageRouter from './pages/ResultPage/ResultPageRouter';
 import Container from './components/layout/Container';
 import Header from './components/layout/Header';
+import { Helmet } from 'react-helmet-async';
 
 const DetailPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/DetailPage/DetailPageRouter'));
 const AdminRouter = React.lazy(() => import('./pages/AdminPage/AdminRouter'));
@@ -16,6 +17,9 @@ const YesNoPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './p
 function App() {
   return (
     <>
+      <Helmet>
+        <title>뭐 먹을지 못 정할 땐, 푸딩</title>
+      </Helmet>
       <Suspense
         fallback={
           <Container color="white">
