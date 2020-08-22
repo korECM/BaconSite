@@ -5,6 +5,7 @@ import palette from '../../styles/palette';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
 import MypageButton from '../common/MypageButton';
+import logo from './foodingicon.png';
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -80,7 +81,7 @@ function Header(props: HeaderProps) {
       {props.category === 'main' ? (
         <HeaderContainer {...props}>
           <button>
-            <img src="https://ifh.cc/g/FaLxN0.png" style={{ width: '30px', height: '10px' }} alt="logo" />
+            <img src={logo} style={{ width: '40px', height: '40px' }} alt="logo" />
           </button>
           {user ? (
             <button onClick={onRightButtonClick}>
