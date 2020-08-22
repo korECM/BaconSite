@@ -7,13 +7,22 @@ import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
 import FullHeightFade from '../components/common/FullHeightFade';
 
-const ServiceTitle = styled.h1`
-  font-size: 25px;
+const TitleSlogan = styled.h1`
+  font-size: 14px;
   font-family: 'Nanum Gothic';
-  font-weight: 500;
+  font-weight: 700;
+  text-align: center;
   margin-top: 50px;
   margin-bottom: 20px;
   color: black;
+`;
+
+const TitleLogo = styled.h1`
+  width: flex;
+
+  img{
+    width: 100%;
+  }
 `;
 
 const Caregories = styled.h1`
@@ -66,7 +75,8 @@ function HomePage() {
     <FullHeightFade>
       <Container color="white">
         <Header category="main" headerColor="none" />
-        <ServiceTitle>CAU Fooding</ServiceTitle>
+        <TitleSlogan>뭐 먹을지 고민될 땐?</TitleSlogan>
+        <TitleLogo><img src="https://ifh.cc/g/IuQdZS.png" alt="titleLogo"/></TitleLogo>
         <Caregories>Caregories</Caregories>
         <Divider></Divider>
         <ButtonBlock>

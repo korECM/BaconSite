@@ -41,7 +41,6 @@ const HeaderContainer = styled.div`
     margin-left: auto;
     padding-right: 0;
   }
-
 `;
 
 type HeaderColor = 'red' | 'white' | 'none';
@@ -81,15 +80,15 @@ function Header(props: HeaderProps) {
       {props.category === 'main' ? (
         <HeaderContainer {...props}>
           <button>
-            <img src="https://avatars3.githubusercontent.com/u/69138035?s=60&v=4" alt="logo" />
+            <img src="https://ifh.cc/g/FaLxN0.png" style={{ width: '30px', height: '10px' }} alt="logo" />
           </button>
           {user ? (
             <button onClick={onRightButtonClick}>
-              <img src="https://ifh.cc/g/aVLW50.png" alt="mypage"/>
+              <img src="https://ifh.cc/g/aVLW50.png" alt="mypage" />
             </button>
           ) : (
             <button onClick={onRightButtonClick}>
-              <img src="https://ifh.cc/g/eMtxxz.png" alt="login"/>
+              <img src="https://ifh.cc/g/eMtxxz.png" alt="login" />
             </button>
           )}
         </HeaderContainer>
