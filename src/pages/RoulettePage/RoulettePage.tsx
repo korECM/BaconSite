@@ -10,6 +10,7 @@ import React from 'react';
 import { Wheel } from 'react-custom-roulette';
 import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
+import FullHeightFade from '../../components/common/FullHeightFade';
 
 // import Roulette from 'react-native-casino-roulette';
 
@@ -52,8 +53,8 @@ function RoulettePage() {
   };
 
   return (
-    <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-      <Fade>
+    <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
+      <FullHeightFade>
         <Container color="red">
           <Helmet>
             <title>돌려돌려 돌림판 - 푸딩</title>
@@ -83,7 +84,7 @@ function RoulettePage() {
             </Bounce>
           </Fade>
         </Container>
-      </Fade>
+      </FullHeightFade>
     </Animated>
   );
 }
