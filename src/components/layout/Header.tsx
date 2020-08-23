@@ -6,6 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
 import FoodingTitleRed from './FoodingTitleRed.png';
 import FoodingTitleWhite from './FoodingTitleWhite.png';
+import JustFooding from './JustFooding.png';
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -54,6 +55,16 @@ const HeaderContainer = styled.div`
     /* margin-left: auto; */
     padding-right: 0;
   }
+
+  .myPage {
+    img {
+      width: 27px;
+      height: 23px;
+    }
+    div {
+      font-size: 10px;
+    }
+  }
 `;
 
 type HeaderColor = 'red' | 'white' | 'none';
@@ -96,15 +107,10 @@ function Header(props: HeaderProps) {
             <img src={logo} style={{ width: '40px', height: '40px' }} alt="logo" />
           </button> */}
           <img className="titleLogo" src={props.headerColor === 'red' ? FoodingTitleWhite : FoodingTitleRed} alt="title" />
-          {user ? (
-            <button onClick={onRightButtonClick} className="right">
-              <img src="https://ifh.cc/g/aVLW50.png" alt="mypage" />
-            </button>
-          ) : (
-            <button onClick={onRightButtonClick} className="right">
-              <img src="https://ifh.cc/g/eMtxxz.png" alt="login" />
-            </button>
-          )}
+          <button onClick={onRightButtonClick} className="right myPage">
+            <img src={JustFooding} alt="mypage" />
+            <div>마이푸딩</div>
+          </button>
         </HeaderContainer>
       ) : (
         <HeaderContainer {...props}>
