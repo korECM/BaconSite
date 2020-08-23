@@ -125,7 +125,7 @@ function HomePage() {
             </Link>
           </ButtonBlock>
           <ButtonBlock>
-            <Link to="/result">
+            <Link to="/result?location=front,back&category=western,korean">
               <TextBox>필터링</TextBox>
               <TextBox>결과</TextBox>
             </Link>

@@ -4,7 +4,7 @@ import { Location, ShopCategory } from './getShop';
 
 export interface ShopsInterface {
   _id: string;
-  image: string[];
+  shopImage: string[];
   name: string;
   contact: string;
   address: string;
@@ -12,7 +12,7 @@ export interface ShopsInterface {
   keyword: string;
   open: string;
   closed: string;
-  location: string;
+  location: Location;
   latitude: number;
   longitude: number;
   registerDate: Date;
@@ -24,8 +24,8 @@ export interface ShopsInterface {
 }
 
 export interface getShopsInterface {
-  locations?: Location[];
-  categories?: ShopCategory[];
+  locations?: string[];
+  categories?: string[];
 }
 
 export async function getShops(options: getShopsInterface) {
