@@ -65,7 +65,6 @@ interface State {
   keywords: string[];
 }
 
-<<<<<<< HEAD
 class FilterPage extends React.Component<Props, State> {
   state: State = {
     sorting_bool: [false, false, false],
@@ -80,10 +79,38 @@ class FilterPage extends React.Component<Props, State> {
     keywords: ['가성비', '분위기', '단체', '혼밥', '밥약', '맵찔'],
   };
 
-  changeColor(i: number) {
+  changeSortingColor(i: number) {
     console.log(i);
     this.setState({
       sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? item : !item)),
+    });
+  }
+
+  changeFoodColor(i: number) {
+    console.log(i);
+    this.setState({
+      food_bool: this.state.food_bool.map((item, index) => (index !== i ? item : !item)),
+    });
+  }
+
+  changePlaceColor(i: number) {
+    console.log(i);
+    this.setState({
+      place_bool: this.state.place_bool.map((item, index) => (index !== i ? item : !item)),
+    });
+  }
+
+  changePriceColor(i: number) {
+    console.log(i);
+    this.setState({
+      price_bool: this.state.price_bool.map((item, index) => (index !== i ? item : !item)),
+    });
+  }
+
+  changeKeywordColor(i: number) {
+    console.log(i);
+    this.setState({
+      keyword_bool: this.state.keyword_bool.map((item, index) => (index !== i ? item : !item)),
     });
   }
 
@@ -94,7 +121,7 @@ class FilterPage extends React.Component<Props, State> {
       <button
         className={`roundButton yHover ${this.state.sorting_bool[i] ? 'mainred' : ''}`}
         key={sorting}
-        onClick={(e) => this.changeColor(i)}
+        onClick={(e) => this.changeSortingColor(i)}
         style={{ height: 35, flex: 1 }}
       >
         <div style={TagTextStyle}>{sorting}</div>
@@ -105,7 +132,7 @@ class FilterPage extends React.Component<Props, State> {
       <button
         className={`roundButton yHover ${this.state.food_bool[i] ? 'mainred' : ''}`}
         key={food}
-        onClick={(e) => this.changeColor(i)}
+        onClick={(e) => this.changeFoodColor(i)}
         style={{ height: 35, flex: 1 }}
       >
         <div style={TagTextStyle}>{food}</div>
@@ -116,7 +143,7 @@ class FilterPage extends React.Component<Props, State> {
       <button
         className={`roundButton yHover ${this.state.price_bool[i] ? 'mainred' : ''}`}
         key={price}
-        onClick={(e) => this.changeColor(i)}
+        onClick={(e) => this.changePriceColor(i)}
         style={{ height: 35, flex: 1 }}
       >
         <div style={TagTextStyle}>{price}</div>
@@ -127,7 +154,7 @@ class FilterPage extends React.Component<Props, State> {
       <button
         className={`roundButton yHover ${this.state.place_bool[i] ? 'mainred' : ''}`}
         key={place}
-        onClick={(e) => this.changeColor(i)}
+        onClick={(e) => this.changePlaceColor(i)}
         style={{ height: 35, flex: 1 }}
       >
         <div style={TagTextStyle}>{place}</div>
@@ -138,7 +165,7 @@ class FilterPage extends React.Component<Props, State> {
       <button
         className={`roundButton yHover ${this.state.keyword_bool[i] ? 'mainred' : ''}`}
         key={keyword}
-        onClick={(e) => this.changeColor(i)}
+        onClick={(e) => this.changeKeywordColor(i)}
         style={{ height: 35, flex: 1 }}
       >
         <div style={TagTextStyle}>{keyword}</div>
@@ -193,34 +220,6 @@ class FilterPage extends React.Component<Props, State> {
       </Animated>
     );
   }
-=======
-function FilterPage({ match }: RouteComponentProps) {
-  return (
-    <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-      <Fade>
-        <Container color="white">
-          <Helmet>
-            <title>당신만을 위한 식당 - 푸딩</title>
-          </Helmet>
-          <Header category="modal" headerColor="white" />
-          <Fade>
-            <Bounce>
-              <TitleComment>필터링 검색</TitleComment>
-              <SubtitleComment>정렬</SubtitleComment>
-              <ButtonLine>
-                <Button theme="gray">추천순</Button>
-                <Button theme="gray">평점순</Button>
-                <Button theme="gray">리뷰순</Button>
-              </ButtonLine>
-              <Divider></Divider>
-              <ButtonLine></ButtonLine>
-            </Bounce>
-          </Fade>
-        </Container>
-      </Fade>
-    </Animated>
-  );
->>>>>>> master
 }
 
 export default FilterPage;
