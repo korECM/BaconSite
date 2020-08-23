@@ -130,6 +130,12 @@ function HomePage() {
               <TextBox>결과</TextBox>
             </Link>
           </ButtonBlock>
+          <ButtonBlock>
+            <Link to="/filter">
+              <TextBox>필터링</TextBox>
+              <TextBox>검색</TextBox>
+            </Link>
+          </ButtonBlock>
         </ButtonLine>
       </Container>
     </FullHeightFade>
