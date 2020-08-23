@@ -120,11 +120,7 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
     <RestaurantCardBlock style={appear}>
       <div
         style={{
-          backgroundImage: `url(${
-            shop.shopImage.length
-              ? 'https://bacon-shop-origin.s3.ap-northeast-2.amazonaws.com/images/a81978d0-3911-469b-8285-8bc30c1b1baf1597997778312.jpeg'
-              : BlankImage
-          })`,
+          backgroundImage: `url(${shop.shopImage.length ? shop.shopImage[0] : BlankImage})`,
         }}
         className="image"
       />
