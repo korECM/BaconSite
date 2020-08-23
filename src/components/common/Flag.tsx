@@ -30,10 +30,6 @@ const FlagBlock = styled.div`
 
   margin-left: auto;
   margin-right: 30px;
-
-  ${(props: FlagProps) => css`
-    color: ${props.flagTextColor};
-  `};
 `;
 
 const Title = styled.div`
@@ -62,7 +58,6 @@ interface FlagProps {
   descText: string;
   titleColor: string;
   descColor: string;
-  flagTextColor: string;
   flagBackColor: 'red' | 'gray';
 }
 
