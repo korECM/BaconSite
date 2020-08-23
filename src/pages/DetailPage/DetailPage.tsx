@@ -210,6 +210,7 @@ const Comment = styled(RoundContainer)`
 
   .name {
     font-size: 12px;
+    font-weight: bold;
     margin-bottom: 5px;
   }
   .content {
@@ -227,7 +228,7 @@ const Comment = styled(RoundContainer)`
       margin-left: 10px;
     }
     .likeNum {
-      font-weight: bolder;
+      font-weight: bold;
     }
   }
 `;
