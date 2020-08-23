@@ -203,18 +203,31 @@ const ButtonWithNoMargin = styled(Button)`
 const CommentContainer = styled.div``;
 
 const Comment = styled(RoundContainer)`
-  flex-direction: column;
+  display: flex;
+
   text-align: left;
-  align-items: flex-start;
+  align-items: center;
   padding: 5px 20px;
+  padding-right: 10px;
+
+  margin: 0;
+
+  & + & {
+    margin-top: 20px;
+  }
+
+  .contentContainer {
+    flex: 1;
+  }
 
   .name {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     margin-bottom: 5px;
   }
   .content {
-    font-size: 10px;
+    margin-top: 5px;
+    font-size: 11.5px;
     line-height: 1.5;
   }
 
@@ -229,6 +242,18 @@ const Comment = styled(RoundContainer)`
     }
     .likeNum {
       font-weight: bold;
+    }
+  }
+
+  button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin-left: auto;
+    padding: 15px;
+    svg {
+      width: 12px;
+      height: 12px;
     }
   }
 `;
@@ -565,15 +590,18 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         {reviews.data &&
           reviews.data.map((review, index) => (
             <Comment theme="gray" key={review._id} delay={index * 150}>
-              <div className="name">{review.user.name}</div>
-              <div className="content">{review.comment}</div>
-              <div className="detail">
-                {[new Date(review.registerDate)].map((date) => (
-                  <div key={date.toString()}>{`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
-                ))}
-                <div className="likeNum">좋아요 {review.likeNum}개</div>
-                <Link to="">신고하기</Link>
+              <div className="contentContainer">
+                <div className="name">{review.user.name}</div>
+                <div className="content">{review.comment}</div>
+                <div className="detail">
+                  {[new Date(review.registerDate)].map((date) => (
+                    <div key={date.toString()}>{`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
+                  ))}
+                  <div className="likeNum">좋아요 {review.likeNum}개</div>
+                  <Link to="">신고하기</Link>
+                </div>
               </div>
+              <button>{review.didLike ? <MdFavorite style={{ color: palette.mainRed }} /> : <MdFavoriteBorder />}</button>
             </Comment>
           ))}
       </CommentContainer>
