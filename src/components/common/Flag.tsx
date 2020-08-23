@@ -30,6 +30,12 @@ const FlagBlock = styled.div`
 
   margin-left: auto;
   margin-right: 30px;
+
+  ${(props: FlagProps) =>
+    props.marginRight &&
+    css`
+      margin-right: ${props.marginRight};
+    `};
 `;
 
 const Title = styled.div`
@@ -58,6 +64,7 @@ interface FlagProps {
   descText: string;
   titleColor: string;
   descColor: string;
+  marginRight?: string;
   flagBackColor: 'red' | 'gray';
 }
 
