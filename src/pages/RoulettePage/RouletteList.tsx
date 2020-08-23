@@ -186,44 +186,12 @@ class RouletteList extends React.Component<Props, State> {
     ));
 
     // interface datum { option: String, style: { backgroundColor: String, textColor: String }, font: String };
-    let data = [{ option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' }];
 
-    if (RouletteItems.length == 2) {
-      data = [
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-      ];
-    } else if (RouletteItems.length == 3) {
-      data = [
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-      ];
-    } else if (RouletteItems.length == 4) {
-      data = [
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-      ];
-    } else if (RouletteItems.length == 5) {
-      data = [
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-      ];
-    } else if (RouletteItems.length >= 6) {
-      data = [
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
-      ];
-    }
+    let data = Array.from({ length: Math.min(RouletteItems.length, 6) }, (v) => ({
+      option: 'dd',
+      style: { backgroundColor: 'dd', textColor: 'dd' },
+      font: 'dd',
+    }));
 
     if (RouletteItems.length >= 1) {
       // let data = RouletteItems.map((v) => {
