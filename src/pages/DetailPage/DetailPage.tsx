@@ -158,6 +158,9 @@ const MenuBlock = styled.div`
 
   div.menus {
     font-size: 14px;
+    .noMenu {
+      margin-left: 25px;
+    }
     .menu {
       display: flex;
       align-items: center;
@@ -605,13 +608,17 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <MdRestaurantMenu />
             <p>대표 메뉴</p>
           </div>
-          {shop.data.menus.map((menu) => (
-            <div className="menu" key={menu._id}>
-              <p className="title">{menu.title}</p>
-              <p className="horizontal" />
-              <p className="price">{menu.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
-            </div>
-          ))}
+          {shop.data.menus.length === 0 ? (
+            <div className="noMenu">메뉴가 아직 등록되지 않았어요!</div>
+          ) : (
+            shop.data.menus.map((menu) => (
+              <div className="menu" key={menu._id}>
+                <p className="title">{menu.title}</p>
+                <p className="horizontal" />
+                <p className="price">{menu.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
+              </div>
+            ))
+          )}
         </div>
         <div className="menuImages">
           {shop.data.menuImage.map((menu) => (
