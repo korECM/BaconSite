@@ -29,6 +29,16 @@ const EmptySpace = styled.h1`
   padding: 25px;
 `;
 
+const WarningComment = styled.h1`
+  text-align: right;
+  margin-top: 3px;
+  margin-bottom: 0px;
+  color: ${palette.darkGray};
+  padding: 10px;
+  font-family: 'Nanum Gothic';
+  font-size: 13px;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   height: 100%;
@@ -38,6 +48,7 @@ const ButtonContainer = styled.div`
     border: none;
     outline: none;
     padding-left: 10px;
+    width: 75%;
 
     flex: 1;
 
@@ -152,17 +163,20 @@ class RouletteList extends React.Component<Props, State> {
     });
   };
 
-  // TODO: 공백일 때 입력 안되도록 해야합니당
-  // TODO: 6개 넘으면 크래시나요
+  // TODO: 공백일 때 입력 안되도록 해야합니당 -> (O)
+  // TODO: 6개 넘으면 크래시나요 -> (O)
   onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { RouletteItems, input } = this.state;
     const newItem: RouletteItemState = { id: this.nextRouletteId++, text: input, done: false };
     const nextRouletteItems: RouletteItemState[] = RouletteItems.concat(newItem);
-    this.setState({
-      input: '',
-      RouletteItems: nextRouletteItems,
-    });
+    if (input !== '' && RouletteItems.length < 6) {
+      this.setState({
+        input: '',
+        RouletteItems: nextRouletteItems,
+      });
+    }
+    console.log('push add button');
   };
 
   onRemove = (id: number): void => {
@@ -183,10 +197,17 @@ class RouletteList extends React.Component<Props, State> {
   moveHref = (data: DataInterface[]) => {
     beClicked = true;
     selected_name = 'true';
-    this.props.history.push({
-      pathname: '/roulette',
-      search: '?items=' + data.map((data) => data.option).join(','),
-    });
+    const { RouletteItems, input } = this.state;
+    const newItem: RouletteItemState = { id: this.nextRouletteId++, text: input, done: false };
+    const nextRouletteItems: RouletteItemState[] = RouletteItems.concat(newItem);
+    if (RouletteItems.length < 2) {
+      console.log('2개 이상 입력하셔야 합니다.');
+    } else {
+      this.props.history.push({
+        pathname: '/roulette',
+        search: '?items=' + data.map((data) => data.option).join(','),
+      });
+    }
   };
 
   render() {
@@ -247,6 +268,7 @@ class RouletteList extends React.Component<Props, State> {
                       <input onChange={onChange} value={input} />
                       <button type="submit">ADD</button>
                     </ButtonContainer>
+                    <WarningComment>※ 2 ~ 6개의 값을 입력해주세요.</WarningComment>
                   </form>
                   <Divider></Divider>
                   <ul>{RouletteItemList}</ul>

@@ -93,6 +93,18 @@ class RoulettePage extends React.Component<Props, State> {
       font: 'dd',
     }));
 
+    function textLengthCheck(str: string, len: number) {
+      var returnValue = '';
+
+      if (str.length > len) {
+        returnValue = str.substring(0, len);
+      } else {
+        returnValue = str;
+      }
+
+      return returnValue;
+    }
+
     if (items.length >= 1) {
       // let data = RouletteItems.map((v) => {
       //     console.log(RouletteItems[v].text);
@@ -100,21 +112,40 @@ class RoulettePage extends React.Component<Props, State> {
       // });
 
       // console.log(RouletteItems.id.text);
-      for (var i = 0; i < items.length; i++) {
-        data[i].option = items[i];
-        if (i % 2 == 0) {
-          data[i].style.backgroundColor = '#dddddd';
-          data[i].style.textColor = '#5d5d5d';
-          data[i].font = 'Nanum Gothic';
-        } else {
-          data[i].style.backgroundColor = 'white';
-          data[i].style.textColor = '#5d5d5d';
-          data[i].font = 'Nanum Gothic';
+      if (items.length % 2 == 0) {
+        for (var i = 0; i < items.length; i++) {
+          data[i].option = textLengthCheck(items[i], 6);
+          if (i % 2 == 0) {
+            data[i].style.backgroundColor = '#dddddd';
+            data[i].style.textColor = '#5d5d5d';
+            data[i].font = 'Nanum Gothic';
+          } else {
+            data[i].style.backgroundColor = 'white';
+            data[i].style.textColor = '#5d5d5d';
+            data[i].font = 'Nanum Gothic';
+          }
+        }
+      } else {
+        for (var i = 0; i < items.length; i++) {
+          data[i].option = textLengthCheck(items[i], 6);
+          if (i % 3 == 0) {
+            data[i].style.backgroundColor = '#dddddd';
+            data[i].style.textColor = '#5d5d5d';
+            data[i].font = 'Nanum Gothic';
+          } else if (i % 3 == 1) {
+            data[i].style.backgroundColor = `${palette.darkGray}`;
+            data[i].style.textColor = 'white';
+            data[i].font = 'Nanum Gothic';
+          } else {
+            data[i].style.backgroundColor = 'white';
+            data[i].style.textColor = '#5d5d5d';
+            data[i].font = 'Nanum Gothic';
+          }
         }
       }
+
       console.log(data);
     }
-    
 
     return (
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
@@ -139,7 +170,7 @@ class RoulettePage extends React.Component<Props, State> {
                   outerBorderWidth={3}
                   innerBorderWidth={0}
                   radiusLineWidth={0}
-                  fontSize={25}
+                  fontSize={23}
                   onStopSpinning={() => null}
                 />
                 <Button theme="white" big onClick={moveHref}>

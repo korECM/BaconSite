@@ -110,7 +110,7 @@ function HomePage() {
             </Link>
           </ButtonBlock>
           <ButtonBlock>
-            <Link to="/roulette">
+            <Link to="/rouletteList">
               <TextBox>돌려돌려</TextBox>
               <TextBox>돌림판</TextBox>
             </Link>
