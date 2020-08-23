@@ -1,18 +1,18 @@
 import axios from 'axios';
 import { apiLink } from '../lib/getAPILink';
-import { Location, ShopCategory } from './getShop';
+import { Location, ShopCategory, Keyword } from './getShop';
 
 export interface ShopsInterface {
   _id: string;
-  image: string[];
+  shopImage: string[];
   name: string;
   contact: string;
   address: string;
   category: string;
-  keyword: string;
+  keyword: Keyword;
   open: string;
   closed: string;
-  location: string;
+  location: Location;
   latitude: number;
   longitude: number;
   registerDate: Date;
@@ -24,8 +24,8 @@ export interface ShopsInterface {
 }
 
 export interface getShopsInterface {
-  locations?: Location[];
-  categories?: ShopCategory[];
+  locations?: string[];
+  categories?: string[];
 }
 
 export async function getShops(options: getShopsInterface) {

@@ -18,6 +18,7 @@ import KakaoMap from '../../components/common/KakaoMap';
 import { BounceLoader } from 'react-spinners';
 import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
+import { getScore } from '../../lib/scoreUtil';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -158,6 +159,9 @@ const MenuBlock = styled.div`
 
   div.menus {
     font-size: 14px;
+    .noMenu {
+      margin-left: 25px;
+    }
     .menu {
       display: flex;
       align-items: center;
@@ -257,26 +261,6 @@ const Comment = styled(RoundContainer)`
     }
   }
 `;
-
-const getScore = (score: number): string => {
-  if (score >= 4.25) {
-    return 'A+';
-  } else if (score >= 3.75) {
-    return 'A';
-  } else if (score >= 3.25) {
-    return 'B+';
-  } else if (score >= 2.75) {
-    return 'B';
-  } else if (score >= 2.25) {
-    return 'C+';
-  } else if (score >= 1.75) {
-    return 'C';
-  } else if (score >= 1.25) {
-    return 'D+';
-  } else {
-    return 'D';
-  }
-};
 
 interface DetailPageProps extends RouteComponentProps {}
 
@@ -436,6 +420,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   );
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     return () => {
       setLikeOffset(0);
       resetDataAction();
@@ -517,7 +505,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             descColor={palette.white}
             titleText={getScore(shop.data.scoreAverage)}
             descText={shop.data.scoreAverage ? `${shop.data.scoreAverage.toPrecision(3)}학점` : ''}
-            flagColor={palette.mainRed}
+            flagBackColor="red"
           />
         </ShopImage>
       </ShopImageContainer>
@@ -605,13 +593,17 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <MdRestaurantMenu />
             <p>대표 메뉴</p>
           </div>
-          {shop.data.menus.map((menu) => (
-            <div className="menu" key={menu._id}>
-              <p className="title">{menu.title}</p>
-              <p className="horizontal" />
-              <p className="price">{menu.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
-            </div>
-          ))}
+          {shop.data.menus.length === 0 ? (
+            <div className="noMenu">메뉴가 아직 등록되지 않았어요!</div>
+          ) : (
+            shop.data.menus.map((menu) => (
+              <div className="menu" key={menu._id}>
+                <p className="title">{menu.title}</p>
+                <p className="horizontal" />
+                <p className="price">{menu.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
+              </div>
+            ))
+          )}
         </div>
         <div className="menuImages">
           {shop.data.menuImage.map((menu) => (
