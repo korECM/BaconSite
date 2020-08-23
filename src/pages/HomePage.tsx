@@ -26,7 +26,7 @@ const TitleLogo = styled.h1`
   }
 `;
 
-const Caregories = styled.h1`
+const Categories = styled.h1`
   font-size: 15px;
   font-family: 'Nanum Gothic';
   font-weight: 600;
@@ -90,7 +90,7 @@ function HomePage() {
         <TitleLogo>
           <img src={titlelogo} alt="titlelogo" />
         </TitleLogo>
-        <Caregories>Caregories</Caregories>
+        <Categories>Categories</Categories>
         <Divider></Divider>
         <ButtonLine>
           <ButtonBlock>

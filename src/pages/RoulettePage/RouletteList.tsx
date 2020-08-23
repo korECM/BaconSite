@@ -7,6 +7,7 @@ import palette from '../../styles/palette';
 import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
 import styled, { css } from 'styled-components';
+import Button from '../../components/common/Button';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -40,7 +41,7 @@ const ButtonContainer = styled.div`
     width: 190px;
 
     font-size: 15px;
-    font-weight: 2000;
+    font-weight: 800;
     font-family: 'Nanum Gothic';
     color: black;
 
@@ -58,7 +59,7 @@ const ButtonContainer = styled.div`
     width: 100%;
 
     font-size: 15px;
-    font-weight: 2000;
+    font-weight: 900;
     font-family: 'Nanum Gothic';
     color: black;
 
@@ -121,6 +122,9 @@ interface State {
   RouletteItems: RouletteItemState[];
 }
 
+let beClicked = false;
+let selected_name = 'false';
+
 class RouletteList extends React.Component<Props, State> {
   nextRouletteId: number = 0;
 
@@ -169,13 +173,82 @@ class RouletteList extends React.Component<Props, State> {
     });
   };
 
+  moveHref = () => {
+    beClicked = true;
+    selected_name = 'true';
+  };
+
   render() {
-    const { onSubmit, onChange, onToggle, onRemove } = this;
+    const { onSubmit, onChange, onToggle, onRemove, moveHref } = this;
     const { input, RouletteItems } = this.state;
 
     const RouletteItemList: React.ReactElement[] = RouletteItems.map((Roulette) => (
       <RouletteItem key={Roulette.id} done={Roulette.done} onToggle={() => onToggle(Roulette.id)} onRemove={() => onRemove(Roulette.id)} text={Roulette.text} />
     ));
+
+    // interface datum { option: String, style: { backgroundColor: String, textColor: String }, font: String };
+    let data = [{ option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' }];
+
+    if (RouletteItems.length == 2) {
+      data = [
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+      ];
+    } else if (RouletteItems.length == 3) {
+      data = [
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+      ];
+    } else if (RouletteItems.length == 4) {
+      data = [
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+      ];
+    } else if (RouletteItems.length == 5) {
+      data = [
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+      ];
+    } else if (RouletteItems.length >= 6) {
+      data = [
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+        { option: 'dd', style: { backgroundColor: 'dd', textColor: 'dd' }, font: 'dd' },
+      ];
+    }
+
+    if (RouletteItems.length >= 1) {
+      // let data = RouletteItems.map((v) => {
+      //     console.log(RouletteItems[v].text);
+      //     return RouletteItems;
+      // });
+
+      // console.log(RouletteItems.id.text);
+      for (var i = 0; i < RouletteItems.length; i++) {
+        data[i].option = RouletteItems[i].text;
+        if (i % 2 == 0) {
+          data[i].style.backgroundColor = '#dddddd';
+          data[i].style.textColor = '#5d5d5d';
+          data[i].font = 'Nanum Gothic';
+        } else {
+          data[i].style.backgroundColor = 'white';
+          data[i].style.textColor = '#5d5d5d';
+          data[i].font = 'Nanum Gothic';
+        }
+      }
+      console.log(data);
+    }
+
+    // alert(JSON.stringify(RouletteItemList.text));
 
     return (
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
@@ -199,6 +272,18 @@ class RouletteList extends React.Component<Props, State> {
                   <Divider></Divider>
                   <ul>{RouletteItemList}</ul>
                 </div>
+                <Link
+                  to={{
+                    pathname: '/roulette',
+                    state: {
+                      datalist: data,
+                    },
+                  }}
+                >
+                  <Button theme="red" onClick={moveHref}>
+                    룰렛 돌리기
+                  </Button>
+                </Link>
               </Bounce>
             </Fade>
           </Container>
