@@ -28,6 +28,8 @@ const RestaurantCardContainer = styled.div`
   & > a {
     margin: 12.5px 0;
     display: block;
+    text-decoration: none;
+    color: inherit;
   }
 `;
 
