@@ -42,6 +42,7 @@ const HeaderContainer = styled.div`
     background-color: transparent;
     color: inherit;
     font-size: 2.5rem;
+    cursor: pointer;
   }
   .left {
     position: absolute;
