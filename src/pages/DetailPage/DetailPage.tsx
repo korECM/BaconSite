@@ -18,6 +18,7 @@ import KakaoMap from '../../components/common/KakaoMap';
 import { BounceLoader } from 'react-spinners';
 import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
+import { getScore } from '../../lib/scoreUtil';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -261,26 +262,6 @@ const Comment = styled(RoundContainer)`
   }
 `;
 
-const getScore = (score: number): string => {
-  if (score >= 4.25) {
-    return 'A+';
-  } else if (score >= 3.75) {
-    return 'A';
-  } else if (score >= 3.25) {
-    return 'B+';
-  } else if (score >= 2.75) {
-    return 'B';
-  } else if (score >= 2.25) {
-    return 'C+';
-  } else if (score >= 1.75) {
-    return 'C';
-  } else if (score >= 1.25) {
-    return 'D+';
-  } else {
-    return 'D';
-  }
-};
-
 interface DetailPageProps extends RouteComponentProps {}
 
 function DetailPage({ match, history, location }: DetailPageProps) {
@@ -437,6 +418,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     },
     [user, reviews.data, commentLikeOffset, onLikeComment, onUnlikeComment],
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     return () => {
