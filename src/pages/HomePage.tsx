@@ -110,7 +110,7 @@ function HomePage() {
             </Link>
           </ButtonBlock>
           <ButtonBlock>
-            <Link to="/roulette">
+            <Link to="/rouletteList">
               <TextBox>돌려돌려</TextBox>
               <TextBox>돌림판</TextBox>
             </Link>
@@ -118,12 +118,6 @@ function HomePage() {
         </ButtonLine>
         <Divider></Divider>
         <ButtonLine>
-          <ButtonBlock>
-            <Link to="/rouletteList">
-              <TextBox>돌림판</TextBox>
-              <TextBox>리스트 받기</TextBox>
-            </Link>
-          </ButtonBlock>
           <ButtonBlock>
             <Link to="/result">
               <TextBox>필터링</TextBox>
