@@ -7,6 +7,7 @@ import { ReviewInterface, getReview } from '../api/getReview';
 import { ImageUploadResponseInterface, shopImageUpload, menuImageUpload } from '../api/uploadImage';
 import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
+import { LikeCommentInterface, likeCommentAPI, unlikeCommentAPI } from '../api/likeComment';
 
 const RESET_DATA = 'detail/RESET_DATA' as const;
 
@@ -34,6 +35,14 @@ const UNLIKE_SHOP = 'detail/UNLIKE_SHOP' as const;
 const UNLIKE_SHOP_SUCCESS = 'detail/UNLIKE_SHOP_SUCCESS' as const;
 const UNLIKE_SHOP_ERROR = 'detail/UNLIKE_SHOP_ERROR' as const;
 
+const LIKE_COMMENT = 'detail/LIKE_COMMENT' as const;
+const LIKE_COMMENT_SUCCESS = 'detail/LIKE_COMMENT_SUCCESS' as const;
+const LIKE_COMMENT_ERROR = 'detail/LIKE_COMMENT_ERROR' as const;
+
+const UNLIKE_COMMENT = 'detail/UNLIKE_COMMENT' as const;
+const UNLIKE_COMMENT_SUCCESS = 'detail/UNLIKE_COMMENT_SUCCESS' as const;
+const UNLIKE_COMMENT_ERROR = 'detail/UNLIKE_COMMENT_ERROR' as const;
+
 const GET_LOCATION = 'detail/GET_LOCATION' as const;
 const GET_LOCATION_SUCCESS = 'detail/GET_LOCATION_SUCCESS' as const;
 const GET_LOCATION_ERROR = 'detail/GET_LOCATION_ERROR' as const;
@@ -60,6 +69,10 @@ export const likeShopAsync = createAsyncAction(LIKE_SHOP, LIKE_SHOP_SUCCESS, LIK
 
 export const unlikeShopAsync = createAsyncAction(UNLIKE_SHOP, UNLIKE_SHOP_SUCCESS, UNLIKE_SHOP_ERROR)<void, LikeInterface, AxiosError>();
 
+export const likeCommentAsync = createAsyncAction(LIKE_COMMENT, LIKE_COMMENT_SUCCESS, LIKE_COMMENT_ERROR)<void, LikeCommentInterface, AxiosError>();
+
+export const unlikeCommentAsync = createAsyncAction(UNLIKE_COMMENT, UNLIKE_COMMENT_SUCCESS, UNLIKE_COMMENT_ERROR)<void, LikeCommentInterface, AxiosError>();
+
 export const getLocationAsync = createAsyncAction(GET_LOCATION, GET_LOCATION_SUCCESS, GET_LOCATION_ERROR)<void, LocationInterface, AxiosError>();
 
 type DetailAction =
@@ -82,6 +95,12 @@ type DetailAction =
   | ReturnType<typeof unlikeShopAsync.request>
   | ReturnType<typeof unlikeShopAsync.success>
   | ReturnType<typeof unlikeShopAsync.failure>
+  | ReturnType<typeof likeCommentAsync.request>
+  | ReturnType<typeof likeCommentAsync.success>
+  | ReturnType<typeof likeCommentAsync.failure>
+  | ReturnType<typeof unlikeCommentAsync.request>
+  | ReturnType<typeof unlikeCommentAsync.success>
+  | ReturnType<typeof unlikeCommentAsync.failure>
   | ReturnType<typeof getLocationAsync.request>
   | ReturnType<typeof getLocationAsync.success>
   | ReturnType<typeof getLocationAsync.failure>;
@@ -92,6 +111,8 @@ export const postShopImageThunk = createAsyncThunk(postShopImagesAsync, shopImag
 export const postMenuImageThunk = createAsyncThunk(postMenuImagesAsync, menuImageUpload);
 export const likeShopThunk = createAsyncThunk(likeShopAsync, likeShopAPI);
 export const unlikeShopThunk = createAsyncThunk(unlikeShopAsync, unlikeShopAPI);
+export const likeCommentThunk = createAsyncThunk(likeCommentAsync, likeCommentAPI);
+export const unlikeCommentThunk = createAsyncThunk(unlikeCommentAsync, unlikeCommentAPI);
 export const getLocationThunk = createAsyncThunk(getLocationAsync, getLocation);
 
 type Modify<T, R> = Omit<T, keyof R> & R;
@@ -286,6 +307,24 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
   [GET_LOCATION_ERROR]: (state, { payload: error }) => ({
     ...state,
     mapAddress: asyncState.error(error.response?.status || 404),
+  }),
+  [LIKE_COMMENT]: (state) => ({
+    ...state,
+  }),
+  [LIKE_COMMENT_SUCCESS]: (state) => ({
+    ...state,
+  }),
+  [LIKE_COMMENT_ERROR]: (state) => ({
+    ...state,
+  }),
+  [UNLIKE_COMMENT]: (state) => ({
+    ...state,
+  }),
+  [UNLIKE_COMMENT_SUCCESS]: (state) => ({
+    ...state,
+  }),
+  [UNLIKE_COMMENT_ERROR]: (state) => ({
+    ...state,
   }),
 });
 export default detail;

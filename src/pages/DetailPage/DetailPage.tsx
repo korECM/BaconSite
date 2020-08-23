@@ -289,8 +289,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     onShopImageUploadRequest,
     onMenuImageUploadRequest,
     resetDataAction,
-    onLike,
-    onUnlike,
+    onLikeShop,
+    onUnlikeShop,
+    onLikeComment,
+    onUnlikeComment,
     getLocation,
     shop,
     reviews,
@@ -302,6 +304,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const { user } = useCheck();
 
   const [likeOffset, setLikeOffset] = useState(0);
+  const [commentLikeOffset, setCommentLikeOffset] = useState<number[]>([]);
 
   const shopFileRef = useRef<HTMLInputElement>(null);
   const menuFileRef = useRef<HTMLInputElement>(null);
@@ -378,18 +381,18 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     if (shop.data) {
       if (likeOffset === 0) {
         if (shop.data.didLike) {
-          onUnlike();
+          onUnlikeShop();
           setLikeOffset(-1);
         } else {
-          onLike();
+          onLikeShop();
           setLikeOffset(1);
         }
       } else {
         if (likeOffset === 1) {
-          onUnlike();
+          onUnlikeShop();
           setLikeOffset(0);
         } else {
-          onLike();
+          onLikeShop();
           setLikeOffset(0);
         }
       }
@@ -404,6 +407,33 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     }
     history.push('/auth/login');
   }, [history, match]);
+
+  const likeComment = useCallback(
+    (commentId: number) => {
+      if (!user) {
+        setLoginMessage('댓글 좋아요를 누르려면 로그인을 해야합니다');
+        setLoginAlert(true);
+        return;
+      }
+      if (!reviews.data) return;
+      if (commentLikeOffset[commentId] === 0) {
+        if (reviews.data[commentId].didLike) {
+          onUnlikeComment(reviews.data[commentId]._id);
+          setCommentLikeOffset(commentLikeOffset.map((comment, index) => (index === commentId ? -1 : comment)));
+        } else {
+          onLikeComment(reviews.data[commentId]._id);
+          setCommentLikeOffset(commentLikeOffset.map((comment, index) => (index === commentId ? 1 : comment)));
+        }
+      } else if (commentLikeOffset[commentId] === 1) {
+        onUnlikeComment(reviews.data[commentId]._id);
+        setCommentLikeOffset(commentLikeOffset.map((comment, index) => (index === commentId ? 0 : comment)));
+      } else if (commentLikeOffset[commentId] === -1) {
+        onLikeComment(reviews.data[commentId]._id);
+        setCommentLikeOffset(commentLikeOffset.map((comment, index) => (index === commentId ? 0 : comment)));
+      }
+    },
+    [user, reviews.data, commentLikeOffset, onLikeComment, onUnlikeComment],
+  );
 
   useEffect(() => {
     return () => {
@@ -424,6 +454,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       getLocation(shop.data.address);
     }
   }, [shop.data, getLocation]);
+
+  useEffect(() => {
+    setCommentLikeOffset(Array.from(Array(reviews.data ? reviews.data.length : 0)).map(() => 0));
+  }, [reviews.data]);
 
   if (shop.loading) {
     return (
@@ -597,11 +631,23 @@ function DetailPage({ match, history, location }: DetailPageProps) {
                   {[new Date(review.registerDate)].map((date) => (
                     <div key={date.toString()}>{`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
                   ))}
-                  <div className="likeNum">좋아요 {review.likeNum}개</div>
+                  <div className="likeNum">좋아요 {review.likeNum + commentLikeOffset[index]}개</div>
                   <Link to="">신고하기</Link>
                 </div>
               </div>
-              <button>{review.didLike ? <MdFavorite style={{ color: palette.mainRed }} /> : <MdFavoriteBorder />}</button>
+              <button onClick={() => likeComment(index)}>
+                {commentLikeOffset[index] === 0 ? (
+                  review.didLike ? (
+                    <MdFavorite style={{ color: palette.mainRed }} />
+                  ) : (
+                    <MdFavoriteBorder />
+                  )
+                ) : commentLikeOffset[index] === 1 ? (
+                  <MdFavorite style={{ color: palette.mainRed }} />
+                ) : (
+                  <MdFavoriteBorder />
+                )}
+              </button>
             </Comment>
           ))}
       </CommentContainer>

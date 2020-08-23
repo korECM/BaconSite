@@ -10,6 +10,8 @@ import {
   unlikeShopThunk,
   getLocationThunk,
   postMenuImageThunk,
+  likeCommentThunk,
+  unlikeCommentThunk,
 } from '../modules/detail';
 
 export default function useDetail(shopId: string) {
@@ -23,8 +25,11 @@ export default function useDetail(shopId: string) {
   const onShopImageUploadRequest = useCallback((files: FileList) => dispatch(postShopImageThunk(shopId, files)), [shopId, dispatch]);
   const onMenuImageUploadRequest = useCallback((files: FileList) => dispatch(postMenuImageThunk(shopId, files)), [shopId, dispatch]);
 
-  const onLike = useCallback(() => dispatch(likeShopThunk(shopId)), [dispatch, shopId]);
-  const onUnlike = useCallback(() => dispatch(unlikeShopThunk(shopId)), [dispatch, shopId]);
+  const onLikeShop = useCallback(() => dispatch(likeShopThunk(shopId)), [dispatch, shopId]);
+  const onUnlikeShop = useCallback(() => dispatch(unlikeShopThunk(shopId)), [dispatch, shopId]);
+
+  const onLikeComment = useCallback((commentId: string) => dispatch(likeCommentThunk(commentId)), [dispatch]);
+  const onUnlikeComment = useCallback((commentId: string) => dispatch(unlikeCommentThunk(commentId)), [dispatch]);
 
   const getLocation = useCallback((keyword: string) => dispatch(getLocationThunk(keyword)), [dispatch]);
 
@@ -39,8 +44,10 @@ export default function useDetail(shopId: string) {
     onShopImageUploadRequest,
     onMenuImageUploadRequest,
     resetDataAction,
-    onLike,
-    onUnlike,
+    onLikeShop,
+    onUnlikeShop,
+    onLikeComment,
+    onUnlikeComment,
     getLocation,
   };
 }
