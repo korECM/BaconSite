@@ -501,10 +501,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
         >
           <Flag
-            titleColor={palette.white}
+            titleColor={shop.data.scoreAverage ? palette.white : 'black'}
             descColor={palette.white}
             titleText={getScore(shop.data.scoreAverage)}
-            descText={shop.data.scoreAverage ? `${shop.data.scoreAverage.toPrecision(3)}학점` : ''}
+            descText={shop.data.scoreAverage ? `${shop.data.scoreAverage.toPrecision(3)}학점` : '0.0학점'}
             flagBackColor="red"
           />
         </ShopImage>
