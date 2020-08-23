@@ -8,6 +8,7 @@ import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
 import styled, { css } from 'styled-components';
 import Button from '../../components/common/Button';
+import FullHeightFade from '../../components/common/FullHeightFade';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -249,8 +250,8 @@ class RouletteList extends React.Component<Props, State> {
     // alert(JSON.stringify(RouletteItemList.text));
 
     return (
-      <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-        <Fade>
+      <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
+        <FullHeightFade>
           <Container color="white">
             <Header category="modal" headerColor="red" />
             <Fade>
@@ -285,7 +286,7 @@ class RouletteList extends React.Component<Props, State> {
               </Bounce>
             </Fade>
           </Container>
-        </Fade>
+        </FullHeightFade>
       </Animated>
     );
   }
