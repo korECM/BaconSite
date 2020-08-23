@@ -12,10 +12,14 @@ import {
   postMenuImageThunk,
   likeCommentThunk,
   unlikeCommentThunk,
+  toggleShopReportButton,
+  setReviewReportComment,
+  setShopReportComment,
+  postShopReportThunk,
 } from '../modules/detail';
 
 export default function useDetail(shopId: string) {
-  const { shop, reviews, shopImage, menuImage, mapAddress } = useSelector((state: RootState) => state.detail);
+  const { shop, reviews, shopImage, menuImage, mapAddress, form, shopReport } = useSelector((state: RootState) => state.detail);
   const dispatch = useDispatch();
 
   const onShopRequest = useCallback(() => dispatch(getShopThunk(shopId)), [shopId, dispatch]);
@@ -33,12 +37,25 @@ export default function useDetail(shopId: string) {
 
   const getLocation = useCallback((keyword: string) => dispatch(getLocationThunk(keyword)), [dispatch]);
 
+  const toggleShopReportButtonDispatch = useCallback((num: number) => dispatch(toggleShopReportButton(num)), [dispatch]);
+
+  const setShopReportCommentDispatch = useCallback((comment: string) => dispatch(setShopReportComment(comment)), [dispatch]);
+  const setReviewReportCommentDispatch = useCallback((comment: string) => dispatch(setReviewReportComment(comment)), [dispatch]);
+
+  const postShopReportDispatch = useCallback(() => dispatch(postShopReportThunk(shopId, { type: form.shopReport.type, comment: form.shopReport.comment })), [
+    dispatch,
+    shopId,
+    form.shopReport,
+  ]);
+
   return {
     shop,
     reviews,
     shopImage,
     menuImage,
     mapAddress,
+    form,
+    shopReport,
     onShopRequest,
     onReviewRequest,
     onShopImageUploadRequest,
@@ -49,5 +66,9 @@ export default function useDetail(shopId: string) {
     onLikeComment,
     onUnlikeComment,
     getLocation,
+    toggleShopReportButtonDispatch,
+    setShopReportCommentDispatch,
+    setReviewReportCommentDispatch,
+    postShopReportDispatch,
   };
 }

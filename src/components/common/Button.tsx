@@ -30,9 +30,9 @@ const ButtonBlock = styled.button`
       -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
       box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
       :hover {
-        background-color: ${palette.mainRed};
+        /* background-color: ${palette.mainRed};
         color: ${palette.white};
-        cursor: pointer;
+        cursor: pointer; */
       }
     `}
 

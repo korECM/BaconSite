@@ -120,11 +120,15 @@ const KakaoMapBlock = styled.div`
   box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.1);
 `;
 
-const ReportBlock = styled.div`
+const ReportBlock = styled.button`
+  border: none;
+  outline: none;
+  background-color: transparent;
   border-top: 1px solid ${hexToRGB(palette.middleGray, 0.5)};
   border-bottom: 1px solid ${hexToRGB(palette.middleGray, 0.5)};
   padding: 20px 10px;
-  margin: 30px 0;
+  margin: 0;
+  width: 100%;
   color: ${palette.darkGray};
   font-size: 12.5px;
   display: flex;
@@ -262,6 +266,31 @@ const Comment = styled(RoundContainer)`
   }
 `;
 
+const ShopReport = styled.div`
+  .buttonGroup {
+    div {
+      display: flex;
+      justify-content: space-between;
+      button {
+        flex: 1;
+        font-size: 10px;
+        padding: 8.5px 0;
+        margin: 10px 5px;
+      }
+    }
+  }
+  textarea {
+    resize: none;
+    margin: 10px 0;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 25px;
+
+    border: 1px solid ${palette.middleGray};
+  }
+`;
+
 interface DetailPageProps extends RouteComponentProps {}
 
 function DetailPage({ match, history, location }: DetailPageProps) {
@@ -278,11 +307,17 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     onLikeComment,
     onUnlikeComment,
     getLocation,
+    setShopReportCommentDispatch,
+    toggleShopReportButtonDispatch,
+    setReviewReportCommentDispatch,
+    postShopReportDispatch,
     shop,
     reviews,
     shopImage,
     menuImage,
     mapAddress,
+    form,
+    shopReport,
   } = useDetail(shopId);
 
   const { user } = useCheck();
@@ -294,6 +329,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const menuFileRef = useRef<HTMLInputElement>(null);
 
   const [loginAlert, setLoginAlert] = useState(false);
+
+  const [shopReportAlert, setShopReportAlert] = useState(false);
+  const [reviewReportAlert, setReviewReportAlert] = useState(false);
 
   const [loginMessage, setLoginMessage] = useState('');
 
@@ -418,6 +456,20 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     },
     [user, reviews.data, commentLikeOffset, onLikeComment, onUnlikeComment],
   );
+
+  const onShopReportCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setShopReportCommentDispatch(event.target.value);
+  };
+
+  const onReviewReportCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setReviewReportCommentDispatch(event.target.value);
+  };
+
+  const postShopReport = useCallback(() => {
+    setShopReportAlert(false);
+    if (shopReport.loading) return;
+    postShopReportDispatch();
+  }, [shopReport, postShopReportDispatch]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -582,7 +634,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         )}
       </KakaoMapBlock>
       <ShopInformation shop={shop.data} />
-      <ReportBlock>
+      <ReportBlock onClick={() => setShopReportAlert(true)}>
         <MdInfoOutline />
         <p>잘못된 정보가 있나요? 푸딩에게 알려주세요!</p>
         <MdKeyboardArrowRight className="right" />
@@ -653,6 +705,46 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         onConfirm={() => goLogin()}
         visible={loginAlert}
       />
+      <Dialog mode="custom" customPadding="1rem" onCancel={() => setShopReportAlert(false)} visible={shopReportAlert}>
+        <ShopReport>
+          <div className="buttonGroup">
+            <div>
+              <Button theme="gray" onClick={() => toggleShopReportButtonDispatch(0)} selected={form.shopReport.type[0]}>
+                폐업했어요
+              </Button>
+              <Button theme="gray" onClick={() => toggleShopReportButtonDispatch(1)} selected={form.shopReport.type[1]}>
+                주소가 틀려요
+              </Button>
+              <Button theme="gray" onClick={() => toggleShopReportButtonDispatch(2)} selected={form.shopReport.type[2]}>
+                가격이 틀려요
+              </Button>
+            </div>
+            <div>
+              <Button theme="gray" onClick={() => toggleShopReportButtonDispatch(3)} selected={form.shopReport.type[3]}>
+                메뉴가 틀려요
+              </Button>
+              <Button theme="gray" onClick={() => toggleShopReportButtonDispatch(4)} selected={form.shopReport.type[4]}>
+                영업일 틀려요
+              </Button>
+              <Button theme="gray" onClick={() => toggleShopReportButtonDispatch(5)} selected={form.shopReport.type[5]}>
+                전화번호 틀려요
+              </Button>
+            </div>
+          </div>
+          <textarea placeholder="그 외 잘못된 정보를 입력해주세요." rows={5} onChange={onShopReportCommentChange}>
+            {form.shopReport.comment}
+          </textarea>
+          <Button
+            theme="red"
+            fullWidth
+            onClick={postShopReport}
+            disabled={form.shopReport.type.every((t) => t === false) && form.shopReport.comment.length === 0}
+          >
+            제출하기
+          </Button>
+        </ShopReport>
+      </Dialog>
+      <Dialog mode="custom" onCancel={() => setReviewReportAlert(false)} visible={reviewReportAlert} />
     </Container>
   );
 }
