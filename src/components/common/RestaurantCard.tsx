@@ -17,6 +17,8 @@ const RestaurantCardBlock = styled(animated.button)`
   width: 100%;
   border-radius: 12.5px;
 
+  background-color : ${palette.white};
+
   font-family: inherit;
 
   -webkit-box-shadow: 5px 5px 5px -1px rgba(0, 0, 0, 0.1);
