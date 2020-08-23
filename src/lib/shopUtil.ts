@@ -1,4 +1,4 @@
-import { Location, ShopCategory } from '../api/getShop';
+import { Location, ShopCategory, Keyword } from '../api/getShop';
 
 export const categoryToString = (category: ShopCategory) => {
   switch (category) {
@@ -33,5 +33,22 @@ export const locationToString = (location: Location) => {
       return '흑석역 근처';
     default:
       return '';
+  }
+};
+
+export const keywordToString = (keyword: keyof Keyword) => {
+  switch (keyword) {
+    case 'atmosphere':
+      return '분위기';
+    case 'costRatio':
+      return '가성비';
+    case 'group':
+      return '단체';
+    case 'individual':
+      return '혼밥';
+    case 'riceAppointment':
+      return '밥약';
+    case 'spicy':
+      return '매워요';
   }
 };

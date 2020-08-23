@@ -64,7 +64,7 @@ function ResultPage({ location }: RouteComponentProps) {
           <ResultComment>검색 결과를 찾았습니다!</ResultComment>
           <RestaurantCardContainer>
             {shops.data.map((shop, index) => (
-              <Link to={`/shop/${shop._id}`}>
+              <Link to={`/shop/${shop._id}`} key={shop._id}>
                 <RestaurantCard shop={shop} delay={index} />
               </Link>
             ))}
