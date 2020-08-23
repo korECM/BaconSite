@@ -21,10 +21,10 @@ import { MdLiveTv } from 'react-icons/md';
 // const numbers = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
 // const options = numbers.map((o) => ({ index: o }));
 
-let data = [
-  { option: '맥도날드', style: { backgroundColor: '#dddddd', textColor: '#5d5d5d' }, font: 'Nanum Gothic' },
-  { option: '더마니', style: { backgroundColor: 'white', textColor: '#5d5d5d' }, font: 'Nanum Gothic' },
-];
+// let data = [
+//   { option: '맥도날드', style: { backgroundColor: '#dddddd', textColor: '#5d5d5d' }, font: 'Nanum Gothic' },
+//   { option: '더마니', style: { backgroundColor: 'white', textColor: '#5d5d5d' }, font: 'Nanum Gothic' },
+// ];
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -56,6 +56,12 @@ interface RouletteItemState {
   done: boolean;
 }
 
+interface DataInterface {
+  option: string;
+  style: { backgroundColor: string; textColor: string };
+  font: string;
+}
+
 interface State {
   input: string;
   RouletteItems: RouletteItemState[];
@@ -81,7 +87,34 @@ class RoulettePage extends React.Component<Props, State> {
       .map((item) => decodeURIComponent(item));
     console.log(items);
 
-    // data = this.props.location.state.datalist;
+    let data: DataInterface[] = Array.from({ length: Math.min(items.length, 6) }, (v) => ({
+      option: 'dd',
+      style: { backgroundColor: 'dd', textColor: 'dd' },
+      font: 'dd',
+    }));
+
+    if (items.length >= 1) {
+      // let data = RouletteItems.map((v) => {
+      //     console.log(RouletteItems[v].text);
+      //     return RouletteItems;
+      // });
+
+      // console.log(RouletteItems.id.text);
+      for (var i = 0; i < items.length; i++) {
+        data[i].option = items[i];
+        if (i % 2 == 0) {
+          data[i].style.backgroundColor = '#dddddd';
+          data[i].style.textColor = '#5d5d5d';
+          data[i].font = 'Nanum Gothic';
+        } else {
+          data[i].style.backgroundColor = 'white';
+          data[i].style.textColor = '#5d5d5d';
+          data[i].font = 'Nanum Gothic';
+        }
+      }
+      console.log(data);
+    }
+    
 
     return (
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
