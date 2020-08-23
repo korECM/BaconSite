@@ -18,11 +18,16 @@ const TitleSlogan = styled.h1`
   color: black;
 `;
 
-const TitleLogo = styled.h1`
-  width: flex;
+const TitleLogo = styled.div`
+  display: flex;
+
+  justify-content: center;
 
   img {
-    width: 100%;
+    flex: 1;
+    padding: 0 10%;
+    max-height: 64px;
+    max-width: 284px;
   }
 `;
 
