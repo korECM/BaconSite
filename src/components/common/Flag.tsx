@@ -1,10 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import RedFlag from './RedFlag.png';
 
 const FlagBlock = styled.div`
   height: 85px;
   width: 53px;
-  background-image: url('https://bacon-shop-origin.s3.ap-northeast-2.amazonaws.com/images/Flag.png');
+  background-image: ${`url(${RedFlag})`};
 
   background-repeat: no-repeat;
   background-position: center;
