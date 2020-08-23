@@ -108,12 +108,18 @@ const ErrorMessage = styled.div`
   margin-bottom: 20px;
 `;
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
 interface RouletteItemState {
   id: number;
   text: string;
   done: boolean;
+}
+
+interface DataInterface {
+  option: string;
+  style: { backgroundColor: string; textColor: string };
+  font: string;
 }
 
 interface State {
@@ -146,6 +152,8 @@ class RouletteList extends React.Component<Props, State> {
     });
   };
 
+  // TODO: 공백일 때 입력 안되도록 해야합니당
+  // TODO: 6개 넘으면 크래시나요
   onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { RouletteItems, input } = this.state;
@@ -172,9 +180,13 @@ class RouletteList extends React.Component<Props, State> {
     });
   };
 
-  moveHref = () => {
+  moveHref = (data: DataInterface[]) => {
     beClicked = true;
     selected_name = 'true';
+    this.props.history.push({
+      pathname: '/roulette',
+      search: '?items=' + data.map((data) => data.option).join(','),
+    });
   };
 
   render() {
@@ -187,7 +199,7 @@ class RouletteList extends React.Component<Props, State> {
 
     // interface datum { option: String, style: { backgroundColor: String, textColor: String }, font: String };
 
-    let data = Array.from({ length: Math.min(RouletteItems.length, 6) }, (v) => ({
+    let data: DataInterface[] = Array.from({ length: Math.min(RouletteItems.length, 6) }, (v) => ({
       option: 'dd',
       style: { backgroundColor: 'dd', textColor: 'dd' },
       font: 'dd',
@@ -222,7 +234,7 @@ class RouletteList extends React.Component<Props, State> {
         <FullHeightFade>
           <Container color="white">
             <Header category="modal" headerColor="red" />
-            <Fade>
+            <FullHeightFade>
               <Bounce>
                 <EmptySpace></EmptySpace>
                 <div>
@@ -239,20 +251,11 @@ class RouletteList extends React.Component<Props, State> {
                   <Divider></Divider>
                   <ul>{RouletteItemList}</ul>
                 </div>
-                <Link
-                  to={{
-                    pathname: '/roulette',
-                    state: {
-                      datalist: data,
-                    },
-                  }}
-                >
-                  <Button theme="red" onClick={moveHref}>
-                    룰렛 돌리기
-                  </Button>
-                </Link>
+                <Button theme="red" onClick={() => moveHref(data)}>
+                  룰렛 돌리기
+                </Button>
               </Bounce>
-            </Fade>
+            </FullHeightFade>
           </Container>
         </FullHeightFade>
       </Animated>
@@ -260,4 +263,4 @@ class RouletteList extends React.Component<Props, State> {
   }
 }
 
-export default RouletteList;
+export default withRouter(RouletteList);

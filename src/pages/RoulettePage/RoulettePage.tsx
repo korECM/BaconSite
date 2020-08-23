@@ -3,14 +3,14 @@ import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
 // import React from 'react';
-import {  Route, BrowserRouter, RouteComponentProps, useHistory, useLocation } from 'react-router-dom';
+import { Route, BrowserRouter, RouteComponentProps, useHistory, useLocation } from 'react-router-dom';
 import palette from '../../styles/palette';
 import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
 import { Wheel } from 'react-custom-roulette';
 import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
-import { RouteProps } from 'react-router';
+import { RouteProps, withRouter } from 'react-router';
 import FullHeightFade from '../../components/common/FullHeightFade';
 import { MdLiveTv } from 'react-icons/md';
 
@@ -48,7 +48,7 @@ const EmptySpace = styled.h1`
 let beClicked = false;
 let selected_name = 'false';
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
 interface RouletteItemState {
   id: number;
@@ -66,9 +66,7 @@ interface DetailPageProps extends RouteComponentProps {}
 // const history = useHistory();
 // const location = useLocation();
 
-class RoulettePage extends React.Component<Props & RouteProps, State> {
-  
-  
+class RoulettePage extends React.Component<Props, State> {
   moveHref = () => {
     beClicked = true;
     selected_name = 'true';
@@ -76,6 +74,12 @@ class RoulettePage extends React.Component<Props & RouteProps, State> {
 
   render() {
     const { moveHref } = this;
+
+    let items = this.props.location.search
+      .split('=')[1]
+      .split(',')
+      .map((item) => decodeURIComponent(item));
+    console.log(items);
 
     // data = this.props.location.state.datalist;
 
@@ -117,7 +121,7 @@ class RoulettePage extends React.Component<Props & RouteProps, State> {
   }
 }
 
-export default RoulettePage;
+export default withRouter(RoulettePage);
 
 {
   /* <canvas width={50} height={50} color={'black'} background-color={'black'}>
