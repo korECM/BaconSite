@@ -65,6 +65,7 @@ interface State {
   keywords: string[];
 }
 
+<<<<<<< HEAD
 class FilterPage extends React.Component<Props, State> {
   state: State = {
     sorting_bool: [false, false, false],
@@ -192,6 +193,34 @@ class FilterPage extends React.Component<Props, State> {
       </Animated>
     );
   }
+=======
+function FilterPage({ match }: RouteComponentProps) {
+  return (
+    <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
+      <Fade>
+        <Container color="white">
+          <Helmet>
+            <title>당신만을 위한 식당 - 푸딩</title>
+          </Helmet>
+          <Header category="modal" headerColor="white" />
+          <Fade>
+            <Bounce>
+              <TitleComment>필터링 검색</TitleComment>
+              <SubtitleComment>정렬</SubtitleComment>
+              <ButtonLine>
+                <Button theme="gray">추천순</Button>
+                <Button theme="gray">평점순</Button>
+                <Button theme="gray">리뷰순</Button>
+              </ButtonLine>
+              <Divider></Divider>
+              <ButtonLine></ButtonLine>
+            </Bounce>
+          </Fade>
+        </Container>
+      </Fade>
+    </Animated>
+  );
+>>>>>>> master
 }
 
 export default FilterPage;

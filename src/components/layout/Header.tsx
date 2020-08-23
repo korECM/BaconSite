@@ -4,8 +4,9 @@ import { MdClear, MdKeyboardArrowLeft } from 'react-icons/md';
 import palette from '../../styles/palette';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
-import MypageButton from '../common/MypageButton';
-import logo from './foodingicon.png';
+import FoodingTitleRed from './FoodingTitleRed.png';
+import FoodingTitleWhite from './FoodingTitleWhite.png';
+import JustFooding from './JustFooding.png';
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -14,7 +15,9 @@ const HeaderBlock = styled.div`
 
 const HeaderContainer = styled.div`
   display: flex;
+  position: relative;
   height: 100%;
+  align-items: center;
   ${(props: HeaderProps) =>
     css`
       if(props.headerColor !== 'none') {
@@ -27,6 +30,12 @@ const HeaderContainer = styled.div`
     height: 50px;
   }
 
+  .titleLogo {
+    width: 109px;
+    height: 31px;
+    margin: 0 auto;
+  }
+
   button {
     border: none;
     outline: none;
@@ -34,13 +43,27 @@ const HeaderContainer = styled.div`
     color: inherit;
     font-size: 2.5rem;
   }
-  button:nth-child(1) {
+  .left {
+    position: absolute;
+    left: 0;
     padding-left: 0;
   }
 
-  button:nth-child(2) {
-    margin-left: auto;
+  .right {
+    position: absolute;
+    right: 0;
+    /* margin-left: auto; */
     padding-right: 0;
+  }
+
+  .myPage {
+    img {
+      width: 27px;
+      height: 23px;
+    }
+    div {
+      font-size: 10px;
+    }
   }
 `;
 
@@ -80,25 +103,22 @@ function Header(props: HeaderProps) {
     <HeaderBlock>
       {props.category === 'main' ? (
         <HeaderContainer {...props}>
-          <button>
+          {/* <button className="left">
             <img src={logo} style={{ width: '40px', height: '40px' }} alt="logo" />
+          </button> */}
+          <img className="titleLogo" src={props.headerColor === 'red' ? FoodingTitleWhite : FoodingTitleRed} alt="title" />
+          <button onClick={onRightButtonClick} className="right myPage">
+            <img src={JustFooding} alt="mypage" />
+            <div>마이푸딩</div>
           </button>
-          {user ? (
-            <button onClick={onRightButtonClick}>
-              <img src="https://ifh.cc/g/aVLW50.png" alt="mypage" />
-            </button>
-          ) : (
-            <button onClick={onRightButtonClick}>
-              <img src="https://ifh.cc/g/eMtxxz.png" alt="login" />
-            </button>
-          )}
         </HeaderContainer>
       ) : (
         <HeaderContainer {...props}>
-          <button onClick={onLeftButtonClick}>
+          <button onClick={onLeftButtonClick} className="left">
             <MdKeyboardArrowLeft />
           </button>
-          <button onClick={onRightButtonClick}>
+          <img className="titleLogo" src={props.headerColor === 'red' ? FoodingTitleWhite : FoodingTitleRed} alt="title" />
+          <button onClick={onRightButtonClick} className="right">
             <MdClear />
           </button>
         </HeaderContainer>

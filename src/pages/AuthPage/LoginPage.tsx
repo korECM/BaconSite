@@ -13,6 +13,7 @@ import useAuth from '../../hooks/useAuth';
 import useCheck from '../../hooks/useCheck';
 import StyledInput from '../../components/common/StyledInput';
 import { Helmet } from 'react-helmet-async';
+import LogoImage from '../fooding_titlelogo.png';
 
 const AuthPageBlock = styled.div`
   padding: 0 5%;
@@ -21,6 +22,18 @@ const AuthContainer = styled.form``;
 
 const Logo = styled.div`
   margin: 50px 0;
+  h1 {
+    color: black;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+  img {
+    height: 64px;
+    width: 284px;
+  }
 `;
 
 const AuthSelectBlock = styled.div`
@@ -224,7 +237,10 @@ function LoginPage({ history }: RouteComponentProps) {
       </Helmet>
       <Header category="modal" headerColor="white" />
       <AuthPageBlock>
-        <Logo>로고 들어가는 자리</Logo>
+        <Logo>
+          <h1>뭐 먹을지 고민될 땐?</h1>
+          <img src={LogoImage} alt="logo" />
+        </Logo>
         <AuthContainer onSubmit={onSubmit}>
           <AuthSelectBlock>
             <button type="button" className={cx({ select: mode === 'login' })} onClick={() => setModeDispatch('login')}>

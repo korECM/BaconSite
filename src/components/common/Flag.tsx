@@ -1,10 +1,22 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import RedFlag from './RedFlag.png';
+import GrayFlag from './GrayFlag.png';
 
 const FlagBlock = styled.div`
   height: 85px;
   width: 53px;
-  background-image: url('https://bacon-shop-origin.s3.ap-northeast-2.amazonaws.com/images/Flag.png');
+  ${(props: FlagProps) => {
+    if (props.flagBackColor === 'red') {
+      return css`
+        background-image: ${`url(${RedFlag})`};
+      `;
+    } else {
+      return css`
+        background-image: ${`url(${GrayFlag})`};
+      `;
+    }
+  }}
 
   background-repeat: no-repeat;
   background-position: center;
@@ -19,9 +31,11 @@ const FlagBlock = styled.div`
   margin-left: auto;
   margin-right: 30px;
 
-  ${(props: FlagProps) => css`
-    color: ${props.flagColor};
-  `};
+  ${(props: FlagProps) =>
+    props.marginRight &&
+    css`
+      margin-right: ${props.marginRight};
+    `};
 `;
 
 const Title = styled.div`
@@ -50,7 +64,8 @@ interface FlagProps {
   descText: string;
   titleColor: string;
   descColor: string;
-  flagColor: string;
+  marginRight?: string;
+  flagBackColor: 'red' | 'gray';
 }
 
 function Flag(props: FlagProps) {

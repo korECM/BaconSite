@@ -17,10 +17,14 @@ const LoaderBlock = styled.div`
   transform: translateX(-30px);
 `;
 
-function Loader() {
+interface LoaderProps {
+  color?: string;
+}
+
+function Loader({ color }: LoaderProps) {
   return (
     <LoaderBlock>
-      <PacmanLoader color={palette.mainRed} size={20} />
+      <PacmanLoader color={color || palette.mainRed} size={20} />
     </LoaderBlock>
   );
 }

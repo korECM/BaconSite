@@ -254,7 +254,7 @@ class RouletteList extends React.Component<Props, State> {
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
         <FullHeightFade>
           <Container color="white">
-            <Header category="modal" headerColor="red" />
+            <Header category="modal" headerColor="white" />
             <FullHeightFade>
               <Bounce>
                 <EmptySpace></EmptySpace>
