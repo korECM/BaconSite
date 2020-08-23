@@ -38,7 +38,7 @@ const ButtonContainer = styled.div`
     outline: none;
     padding-left: 10px;
 
-    width: 190px;
+    flex: 1;
 
     font-size: 15px;
     font-weight: 800;
@@ -90,8 +90,6 @@ const ButtonContainer = styled.div`
   }
 
   button:nth-child(2) {
-    margin-left: auto;
-    padding-right: 0;
   }
 `;
 
