@@ -139,6 +139,9 @@ body {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
+body {
+  touch-action: manipulation;
+}
 #root {
   height: 100%;
 }
