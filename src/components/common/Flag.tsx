@@ -1,11 +1,22 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import RedFlag from './RedFlag.png';
+import GrayFlag from './GrayFlag.png';
 
 const FlagBlock = styled.div`
   height: 85px;
   width: 53px;
-  background-image: ${`url(${RedFlag})`};
+  ${(props: FlagProps) => {
+    if (props.flagBackColor === 'red') {
+      return css`
+        background-image: ${`url(${RedFlag})`};
+      `;
+    } else {
+      return css`
+        background-image: ${`url(${GrayFlag})`};
+      `;
+    }
+  }}
 
   background-repeat: no-repeat;
   background-position: center;
@@ -21,7 +32,7 @@ const FlagBlock = styled.div`
   margin-right: 30px;
 
   ${(props: FlagProps) => css`
-    color: ${props.flagColor};
+    color: ${props.flagTextColor};
   `};
 `;
 
@@ -51,7 +62,8 @@ interface FlagProps {
   descText: string;
   titleColor: string;
   descColor: string;
-  flagColor: string;
+  flagTextColor: string;
+  flagBackColor: 'red' | 'gray';
 }
 
 function Flag(props: FlagProps) {

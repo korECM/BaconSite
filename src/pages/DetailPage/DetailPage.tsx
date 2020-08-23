@@ -520,7 +520,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             descColor={palette.white}
             titleText={getScore(shop.data.scoreAverage)}
             descText={shop.data.scoreAverage ? `${shop.data.scoreAverage.toPrecision(3)}학점` : ''}
-            flagColor={palette.mainRed}
+            flagTextColor={palette.mainRed}
+            flagBackColor="red"
           />
         </ShopImage>
       </ShopImageContainer>
