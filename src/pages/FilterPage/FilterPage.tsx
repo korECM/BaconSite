@@ -13,6 +13,35 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet-async';
 import './TagButton.css';
 
+const ButtonBlock = styled.button`
+  margin-right: -4px;
+  background-color: #DB2A37;
+  color: white;
+  margin-top: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 15px;
+
+  outline: none;
+  border: none;
+
+  border-radius: 12.5px;
+  padding: 8.5px 27.5px;
+
+  margin-bottom: 15px;
+  margin: 3%;
+  width: 100%;
+  height: 50px;
+
+  transition: background-color 0.2s ease;
+  -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+
+  font-family: 'Nanum Gothic';
+  font-weight: 700;
+`;
+
 const TitleComment = styled.h1`
   font-family: 'Nanum Gothic';
   font-size: 30px;
@@ -91,6 +120,11 @@ class FilterPage extends React.Component<Props, State> {
     this.setState({
       food_bool: this.state.food_bool.map((item, index) => (index !== i ? item : !item)),
     });
+    // if (this.state.food_bool[5] == true) {
+    //   this.setState({
+    //     food_bool: this.state.food_bool.map((item, index) => true),
+    //   });
+    // }
   }
 
   changePlaceColor(i: number) {
@@ -213,6 +247,9 @@ class FilterPage extends React.Component<Props, State> {
                   <div style={TagTextStyle}>{keywordList}</div>
                 </ButtonLine>
                 <Divider></Divider>
+                <Divider></Divider>
+                <Divider></Divider>
+                <ButtonBlock>검색하기</ButtonBlock>
               </Bounce>
             </Fade>
           </Container>
