@@ -24,10 +24,9 @@ const TitleLogo = styled.div`
   justify-content: center;
 
   img {
-    flex: 1;
     padding: 0 10%;
-    max-height: 64px;
-    max-width: 284px;
+    height: 64px;
+    width: 284px;
   }
 `;
 
