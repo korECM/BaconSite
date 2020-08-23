@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback, useState } from 'react';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import useDetail from '../../hooks/useDetail';
 import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit, MdInfoOutline, MdKeyboardArrowRight, MdRestaurantMenu } from 'react-icons/md';
 import { ClockLoader } from 'react-spinners';
@@ -208,13 +208,27 @@ const Comment = styled(RoundContainer)`
   align-items: flex-start;
   padding: 5px 20px;
 
-  div:nth-child(1) {
+  .name {
     font-size: 12px;
     margin-bottom: 5px;
   }
-  div:nth-child(2) {
+  .content {
     font-size: 10px;
     line-height: 1.5;
+  }
+
+  .detail {
+    margin-top: 5px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    .likeNum,
+    a {
+      margin-left: 10px;
+    }
+    .likeNum {
+      font-weight: bolder;
+    }
   }
 `;
 
@@ -550,8 +564,15 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         {reviews.data &&
           reviews.data.map((review, index) => (
             <Comment theme="gray" key={review._id} delay={index * 150}>
-              <div>{review.user.name}</div>
-              <div>{review.comment}</div>
+              <div className="name">{review.user.name}</div>
+              <div className="content">{review.comment}</div>
+              <div className="detail">
+                {[new Date(review.registerDate)].map((date) => (
+                  <div key={date.toString()}>{`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
+                ))}
+                <div className="likeNum">좋아요 {review.likeNum}개</div>
+                <Link to="">신고하기</Link>
+              </div>
             </Comment>
           ))}
       </CommentContainer>

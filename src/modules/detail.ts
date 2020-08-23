@@ -142,7 +142,7 @@ const initialState: DetailState = {
         riceAppointment: 0,
         spicy: 0,
       },
-      registerDate: '',
+      registerDate: new Date(),
     },
     true,
   ),

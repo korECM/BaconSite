@@ -8,6 +8,7 @@ export interface ReviewInterface {
   score: number;
   registerDate: Date;
   didLike: boolean;
+  likeNum: number;
 }
 
 export interface User {

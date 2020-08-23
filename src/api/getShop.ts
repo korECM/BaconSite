@@ -33,7 +33,7 @@ export interface ShopInterface {
   location: Location;
   latitude: number;
   longitude: number;
-  registerDate: string;
+  registerDate: Date;
   scoreAverage: number;
   reviewCount: number;
   likerCount: number;
