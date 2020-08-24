@@ -31,8 +31,10 @@ const Logo = styled.div`
     margin-bottom: 20px;
   }
   img {
+    display: block;
     height: 64px;
     width: 284px;
+    margin: 0 auto;
   }
 `;
 
