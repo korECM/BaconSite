@@ -119,7 +119,7 @@ class FilterPage extends React.Component<Props, State> {
   changeSortingColor(i: number) {
     console.log(i);
     this.setState({
-      sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? item : !item)),
+      sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? item=false : item=true)),
     });
   }
 
