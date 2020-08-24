@@ -124,7 +124,7 @@ function MyPage() {
             <div className="shops">
               {shops.data &&
                 shops.data.map((shop, index) => (
-                  <Link to={`/shop/${shop._id}`}>
+                  <Link to={`/shop/${shop._id}`} key={shop._id}>
                     <RestaurantCard shop={shop} delay={index} />
                   </Link>
                 ))}
@@ -143,7 +143,7 @@ function MyPage() {
           <div className="comments">
             {reviews.data &&
               reviews.data.map((review, index) => (
-                <div className="commentWrapper">
+                <div className="commentWrapper" key={review._id}>
                   <Comment
                     review={review}
                     index={index}
