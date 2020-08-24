@@ -7,14 +7,14 @@ import Container from './components/layout/Container';
 import Header from './components/layout/Header';
 import { Helmet } from 'react-helmet-async';
 
-const DetailPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/DetailPage/DetailPageRouter'));
+const DetailPageRouter = React.lazy(() => import(/* webpackChunkName: "result", webpackPrefetch: true */ './pages/DetailPage/DetailPageRouter'));
 const AdminRouter = React.lazy(() => import('./pages/AdminPage/AdminRouter'));
-const RouletteRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/RoulettePage/RoulettePageRouter'));
-const RouletteListRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/RoulettePage/RouletteListRouter'));
-const LoginPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/AuthPage/LoginPageRouter'));
-const YesNoPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/YesNoPage/YesNoPageRouter'));
-const FilterPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/FilterPage/FilterPageRouter'));
-const MyPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/MyPage/MyPage'));
+const RouletteRouter = React.lazy(() => import(/* webpackChunkName: "roulette", webpackPrefetch: true */ './pages/RoulettePage/RoulettePageRouter'));
+const RouletteListRouter = React.lazy(() => import(/* webpackChunkName: "rouletteList", webpackPrefetch: true */ './pages/RoulettePage/RouletteListRouter'));
+const LoginPageRouter = React.lazy(() => import(/* webpackChunkName: "login", webpackPrefetch: true */ './pages/AuthPage/LoginPageRouter'));
+const YesNoPageRouter = React.lazy(() => import(/* webpackChunkName: "yesno", webpackPrefetch: true */ './pages/YesNoPage/YesNoPageRouter'));
+const FilterPageRouter = React.lazy(() => import(/* webpackChunkName: "filter", webpackPrefetch: true */ './pages/FilterPage/FilterPageRouter'));
+const MyPageRouter = React.lazy(() => import(/* webpackChunkName: "myPage", webpackPrefetch: true */ './pages/MyPage/MyPage'));
 
 function App() {
   return (
