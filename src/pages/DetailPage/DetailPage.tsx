@@ -643,7 +643,14 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       <CommentContainer>
         {reviews.data &&
           reviews.data.map((review, index) => (
-            <Comment review={review} index={index} commentLikeOffset={commentLikeOffset} openReviewReport={openReviewReport} likeComment={likeComment} />
+            <Comment
+              review={review}
+              index={index}
+              commentLikeOffset={commentLikeOffset}
+              openReviewReport={openReviewReport}
+              likeComment={likeComment}
+              key={review._id}
+            />
           ))}
       </CommentContainer>
       <Dialog

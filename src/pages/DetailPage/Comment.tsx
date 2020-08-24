@@ -82,7 +82,7 @@ interface CommentProps {
 
 function Comment({ review, index, openReviewReport, likeComment, commentLikeOffset }: CommentProps) {
   return (
-    <CommentBlock theme="gray" key={review._id} delay={index * 150}>
+    <CommentBlock theme="gray" delay={index * 150}>
       <div className="contentContainer">
         <div className="name">{review.user.name}</div>
         <div className="content">{review.comment}</div>
