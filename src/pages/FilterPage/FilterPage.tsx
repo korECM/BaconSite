@@ -218,7 +218,7 @@ class FilterPage extends React.Component<Props, State> {
             <Helmet>
               <title>당신만을 위한 식당 - 푸딩</title>
             </Helmet>
-            <Header category="modal" headerColor="red" />
+            <Header category="modal" headerColor="white" />
             <Fade>
               <Bounce>
                 <TitleComment>필터링 검색</TitleComment>
