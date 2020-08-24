@@ -10,12 +10,13 @@ import Loader from '../../components/common/Loader';
 import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
 import React, { Component } from 'react';
+import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
 import './TagButton.css';
 
 const ButtonBlock = styled.button`
   margin-right: -4px;
-  background-color: #DB2A37;
+  background-color: #db2a37;
   color: white;
   margin-top: 50px;
   padding-left: 25px;
@@ -79,7 +80,14 @@ const Divider = styled.div`
   margin-bottom: 17px;
 `;
 
+let beClicked = false;
+let selected_name = 'false';
+
 interface Props extends RouteComponentProps {}
+
+interface DataInterface {
+  option: string[];
+}
 
 interface State {
   sorting_bool: boolean[];
@@ -96,22 +104,22 @@ interface State {
 
 class FilterPage extends React.Component<Props, State> {
   state: State = {
-    sorting_bool: [false, false, false],
-    sortings: ['별점순', '최신순', '리뷰순'],
-    food_bool: [false, false, false, false, false, false],
-    foods: ['한식', '중식', '일식', '양식', '분식', 'ALL'],
-    price_bool: [false, false, false, false],
-    prices: ['5천원 이하', '1만원 이하', '2만원 이하', '3만원 이하'],
-    place_bool: [false, false, false],
-    places: ['정문', '후문', 'ALL'],
-    keyword_bool: [false, false, false, false, false, false],
-    keywords: ['가성비', '분위기', '단체', '혼밥', '밥약', '맵찔'],
+    sorting_bool: [true, false, false],
+    sortings: ['평점순', '추천순', '리뷰순'],
+    food_bool: [false, false, false, false, false, false, false, true],
+    foods: ['한식', '중식', '일식', '양식', '분식', '퓨전', '기타', 'ALL'],
+    price_bool: [false, false, false, true],
+    prices: ['5천원 이하', '1만원 이하', '2만원 이하', 'ALL'],
+    place_bool: [false, false, false, false, true],
+    places: ['정문', '후문', '중대병원', '흑석역', 'ALL'],
+    keyword_bool: [false, false, false, false, false, false, true],
+    keywords: ['가성비', '분위기', '단체', '혼밥', '밥약', '맵찔', 'ALL'],
   };
 
   changeSortingColor(i: number) {
     console.log(i);
     this.setState({
-      sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? item : !item)),
+      sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? item=false : item=true)),
     });
   }
 
@@ -148,7 +156,29 @@ class FilterPage extends React.Component<Props, State> {
     });
   }
 
+  moveHref = (data: DataInterface[]) => {
+    beClicked = true;
+    selected_name = 'true';
+    this.props.history.push({
+      pathname: '/result',
+      search:
+        '?order=' +
+        data[0].option.join(',') +
+        '&category=' +
+        data[1].option.join(',') +
+        '&price=' +
+        data[2].option.join(',') +
+        '&location=' +
+        data[3].option.join(',') +
+        '&keyword=' +
+        data[4].option.join(','),
+    });
+  };
+
+  // data.map((data) => data.option)
+
   render() {
+    const { moveHref } = this;
     const { sortings, foods, prices, places, keywords } = this.state;
 
     const sortingList = sortings.map((sorting, i) => (
@@ -206,6 +236,87 @@ class FilterPage extends React.Component<Props, State> {
       </button>
     ));
 
+    let data: DataInterface[] = [
+      { option: [] } /* order : rate, recommended, review*/,
+      { option: [] } /* category : korean, chinese, japanese, western, school, fusion, other, all*/,
+      { option: [] } /* price : 5000, 10000, 20000, all*/,
+      { option: [] } /* location : front, back, hs_station, front_far, all*/,
+      { option: [] } /* keyword : costRatio,atmosphere,group,individual,riceAppointment,spicy*/,
+    ];
+
+    let order = ['rate', 'recommended', 'review'];
+    let category = ['korean', 'chinese', 'japanese', 'western', 'school', 'fusion', 'other'];
+    let price = ['5000', '10000', '20000'];
+    let location = ['front', 'back', 'front_far', 'hs_station'];
+    let keyword = ['costRatio', 'atmosphere', 'group', 'individual', 'riceAppointment', 'spicy'];
+
+    var selectCheck = true;
+
+    function orOperation(array: boolean[]) {
+      var result = false;
+
+      for (var i = 0; i < array.length; i++) result = result || array[i];
+
+      return result;
+    }
+
+    if (orOperation(this.state.sorting_bool) === false) {
+      selectCheck = false;
+    } else if (orOperation(this.state.food_bool) === false) {
+      selectCheck = false;
+    } else if (orOperation(this.state.price_bool) === false) {
+      selectCheck = false;
+    } else if (orOperation(this.state.place_bool) === false) {
+      selectCheck = false;
+    } else if (orOperation(this.state.keyword_bool) === false) {
+      selectCheck = false;
+    }
+
+    if (selectCheck === true) {
+      for (var i = 0; i < this.state.sorting_bool.length; i++) {
+        if (this.state.sorting_bool[i] === true) {
+          data[0].option.push(order[i]);
+        }
+      }
+      for (var i = 0; i < this.state.food_bool.length - 1; i++) {
+        if (this.state.food_bool[i] === true) {
+          data[1].option.push(category[i]);
+        }
+      }
+      if (this.state.food_bool[this.state.food_bool.length - 1] === true) {
+        /*ALL이 TRUE면 */
+        data[1].option = [];
+      }
+      for (var i = 0; i < this.state.price_bool.length - 1; i++) {
+        if (this.state.price_bool[i] === true) {
+          data[2].option.push(price[i]);
+        }
+      }
+      if (this.state.price_bool[this.state.price_bool.length - 1] === true) {
+        /*ALL이 TRUE면 */
+        data[2].option = [];
+      }
+      for (var i = 0; i < this.state.place_bool.length - 1; i++) {
+        if (this.state.place_bool[i] === true) {
+          data[3].option.push(location[i]);
+        }
+      }
+      if (this.state.place_bool[this.state.place_bool.length - 1] === true) {
+        /*ALL이 TRUE면 */
+        data[3].option = [];
+      }
+      for (var i = 0; i < this.state.keyword_bool.length - 1; i++) {
+        if (this.state.keyword_bool[i] === true) {
+          data[4].option.push(keyword[i]);
+        }
+      }
+      if (this.state.keyword_bool[this.state.keyword_bool.length - 1] === true) {
+        /*ALL이 TRUE면 */
+        data[4].option = [];
+      }
+      console.log(data);
+    }
+
     var TagTextStyle = {
       fontSize: 30,
       flex: 1,
@@ -218,7 +329,7 @@ class FilterPage extends React.Component<Props, State> {
             <Helmet>
               <title>당신만을 위한 식당 - 푸딩</title>
             </Helmet>
-            <Header category="modal" headerColor="red" />
+            <Header category="modal" headerColor="white" />
             <Fade>
               <Bounce>
                 <TitleComment>필터링 검색</TitleComment>
@@ -249,7 +360,9 @@ class FilterPage extends React.Component<Props, State> {
                 <Divider></Divider>
                 <Divider></Divider>
                 <Divider></Divider>
-                <ButtonBlock>검색하기</ButtonBlock>
+                <Button theme="red" big onClick={() => moveHref(data)}>
+                  검색하기
+                </Button>
               </Bounce>
             </Fade>
           </Container>
