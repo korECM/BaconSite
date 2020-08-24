@@ -247,7 +247,7 @@ class FilterPage extends React.Component<Props, State> {
     let order = ['rate', 'recommended', 'review'];
     let category = ['korean', 'chinese', 'japanese', 'western', 'school', 'fusion', 'other'];
     let price = ['5000', '10000', '20000'];
-    let location = ['front', 'back', 'hs_station', 'front_far'];
+    let location = ['front', 'back', 'front_far', 'hs_station'];
     let keyword = ['costRatio', 'atmosphere', 'group', 'individual', 'riceAppointment', 'spicy'];
 
     var selectCheck = true;
@@ -360,7 +360,7 @@ class FilterPage extends React.Component<Props, State> {
                 <Divider></Divider>
                 <Divider></Divider>
                 <Divider></Divider>
-                <Button theme="red" onClick={() => moveHref(data)}>
+                <Button theme="red" big onClick={() => moveHref(data)}>
                   검색하기
                 </Button>
               </Bounce>
