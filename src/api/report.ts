@@ -24,10 +24,12 @@ export async function reportShopAPI(shopId: string, data: ReportShopInterface) {
   return response.data;
 }
 
-export async function reportReviewAPI(reviewId: string) {
+export async function reportReviewAPI(reviewId: string, comment: string) {
   const response = await axios.post<ReportInterface>(
     apiLink() + `/shop/review/report/${reviewId}`,
-    {},
+    {
+      comment,
+    },
     {
       withCredentials: true,
     },

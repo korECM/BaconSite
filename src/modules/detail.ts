@@ -9,7 +9,7 @@ import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
 import { LikeCommentInterface, likeCommentAPI, unlikeCommentAPI } from '../api/likeComment';
 import { locationToString, categoryToString } from '../lib/shopUtil';
-import { ReportInterface, reportShopAPI } from '../api/report';
+import { ReportInterface, reportShopAPI, reportReviewAPI } from '../api/report';
 
 const RESET_DATA = 'detail/RESET_DATA' as const;
 
@@ -59,6 +59,10 @@ const POST_SHOP_REPORT = 'detail/POST_SHOP_REPORT' as const;
 const POST_SHOP_REPORT_SUCCESS = 'detail/POST_SHOP_REPORT_SUCCESS' as const;
 const POST_SHOP_REPORT_ERROR = 'detail/POST_SHOP_REPORT_ERROR' as const;
 
+const POST_REVIEW_REPORT = 'detail/POST_REVIEW_REPORT' as const;
+const POST_REVIEW_REPORT_SUCCESS = 'detail/POST_REVIEW_REPORT_SUCCESS' as const;
+const POST_REVIEW_REPORT_ERROR = 'detail/POST_REVIEW_REPORT_ERROR' as const;
+
 export const resetData = createAction(RESET_DATA)();
 export const toggleShopReportButton = createAction(TOGGLE_SHOP_REPORT_BUTTON)<number>();
 export const setShopReportComment = createAction(SET_SHOP_REPORT_COMMENT)<string>();
@@ -91,6 +95,12 @@ export const unlikeCommentAsync = createAsyncAction(UNLIKE_COMMENT, UNLIKE_COMME
 export const getLocationAsync = createAsyncAction(GET_LOCATION, GET_LOCATION_SUCCESS, GET_LOCATION_ERROR)<void, LocationInterface, AxiosError>();
 
 export const postShopReportAsync = createAsyncAction(POST_SHOP_REPORT, POST_SHOP_REPORT_SUCCESS, POST_SHOP_REPORT_ERROR)<void, ReportInterface, AxiosError>();
+
+export const postReviewReportAsync = createAsyncAction(POST_REVIEW_REPORT, POST_REVIEW_REPORT_SUCCESS, POST_REVIEW_REPORT_ERROR)<
+  void,
+  ReportInterface,
+  AxiosError
+>();
 
 type DetailAction =
   | ReturnType<typeof resetData>
@@ -126,7 +136,10 @@ type DetailAction =
   | ReturnType<typeof getLocationAsync.failure>
   | ReturnType<typeof postShopReportAsync.request>
   | ReturnType<typeof postShopReportAsync.success>
-  | ReturnType<typeof postShopReportAsync.failure>;
+  | ReturnType<typeof postShopReportAsync.failure>
+  | ReturnType<typeof postReviewReportAsync.request>
+  | ReturnType<typeof postReviewReportAsync.success>
+  | ReturnType<typeof postReviewReportAsync.failure>;
 
 export const getShopThunk = createAsyncThunk(getShopAsync, getShop);
 export const getReviewThunk = createAsyncThunk(getReviewAsync, getReview);
@@ -138,6 +151,7 @@ export const likeCommentThunk = createAsyncThunk(likeCommentAsync, likeCommentAP
 export const unlikeCommentThunk = createAsyncThunk(unlikeCommentAsync, unlikeCommentAPI);
 export const getLocationThunk = createAsyncThunk(getLocationAsync, getLocation);
 export const postShopReportThunk = createAsyncThunk(postShopReportAsync, reportShopAPI);
+export const postReviewReportThunk = createAsyncThunk(postReviewReportAsync, reportReviewAPI);
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -161,6 +175,7 @@ type DetailState = {
     };
   };
   shopReport: AsyncState<ReportInterface, number>;
+  reviewReport: AsyncState<ReportInterface, number>;
   shop: AsyncState<ShopUIInterface, number>;
   reviews: AsyncState<ReviewInterface[], number>;
   shopImage: AsyncState<ImageUploadResponseInterface, number>;
@@ -180,6 +195,7 @@ const initialState: DetailState = {
     },
   },
   shopReport: asyncState.initial(),
+  reviewReport: asyncState.initial(),
   shop: asyncState.initial(
     {
       _id: '',
@@ -382,6 +398,24 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
   [POST_SHOP_REPORT_ERROR]: (state, { payload: error }) => ({
     ...state,
     shopReport: asyncState.error(error.response?.status || 404),
+  }),
+  [POST_REVIEW_REPORT]: (state) => ({
+    ...state,
+    reviewReport: asyncState.load(),
+    form: {
+      ...state.form,
+      reviewReport: {
+        comment: '',
+      },
+    },
+  }),
+  [POST_REVIEW_REPORT_SUCCESS]: (state, { payload: data }) => ({
+    ...state,
+    reviewReport: asyncState.success(data),
+  }),
+  [POST_REVIEW_REPORT_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    reviewReport: asyncState.error(error.response?.status || 404),
   }),
 });
 export default detail;

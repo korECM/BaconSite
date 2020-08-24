@@ -16,10 +16,11 @@ import {
   setReviewReportComment,
   setShopReportComment,
   postShopReportThunk,
+  postReviewReportThunk,
 } from '../modules/detail';
 
 export default function useDetail(shopId: string) {
-  const { shop, reviews, shopImage, menuImage, mapAddress, form, shopReport } = useSelector((state: RootState) => state.detail);
+  const { shop, reviews, shopImage, menuImage, mapAddress, form, shopReport, reviewReport } = useSelector((state: RootState) => state.detail);
   const dispatch = useDispatch();
 
   const onShopRequest = useCallback(() => dispatch(getShopThunk(shopId)), [shopId, dispatch]);
@@ -48,6 +49,11 @@ export default function useDetail(shopId: string) {
     form.shopReport,
   ]);
 
+  const postReviewReportDispatch = useCallback((reviewId: string) => dispatch(postReviewReportThunk(reviewId, form.reviewReport.comment)), [
+    dispatch,
+    form.reviewReport,
+  ]);
+
   return {
     shop,
     reviews,
@@ -56,6 +62,7 @@ export default function useDetail(shopId: string) {
     mapAddress,
     form,
     shopReport,
+    reviewReport,
     onShopRequest,
     onReviewRequest,
     onShopImageUploadRequest,
@@ -70,5 +77,6 @@ export default function useDetail(shopId: string) {
     setShopReportCommentDispatch,
     setReviewReportCommentDispatch,
     postShopReportDispatch,
+    postReviewReportDispatch,
   };
 }

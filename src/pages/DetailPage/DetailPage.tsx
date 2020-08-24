@@ -245,8 +245,18 @@ const Comment = styled(RoundContainer)`
     display: flex;
     align-items: center;
     .likeNum,
-    a {
+    .report {
       margin-left: 10px;
+    }
+
+    .report {
+      padding: 0;
+      font: inherit;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: ${palette.middleGray};
+      cursor: pointer;
     }
     .likeNum {
       font-weight: bold;
@@ -291,6 +301,19 @@ const ShopReport = styled.div`
   }
 `;
 
+const ReviewReport = styled.div`
+  textarea {
+    resize: none;
+    margin: 10px 0;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 25px;
+
+    border: 1px solid ${palette.middleGray};
+  }
+`;
+
 interface DetailPageProps extends RouteComponentProps {}
 
 function DetailPage({ match, history, location }: DetailPageProps) {
@@ -311,6 +334,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     toggleShopReportButtonDispatch,
     setReviewReportCommentDispatch,
     postShopReportDispatch,
+    postReviewReportDispatch,
     shop,
     reviews,
     shopImage,
@@ -318,6 +342,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     mapAddress,
     form,
     shopReport,
+    reviewReport,
   } = useDetail(shopId);
 
   const { user } = useCheck();
@@ -332,6 +357,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [shopReportAlert, setShopReportAlert] = useState(false);
   const [reviewReportAlert, setReviewReportAlert] = useState(false);
+
+  const [reviewReportNumber, setReviewReportNumber] = useState('');
 
   const [loginMessage, setLoginMessage] = useState('');
 
@@ -470,6 +497,20 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     if (shopReport.loading) return;
     postShopReportDispatch();
   }, [shopReport, postShopReportDispatch]);
+
+  const postReviewReport = useCallback(
+    (reviewId: string) => {
+      setReviewReportAlert(false);
+      if (reviewReport.loading) return;
+      postReviewReportDispatch(reviewId);
+    },
+    [reviewReport, postReviewReportDispatch],
+  );
+
+  const openReviewReport = useCallback((reviewId: string) => {
+    setReviewReportAlert(true);
+    setReviewReportNumber(reviewId);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -675,8 +716,11 @@ function DetailPage({ match, history, location }: DetailPageProps) {
                   {[new Date(review.registerDate)].map((date) => (
                     <div key={date.toString()}>{`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
                   ))}
+                  ``
                   <div className="likeNum">좋아요 {review.likeNum + commentLikeOffset[index]}개</div>
-                  <Link to="">신고하기</Link>
+                  <button onClick={() => openReviewReport(review._id)} className="report">
+                    신고하기
+                  </button>
                 </div>
               </div>
               <button onClick={() => likeComment(index)}>
@@ -744,7 +788,16 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           </Button>
         </ShopReport>
       </Dialog>
-      <Dialog mode="custom" onCancel={() => setReviewReportAlert(false)} visible={reviewReportAlert} />
+      <Dialog mode="custom" customPadding="1rem" onCancel={() => setReviewReportAlert(false)} visible={reviewReportAlert}>
+        <ReviewReport>
+          <textarea placeholder="그 외 잘못된 정보를 입력해주세요." rows={8} onChange={onReviewReportCommentChange}>
+            {form.reviewReport.comment}
+          </textarea>
+          <Button theme="red" fullWidth onClick={() => postReviewReport(reviewReportNumber)} disabled={form.reviewReport.comment.length === 0}>
+            제출하기
+          </Button>
+        </ReviewReport>
+      </Dialog>
     </Container>
   );
 }
