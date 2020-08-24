@@ -46,6 +46,13 @@ export async function check() {
   return response.data;
 }
 
+export async function logout() {
+  const response = await axios.get(apiLink() + `/auth/logout`, {
+    withCredentials: true,
+  });
+  return response.data;
+}
+
 export interface RegisterInterface {
   name: string;
   email: string;

@@ -25,6 +25,18 @@ const HeaderContainer = styled.div`
       }
     `}
 
+  ${(props: HeaderProps) =>
+    props.iconColor &&
+    css`
+      color: ${props.iconColor};
+    `}
+
+  ${(props: HeaderProps) =>
+    props.backColor &&
+    css`
+      background-color: ${props.backColor};
+    `}
+
   img {
     width: 50px;
     height: 50px;
@@ -66,6 +78,21 @@ const HeaderContainer = styled.div`
       font-size: 10px;
     }
   }
+
+  .title {
+    width: 109px;
+    height: 31px;
+    margin: 0 auto;
+
+    font-size : 20px;
+    font-weight : bolder;
+    text-align  :center;
+    ${(props: HeaderProps) =>
+      props.titleColor &&
+      css`
+        color: ${props.titleColor};
+      `}
+  }
 `;
 
 type HeaderColor = 'red' | 'white' | 'none';
@@ -74,8 +101,10 @@ type Category = 'main' | 'modal';
 interface HeaderProps extends RouteComponentProps {
   category: Category;
   headerColor: HeaderColor;
-  onBack?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onClose?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  backColor?: string;
+  titleText?: string;
+  titleColor?: string;
+  iconColor?: string;
 }
 
 function Header(props: HeaderProps) {
@@ -92,7 +121,7 @@ function Header(props: HeaderProps) {
       props.history.push('/');
     } else {
       if (user) {
-        console.log('마이 페이지로 가자');
+        props.history.push('/myPage');
       } else {
         localStorage.setItem('redir', props.match.url);
         props.history.push('/auth/login');
@@ -118,7 +147,11 @@ function Header(props: HeaderProps) {
           <button onClick={onLeftButtonClick} className="left">
             <MdKeyboardArrowLeft />
           </button>
-          <img className="titleLogo" src={props.headerColor === 'red' ? FoodingTitleWhite : FoodingTitleRed} alt="title" />
+          {props.titleText ? (
+            <div className="title">{props.titleText}</div>
+          ) : (
+            <img className="titleLogo" src={props.headerColor === 'red' ? FoodingTitleWhite : FoodingTitleRed} alt="title" />
+          )}
           <button onClick={onRightButtonClick} className="right">
             <MdClear />
           </button>
