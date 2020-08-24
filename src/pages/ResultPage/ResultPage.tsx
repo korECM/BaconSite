@@ -52,7 +52,6 @@ function ResultPage({ location }: RouteComponentProps) {
     });
     onGetShops(options);
   }, [location, onGetShops]);
-
   return (
     <Container color="red">
       <Helmet>

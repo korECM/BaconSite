@@ -101,23 +101,6 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
     delay: delay || 0,
   });
 
-  const [keywords, setKeywords] = useState<(keyof Keyword)[]>([]);
-
-  useEffect(() => {
-    let temp: { name: keyof Keyword; value: number }[] = Object.entries(shop.keyword)
-      .filter((data) => data[0] !== '_id')
-      .filter((data) => data[0] !== 'registerDate')
-      .filter((data) => data[0] !== '__v')
-      .map((data) => ({
-        name: data[0] as any,
-        value: data[1] as any,
-      }));
-    temp.sort((a, b) => b.value - a.value);
-    temp.splice(2);
-    // TODO: 모두 0이거나 같은 값 여러개 어떻게 처리할지 생각
-    setKeywords(temp.map((data) => data.name));
-  }, [shop]);
-
   return (
     <RestaurantCardBlock style={appear}>
       <div
@@ -130,7 +113,7 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
         <div className="name">{shop.name}</div>
         <div className="loc">{locationToString(shop.location)}</div>
         <div className="tags">
-          {keywords.map((keyword) => (
+          {shop.topKeyword.map((keyword) => (
             <div className="tag" key={keyword}>
               #{keywordToString(keyword)}
             </div>

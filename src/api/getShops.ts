@@ -17,11 +17,14 @@ export interface ShopsInterface {
   longitude: number;
   registerDate: Date;
   price: number;
-  menuImage: string[];
+  menuImage: Image[];
+  topKeyword: KeywordElement[];
   scoreAverage: number;
   reviewCount: number;
   likerCount: number;
 }
+
+type KeywordElement = keyof Keyword;
 
 export interface getShopsInterface {
   locations?: string[];
@@ -33,10 +36,6 @@ export interface getShopsInterface {
 export interface Image {
   _id: string;
   imageLink: string;
-  shopId: string;
-  type: string;
-  registerDate: string;
-  __v: number;
 }
 
 export async function getShops(options: getShopsInterface) {
