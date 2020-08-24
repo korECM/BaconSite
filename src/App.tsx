@@ -14,6 +14,7 @@ const RouletteListRouter = React.lazy(() => import(/* webpackPrefetch: true */ '
 const LoginPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/AuthPage/LoginPageRouter'));
 const YesNoPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/YesNoPage/YesNoPageRouter'));
 const FilterPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/FilterPage/FilterPageRouter'));
+const MyPageRouter = React.lazy(() => import(/* webpackPrefetch: true */ './pages/MyPage/MyPage'));
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route component={RouletteRouter} path="/roulette" />
           <Route component={RouletteListRouter} path="/rouletteList" />
           <Route component={FilterPageRouter} path="/filter" />
+          <Route component={MyPageRouter} path="/myPage" />
         </Switch>
       </Suspense>
     </>

@@ -17,7 +17,14 @@ export interface User {
 }
 
 export async function getReview(reviewId: string) {
-  const response = await axios.get<ReviewInterface>(apiLink() + `/shop/review/${reviewId}`, {
+  const response = await axios.get<ReviewInterface[]>(apiLink() + `/shop/review/${reviewId}`, {
+    withCredentials: true,
+  });
+  return response.data;
+}
+
+export async function getMyReview() {
+  const response = await axios.get<ReviewInterface[]>(apiLink() + `/shop/myReview`, {
     withCredentials: true,
   });
   return response.data;

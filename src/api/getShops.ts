@@ -48,3 +48,10 @@ export async function getShops(options: getShopsInterface) {
   );
   return response.data;
 }
+
+export async function getMyShops() {
+  const response = await axios.get<ShopsInterface[]>(apiLink() + `/shop/myShop`, {
+    withCredentials: true,
+  });
+  return response.data;
+}
