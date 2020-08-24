@@ -87,58 +87,56 @@ const Divider = styled.div`
 
 function HomePage() {
   return (
-    <FullHeightFade>
-      <Container color="white">
-        <Header category="main" headerColor="none" />
-        <TitleSlogan>뭐 먹을지 고민될 땐?</TitleSlogan>
-        <TitleLogo>
-          <img src={titlelogo} alt="titlelogo" />
-        </TitleLogo>
-        <Categories>Categories</Categories>
-        <Divider></Divider>
-        <ButtonLine>
-          <ButtonBlock>
-            <Link to="/shop/5f26b992555be6865ede4e28">
-              <TextBox>테스트</TextBox>
-              <TextBox>가게</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/yesno">
-              <TextBox>선택장애</TextBox>
-              <TextBox>Yes or No</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/rouletteList">
-              <TextBox>돌려돌려</TextBox>
-              <TextBox>돌림판</TextBox>
-            </Link>
-          </ButtonBlock>
-        </ButtonLine>
-        <Divider></Divider>
-        <ButtonLine>
-          <ButtonBlock>
-            <Link to="/rouletteList">
-              <TextBox>돌림판</TextBox>
-              <TextBox>리스트 받기</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/result?location=front,back&category=western,korean">
-              <TextBox>필터링</TextBox>
-              <TextBox>결과</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/filter">
-              <TextBox>필터링</TextBox>
-              <TextBox>검색</TextBox>
-            </Link>
-          </ButtonBlock>
-        </ButtonLine>
-      </Container>
-    </FullHeightFade>
+    <Container color="white">
+      <Header category="main" headerColor="none" />
+      <TitleSlogan>뭐 먹을지 고민될 땐?</TitleSlogan>
+      <TitleLogo>
+        <img src={titlelogo} alt="titlelogo" />
+      </TitleLogo>
+      <Categories>Categories</Categories>
+      <Divider></Divider>
+      <ButtonLine>
+        <ButtonBlock>
+          <Link to="/shop/5f26b992555be6865ede4e28">
+            <TextBox>테스트</TextBox>
+            <TextBox>가게</TextBox>
+          </Link>
+        </ButtonBlock>
+        <ButtonBlock>
+          <Link to="/yesno">
+            <TextBox>선택장애</TextBox>
+            <TextBox>Yes or No</TextBox>
+          </Link>
+        </ButtonBlock>
+        <ButtonBlock>
+          <Link to="/rouletteList">
+            <TextBox>돌려돌려</TextBox>
+            <TextBox>돌림판</TextBox>
+          </Link>
+        </ButtonBlock>
+      </ButtonLine>
+      <Divider></Divider>
+      <ButtonLine>
+        <ButtonBlock>
+          <Link to="/rouletteList">
+            <TextBox>돌림판</TextBox>
+            <TextBox>리스트 받기</TextBox>
+          </Link>
+        </ButtonBlock>
+        <ButtonBlock>
+          <Link to="/result?location=front,back&category=western,korean">
+            <TextBox>필터링</TextBox>
+            <TextBox>결과</TextBox>
+          </Link>
+        </ButtonBlock>
+        <ButtonBlock>
+          <Link to="/filter">
+            <TextBox>필터링</TextBox>
+            <TextBox>검색</TextBox>
+          </Link>
+        </ButtonBlock>
+      </ButtonLine>
+    </Container>
   );
 }
 
