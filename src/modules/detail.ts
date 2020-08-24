@@ -9,8 +9,15 @@ import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
 import { LikeCommentInterface, likeCommentAPI, unlikeCommentAPI } from '../api/likeComment';
 import { locationToString, categoryToString } from '../lib/shopUtil';
+import { ReportInterface, reportShopAPI, reportReviewAPI } from '../api/report';
 
 const RESET_DATA = 'detail/RESET_DATA' as const;
+
+const TOGGLE_SHOP_REPORT_BUTTON = 'detail/TOGGLE_SHOP_REPORT_BUTTON' as const;
+
+const SET_SHOP_REPORT_COMMENT = 'detail/SET_SHOP_REPORT_COMMENT' as const;
+
+const SET_REVIEW_REPORT_COMMENT = 'detail/SET_REVIEW_REPORT_COMMENT' as const;
 
 const GET_SHOP_INFO = 'detail/GET_SHOP_INFO' as const;
 const GET_SHOP_INFO_SUCCESS = 'detail/GET_SHOP_INFO_SUCCESS' as const;
@@ -48,7 +55,18 @@ const GET_LOCATION = 'detail/GET_LOCATION' as const;
 const GET_LOCATION_SUCCESS = 'detail/GET_LOCATION_SUCCESS' as const;
 const GET_LOCATION_ERROR = 'detail/GET_LOCATION_ERROR' as const;
 
+const POST_SHOP_REPORT = 'detail/POST_SHOP_REPORT' as const;
+const POST_SHOP_REPORT_SUCCESS = 'detail/POST_SHOP_REPORT_SUCCESS' as const;
+const POST_SHOP_REPORT_ERROR = 'detail/POST_SHOP_REPORT_ERROR' as const;
+
+const POST_REVIEW_REPORT = 'detail/POST_REVIEW_REPORT' as const;
+const POST_REVIEW_REPORT_SUCCESS = 'detail/POST_REVIEW_REPORT_SUCCESS' as const;
+const POST_REVIEW_REPORT_ERROR = 'detail/POST_REVIEW_REPORT_ERROR' as const;
+
 export const resetData = createAction(RESET_DATA)();
+export const toggleShopReportButton = createAction(TOGGLE_SHOP_REPORT_BUTTON)<number>();
+export const setShopReportComment = createAction(SET_SHOP_REPORT_COMMENT)<string>();
+export const setReviewReportComment = createAction(SET_REVIEW_REPORT_COMMENT)<string>();
 
 export const getShopAsync = createAsyncAction(GET_SHOP_INFO, GET_SHOP_INFO_SUCCESS, GET_SHOP_INFO_ERROR)<void, ShopInterface, AxiosError>();
 
@@ -76,8 +94,19 @@ export const unlikeCommentAsync = createAsyncAction(UNLIKE_COMMENT, UNLIKE_COMME
 
 export const getLocationAsync = createAsyncAction(GET_LOCATION, GET_LOCATION_SUCCESS, GET_LOCATION_ERROR)<void, LocationInterface, AxiosError>();
 
+export const postShopReportAsync = createAsyncAction(POST_SHOP_REPORT, POST_SHOP_REPORT_SUCCESS, POST_SHOP_REPORT_ERROR)<void, ReportInterface, AxiosError>();
+
+export const postReviewReportAsync = createAsyncAction(POST_REVIEW_REPORT, POST_REVIEW_REPORT_SUCCESS, POST_REVIEW_REPORT_ERROR)<
+  void,
+  ReportInterface,
+  AxiosError
+>();
+
 type DetailAction =
   | ReturnType<typeof resetData>
+  | ReturnType<typeof toggleShopReportButton>
+  | ReturnType<typeof setShopReportComment>
+  | ReturnType<typeof setReviewReportComment>
   | ReturnType<typeof getShopAsync.request>
   | ReturnType<typeof getShopAsync.success>
   | ReturnType<typeof getShopAsync.failure>
@@ -104,7 +133,13 @@ type DetailAction =
   | ReturnType<typeof unlikeCommentAsync.failure>
   | ReturnType<typeof getLocationAsync.request>
   | ReturnType<typeof getLocationAsync.success>
-  | ReturnType<typeof getLocationAsync.failure>;
+  | ReturnType<typeof getLocationAsync.failure>
+  | ReturnType<typeof postShopReportAsync.request>
+  | ReturnType<typeof postShopReportAsync.success>
+  | ReturnType<typeof postShopReportAsync.failure>
+  | ReturnType<typeof postReviewReportAsync.request>
+  | ReturnType<typeof postReviewReportAsync.success>
+  | ReturnType<typeof postReviewReportAsync.failure>;
 
 export const getShopThunk = createAsyncThunk(getShopAsync, getShop);
 export const getReviewThunk = createAsyncThunk(getReviewAsync, getReview);
@@ -115,6 +150,8 @@ export const unlikeShopThunk = createAsyncThunk(unlikeShopAsync, unlikeShopAPI);
 export const likeCommentThunk = createAsyncThunk(likeCommentAsync, likeCommentAPI);
 export const unlikeCommentThunk = createAsyncThunk(unlikeCommentAsync, unlikeCommentAPI);
 export const getLocationThunk = createAsyncThunk(getLocationAsync, getLocation);
+export const postShopReportThunk = createAsyncThunk(postShopReportAsync, reportShopAPI);
+export const postReviewReportThunk = createAsyncThunk(postReviewReportAsync, reportReviewAPI);
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -128,6 +165,17 @@ export interface ShopUIInterface
   > {}
 
 type DetailState = {
+  form: {
+    shopReport: {
+      type: boolean[];
+      comment: string;
+    };
+    reviewReport: {
+      comment: string;
+    };
+  };
+  shopReport: AsyncState<ReportInterface, number>;
+  reviewReport: AsyncState<ReportInterface, number>;
   shop: AsyncState<ShopUIInterface, number>;
   reviews: AsyncState<ReviewInterface[], number>;
   shopImage: AsyncState<ImageUploadResponseInterface, number>;
@@ -137,6 +185,17 @@ type DetailState = {
 };
 
 const initialState: DetailState = {
+  form: {
+    shopReport: {
+      type: [false, false, false, false, false, false],
+      comment: '',
+    },
+    reviewReport: {
+      comment: '',
+    },
+  },
+  shopReport: asyncState.initial(),
+  reviewReport: asyncState.initial(),
   shop: asyncState.initial(
     {
       _id: '',
@@ -184,6 +243,36 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
     },
     reviews: asyncState.initial(new Array<ReviewInterface>()),
     shopImage: asyncState.initial(),
+  }),
+  [TOGGLE_SHOP_REPORT_BUTTON]: (state, { payload: num }) => ({
+    ...state,
+    form: {
+      ...state.form,
+      shopReport: {
+        ...state.form.shopReport,
+        type: state.form.shopReport.type.map((t, index) => (index === num ? !t : t)),
+      },
+    },
+  }),
+  [SET_SHOP_REPORT_COMMENT]: (state, { payload: comment }) => ({
+    ...state,
+    form: {
+      ...state.form,
+      shopReport: {
+        ...state.form.shopReport,
+        comment,
+      },
+    },
+  }),
+  [SET_REVIEW_REPORT_COMMENT]: (state, { payload: comment }) => ({
+    ...state,
+    form: {
+      ...state.form,
+      reviewReport: {
+        ...state.form.reviewReport,
+        comment,
+      },
+    },
   }),
   [GET_SHOP_INFO]: (state) => ({
     ...state,
@@ -290,6 +379,43 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
   }),
   [UNLIKE_COMMENT_ERROR]: (state) => ({
     ...state,
+  }),
+  [POST_SHOP_REPORT]: (state) => ({
+    ...state,
+    shopReport: asyncState.load(),
+    form: {
+      ...state.form,
+      shopReport: {
+        comment: '',
+        type: [false, false, false, false, false, false],
+      },
+    },
+  }),
+  [POST_SHOP_REPORT_SUCCESS]: (state, { payload: data }) => ({
+    ...state,
+    shopReport: asyncState.success(data),
+  }),
+  [POST_SHOP_REPORT_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    shopReport: asyncState.error(error.response?.status || 404),
+  }),
+  [POST_REVIEW_REPORT]: (state) => ({
+    ...state,
+    reviewReport: asyncState.load(),
+    form: {
+      ...state.form,
+      reviewReport: {
+        comment: '',
+      },
+    },
+  }),
+  [POST_REVIEW_REPORT_SUCCESS]: (state, { payload: data }) => ({
+    ...state,
+    reviewReport: asyncState.success(data),
+  }),
+  [POST_REVIEW_REPORT_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    reviewReport: asyncState.error(error.response?.status || 404),
   }),
 });
 export default detail;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import React from 'react';
 import Button from './Button';
 import ButtonGroup from './ButtonGroup';
@@ -54,13 +54,15 @@ const WhiteBox = styled.div`
 `;
 
 interface DialogProps {
-  title: string;
-  desc: string;
-  mode: 'confirm' | 'cancel';
-  cancelText: string;
+  title?: string;
+  desc?: string;
+  mode: 'confirm' | 'cancel' | 'custom';
+  children?: React.ReactNode;
+  cancelText?: string;
   confirmText?: string;
   onCancel: () => void;
   onConfirm?: () => void;
+  customPadding?: string;
   visible: boolean;
 }
 
@@ -95,10 +97,20 @@ const Dialog = (p: DialogProps) => {
       {fadeTransition.map(({ item, key, props }) => (item ? <DialogBackground key={key} style={props} /> : null))}
       {slideUpTransition.map(({ item, key, props }) =>
         item ? (
-          <DialogBlock style={props} key={key}>
-            <WhiteBox>
-              <h3>{p.title}</h3>
-              <p>{p.desc}</p>
+          <DialogBlock style={props} key={key} onClick={p.onCancel}>
+            <WhiteBox
+              style={{ padding: p.customPadding || '2rem' }}
+              onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                event.stopPropagation();
+              }}
+            >
+              {p.mode === 'custom' && <>{p.children || null}</>}
+              {p.mode !== 'custom' && (
+                <>
+                  <h3>{p.title}</h3>
+                  <p>{p.desc}</p>
+                </>
+              )}
               {p.mode === 'confirm' && (
                 <ButtonGroup direction="row" rightAlign gap="0">
                   <Button theme="white" onClick={p.onConfirm}>
