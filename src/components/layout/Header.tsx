@@ -70,12 +70,16 @@ const HeaderContainer = styled.div`
   }
 
   .myPage {
+    display : flex;
+    flex-direction : column;
+    align-items : center;
     img {
       width: 27px;
       height: 23px;
     }
     div {
       font-size: 10px;
+      margin-top : 5px;
     }
   }
 
