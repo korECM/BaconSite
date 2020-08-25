@@ -707,7 +707,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       </Dialog>
       <Dialog mode="custom" customPadding="1rem" onCancel={() => setReviewReportAlert(false)} visible={reviewReportAlert}>
         <ReviewReport>
-          <textarea placeholder="그 외 잘못된 정보를 입력해주세요." rows={8} onChange={onReviewReportCommentChange}>
+          <textarea placeholder="어떤 점이 불편하셨나요?&#13;&#10;(ex. 부적절한 표현을 사용했어요.)" rows={8} onChange={onReviewReportCommentChange}>
             {form.reviewReport.comment}
           </textarea>
           <Button theme="red" fullWidth onClick={() => postReviewReport(reviewReportNumber)} disabled={form.reviewReport.comment.length === 0}>
