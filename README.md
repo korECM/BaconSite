@@ -1,5 +1,7 @@
 # BaconSite
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/74e9285a-2714-4d0d-9e64-172610c84685/deploy-status)](https://app.netlify.com/sites/epic-brown-de1e48/deploys)
+
 ## 개발 관련
 
 ### 폴더
