@@ -9,6 +9,7 @@ export enum ShopCategory {
   Fusion = 'fusion',
   School = 'school',
   other = 'other',
+  None = '',
 }
 
 export enum Location {
@@ -16,6 +17,7 @@ export enum Location {
   Back = 'back',
   HsStation = 'hs_station',
   FrontFar = 'front_far',
+  None = '',
 }
 
 export interface ShopInterface {
