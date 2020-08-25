@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { ShopUIInterface } from '../../modules/detail';
 import palette, { hexToRGB } from '../../styles/palette';
-import { GridLoader } from 'react-spinners';
+import GridLoader from 'react-spinners/GridLoader';
 
 const RadarContainer = styled.div`
   background-color: white;
