@@ -5,8 +5,8 @@ import styled, { css } from 'styled-components';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import useDetail from '../../hooks/useDetail';
 import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit, MdInfoOutline, MdKeyboardArrowRight, MdRestaurantMenu } from 'react-icons/md';
-import { ClockLoader } from 'react-spinners';
-import RoundContainer from '../../components/common/RoundContainer';
+import ClockLoader from 'react-spinners/ClockLoader';
+import BounceLoader from 'react-spinners/BounceLoader';
 import palette, { hexToRGB } from '../../styles/palette';
 import Flag from '../../components/common/Flag';
 import Loader from '../../components/common/Loader';
@@ -15,7 +15,6 @@ import Radar from './Radar';
 import useCheck from '../../hooks/useCheck';
 import Dialog from '../../components/common/Dialog';
 import KakaoMap from '../../components/common/KakaoMap';
-import { BounceLoader } from 'react-spinners';
 import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
 import { getScore } from '../../lib/scoreUtil';
@@ -615,30 +614,34 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         <p>잘못된 정보가 있나요? 푸딩에게 알려주세요!</p>
         <MdKeyboardArrowRight className="right" />
       </ReportBlock>
-      <MenuBlock>
-        <div className="menus">
-          <div className="menuHeader">
-            <MdRestaurantMenu />
-            <p>대표 메뉴</p>
+      {(shop.data.menus.length !== 0 || shop.data.menuImage.length !== 0) && (
+        <MenuBlock>
+          <div className="menus">
+            <div className="menuHeader">
+              <MdRestaurantMenu />
+              <p>대표 메뉴</p>
+            </div>
+            {shop.data.menus.length === 0 ? (
+              <div className="noMenu">메뉴가 아직 등록되지 않았어요!</div>
+            ) : (
+              shop.data.menus.map((menu) => (
+                <div className="menu" key={menu._id}>
+                  <p className="title">{menu.title}</p>
+                  <p className="horizontal" />
+                  <p className="price">{menu.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
+                </div>
+              ))
+            )}
           </div>
-          {shop.data.menus.length === 0 ? (
-            <div className="noMenu">메뉴가 아직 등록되지 않았어요!</div>
-          ) : (
-            shop.data.menus.map((menu) => (
-              <div className="menu" key={menu._id}>
-                <p className="title">{menu.title}</p>
-                <p className="horizontal" />
-                <p className="price">{menu.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
-              </div>
-            ))
+          {shop.data.menuImage.length > 0 && (
+            <div className="menuImages">
+              {shop.data.menuImage.map((menu) => (
+                <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" key={menu._id} />
+              ))}
+            </div>
           )}
-        </div>
-        <div className="menuImages">
-          {shop.data.menuImage.map((menu) => (
-            <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" key={menu._id} />
-          ))}
-        </div>
-      </MenuBlock>
+        </MenuBlock>
+      )}
       <Radar shop={shop.data} />
       <CommentContainer>
         {reviews.data &&
