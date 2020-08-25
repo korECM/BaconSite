@@ -4,6 +4,7 @@ import { ShopUIInterface } from '../../modules/detail';
 import { MdPhone, MdLocationOn, MdRestaurantMenu, MdBusiness } from 'react-icons/md';
 import palette from '../../styles/palette';
 import ShopInformationElement from './ShopInformationElement';
+import { categoryToString, locationToString } from '../../lib/shopUtil';
 
 const ShopInformationContainer = styled.div`
   font-weight: 100;
@@ -30,12 +31,12 @@ function ShopInformation({ shop }: ShopInformationProps) {
     {
       data: shop.category,
       icon: <MdRestaurantMenu />,
-      tag: <span>{shop.category}</span>,
+      tag: <span>{categoryToString(shop.category)}</span>,
     },
     {
       data: shop.location,
       icon: <MdBusiness />,
-      tag: <span>{shop.location}</span>,
+      tag: <span>{locationToString(shop.location)}</span>,
     },
   ].filter((e) => e.data);
 
