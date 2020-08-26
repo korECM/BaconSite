@@ -6,14 +6,14 @@ import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import palette from '../../styles/palette';
 import Button from '../../components/common/Button';
-import kakaotalk from './kakaotalk.png';
-import gender from './gender.png';
+import kakaotalk from 'assets/kakaotalk.png';
+import gender from 'assets/gender.png';
 import { AiOutlineUser, AiOutlineLock, AiOutlineIdcard } from 'react-icons/ai';
 import useAuth from '../../hooks/useAuth';
 import useCheck from '../../hooks/useCheck';
 import StyledInput from '../../components/common/StyledInput';
 import { Helmet } from 'react-helmet-async';
-import LogoImage from '../fooding_titlelogo.png';
+import LogoImage from 'assets/fooding_titlelogo.png';
 
 const AuthPageBlock = styled.div`
   padding: 0 5%;
