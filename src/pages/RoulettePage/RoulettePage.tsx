@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React from 'react';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 // import React from 'react';
-import { Route, BrowserRouter, RouteComponentProps, useHistory, useLocation } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import palette from '../../styles/palette';
 import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
@@ -112,10 +112,10 @@ class RoulettePage extends React.Component<Props, State> {
       // });
 
       // console.log(RouletteItems.id.text);
-      if (items.length % 2 == 0) {
+      if (items.length % 2 === 0) {
         for (var i = 0; i < items.length; i++) {
           data[i].option = textLengthCheck(items[i], 6);
-          if (i % 2 == 0) {
+          if (i % 2 === 0) {
             data[i].style.backgroundColor = '#dddddd';
             data[i].style.textColor = '#5d5d5d';
             data[i].font = 'Nanum Gothic';
@@ -128,11 +128,11 @@ class RoulettePage extends React.Component<Props, State> {
       } else {
         for (var i = 0; i < items.length; i++) {
           data[i].option = textLengthCheck(items[i], 6);
-          if (i % 3 == 0) {
+          if (i % 3 === 0) {
             data[i].style.backgroundColor = '#dddddd';
             data[i].style.textColor = '#5d5d5d';
             data[i].font = 'Nanum Gothic';
-          } else if (i % 3 == 1) {
+          } else if (i % 3 === 1) {
             data[i].style.backgroundColor = `${palette.darkGray}`;
             data[i].style.textColor = 'white';
             data[i].font = 'Nanum Gothic';

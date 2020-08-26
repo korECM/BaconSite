@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiLink } from '../lib/getAPILink';
-import { Location, ShopCategory, Keyword } from './getShop';
+import { Location, Keyword } from './getShop';
 
 export interface ShopsInterface {
   _id: string;

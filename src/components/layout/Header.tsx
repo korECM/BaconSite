@@ -4,9 +4,9 @@ import { MdClear, MdKeyboardArrowLeft } from 'react-icons/md';
 import palette from '../../styles/palette';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
-import FoodingTitleRed from './FoodingTitleRed.png';
-import FoodingTitleWhite from './FoodingTitleWhite.png';
-import JustFooding from './JustFooding.png';
+import FoodingTitleRed from 'assets/FoodingTitleRed.png';
+import FoodingTitleWhite from 'assets/FoodingTitleWhite.png';
+import JustFooding from 'assets/JustFooding.png';
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -70,16 +70,16 @@ const HeaderContainer = styled.div`
   }
 
   .myPage {
-    display : flex;
-    flex-direction : column;
-    align-items : center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     img {
       width: 27px;
       height: 23px;
     }
     div {
       font-size: 10px;
-      margin-top : 5px;
+      margin-top: 5px;
     }
   }
 
@@ -88,9 +88,9 @@ const HeaderContainer = styled.div`
     height: 31px;
     margin: 0 auto;
 
-    font-size : 20px;
-    font-weight : bolder;
-    text-align  :center;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
     ${(props: HeaderProps) =>
       props.titleColor &&
       css`

@@ -14,7 +14,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "removeComments": false
+    "removeComments": false,
+    "baseUrl": "src",
   },
   "include": ["src"]
 }
