@@ -9,6 +9,7 @@ import { apiLink } from '../../lib/getAPILink';
 import axios from 'axios';
 import AdminShopInformation from './AdminShopInformation';
 import AdminMenuInformation from './AdminMenuInformation';
+import AdminShopImage from './AdminShopImage';
 
 const ShopImageContainer = styled.div`
   height: 60vw;
@@ -114,9 +115,13 @@ function AdminDetail({ match, location }: RouteComponentProps) {
         <Link to={`${match.url}/menu`} className={cx('item', { selected: location.pathname === `${match.url}/menu` })}>
           가게 메뉴
         </Link>
+        <Link to={`${match.url}/shopImage`} className={cx('item', { selected: location.pathname === `${match.url}/shopImage` })}>
+          가게 사진
+        </Link>
       </Header>
       <Route exact path={`${match.path}/data`} render={() => <AdminShopInformation shop={shop.data!} reload={onShopRequest} />} />
       <Route exact path={`${match.path}/menu`} render={() => <AdminMenuInformation shop={shop.data!} reload={onShopRequest} />} />
+      <Route exact path={`${match.path}/shopImage`} render={() => <AdminShopImage shop={shop.data!} reload={onShopRequest} />} />
       <CommentContainer>
         {reviews.data &&
           reviews.data.map((review) => (
