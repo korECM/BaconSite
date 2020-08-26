@@ -9,7 +9,6 @@ import { ShopUIInterface } from '../../modules/detail';
 import axios from 'axios';
 import { apiLink } from '../../lib/getAPILink';
 import palette from '../../styles/palette';
-import { AnyAction } from 'redux';
 
 const ShopInformationContainer = styled.form`
   margin-top: 20px;
