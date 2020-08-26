@@ -7,11 +7,15 @@ import axios from 'axios';
 import { apiLink } from '../../lib/getAPILink';
 import { Image } from '../../api/getShop';
 import { AdminElementInterface } from './AdminDetail';
+import palette, { hexToRGB } from '../../styles/palette';
 
 const AdminShopImageBlock = styled.div`
   display: flex;
-  width: 100%;
+  width: calc(100% - 20px);
   height: 140px;
+  background-color: ${hexToRGB(palette.middleLightGray, 0.5)};
+  border-radius: 15px;
+  padding: 10px;
   overflow-x: scroll;
   align-items: center;
   .imageContainer {
