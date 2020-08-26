@@ -63,16 +63,20 @@ const Comment = styled.div`
 const Header = styled.div`
   color: black;
   display: flex;
+  flex-wrap: nowrap;
   height: 50px;
   padding: 20px 0;
   margin-bottom: 10px;
   padding-bottom: 0;
   align-items: center;
+  width: 100%;
+  overflow-x: auto;
 
   .item {
     padding: 10px 0;
     margin-right: 20px;
-    /* font-size: 1.5rem; */
+    width: 70px;
+    flex: 0 0 auto;
     display: block;
     &.selected {
       border-bottom: 1.5px solid ${palette.mainRed};
