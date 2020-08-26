@@ -65,7 +65,7 @@ function AdminList() {
                 <div>Review : {shop.reviewCount}</div>
               </div>
               <div className="href">
-                <a href={`/admin/shop/${shop._id}`}>가게 정보 수정</a>
+                <a href={`/admin/shop/${shop._id}/data`}>가게 정보 수정</a>
                 <a href={`/shop/${shop._id}`}>가게 페이지</a>
               </div>
             </ShopBlock>

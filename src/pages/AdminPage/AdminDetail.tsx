@@ -1,26 +1,14 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
+import cx from 'classnames';
 import useDetail from '../../hooks/useDetail';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, Route, Link } from 'react-router-dom';
 import Container from '../../components/layout/Container';
-import Header from '../../components/layout/Header';
 import palette from '../../styles/palette';
-import { locationToString, categoryToString } from '../../lib/shopUtil';
-import { Location, ShopCategory } from '../../api/getShop';
-import Button from '../../components/common/Button';
-import ButtonGroup from '../../components/common/ButtonGroup';
 import { apiLink } from '../../lib/getAPILink';
 import axios from 'axios';
-import { stringify } from 'querystring';
 import AdminShopInformation from './AdminShopInformation';
 import AdminMenuInformation from './AdminMenuInformation';
-
-const ShopTitle = styled.h1`
-  font-size: 31px;
-  font-weight: 900;
-  margin-top: 10px;
-  margin-bottom: 20px;
-`;
 
 const ShopImageContainer = styled.div`
   height: 60vw;
@@ -71,7 +59,28 @@ const Comment = styled.div`
   }
 `;
 
-function AdminDetail({ match }: RouteComponentProps) {
+const Header = styled.div`
+  color: black;
+  display: flex;
+  height: 50px;
+  padding: 20px 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  align-items: center;
+
+  .item {
+    padding: 10px 0;
+    margin-right: 20px;
+    /* font-size: 1.5rem; */
+    display: block;
+    &.selected {
+      border-bottom: 1.5px solid ${palette.mainRed};
+      font-weight: bolder;
+    }
+  }
+`;
+
+function AdminDetail({ match, location }: RouteComponentProps) {
   const shopId: string = (match.params as any).shopId;
 
   const { onShopRequest, onReviewRequest, shop, reviews } = useDetail(shopId);
@@ -87,7 +96,7 @@ function AdminDetail({ match }: RouteComponentProps) {
     }
   }, [shop.data]);
 
-  if (shop.loading) {
+  if (shop.data === null || shop.loading) {
     return <p>로딩중</p>;
   }
 
@@ -98,8 +107,16 @@ function AdminDetail({ match }: RouteComponentProps) {
           imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
         ></ShopImage>
       </ShopImageContainer>
-      <AdminShopInformation shop={shop.data} reload={onShopRequest} />
-      <AdminMenuInformation shop={shop.data} reload={onShopRequest} />
+      <Header>
+        <Link to={`${match.url}/data`} className={cx('item', { selected: location.pathname === `${match.url}/data` })}>
+          가게 정보
+        </Link>
+        <Link to={`${match.url}/menu`} className={cx('item', { selected: location.pathname === `${match.url}/menu` })}>
+          가게 메뉴
+        </Link>
+      </Header>
+      <Route exact path={`${match.path}/data`} render={() => <AdminShopInformation shop={shop.data!} reload={onShopRequest} />} />
+      <Route exact path={`${match.path}/menu`} render={() => <AdminMenuInformation shop={shop.data!} reload={onShopRequest} />} />
       <CommentContainer>
         {reviews.data &&
           reviews.data.map((review) => (
