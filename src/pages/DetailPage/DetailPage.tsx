@@ -296,30 +296,30 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [loginMessage, setLoginMessage] = useState('');
 
+  const simpleDialogAlert = useCallback(
+    (message: string) => {
+      if (!user) {
+        setLoginMessage(message);
+        setLoginAlert(true);
+        return false;
+      }
+      return true;
+    },
+    [user],
+  );
+
   const onWriteReviewButtonClick = useCallback(() => {
-    if (!user) {
-      setLoginMessage('리뷰를 남기려면 로그인을 해야합니다');
-      setLoginAlert(true);
-      return;
-    }
+    if (!simpleDialogAlert('리뷰를 남기려면 로그인을 해야합니다')) return;
     history.push(`comment/${(match.params as any).shopId}`);
-  }, [history, match.params, user]);
+  }, [history, match.params, simpleDialogAlert]);
 
   const onShopImageUploadButtonClick = () => {
-    if (!user) {
-      setLoginMessage('이미지를 올리려면 로그인을 해야합니다');
-      setLoginAlert(true);
-      return;
-    }
+    if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
     shopFileRef.current?.click();
   };
 
   const onMenuImageUploadButtonClick = () => {
-    if (!user) {
-      setLoginMessage('이미지를 올리려면 로그인을 해야합니다');
-      setLoginAlert(true);
-      return;
-    }
+    if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
     menuFileRef.current?.click();
   };
 
@@ -356,11 +356,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   };
 
   const onLikeButton = () => {
-    if (!user) {
-      setLoginMessage('좋아요를 누르려면 로그인을 해야합니다');
-      setLoginAlert(true);
-      return;
-    }
+    if (!simpleDialogAlert('좋아요를 누르려면 로그인을 해야합니다')) return;
     if (shop.data) {
       if (likeOffset === 0) {
         if (shop.data.didLike) {
@@ -393,11 +389,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const likeComment = useCallback(
     (commentId: number) => {
-      if (!user) {
-        setLoginMessage('댓글 좋아요를 누르려면 로그인을 해야합니다');
-        setLoginAlert(true);
-        return;
-      }
+      if (!simpleDialogAlert('댓글 좋아요를 누르려면 로그인을 해야합니다')) return;
       if (!reviews.data) return;
       if (commentLikeOffset[commentId] === 0) {
         if (reviews.data[commentId].didLike) {
@@ -415,7 +407,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         setCommentLikeOffset(commentLikeOffset.map((comment, index) => (index === commentId ? 0 : comment)));
       }
     },
-    [user, reviews.data, commentLikeOffset, onLikeComment, onUnlikeComment],
+    [simpleDialogAlert, reviews.data, commentLikeOffset, onLikeComment, onUnlikeComment],
   );
 
   const onShopReportCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
