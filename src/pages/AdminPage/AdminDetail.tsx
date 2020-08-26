@@ -12,6 +12,7 @@ import ButtonGroup from '../../components/common/ButtonGroup';
 import { apiLink } from '../../lib/getAPILink';
 import axios from 'axios';
 import { stringify } from 'querystring';
+import AdminShopInformation from './AdminShopInformation';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -54,33 +55,6 @@ const ShopImage = styled.div`
     `}
 `;
 
-const ShopInformationContainer = styled.form`
-  margin-top: 20px;
-  select {
-    width: 100px;
-    padding: 0 10px;
-  }
-`;
-const ShopInformation = styled.div`
-  color: ${palette.darkGray};
-
-  display: flex;
-  align-items: center;
-
-  margin: 10px 0;
-
-  span {
-    margin-right: 10px;
-    width: 70px;
-  }
-  input {
-    flex: 1;
-  }
-  button.submit {
-    border: none;
-  }
-`;
-
 const MenuContainer = styled.div`
   .menu {
     display: flex;
@@ -117,30 +91,6 @@ function AdminDetail({ match }: RouteComponentProps) {
 
   const { onShopRequest, onReviewRequest, shop, reviews } = useDetail(shopId);
 
-  interface Form {
-    name: string;
-    address: string;
-    location: Location;
-    latitude: number;
-    longitude: number;
-    category: ShopCategory;
-    contact: string;
-    open: string;
-    closed: string;
-  }
-
-  const [form, setForm] = useState<Form>({
-    name: '',
-    address: '',
-    location: Location.None,
-    latitude: 0,
-    longitude: 0,
-    category: ShopCategory.None,
-    contact: '',
-    open: '',
-    closed: '',
-  });
-
   interface Menu {
     title: string;
     price: number;
@@ -163,51 +113,9 @@ function AdminDetail({ match }: RouteComponentProps) {
   useEffect(() => {
     let s = shop.data;
     if (s) {
-      setForm({
-        name: s.name,
-        address: s.address,
-        location: s.location,
-        latitude: s.latitude,
-        longitude: s.longitude,
-        category: s.category,
-        contact: s.contact,
-        open: s.open,
-        closed: s.closed,
-      });
       setMenus(s.menus);
     }
   }, [shop.data]);
-
-  const onSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      if (!shop.data) return;
-      axios.put(`${apiLink()}/shop/${shop.data._id}`, form, {
-        withCredentials: true,
-      });
-    },
-    [form, shop.data],
-  );
-
-  const onChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setForm({
-        ...form,
-        [event.target.name]: event.target.value,
-      });
-    },
-    [form],
-  );
-
-  const onChangeSelect = useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setForm({
-        ...form,
-        [event.target.name]: event.target.value,
-      });
-    },
-    [form],
-  );
 
   const onMenuChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>, menuIndex: number) => {
@@ -280,60 +188,7 @@ function AdminDetail({ match }: RouteComponentProps) {
           imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
         ></ShopImage>
       </ShopImageContainer>
-      <ShopInformationContainer onSubmit={onSubmit} method="post">
-        <ShopInformation>
-          <span>이름 : </span>
-          <input name="name" value={form.name} onChange={onChange} />
-        </ShopInformation>
-        <ShopInformation>
-          <span>주소 : </span>
-          <input name="address" value={form.address} onChange={onChange} />
-        </ShopInformation>
-        <ShopInformation>
-          <span>위치 : </span>
-          <select value={form.location} name="location" onChange={onChangeSelect}>
-            <option value={Location.Front}>{locationToString(Location.Front)}</option>
-            <option value={Location.FrontFar}>{locationToString(Location.FrontFar)}</option>
-            <option value={Location.HsStation}>{locationToString(Location.HsStation)}</option>
-            <option value={Location.Back}>{locationToString(Location.Back)}</option>
-          </select>
-        </ShopInformation>
-        <ShopInformation>
-          <span>위도 : </span>
-          <input name="latitude" value={form.latitude} onChange={onChange} />
-        </ShopInformation>
-        <ShopInformation>
-          <span>경도 : </span>
-          <input name="longitude" value={form.longitude} onChange={onChange} />
-        </ShopInformation>
-        <ShopInformation>
-          <span>카테고리 : </span>
-          <select name="category" value={form.category} onChange={onChangeSelect}>
-            <option value={ShopCategory.Korean}>{categoryToString(ShopCategory.Korean)}</option>
-            <option value={ShopCategory.Japanese}>{categoryToString(ShopCategory.Japanese)}</option>
-            <option value={ShopCategory.Chinese}>{categoryToString(ShopCategory.Chinese)}</option>
-            <option value={ShopCategory.Western}>{categoryToString(ShopCategory.Western)}</option>
-            <option value={ShopCategory.Fusion}>{categoryToString(ShopCategory.Fusion)}</option>
-            <option value={ShopCategory.School}>{categoryToString(ShopCategory.School)}</option>
-            <option value={ShopCategory.other}>{categoryToString(ShopCategory.other)}</option>
-          </select>
-        </ShopInformation>
-        <ShopInformation>
-          <span>전화번호 : </span>
-          <input name="contact" value={form.contact} onChange={onChange} />
-        </ShopInformation>
-        <ShopInformation>
-          <span>오픈 : </span>
-          <input name="open" value={form.open} onChange={onChange} />
-        </ShopInformation>
-        <ShopInformation>
-          <span>클로즈 : </span>
-          <input name="closed" value={form.closed} onChange={onChange} />
-        </ShopInformation>
-        <ButtonGroup rightAlign direction="row" gap="0">
-          <Button theme="red">적용</Button>
-        </ButtonGroup>
-      </ShopInformationContainer>
+      <AdminShopInformation shop={shop.data} />
       <MenuContainer>
         {shop.data.menus.map((menu, index) => (
           <div className="menu" key={menu._id}>
