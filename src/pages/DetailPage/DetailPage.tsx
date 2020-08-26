@@ -323,34 +323,32 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     menuFileRef.current?.click();
   };
 
-  const onShopFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = shopFileRef.current?.files;
+  const fileSizeAlert = (fileRef: React.RefObject<HTMLInputElement>) => {
+    const files = fileRef.current?.files;
     if (files?.length) {
       for (let index = 0; index < files.length; index++) {
         const file = files.item(index);
         if (file && file.size > 5 * 1024 * 1024) {
           alert('사진의 크기가 5MB보다 큽니다');
-          shopFileRef.current!.value = '';
-          return;
+          fileRef.current!.value = '';
+          return false;
         }
       }
-      onShopImageUploadRequest(files!);
+      return true;
+    }
+    return false;
+  };
+
+  const onShopFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (fileSizeAlert(shopFileRef)) {
+      onShopImageUploadRequest(shopFileRef.current!.files!);
       shopFileRef.current!.value = '';
     }
   };
 
   const onMenuFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = menuFileRef.current?.files;
-    if (files?.length) {
-      for (let index = 0; index < files.length; index++) {
-        const file = files.item(index);
-        if (file && file.size > 5 * 1024 * 1024) {
-          alert('사진의 크기가 5MB보다 큽니다');
-          menuFileRef.current!.value = '';
-          return;
-        }
-      }
-      onMenuImageUploadRequest(files!);
+    if (fileSizeAlert(menuFileRef)) {
+      onMenuImageUploadRequest(menuFileRef.current!.files!);
       menuFileRef.current!.value = '';
     }
   };
