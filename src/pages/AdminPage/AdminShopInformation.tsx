@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, Dispatch } from 'react';
 import classNames from 'classnames/bind';
 import styled from 'styled-components';
 import { locationToString, categoryToString } from '../../lib/shopUtil';
@@ -9,6 +9,7 @@ import { ShopUIInterface } from '../../modules/detail';
 import axios from 'axios';
 import { apiLink } from '../../lib/getAPILink';
 import palette from '../../styles/palette';
+import { AnyAction } from 'redux';
 
 const ShopInformationContainer = styled.form`
   margin-top: 20px;
@@ -39,9 +40,10 @@ const ShopInformation = styled.div`
 
 interface AdminShopInformationProps {
   shop: ShopUIInterface;
+  reload: () => any;
 }
 
-function AdminShopInformation({ shop }: AdminShopInformationProps) {
+function AdminShopInformation({ shop, reload }: AdminShopInformationProps) {
   interface Form {
     name: string;
     address: string;
@@ -69,11 +71,15 @@ function AdminShopInformation({ shop }: AdminShopInformationProps) {
   const onSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      axios.put(`${apiLink()}/shop/${shop._id}`, form, {
-        withCredentials: true,
-      });
+      const updateData = async () => {
+        await axios.put(`${apiLink()}/shop/${shop._id}`, form, {
+          withCredentials: true,
+        });
+        reload();
+      };
+      updateData();
     },
-    [form, shop],
+    [form, shop, reload],
   );
 
   const onChange = useCallback(

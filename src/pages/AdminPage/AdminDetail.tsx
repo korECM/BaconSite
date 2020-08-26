@@ -188,7 +188,7 @@ function AdminDetail({ match }: RouteComponentProps) {
           imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
         ></ShopImage>
       </ShopImageContainer>
-      <AdminShopInformation shop={shop.data} />
+      <AdminShopInformation shop={shop.data} reload={onShopRequest} />
       <MenuContainer>
         {shop.data.menus.map((menu, index) => (
           <div className="menu" key={menu._id}>
