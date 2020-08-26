@@ -10,7 +10,7 @@ import { Image } from '../../api/getShop';
 const AdminShopImageBlock = styled.div`
   display: flex;
   width: 100%;
-  height: 120px;
+  height: 140px;
   overflow-x: scroll;
   align-items: center;
   .imageContainer {
