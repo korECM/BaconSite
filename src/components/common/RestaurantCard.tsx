@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import palette, { hexToRGB } from '../../styles/palette';
 import Flag from '../../components/common/Flag';
 import { ShopsInterface } from '../../api/getShops';
@@ -7,7 +7,6 @@ import { getScore } from '../../lib/scoreUtil';
 import { locationToString, keywordToString } from '../../lib/shopUtil';
 import BlankImage from 'assets/blank.png';
 import { useSpring, animated } from 'react-spring';
-import { Keyword } from '../../api/getShop';
 
 const RestaurantCardBlock = styled(animated.button)`
   border: none;

@@ -8,7 +8,6 @@ import { ImageUploadResponseInterface, shopImageUpload, menuImageUpload } from '
 import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
 import { LikeCommentInterface, likeCommentAPI, unlikeCommentAPI } from '../api/likeComment';
-import { locationToString, categoryToString } from '../lib/shopUtil';
 import { ReportInterface, reportShopAPI, reportReviewAPI } from '../api/report';
 
 const RESET_DATA = 'detail/RESET_DATA' as const;
