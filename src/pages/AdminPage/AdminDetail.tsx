@@ -10,6 +10,7 @@ import axios from 'axios';
 import AdminShopInformation from './AdminShopInformation';
 import AdminMenuInformation from './AdminMenuInformation';
 import AdminImage from './AdminImage';
+import AdminReviewInformation from './AdminReviewInformation';
 
 const ShopImageContainer = styled.div`
   height: 60vw;
@@ -43,21 +44,6 @@ const ShopImage = styled.div`
     css`
       background-image: url(${props.imageLink});
     `}
-`;
-
-const CommentContainer = styled.div`
-  color: ${palette.darkGray};
-`;
-
-const Comment = styled.div`
-  margin: 15px 0;
-  padding: 5px;
-
-  border: 1px solid ${palette.middleGray};
-
-  p {
-    margin: 5px 0;
-  }
 `;
 
 const Header = styled.div`
@@ -128,6 +114,9 @@ function AdminDetail({ match, location }: RouteComponentProps) {
         <Link to={`${match.url}/menu`} className={cx('item', { selected: location.pathname === `${match.url}/menu` })}>
           가게 메뉴
         </Link>
+        <Link to={`${match.url}/review`} className={cx('item', { selected: location.pathname === `${match.url}/review` })}>
+          가게 댓글
+        </Link>
         <Link to={`${match.url}/shopImage`} className={cx('item', { selected: location.pathname === `${match.url}/shopImage` })}>
           가게 사진
         </Link>
@@ -139,6 +128,11 @@ function AdminDetail({ match, location }: RouteComponentProps) {
       <Route exact path={`${match.path}/menu`} render={() => <AdminMenuInformation shop={shop.data!} reload={onShopRequest} confirmAlert={onConfirm} />} />
       <Route
         exact
+        path={`${match.path}/review`}
+        render={() => <AdminReviewInformation reviews={reviews.data} reload={onShopRequest} confirmAlert={onConfirm} />}
+      />
+      <Route
+        exact
         path={`${match.path}/shopImage`}
         render={() => <AdminImage images={shop.data!.shopImage} reload={onShopRequest} type="shop" confirmAlert={onConfirm} />}
       />
@@ -147,15 +141,6 @@ function AdminDetail({ match, location }: RouteComponentProps) {
         path={`${match.path}/menuImage`}
         render={() => <AdminImage images={shop.data!.menuImage} reload={onShopRequest} type="menu" confirmAlert={onConfirm} />}
       />
-      <CommentContainer>
-        {reviews.data &&
-          reviews.data.map((review) => (
-            <Comment key={review._id}>
-              <p>작성자 : {review.user.name}</p>
-              <p>내용 : {review.comment}</p>
-            </Comment>
-          ))}
-      </CommentContainer>
     </Container>
   ) : null;
 }
