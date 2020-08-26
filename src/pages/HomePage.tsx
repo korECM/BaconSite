@@ -6,7 +6,7 @@ import Button from '../components/common/Button';
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
 import FullHeightFade from '../components/common/FullHeightFade';
-import titlelogo from './fooding_titlelogo.png';
+import titlelogo from 'assets/fooding_titlelogo.png';
 
 const TitleSlogan = styled.h1`
   font-size: 14px;
