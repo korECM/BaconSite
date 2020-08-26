@@ -9,7 +9,7 @@ import { apiLink } from '../../lib/getAPILink';
 import axios from 'axios';
 import AdminShopInformation from './AdminShopInformation';
 import AdminMenuInformation from './AdminMenuInformation';
-import AdminShopImage from './AdminShopImage';
+import AdminImage from './AdminImage';
 
 const ShopImageContainer = styled.div`
   height: 60vw;
@@ -118,10 +118,14 @@ function AdminDetail({ match, location }: RouteComponentProps) {
         <Link to={`${match.url}/shopImage`} className={cx('item', { selected: location.pathname === `${match.url}/shopImage` })}>
           가게 사진
         </Link>
+        <Link to={`${match.url}/menuImage`} className={cx('item', { selected: location.pathname === `${match.url}/menuImage` })}>
+          메뉴 사진
+        </Link>
       </Header>
       <Route exact path={`${match.path}/data`} render={() => <AdminShopInformation shop={shop.data!} reload={onShopRequest} />} />
       <Route exact path={`${match.path}/menu`} render={() => <AdminMenuInformation shop={shop.data!} reload={onShopRequest} />} />
-      <Route exact path={`${match.path}/shopImage`} render={() => <AdminShopImage shop={shop.data!} reload={onShopRequest} />} />
+      <Route exact path={`${match.path}/shopImage`} render={() => <AdminImage images={shop.data!.shopImage} reload={onShopRequest} type="shop" />} />
+      <Route exact path={`${match.path}/menuImage`} render={() => <AdminImage images={shop.data!.menuImage} reload={onShopRequest} type="menu" />} />
       <CommentContainer>
         {reviews.data &&
           reviews.data.map((review) => (

@@ -5,6 +5,7 @@ import { ShopUIInterface } from '../../modules/detail';
 import Button from '../../components/common/Button';
 import axios from 'axios';
 import { apiLink } from '../../lib/getAPILink';
+import { Image } from '../../api/getShop';
 
 const AdminShopImageBlock = styled.div`
   display: flex;
@@ -33,31 +34,32 @@ const AdminShopImageBlock = styled.div`
   }
 `;
 
-interface AdminShopImageProps {
-  shop: ShopUIInterface;
+interface AdminImageProps {
+  images: Image[];
   reload: () => any;
+  type: 'shop' | 'menu';
 }
 
-function AdminShopImage({ shop, reload }: AdminShopImageProps) {
+function AdminImage({ images, reload, type }: AdminImageProps) {
   const onDelete = useCallback(
     (imageId: string) => {
       const request = async () => {
-        await axios.delete(`${apiLink()}/shop/shopImage/${imageId}`, {
+        await axios.delete(`${apiLink()}/shop/${type}Image/${imageId}`, {
           withCredentials: true,
         });
         await reload();
       };
       request();
     },
-    [reload],
+    [reload, type],
   );
 
   return (
     <AdminShopImageBlock>
-      {shop.shopImage.map((image) => (
+      {images.map((image) => (
         <div key={image._id} className="imageContainer">
           <a href={image.imageLink}>
-            <img src={image.imageLink} alt="가게 사진" />
+            <img src={image.imageLink} alt="가게 관련 사진" />
           </a>
           <Button theme="red" onClick={() => onDelete(image._id)}>
             삭제
@@ -68,4 +70,4 @@ function AdminShopImage({ shop, reload }: AdminShopImageProps) {
   );
 }
 
-export default AdminShopImage;
+export default AdminImage;
