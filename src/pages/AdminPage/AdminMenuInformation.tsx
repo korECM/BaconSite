@@ -149,7 +149,7 @@ function AdminMenuInformation({ shop, reload, confirmAlert }: AdminMenuInformati
       ))}
       {shop.menus.length < 3 && (
         <div className="menu">
-          {menus.length > 0 && (
+          {
             <>
               <div>
                 <div>
@@ -167,7 +167,7 @@ function AdminMenuInformation({ shop, reload, confirmAlert }: AdminMenuInformati
                 </Button>
               </ButtonGroup>
             </>
-          )}
+          }
         </div>
       )}
     </MenuContainer>
