@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback, useState } from 'react';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import useDetail from '../../hooks/useDetail';
 import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit, MdInfoOutline, MdKeyboardArrowRight, MdRestaurantMenu } from 'react-icons/md';
 import ClockLoader from 'react-spinners/ClockLoader';
@@ -296,71 +296,65 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [loginMessage, setLoginMessage] = useState('');
 
+  const simpleDialogAlert = useCallback(
+    (message: string) => {
+      if (!user) {
+        setLoginMessage(message);
+        setLoginAlert(true);
+        return false;
+      }
+      return true;
+    },
+    [user],
+  );
+
   const onWriteReviewButtonClick = useCallback(() => {
-    if (!user) {
-      setLoginMessage('리뷰를 남기려면 로그인을 해야합니다');
-      setLoginAlert(true);
-      return;
-    }
+    if (!simpleDialogAlert('리뷰를 남기려면 로그인을 해야합니다')) return;
     history.push(`comment/${(match.params as any).shopId}`);
-  }, [history, match.params, user]);
+  }, [history, match.params, simpleDialogAlert]);
 
   const onShopImageUploadButtonClick = () => {
-    if (!user) {
-      setLoginMessage('이미지를 올리려면 로그인을 해야합니다');
-      setLoginAlert(true);
-      return;
-    }
+    if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
     shopFileRef.current?.click();
   };
 
   const onMenuImageUploadButtonClick = () => {
-    if (!user) {
-      setLoginMessage('이미지를 올리려면 로그인을 해야합니다');
-      setLoginAlert(true);
-      return;
-    }
+    if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
     menuFileRef.current?.click();
   };
 
-  const onShopFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = shopFileRef.current?.files;
+  const fileSizeAlert = (fileRef: React.RefObject<HTMLInputElement>) => {
+    const files = fileRef.current?.files;
     if (files?.length) {
       for (let index = 0; index < files.length; index++) {
         const file = files.item(index);
         if (file && file.size > 5 * 1024 * 1024) {
           alert('사진의 크기가 5MB보다 큽니다');
-          shopFileRef.current!.value = '';
-          return;
+          fileRef.current!.value = '';
+          return false;
         }
       }
-      onShopImageUploadRequest(files!);
+      return true;
+    }
+    return false;
+  };
+
+  const onShopFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (fileSizeAlert(shopFileRef)) {
+      onShopImageUploadRequest(shopFileRef.current!.files!);
       shopFileRef.current!.value = '';
     }
   };
 
   const onMenuFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = menuFileRef.current?.files;
-    if (files?.length) {
-      for (let index = 0; index < files.length; index++) {
-        const file = files.item(index);
-        if (file && file.size > 5 * 1024 * 1024) {
-          alert('사진의 크기가 5MB보다 큽니다');
-          menuFileRef.current!.value = '';
-          return;
-        }
-      }
-      onMenuImageUploadRequest(files!);
+    if (fileSizeAlert(menuFileRef)) {
+      onMenuImageUploadRequest(menuFileRef.current!.files!);
       menuFileRef.current!.value = '';
     }
   };
 
   const onLikeButton = () => {
-    if (!user) {
-      setLoginMessage('좋아요를 누르려면 로그인을 해야합니다');
-      setLoginAlert(true);
-      return;
-    }
+    if (!simpleDialogAlert('좋아요를 누르려면 로그인을 해야합니다')) return;
     if (shop.data) {
       if (likeOffset === 0) {
         if (shop.data.didLike) {
@@ -393,11 +387,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const likeComment = useCallback(
     (commentId: number) => {
-      if (!user) {
-        setLoginMessage('댓글 좋아요를 누르려면 로그인을 해야합니다');
-        setLoginAlert(true);
-        return;
-      }
+      if (!simpleDialogAlert('댓글 좋아요를 누르려면 로그인을 해야합니다')) return;
       if (!reviews.data) return;
       if (commentLikeOffset[commentId] === 0) {
         if (reviews.data[commentId].didLike) {
@@ -415,7 +405,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         setCommentLikeOffset(commentLikeOffset.map((comment, index) => (index === commentId ? 0 : comment)));
       }
     },
-    [user, reviews.data, commentLikeOffset, onLikeComment, onUnlikeComment],
+    [simpleDialogAlert, reviews.data, commentLikeOffset, onLikeComment, onUnlikeComment],
   );
 
   const onShopReportCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

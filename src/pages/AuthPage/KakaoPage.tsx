@@ -10,7 +10,7 @@ import useCheck from '../../hooks/useCheck';
 import Loader from '../../components/common/Loader';
 import StyledInput from '../../components/common/StyledInput';
 import { AiOutlineIdcard } from 'react-icons/ai';
-import gender from './gender.png';
+import gender from 'assets/gender.png';
 import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
 
