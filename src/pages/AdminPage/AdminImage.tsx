@@ -6,6 +6,7 @@ import Button from '../../components/common/Button';
 import axios from 'axios';
 import { apiLink } from '../../lib/getAPILink';
 import { Image } from '../../api/getShop';
+import { AdminElementInterface } from './AdminDetail';
 
 const AdminShopImageBlock = styled.div`
   display: flex;
@@ -34,13 +35,12 @@ const AdminShopImageBlock = styled.div`
   }
 `;
 
-interface AdminImageProps {
+interface AdminImageProps extends AdminElementInterface {
   images: Image[];
-  reload: () => any;
   type: 'shop' | 'menu';
 }
 
-function AdminImage({ images, reload, type }: AdminImageProps) {
+function AdminImage({ images, reload, type, confirmAlert }: AdminImageProps) {
   const onDelete = useCallback(
     (imageId: string) => {
       const request = async () => {
@@ -49,9 +49,9 @@ function AdminImage({ images, reload, type }: AdminImageProps) {
         });
         await reload();
       };
-      request();
+      if (confirmAlert()) request();
     },
-    [reload, type],
+    [reload, type, confirmAlert],
   );
 
   return (

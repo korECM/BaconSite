@@ -81,6 +81,11 @@ const Header = styled.div`
   }
 `;
 
+export interface AdminElementInterface {
+  reload: () => any;
+  confirmAlert: (message?: string) => boolean;
+}
+
 function AdminDetail({ match, location }: RouteComponentProps) {
   const shopId: string = (match.params as any).shopId;
 
@@ -96,6 +101,10 @@ function AdminDetail({ match, location }: RouteComponentProps) {
     if (s) {
     }
   }, [shop.data]);
+
+  const onConfirm = useCallback((message: string = '다음 행동은 돌이킬 수 없습니다. 계속 하시겠습니까?') => {
+    return window.confirm(message);
+  }, []);
 
   if (shop.data === null || shop.loading) {
     return <p>로딩중</p>;
@@ -122,10 +131,18 @@ function AdminDetail({ match, location }: RouteComponentProps) {
           메뉴 사진
         </Link>
       </Header>
-      <Route exact path={`${match.path}/data`} render={() => <AdminShopInformation shop={shop.data!} reload={onShopRequest} />} />
-      <Route exact path={`${match.path}/menu`} render={() => <AdminMenuInformation shop={shop.data!} reload={onShopRequest} />} />
-      <Route exact path={`${match.path}/shopImage`} render={() => <AdminImage images={shop.data!.shopImage} reload={onShopRequest} type="shop" />} />
-      <Route exact path={`${match.path}/menuImage`} render={() => <AdminImage images={shop.data!.menuImage} reload={onShopRequest} type="menu" />} />
+      <Route exact path={`${match.path}/data`} render={() => <AdminShopInformation shop={shop.data!} reload={onShopRequest} confirmAlert={onConfirm} />} />
+      <Route exact path={`${match.path}/menu`} render={() => <AdminMenuInformation shop={shop.data!} reload={onShopRequest} confirmAlert={onConfirm} />} />
+      <Route
+        exact
+        path={`${match.path}/shopImage`}
+        render={() => <AdminImage images={shop.data!.shopImage} reload={onShopRequest} type="shop" confirmAlert={onConfirm} />}
+      />
+      <Route
+        exact
+        path={`${match.path}/menuImage`}
+        render={() => <AdminImage images={shop.data!.menuImage} reload={onShopRequest} type="menu" confirmAlert={onConfirm} />}
+      />
       <CommentContainer>
         {reviews.data &&
           reviews.data.map((review) => (

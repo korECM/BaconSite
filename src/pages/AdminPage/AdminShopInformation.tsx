@@ -9,6 +9,7 @@ import { ShopUIInterface } from '../../modules/detail';
 import axios from 'axios';
 import { apiLink } from '../../lib/getAPILink';
 import palette from '../../styles/palette';
+import { AdminElementInterface } from './AdminDetail';
 
 const ShopInformationContainer = styled.form`
   margin-top: 20px;
@@ -37,12 +38,11 @@ const ShopInformation = styled.div`
   }
 `;
 
-interface AdminShopInformationProps {
+interface AdminShopInformationProps extends AdminElementInterface {
   shop: ShopUIInterface;
-  reload: () => any;
 }
 
-function AdminShopInformation({ shop, reload }: AdminShopInformationProps) {
+function AdminShopInformation({ shop, reload, confirmAlert }: AdminShopInformationProps) {
   interface Form {
     name: string;
     address: string;
@@ -70,6 +70,7 @@ function AdminShopInformation({ shop, reload }: AdminShopInformationProps) {
   const onSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+      if (!confirmAlert()) return;
       const updateData = async () => {
         await axios.put(`${apiLink()}/shop/${shop._id}`, form, {
           withCredentials: true,
@@ -78,7 +79,7 @@ function AdminShopInformation({ shop, reload }: AdminShopInformationProps) {
       };
       updateData();
     },
-    [form, shop, reload],
+    [form, shop, reload, confirmAlert],
   );
 
   const onChange = useCallback(

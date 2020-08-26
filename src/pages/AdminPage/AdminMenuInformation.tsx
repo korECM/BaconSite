@@ -6,6 +6,7 @@ import Button from '../../components/common/Button';
 import ButtonGroup from '../../components/common/ButtonGroup';
 import axios from 'axios';
 import { apiLink } from '../../lib/getAPILink';
+import { AdminElementInterface } from './AdminDetail';
 
 const MenuContainer = styled.div`
   .menu {
@@ -23,12 +24,11 @@ const MenuContainer = styled.div`
   }
 `;
 
-interface AdminMenuInformationProps {
+interface AdminMenuInformationProps extends AdminElementInterface {
   shop: ShopUIInterface;
-  reload: () => any;
 }
 
-function AdminMenuInformation({ shop, reload }: AdminMenuInformationProps) {
+function AdminMenuInformation({ shop, reload, confirmAlert }: AdminMenuInformationProps) {
   interface Menu {
     title: string;
     price: number;
@@ -65,6 +65,7 @@ function AdminMenuInformation({ shop, reload }: AdminMenuInformationProps) {
 
   const updateMenu = async (menuId: string, index: number) => {
     if (!menus[index]) return;
+    if (!confirmAlert()) return;
     await axios.put(
       `${apiLink()}/shop/menu/${menuId}`,
       { title: menus[index].title, price: menus[index].price },
@@ -76,6 +77,7 @@ function AdminMenuInformation({ shop, reload }: AdminMenuInformationProps) {
   };
 
   const deleteMenu = async (menuId: string) => {
+    if (!confirmAlert()) return;
     await axios.delete(`${apiLink()}/shop/menu/${menuId}`, {
       withCredentials: true,
     });
@@ -93,6 +95,7 @@ function AdminMenuInformation({ shop, reload }: AdminMenuInformationProps) {
   );
 
   const addNewMenu = async () => {
+    if (!confirmAlert()) return;
     await axios.post(
       `${apiLink()}/shop/menu/${shop._id}`,
       {
