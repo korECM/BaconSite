@@ -109,11 +109,11 @@ function AdminShopInformation({ shop, reload }: AdminShopInformationProps) {
     <ShopInformationContainer onSubmit={onSubmit} method="post">
       <ShopInformation>
         <span>이름 : </span>
-        <input name="name" value={form.name} onChange={onChange} />
+        <input name="name" value={form.name} onChange={onChange} autoComplete="off" />
       </ShopInformation>
       <ShopInformation>
         <span>주소 : </span>
-        <input name="address" value={form.address} onChange={onChange} />
+        <input name="address" value={form.address} onChange={onChange} autoComplete="off" />
       </ShopInformation>
       <ShopInformation>
         <span>위치 : </span>
@@ -126,11 +126,11 @@ function AdminShopInformation({ shop, reload }: AdminShopInformationProps) {
       </ShopInformation>
       <ShopInformation>
         <span>위도 : </span>
-        <input name="latitude" value={form.latitude} onChange={onChange} />
+        <input name="latitude" value={form.latitude} onChange={onChange} autoComplete="off" />
       </ShopInformation>
       <ShopInformation>
         <span>경도 : </span>
-        <input name="longitude" value={form.longitude} onChange={onChange} />
+        <input name="longitude" value={form.longitude} onChange={onChange} autoComplete="off" />
       </ShopInformation>
       <ShopInformation>
         <span>카테고리 : </span>
@@ -146,15 +146,15 @@ function AdminShopInformation({ shop, reload }: AdminShopInformationProps) {
       </ShopInformation>
       <ShopInformation>
         <span>전화번호 : </span>
-        <input name="contact" value={form.contact} onChange={onChange} />
+        <input name="contact" value={form.contact} onChange={onChange} autoComplete="off" />
       </ShopInformation>
       <ShopInformation>
         <span>오픈 : </span>
-        <input name="open" value={form.open} onChange={onChange} />
+        <input name="open" value={form.open} onChange={onChange} autoComplete="off" />
       </ShopInformation>
       <ShopInformation>
         <span>클로즈 : </span>
-        <input name="closed" value={form.closed} onChange={onChange} />
+        <input name="closed" value={form.closed} onChange={onChange} autoComplete="off" />
       </ShopInformation>
       <ButtonGroup rightAlign direction="row" gap="0">
         <Button theme="red">적용</Button>
