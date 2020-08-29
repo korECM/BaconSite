@@ -1,17 +1,27 @@
 .roundButton {
   margin-right: -4px;
+<<<<<<< HEAD
   background-color: #dddddd;
   color: #5d5d5d;
   padding: 0px;
   /* padding-left: 25px; */
   /* padding-right: 25px; */
   font-size: 13.33px;
+=======
+  background-color: #DDDDDD;
+  color: #5D5D5D;
+  font-size: 12.5px;
+>>>>>>> master
 
   outline: none;
   border: none;
 
   border-radius: 12.5px;
+<<<<<<< HEAD
   /* padding: 8.5px 27.5px; */
+=======
+  padding: 5px 0;
+>>>>>>> master
 
   margin-bottom: 15px;
   margin-top: 15px;
@@ -19,9 +29,9 @@
   width: 27%;
 
   transition: background-color 0.2s ease;
-  -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-  box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 4px 15px -5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 4px 15px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 15px -5px rgba(0, 0, 0, 0.3);
 
   font-family: 'Nanum Gothic';
   font-weight: 200;
@@ -40,5 +50,10 @@
 
 .roundButton:hovers {
   color: white;
+<<<<<<< HEAD
   background-color: #db2a37;
 }
+=======
+  background-color: #DB2A37;
+}
+>>>>>>> master
