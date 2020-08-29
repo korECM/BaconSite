@@ -13,10 +13,34 @@ const ShopBlock = styled.div`
   padding: 10px;
   color: white;
   border-radius: 10px;
-  h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
+  font-size: 12.5px;
+  .shopHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    h1 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  }
+  .info {
+    display: flex;
     margin-bottom: 15px;
+    padding-left: 5px;
+    div {
+      margin-right: 10px;
+    }
+  }
+  .href {
+    padding-left: 5px;
+    padding-bottom: 10px;
+    a {
+      border: 1px solid white;
+      border-radius: 10px;
+      padding: 5px 10px;
+      margin-right: 10px;
+    }
   }
 `;
 
@@ -31,12 +55,18 @@ function AdminList() {
     <AdminListBlock>
       <ShopBlockContainer>
         {shops.data &&
-          shops.data.map((data) => (
-            <ShopBlock key={data.name}>
-              <h1>{data.name}</h1>
-              <div>
-                <a href={`/admin/shop/${data._id}`}>가게 정보 수정</a>
-                <a href={`/shop/${data._id}`}>가게 페이지</a>
+          shops.data.map((shop) => (
+            <ShopBlock key={shop.name}>
+              <div className="shopHeader">
+                <h1>{shop.name}</h1>
+              </div>
+              <div className="info">
+                <div>Like : {shop.likerCount}</div>
+                <div>Review : {shop.reviewCount}</div>
+              </div>
+              <div className="href">
+                <a href={`/admin/shop/${shop._id}/data`}>가게 정보 수정</a>
+                <a href={`/shop/${shop._id}`}>가게 페이지</a>
               </div>
             </ShopBlock>
           ))}

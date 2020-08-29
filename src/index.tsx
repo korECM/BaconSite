@@ -16,6 +16,7 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(Thunk
 
 function loadUser() {
   try {
+    // TODO: localStorage는 없고 쿠키만 있는 경우 로그인 안되는 오류 존재
     const user = localStorage.getItem('user');
     if (!user) return;
 

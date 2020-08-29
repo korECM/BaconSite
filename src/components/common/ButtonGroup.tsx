@@ -17,12 +17,12 @@ const ButtonGroupBlock = styled.div`
     ${(props: ButtonGroupProps) =>
       props.direction === 'row' &&
       css`
-        margin-left: props.gap;
+        margin-left: ${props.gap};
       `}
     ${(props: ButtonGroupProps) =>
       props.direction === 'column' &&
       css`
-        margin-top: props.gap;
+        margin-top: ${props.gap};
       `}
   }
 `;

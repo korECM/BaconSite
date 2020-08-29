@@ -8,7 +8,6 @@ import { ImageUploadResponseInterface, shopImageUpload, menuImageUpload } from '
 import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
 import { LikeCommentInterface, likeCommentAPI, unlikeCommentAPI } from '../api/likeComment';
-import { locationToString, categoryToString } from '../lib/shopUtil';
 import { ReportInterface, reportShopAPI, reportReviewAPI } from '../api/report';
 
 const RESET_DATA = 'detail/RESET_DATA' as const;
@@ -159,8 +158,8 @@ export interface ShopUIInterface
   extends Modify<
     ShopInterface,
     {
-      location: string;
-      category: string;
+      // location: string;
+      // category: string;
     }
   > {}
 
@@ -200,12 +199,12 @@ const initialState: DetailState = {
     {
       _id: '',
       name: '',
-      location: '',
+      location: Location.None,
       latitude: 0,
       longitude: 0,
       contact: '',
       address: '',
-      category: '',
+      category: ShopCategory.None,
       open: '',
       closed: '',
       shopImage: [],
@@ -282,8 +281,8 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
     ...state,
     shop: asyncState.success({
       ...shop,
-      location: locationToString(shop.location),
-      category: categoryToString(shop.category),
+      location: shop.location,
+      category: shop.category,
     }),
   }),
   [GET_SHOP_INFO_ERROR]: (state, { payload: error }) => ({

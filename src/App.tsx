@@ -8,7 +8,7 @@ import DetailPageRouter from './pages/DetailPage/DetailPageRouter';
 import { Helmet } from 'react-helmet-async';
 
 const ResultPage = React.lazy(() => import(/* webpackChunkName: "result", webpackPrefetch: true */ './pages/ResultPage/ResultPage'));
-const AdminRouter = React.lazy(() => import('./pages/AdminPage/AdminRouter'));
+const AdminRouter = React.lazy(() => import(/* webpackChunkName: "admin" */ './pages/AdminPage/AdminRouter'));
 const RouletteRouter = React.lazy(() => import(/* webpackChunkName: "roulette", webpackPrefetch: true */ './pages/RoulettePage/RoulettePageRouter'));
 const RouletteListRouter = React.lazy(() => import(/* webpackChunkName: "rouletteList", webpackPrefetch: true */ './pages/RoulettePage/RouletteListRouter'));
 const LoginPageRouter = React.lazy(() => import(/* webpackChunkName: "login", webpackPrefetch: true */ './pages/AuthPage/LoginPageRouter'));

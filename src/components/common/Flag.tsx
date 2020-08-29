@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import RedFlag from './RedFlag.png';
-import GrayFlag from './GrayFlag.png';
+import RedFlag from 'assets/RedFlag.png';
+import GrayFlag from 'assets/GrayFlag.png';
 
 const FlagBlock = styled.div`
   height: 85px;
