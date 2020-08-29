@@ -13,6 +13,7 @@ import React, { Component } from 'react';
 import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
 import './TagButton.css';
+import { MdFormatListBulleted } from 'react-icons/md';
 
 const ButtonBlock = styled.button`
   margin-right: -4px;
@@ -104,22 +105,22 @@ interface State {
 
 class FilterPage extends React.Component<Props, State> {
   state: State = {
-    sorting_bool: [true, false, false],
+    sorting_bool: [false, false, false],
     sortings: ['평점순', '추천순', '리뷰순'],
-    food_bool: [false, false, false, false, false, false, false, true],
-    foods: ['한식', '중식', '일식', '양식', '분식', '퓨전', '기타', 'ALL'],
-    price_bool: [false, false, false, true],
-    prices: ['5천원 이하', '1만원 이하', '2만원 이하', 'ALL'],
-    place_bool: [false, false, false, false, true],
-    places: ['정문', '후문', '중대병원', '흑석역', 'ALL'],
-    keyword_bool: [false, false, false, false, false, false, true],
-    keywords: ['가성비', '분위기', '단체', '혼밥', '밥약', '맵찔', 'ALL'],
+    food_bool: [false, false, false, false, false, false, false],
+    foods: ['한식', '중식', '일식', '양식', '분식', '퓨전', '기타'],
+    price_bool: [false, false, false, false],
+    prices: ['5천원 이하', '1만원 이하', '1만원 대', 'Flex 가능'],
+    place_bool: [false, false, false, false],
+    places: ['정문', '후문', '중대병원', '흑석역'],
+    keyword_bool: [false, false, false, false, false, false],
+    keywords: ['가성비', '분위기', '단체', '혼밥', '밥약', '맵찔'],
   };
 
   changeSortingColor(i: number) {
     console.log(i);
     this.setState({
-      sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? item=false : item=true)),
+      sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? (item = false) : (item = true))),
     });
   }
 
@@ -246,7 +247,7 @@ class FilterPage extends React.Component<Props, State> {
 
     let order = ['rate', 'recommended', 'review'];
     let category = ['korean', 'chinese', 'japanese', 'western', 'school', 'fusion', 'other'];
-    let price = ['5000', '10000', '20000'];
+    let price = ['5000', '10000', '15000', '20000'];
     let location = ['front', 'back', 'front_far', 'hs_station'];
     let keyword = ['costRatio', 'atmosphere', 'group', 'individual', 'riceAppointment', 'spicy'];
 
@@ -278,41 +279,29 @@ class FilterPage extends React.Component<Props, State> {
           data[0].option.push(order[i]);
         }
       }
-      for (var i = 0; i < this.state.food_bool.length - 1; i++) {
+      for (var i = 0; i < this.state.food_bool.length; i++) {
         if (this.state.food_bool[i] === true) {
           data[1].option.push(category[i]);
         }
       }
-      if (this.state.food_bool[this.state.food_bool.length - 1] === true) {
-        /*ALL이 TRUE면 */
-        data[1].option = [];
-      }
-      for (var i = 0; i < this.state.price_bool.length - 1; i++) {
+      // if (this.state.food_bool[this.state.food_bool.length - 1] === true) {
+      //   /*ALL이 TRUE면 */
+      //   data[1].option = [];
+      // }
+      for (var i = 0; i < this.state.price_bool.length; i++) {
         if (this.state.price_bool[i] === true) {
           data[2].option.push(price[i]);
         }
       }
-      if (this.state.price_bool[this.state.price_bool.length - 1] === true) {
-        /*ALL이 TRUE면 */
-        data[2].option = [];
-      }
-      for (var i = 0; i < this.state.place_bool.length - 1; i++) {
+      for (var i = 0; i < this.state.place_bool.length; i++) {
         if (this.state.place_bool[i] === true) {
           data[3].option.push(location[i]);
         }
       }
-      if (this.state.place_bool[this.state.place_bool.length - 1] === true) {
-        /*ALL이 TRUE면 */
-        data[3].option = [];
-      }
-      for (var i = 0; i < this.state.keyword_bool.length - 1; i++) {
+      for (var i = 0; i < this.state.keyword_bool.length; i++) {
         if (this.state.keyword_bool[i] === true) {
           data[4].option.push(keyword[i]);
         }
-      }
-      if (this.state.keyword_bool[this.state.keyword_bool.length - 1] === true) {
-        /*ALL이 TRUE면 */
-        data[4].option = [];
       }
       console.log(data);
     }

@@ -7,14 +7,13 @@ import RoundContainer from '../components/common/RoundContainer';
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
 import FullHeightFade from '../components/common/FullHeightFade';
-<<<<<<< HEAD
-import titlelogo from './fooding_titlelogo.png';
+// <<<<<<< HEAD
 import firstbutton from './firstbutton.jpg';
 import secondbutton from './secondbutton.jpg';
 import thirdbutton from './thirdbutton.jpg';
-=======
+// =======
 import titlelogo from 'assets/fooding_titlelogo.png';
->>>>>>> master
+// >>>>>>> master
 
 const TitleSlogan = styled.h1`
   font-size: 14px;
