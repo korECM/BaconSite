@@ -360,7 +360,7 @@ class FilterPage extends React.Component<Props, State> {
                 <Divider></Divider>
                 <Divider></Divider>
                 <Divider></Divider>
-                <Button theme="red" big onClick={() => moveHref(data)}>
+                <Button theme="red" fullWidth onClick={() => moveHref(data)}>
                   검색하기
                 </Button>
               </Bounce>
