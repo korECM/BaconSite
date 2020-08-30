@@ -18,8 +18,6 @@ const ButtonContainer = styled.div`
     height: 50px;
 
     font-size: 15px;
-    font-weight: 2000;
-    font-family: 'Nanum Gothic';
     background-color: ${palette.white};
     color: black;
     line-height: 50px;
@@ -31,6 +29,12 @@ const ButtonContainer = styled.div`
     -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
     box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    align-items: center;
+    button {
+      margin-left: auto;
+    }
   }
 
   button {
@@ -39,15 +43,9 @@ const ButtonContainer = styled.div`
     outline: none;
     width: 70px;
     height: 50px;
-
-    vertical-align: right;
-    margin-right: 10px;
-    padding-right: 10px;
     background-color: transparent;
     color: ${palette.darkGray};
     font-size: 25px;
-    font-weight: 1200;
-    font-family: 'Nanum Gothic';
   }
   button:nth-child(1) {
     padding-left: 0;
@@ -74,7 +72,7 @@ const RouletteItem: React.SFC<Props> = ({ text, done, onToggle, onRemove }) => (
           textDecoration: done ? 'line-through' : 'none',
         }}
       >
-        {text}
+        <span>{text}</span>
         <button onClick={onRemove}>x</button>
       </b>
     </ButtonContainer>

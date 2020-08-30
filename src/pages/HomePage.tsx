@@ -3,12 +3,29 @@ import Container from '../components/layout/Container';
 import Header from '../components/layout/Header';
 import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';
+import RoundContainer from '../components/common/RoundContainer';
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
 import FullHeightFade from '../components/common/FullHeightFade';
+// <<<<<<< HEAD
+import firstbutton from './firstbutton.jpg';
+import secondbutton from './secondbutton.jpg';
+import thirdbutton from './thirdbutton.jpg';
+// =======
 import titlelogo from 'assets/fooding_titlelogo.png';
+// >>>>>>> master
 
 const TitleSlogan = styled.h1`
+  font-size: 14px;
+  font-family: 'Nanum Gothic';
+  font-weight: 700;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  color: black;
+`;
+
+const postbuttonsub = styled.h1`
   font-size: 14px;
   font-family: 'Nanum Gothic';
   font-weight: 700;
@@ -136,6 +153,15 @@ function HomePage() {
           </Link>
         </ButtonBlock>
       </ButtonLine>
+      <RoundContainer theme="image" imageLink={firstbutton}>
+        중앙대 정문 맛집 5곳
+      </RoundContainer>
+      <RoundContainer theme="image" imageLink={secondbutton}>
+        <a href="https://blog.naver.com/crystalnam03/222068892248">인스타 감성 저격 카페 5곳</a>
+      </RoundContainer>
+      <RoundContainer theme="image" imageLink={thirdbutton}>
+        상도동 신상 맛집 10곳
+      </RoundContainer>
     </Container>
   );
 }

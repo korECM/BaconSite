@@ -19,6 +19,7 @@ import Button from '../../components/common/Button';
 import { Helmet } from 'react-helmet-async';
 import { getScore } from '../../lib/scoreUtil';
 import Comment from './Comment';
+import { MdPhotoLibrary } from 'react-icons/md';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -59,6 +60,11 @@ const ShopImage = styled.div`
     css`
       background-image: url(${props.imageLink});
     `}
+
+  svg {
+    color: white;
+    margin: 10px;
+  }
 `;
 
 const ShopActionContainer = styled.div`
@@ -436,6 +442,12 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     setReviewReportNumber(reviewId);
   }, []);
 
+  const onShopImageClick = useCallback(() => {
+    if (!shop.data) return;
+    if (shop.data.shopImage.length <= 1) return;
+    history.push(`/shop/image/${shop.data._id}`);
+  }, [shop.data, history]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -516,7 +528,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       <ShopImageContainer>
         <ShopImage
           imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
+          onClick={onShopImageClick}
         >
+          {shop.data.shopImage.length > 1 && <MdPhotoLibrary />}
           <Flag
             titleColor={shop.data.scoreAverage ? palette.white : 'black'}
             descColor={palette.white}

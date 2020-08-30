@@ -4,6 +4,7 @@ import { withRouter, RouteComponentProps, Route } from 'react-router-dom';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import Loader from '../../components/common/Loader';
+import DetailImage from './DetailImage';
 // import DetailPage from './DetailPage';
 // import WriteReviewPage from './WriteReviewPage';
 
@@ -27,6 +28,7 @@ function DetailPageRouter({ match }: RouteComponentProps) {
       >
         <Route exact path={`${match.path}/:shopId`} component={DetailPage} />
         <Route path={`${match.path}/comment/:shopId`} component={WriteReviewPage} />
+        <Route path={`${match.path}/image/:shopId`} component={DetailImage} />
       </Suspense>
     </DetailPageRouterBlock>
   );

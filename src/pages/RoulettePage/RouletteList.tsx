@@ -11,7 +11,6 @@ import Button from '../../components/common/Button';
 import FullHeightFade from '../../components/common/FullHeightFade';
 
 const ResultComment = styled.h1`
-  font-family: 'Nanum Gothic';
   font-size: 17px;
   font-weight: 900;
   text-align: center;
@@ -35,7 +34,6 @@ const WarningComment = styled.h1`
   margin-bottom: 0px;
   color: ${palette.darkGray};
   padding: 10px;
-  font-family: 'Nanum Gothic';
   font-size: 13px;
 `;
 
@@ -54,7 +52,6 @@ const ButtonContainer = styled.div`
 
     font-size: 15px;
     font-weight: 800;
-    font-family: 'Nanum Gothic';
     color: black;
 
     -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
@@ -72,7 +69,6 @@ const ButtonContainer = styled.div`
 
     font-size: 15px;
     font-weight: 900;
-    font-family: 'Nanum Gothic';
     color: black;
 
     -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
@@ -91,7 +87,6 @@ const ButtonContainer = styled.div`
     color: ${palette.white};
     font-size: 13px;
     font-weight: 900;
-    font-family: 'Nanum Gothic';
 
     -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
