@@ -6,8 +6,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import palette from '../../styles/palette';
 import { Wheel, WheelDataType } from 'react-custom-roulette';
 import Button from '../../components/common/Button';
-import { Helmet } from 'react-helmet-async';
 import { withRouter } from 'react-router';
+import Title from 'lib/meta';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -120,9 +120,7 @@ class RoulettePage extends React.Component<Props, State> {
 
     return (
       <Container color="red">
-        <Helmet>
-          <title>돌려돌려 돌림판 - 푸딩</title>
-        </Helmet>
+        <Title title="돌려돌려 돌림판 - 푸딩" />
         <Header category="modal" headerColor="red" />
         <EmptySpace></EmptySpace>
         <ResultComment>START 버튼을 눌러</ResultComment>

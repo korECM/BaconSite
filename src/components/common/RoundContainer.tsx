@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../styles/palette';
-import { useSpring, animated } from 'react-spring';
 
 const RoundContainerBlock = styled.div`
   min-height: 60px;
@@ -17,6 +16,14 @@ const RoundContainerBlock = styled.div`
   -webkit-box-shadow: 5px 5px 5px -1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 5px 5px 5px -1px rgba(0, 0, 0, 0.1);
   box-shadow: 5px 5px 5px -1px rgba(0, 0, 0, 0.1);
+
+  animation-duration: 0.35s;
+  animation-name: appear;
+  ${(props: RoundContainerProps) =>
+    props.delay &&
+    css`
+      /* animation-delay: ${props.delay / 150}s; */
+    `}
 
   ${(props: RoundContainerProps) =>
     props.theme &&
@@ -38,9 +45,19 @@ const RoundContainerBlock = styled.div`
       min-height: 105px;
       color: ${palette.white};
     `}
-`;
 
-const AnimatedRoundContainerBlock = animated(RoundContainerBlock);
+  @keyframes appear {
+    from {
+      transform: translateY(50px) scale(0.9);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0px) scale(1);
+      opacity: 1;
+    }
+  }
+`;
 
 type Theme = 'gray' | 'image';
 
@@ -52,12 +69,12 @@ interface RoundContainerProps {
 }
 
 function RoundContainer(props: RoundContainerProps) {
-  // const slideUpTransition = useTransition(true, null, {
+  // const appear = useSpring({
   //   from: {
   //     transform: `translateY(50px) scale(0.9)`,
   //     opacity: 0,
   //   },
-  //   enter: {
+  //   to: {
   //     transform: `translateY(0px) scale(1)`,
   //     opacity: 1,
   //   },
@@ -65,25 +82,10 @@ function RoundContainer(props: RoundContainerProps) {
   //     tension: 350,
   //     friction: 25,
   //   },
+  //   delay: props.delay || 0,
   // });
 
-  const appear = useSpring({
-    from: {
-      transform: `translateY(50px) scale(0.9)`,
-      opacity: 0,
-    },
-    to: {
-      transform: `translateY(0px) scale(1)`,
-      opacity: 1,
-    },
-    config: {
-      tension: 350,
-      friction: 25,
-    },
-    delay: props.delay || 0,
-  });
-
-  return <AnimatedRoundContainerBlock style={appear} {...props} />;
+  return <RoundContainerBlock {...props} />;
 
   // return <div>{slideUpTransition.map(({ item, key, props }) => (item ? <AnimatedRoundContainerBlock style={props} {...p} /> : null))}</div>;
 }
