@@ -4,10 +4,11 @@ import HomePage from './pages/HomePage';
 import Container from './components/layout/Container';
 import Header from './components/layout/Header';
 import Loader from './components/common/Loader';
-import DetailPageRouter from './pages/DetailPage/DetailPageRouter';
 import Title from 'lib/meta';
+import SimpleLoader from 'components/common/SimpleLoader';
 
 const ResultPage = React.lazy(() => import(/* webpackChunkName: "result", webpackPrefetch: true */ './pages/ResultPage/ResultPage'));
+const DetailPageRouter = React.lazy(() => import(/* webpackChunkName: "detail", webpackPrefetch: true */ './pages/DetailPage/DetailPageRouter'));
 const AdminRouter = React.lazy(() => import(/* webpackChunkName: "admin" */ './pages/AdminPage/AdminRouter'));
 const RouletteRouter = React.lazy(() => import(/* webpackChunkName: "roulette", webpackPrefetch: true */ './pages/RoulettePage/RoulettePageRouter'));
 const RouletteListRouter = React.lazy(() => import(/* webpackChunkName: "rouletteList", webpackPrefetch: true */ './pages/RoulettePage/RouletteListRouter'));
@@ -22,7 +23,8 @@ function App() {
       fallback={
         <Container color="white">
           <Header category="modal" headerColor="white" />
-          <Loader />
+          {/* <Loader /> */}
+          <SimpleLoader />
         </Container>
       }
     >
