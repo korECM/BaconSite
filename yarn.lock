@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"-@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/-/-/--0.0.1.tgz#db6db7cd866142880dd03e5b8781d1b4fac0e5bd"
-  integrity sha512-3HfneK3DGAm05fpyj20sT3apkNcvPpCuccOThOPdzz8sY7GgQGe0l93XH9bt+YzibcTIgUAIMoyVJI740RtgyQ==
-
 "@babel/code-frame@7.8.3", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -10195,11 +10190,6 @@ react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
-
-react-native-casino-roulette@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-casino-roulette/-/react-native-casino-roulette-1.6.0.tgz#22336dc5ccb212f48c9f6b013733737df02d246b"
-  integrity sha512-6sFU5jtS595LnhpXJ74y7wT1G5ix0ZtJcBJsu7X2GWgdhMendUfi58wzsU2sSVSxUiMwQ8gvC3efHYk606acMQ==
 
 react-redux@^7.2.1:
   version "7.2.1"
