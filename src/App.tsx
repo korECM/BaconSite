@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Container from './components/layout/Container';
 import Header from './components/layout/Header';
 import Loader from './components/common/Loader';
 import DetailPageRouter from './pages/DetailPage/DetailPageRouter';
-import { Helmet } from 'react-helmet-async';
+import Title from 'lib/meta';
 
 const ResultPage = React.lazy(() => import(/* webpackChunkName: "result", webpackPrefetch: true */ './pages/ResultPage/ResultPage'));
 const AdminRouter = React.lazy(() => import(/* webpackChunkName: "admin" */ './pages/AdminPage/AdminRouter'));
@@ -18,33 +18,30 @@ const MyPageRouter = React.lazy(() => import(/* webpackChunkName: "myPage", webp
 
 function App() {
   return (
-    <>
-      <Helmet>
-        <title>뭐 먹을지 못 정할 땐, 푸딩</title>
-      </Helmet>
-      <Suspense
-        fallback={
-          <Container color="white">
-            <Header category="modal" headerColor="white" />
-            <Loader />
-          </Container>
-        }
-      >
-        <Switch>
-          <Route component={HomePage} path="/" exact />
-          <Route component={DetailPageRouter} path="/shop" />
-          <Route component={LoginPageRouter} path="/auth" />
-          <Route component={YesNoPageRouter} path="/yesno" />
-          <Route component={ResultPage} path="/result" />
-          <Route component={AdminRouter} path="/admin" />
-          <Route component={RouletteRouter} path="/roulette" />
-          <Route component={RouletteListRouter} path="/rouletteList" />
-          <Route component={FilterPageRouter} path="/filter" />
-          <Route component={MyPageRouter} path="/myPage" />
-        </Switch>
-      </Suspense>
-    </>
+    <Suspense
+      fallback={
+        <Container color="white">
+          <Header category="modal" headerColor="white" />
+          <Loader />
+        </Container>
+      }
+    >
+      <Title title="뭐 먹을지 못 정할 땐, 푸딩" />
+      <Switch>
+        <Route component={HomePage} path="/" exact />
+        <Route component={DetailPageRouter} path="/shop" />
+        <Route component={LoginPageRouter} path="/auth" />
+        <Route component={YesNoPageRouter} path="/yesno" />
+        <Route component={ResultPage} path="/result" />
+        <Route component={AdminRouter} path="/admin" />
+        <Route component={RouletteRouter} path="/roulette" />
+        <Route component={RouletteListRouter} path="/rouletteList" />
+        <Route component={FilterPageRouter} path="/filter" />
+        <Route component={MyPageRouter} path="/myPage" />
+      </Switch>
+    </Suspense>
   );
 }
 
-export default App;
+// 라우팅 할 때 App 타이틀을 매번 로딩해주기 위해서
+export default withRouter(App);

@@ -7,12 +7,10 @@ import palette from '../../styles/palette';
 import Flag from '../../components/common/Flag';
 import RestaurantCard from '../../components/common/RestaurantCard';
 import Loader from '../../components/common/Loader';
-import { Fade, Bounce } from 'react-awesome-reveal';
-import { Animated } from 'react-animated-css';
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import useShops from '../../hooks/useShops';
 import { getShopsInterface } from '../../api/getShops';
+import Title from 'lib/meta';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -54,9 +52,7 @@ function ResultPage({ location }: RouteComponentProps) {
   }, [location, onGetShops]);
   return (
     <Container color="red">
-      <Helmet>
-        <title>당신만을 위한 식당 - 푸딩</title>
-      </Helmet>
+      <Title title="당신만을 위한 식당 - 푸딩" />
       <Header category="modal" headerColor="red" />
       {shops.loading ? (
         <Loader color="white" />

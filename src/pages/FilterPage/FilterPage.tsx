@@ -11,9 +11,8 @@ import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
 import React, { Component } from 'react';
 import Button from '../../components/common/Button';
-import { Helmet } from 'react-helmet-async';
 import './TagButton.css';
-import { MdFormatListBulleted } from 'react-icons/md';
+import Title from 'lib/meta';
 
 const ButtonBlock = styled.button`
   margin-right: -4px;
@@ -315,9 +314,7 @@ class FilterPage extends React.Component<Props, State> {
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
         <Fade>
           <Container color="white">
-            <Helmet>
-              <title>당신만을 위한 식당 - 푸딩</title>
-            </Helmet>
+            <Title title="당신만을 위한 식당 - 푸딩" />
             <Header category="modal" headerColor="white" />
             <Fade>
               <Bounce>
