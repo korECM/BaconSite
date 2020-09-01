@@ -1,7 +1,7 @@
 .roundButton {
   margin-right: -4px;
-  background-color: #DDDDDD;
-  color: #5D5D5D;
+  background-color: #dddddd;
+  color: #5d5d5d;
   font-size: 12.5px;
 
   outline: none;
@@ -37,5 +37,5 @@
 
 .roundButton:hovers {
   color: white;
-  background-color: #DB2A37;
+  background-color: #db2a37;
 }
