@@ -182,8 +182,8 @@ const ButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     vertical-align: center;
-    margin: 3%;
-    margin-left: 5%;
+    margin-top: 10px;
+    margin-left: 3%;
 
     color: ${palette.white};
   }
@@ -241,10 +241,12 @@ class HomePage extends React.Component<Props, State> {
   moveHref = (data: DataInterface) => {
     beClicked = true;
     selected_name = 'true';
-    this.props.history.push({
-      pathname: '/name',
-      search: '=' + data.name,
-    });
+    if (data.name !== '') {
+      this.props.history.push({
+        pathname: '/name',
+        search: '=' + data.name,
+      });
+    }
   };
 
   render() {
