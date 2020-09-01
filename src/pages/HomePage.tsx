@@ -185,39 +185,30 @@ interface RouletteItemState {
 }
 
 interface DataInterface {
-  option: string;
-  style: { backgroundColor: string; textColor: string };
-  font: string;
+  name: string;
 }
 
 interface State {
   input: string;
-  RouletteItems: RouletteItemState[];
 }
 
 let beClicked = false;
 let selected_name = 'false';
 
 class HomePage extends React.Component<Props, State> {
-  nextRouletteId: number = 0;
-
   state: State = {
     input: '',
-    RouletteItems: [],
   };
 
   onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const { RouletteItems, input } = this.state;
-    const newItem: RouletteItemState = { id: this.nextRouletteId++, text: input, done: false };
-    const nextRouletteItems: RouletteItemState[] = RouletteItems.concat(newItem);
-    if (input !== '' && RouletteItems.length < 6) {
+    const { input } = this.state;
+    if (input !== '' && input.length < 10) {  //10글자로 제한
       this.setState({
         input: '',
-        RouletteItems: nextRouletteItems,
       });
     }
-    console.log('push add button');
+    console.log('push search button');
   };
 
   onChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -227,37 +218,24 @@ class HomePage extends React.Component<Props, State> {
     });
   };
 
+  moveHref = (data: DataInterface) => {
+    beClicked = true;
+    selected_name = 'true';
+    this.props.history.push({
+      pathname: '/name',
+      search:
+        '=' + data.name
+    });
+  };
+
   render() {
-    const { onSubmit, onChange } = this;
-    const { input, RouletteItems } = this.state;
+    const { onSubmit, onChange, moveHref } = this;
+    const { input } = this.state;
 
-    let data: DataInterface[] = Array.from({ length: Math.min(RouletteItems.length, 6) }, (v) => ({
-      option: 'dd',
-      style: { backgroundColor: 'dd', textColor: 'dd' },
-      font: 'dd',
-    }));
+    let data: DataInterface = {
+      name: input,
+    };
 
-    if (RouletteItems.length >= 1) {
-      // let data = RouletteItems.map((v) => {
-      //     console.log(RouletteItems[v].text);
-      //     return RouletteItems;
-      // });
-
-      // console.log(RouletteItems.id.text);
-      for (var i = 0; i < RouletteItems.length; i++) {
-        data[i].option = RouletteItems[i].text;
-        if (i % 2 == 0) {
-          data[i].style.backgroundColor = '#dddddd';
-          data[i].style.textColor = '#5d5d5d';
-          data[i].font = 'Nanum Gothic';
-        } else {
-          data[i].style.backgroundColor = 'white';
-          data[i].style.textColor = '#5d5d5d';
-          data[i].font = 'Nanum Gothic';
-        }
-      }
-      console.log(data);
-    }
 
     return (
       <Container color="white">
@@ -322,7 +300,7 @@ class HomePage extends React.Component<Props, State> {
           <form onSubmit={onSubmit}>
             <ButtonContainer>
               <input onChange={onChange} value={input} />
-              <button type="submit">search</button>
+              <button type="submit" onClick={() => moveHref(data)}>search</button>
             </ButtonContainer>
           </form>
         </SearchBox>
