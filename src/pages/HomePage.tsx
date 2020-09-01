@@ -11,6 +11,7 @@ import FullHeightFade from '../components/common/FullHeightFade';
 import firstbutton from './firstbutton.jpg';
 import secondbutton from './secondbutton.jpg';
 import thirdbutton from './thirdbutton.jpg';
+import search from './search.png';
 import titlelogo from 'assets/fooding_titlelogo.png';
 
 const TitleSlogan = styled.h1`
@@ -56,6 +57,8 @@ const Categories = styled.h1`
 
 const ButtonLine = styled.h1`
   display: 100%;
+  margin-left: 5%;
+  margin-right: 5%;
   font-family: 'Nanum Gothic';
   font-weight: 200;
   color: white;
@@ -101,13 +104,26 @@ const Divider = styled.div`
 `;
 
 const SearchBox = styled.div`
-  width = full;
-  height = 100px;
-  background-color: ${palette.mainRed};
-  
+  background-color: ${palette.white};
+  width: full;
+  border-radius: 20px;
+
   justify-content: center;
   align-items: center;
-  
+`;
+
+const SearchBoxContainer = styled.div`
+  padding-top: 10%;
+  padding-bottom: 10%;
+  padding-left: 5%;
+  padding-right: 5%;
+
+  background-color: ${palette.mainRed};
+  width: full;
+
+  justify-content: center;
+  align-items: center;
+  vertical-align: center;
 `;
 
 const ButtonContainer = styled.div`
@@ -115,7 +131,7 @@ const ButtonContainer = styled.div`
   height: 50px;
 
   input {
-    border-radius: 10px;
+    border-radius: 20px;
     border: none;
     outline: none;
     padding-left: 10px;
@@ -155,18 +171,21 @@ const ButtonContainer = styled.div`
     border-radius: 10px;
     border: none;
     outline: none;
-    width: 70px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     margin-left: 10px;
-    background-color: ${palette.mainRed};
-    color: ${palette.white};
-    font-size: 13px;
-    font-weight: 900;
-    font-family: 'Nanum Gothic';
+    background: url(${search});
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-blend-mode: multiply;
+    justify-content: center;
+    align-items: center;
+    vertical-align: center;
+    margin: 3%;
+    margin-left: 5%;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    color: ${palette.white};
   }
   button:nth-child(1) {
     padding-left: 0;
@@ -203,7 +222,8 @@ class HomePage extends React.Component<Props, State> {
   onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { input } = this.state;
-    if (input !== '' && input.length < 10) {  //10글자로 제한
+    if (input !== '' && input.length < 10) {
+      //10글자로 제한
       this.setState({
         input: '',
       });
@@ -223,8 +243,7 @@ class HomePage extends React.Component<Props, State> {
     selected_name = 'true';
     this.props.history.push({
       pathname: '/name',
-      search:
-        '=' + data.name
+      search: '=' + data.name,
     });
   };
 
@@ -235,7 +254,6 @@ class HomePage extends React.Component<Props, State> {
     let data: DataInterface = {
       name: input,
     };
-
 
     return (
       <Container color="white">
@@ -296,14 +314,16 @@ class HomePage extends React.Component<Props, State> {
         <RoundContainer theme="image" imageLink={thirdbutton}>
           상도동 신상 맛집 10곳
         </RoundContainer>
-        <SearchBox>
-          <form onSubmit={onSubmit}>
-            <ButtonContainer>
-              <input onChange={onChange} value={input} />
-              <button type="submit" onClick={() => moveHref(data)}>search</button>
-            </ButtonContainer>
-          </form>
-        </SearchBox>
+        <SearchBoxContainer>
+          <SearchBox>
+            <form onSubmit={onSubmit}>
+              <ButtonContainer>
+                <button type="submit" onClick={() => moveHref(data)}></button>
+                <input placeholder="search" onChange={onChange} value={input} />
+              </ButtonContainer>
+            </form>
+          </SearchBox>
+        </SearchBoxContainer>
       </Container>
     );
   }
