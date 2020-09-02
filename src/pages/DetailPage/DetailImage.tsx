@@ -82,6 +82,7 @@ const ImageViewer = styled.div`
       width: 100%;
       img {
         width: 70vw;
+        max-height: 90vh;
         /* height: 70vw; */
         object-fit: contain;
       }
