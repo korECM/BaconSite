@@ -91,6 +91,7 @@ const ImageViewer = styled.div`
         background: transparent;
         outline: none;
         color: white;
+        cursor: pointer;
         font-size: 2rem;
         padding: 1rem;
         width: 51px;
