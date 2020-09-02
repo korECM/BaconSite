@@ -7,11 +7,18 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import palette, { hexToRGB } from 'styles/palette';
 import Loader from 'components/common/Loader';
 import LazyImage from 'components/common/LazyImage';
+import Dialog from 'components/common/Dialog';
+import useReport from 'hooks/useReport';
+import ButtonGroup from 'components/common/ButtonGroup';
+import Button from 'components/common/Button';
+import BounceLoader from 'react-spinners/BounceLoader';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
+import useCheck from 'hooks/useCheck';
 
 const DetailImageBlock = styled.div`
   .imageHeader {
     color: black;
-    border-bottom: 1px solid ${hexToRGB(palette.darkGray, 0.5)};
+    border-bottom: 1px solid ${hexToRGB(palette.darkGray, 0.7)};
     padding-bottom: 20px;
     margin-bottom: 30px;
     h1 {
@@ -75,6 +82,15 @@ const ImageViewer = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
+    .option {
+      position: fixed;
+      top: 5px;
+      right: 20px;
+      color: white;
+      font-size: 2rem;
+      span {
+      }
+    }
     .imageContainer {
       display: flex;
       align-items: center;
@@ -100,16 +116,57 @@ const ImageViewer = styled.div`
   }
 `;
 
+const ReportBlock = styled.div`
+  .text {
+    margin-top: 15px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+`;
+
+const SuccessBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  svg {
+    margin-top: 35px;
+    margin-bottom: 20px;
+    color: ${palette.mainRed};
+    font-size: 2.5rem;
+  }
+  div {
+    text-align: center;
+    margin-bottom: 45px;
+  }
+`;
+
+const LoaderBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+`;
+
 interface DetailImageProps extends RouteComponentProps {
   mode: 'shop' | 'menu';
 }
 
-function DetailImage({ match, mode }: DetailImageProps) {
+function DetailImage({ match, mode, history }: DetailImageProps) {
   const shopId: string = (match.params as any).shopId;
 
   const { shop, onShopRequest } = useDetail(shopId);
 
+  const [showOption, setShowOption] = useState(false);
+
+  const [showDone, setShowDone] = useState(false);
+
+  const [loginAlert, setLoginAlert] = useState(false);
+
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+
+  const { report, reportDispatch } = useReport();
+
+  const { user } = useCheck();
 
   useEffect(() => {
     onShopRequest();
@@ -131,6 +188,44 @@ function DetailImage({ match, mode }: DetailImageProps) {
     setSelectedIndex(index + 1);
   }, []);
 
+  const onOptionClick = useCallback(() => {
+    setShowOption(true);
+  }, []);
+
+  const goLogin = useCallback(() => {
+    try {
+      localStorage.setItem('redir', match.url);
+    } catch (error) {
+      console.error('LocalStorage 사용 불가');
+    }
+    history.push('/auth/login');
+  }, [history, match]);
+
+  const onReport = useCallback(() => {
+    if (!shop.data) return;
+    if (selectedIndex === -1) return;
+    if (!user) {
+      setLoginAlert(true);
+      return;
+    }
+    reportDispatch((mode === 'shop' ? shop.data?.shopImage : shop.data?.menuImage)[selectedIndex]._id);
+  }, [reportDispatch, selectedIndex, mode, shop.data, user]);
+
+  console.log(user);
+
+  useEffect(() => {
+    if (report.data?.message === 'success') {
+      setShowDone(true);
+      setTimeout(() => {
+        setShowOption(false);
+        setTimeout(() => {
+          setShowDone(false);
+          setSelectedIndex(-1);
+        }, [500]);
+      }, 1500);
+    }
+  }, [report.data]);
+
   if (!shop.data) {
     return (
       <Container color="white">
@@ -151,6 +246,17 @@ function DetailImage({ match, mode }: DetailImageProps) {
           <ImageViewer>
             <div className="background" />
             <div className="imageBox" onClick={onImageClose}>
+              <div
+                className="option"
+                onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                  event.stopPropagation();
+                  onOptionClick();
+                }}
+              >
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </div>
               <div className="imageContainer">
                 {selectedIndex > 0 ? (
                   <button
@@ -195,6 +301,42 @@ function DetailImage({ match, mode }: DetailImageProps) {
           </div>
         </ImageContainer>
       </Container>
+      <Dialog mode="custom" onCancel={() => setShowOption(false)} visible={showOption} customPadding="1rem">
+        <ReportBlock>
+          {report.loading ? (
+            <LoaderBlock>
+              <BounceLoader color={palette.mainRed} size="30" />
+            </LoaderBlock>
+          ) : showDone ? (
+            <SuccessBlock>
+              <AiOutlineCheckCircle />
+              <div>사진이 신고되었습니다</div>
+            </SuccessBlock>
+          ) : (
+            <>
+              <div className="text">사진을 신고하시겠습니까?</div>
+              <ButtonGroup direction="row" rightAlign gap="10px">
+                <Button theme="text" onClick={() => setShowOption(false)}>
+                  닫기
+                </Button>
+                <Button theme="red" onClick={onReport}>
+                  신고하기
+                </Button>
+              </ButtonGroup>
+            </>
+          )}
+        </ReportBlock>
+      </Dialog>
+      <Dialog
+        cancelText="닫기"
+        confirmText="로그인 하러 가기"
+        desc="사진을 신고하려면 로그인을 해야합니다"
+        title="로그인"
+        mode="cancel"
+        onCancel={() => setLoginAlert(false)}
+        onConfirm={() => goLogin()}
+        visible={loginAlert}
+      />
     </DetailImageBlock>
   );
 }
