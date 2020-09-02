@@ -14,7 +14,7 @@ const ContainerBlock = styled.div`
     padding-top: 35px;
   }
   @media only screen and (min-width: 1000px) {
-    padding: 0 27.5%;
+    padding: 0 20%;
     padding-top: 35px;
   }
 
