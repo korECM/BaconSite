@@ -527,7 +527,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           onClick={onShopImageClick}
           style={{ cursor: shop.data.shopImage.length > 0 ? 'pointer' : 'normal' }}
         >
-          {shop.data.shopImage.length > 1 && <MdPhotoLibrary />}
+          {shop.data.shopImage.length > 0 && <MdPhotoLibrary />}
           <Flag
             titleColor={shop.data.scoreAverage ? palette.white : 'black'}
             descColor={palette.white}
