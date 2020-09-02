@@ -12,21 +12,15 @@ const ContainerBlock = styled.div`
   @media only screen and (min-width: 768px) {
     padding: 0 15%;
     padding-top: 35px;
-
-    padding-bottom: 50px;
   }
   @media only screen and (min-width: 1000px) {
     padding: 0 27.5%;
     padding-top: 35px;
-
-    padding-bottom: 50px;
   }
 
   @media only screen and (min-width: 1600px) {
     padding: 0 35%;
     padding-top: 35px;
-
-    padding-bottom: 50px;
   }
 
   ${(props: ContainerProps) =>
