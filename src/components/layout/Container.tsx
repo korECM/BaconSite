@@ -37,7 +37,7 @@ const ContainerBlock = styled.div`
   ${(props: ContainerProps) =>
     !props.notFullHeight &&
     css`
-      min-height: 100%;
+      min-height: calc(100% - 35px);
     `}
 
   ${(props: ContainerProps) =>
