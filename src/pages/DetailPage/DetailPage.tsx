@@ -525,8 +525,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         <ShopImage
           imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
           onClick={onShopImageClick}
+          style={{ cursor: shop.data.shopImage.length > 0 ? 'pointer' : 'normal' }}
         >
-          {shop.data.shopImage.length > 1 && <MdPhotoLibrary />}
+          {shop.data.shopImage.length > 0 && <MdPhotoLibrary />}
           <Flag
             titleColor={shop.data.scoreAverage ? palette.white : 'black'}
             descColor={palette.white}

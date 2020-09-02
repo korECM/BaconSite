@@ -260,50 +260,52 @@ class FilterPage extends React.Component<Props, State> {
       return result;
     }
 
-    if (orOperation(this.state.sorting_bool) === false) {
-      selectCheck = false;
-    } else if (orOperation(this.state.food_bool) === false) {
-      selectCheck = false;
-    } else if (orOperation(this.state.price_bool) === false) {
-      selectCheck = false;
-    } else if (orOperation(this.state.place_bool) === false) {
-      selectCheck = false;
-    } else if (orOperation(this.state.keyword_bool) === false) {
-      selectCheck = false;
-    }
+    //아래는 select가 한개라도 안된 항목이 있을 시 검색 자체가 불가능하도록 설정할 때 필요한 코드
 
-    if (selectCheck === true) {
-      for (var i = 0; i < this.state.sorting_bool.length; i++) {
-        if (this.state.sorting_bool[i] === true) {
-          data[0].option.push(order[i]);
-        }
+    // if (orOperation(this.state.sorting_bool) === false) {
+    //   selectCheck = false;
+    // } else if (orOperation(this.state.food_bool) === false) {
+    //   selectCheck = false;
+    // } else if (orOperation(this.state.price_bool) === false) {
+    //   selectCheck = false;
+    // } else if (orOperation(this.state.place_bool) === false) {
+    //   selectCheck = false;
+    // } else if (orOperation(this.state.keyword_bool) === false) {
+    //   selectCheck = false;
+    // }
+
+    // if (selectCheck === true) {
+    for (var i = 0; i < this.state.sorting_bool.length; i++) {
+      if (this.state.sorting_bool[i] === true) {
+        data[0].option.push(order[i]);
       }
-      for (var i = 0; i < this.state.food_bool.length; i++) {
-        if (this.state.food_bool[i] === true) {
-          data[1].option.push(category[i]);
-        }
-      }
-      // if (this.state.food_bool[this.state.food_bool.length - 1] === true) {
-      //   /*ALL이 TRUE면 */
-      //   data[1].option = [];
-      // }
-      for (var i = 0; i < this.state.price_bool.length; i++) {
-        if (this.state.price_bool[i] === true) {
-          data[2].option.push(price[i]);
-        }
-      }
-      for (var i = 0; i < this.state.place_bool.length; i++) {
-        if (this.state.place_bool[i] === true) {
-          data[3].option.push(location[i]);
-        }
-      }
-      for (var i = 0; i < this.state.keyword_bool.length; i++) {
-        if (this.state.keyword_bool[i] === true) {
-          data[4].option.push(keyword[i]);
-        }
-      }
-      console.log(data);
     }
+    for (var i = 0; i < this.state.food_bool.length; i++) {
+      if (this.state.food_bool[i] === true) {
+        data[1].option.push(category[i]);
+      }
+    }
+    // if (this.state.food_bool[this.state.food_bool.length - 1] === true) {
+    //   /*ALL이 TRUE면 */
+    //   data[1].option = [];
+    // }
+    for (var i = 0; i < this.state.price_bool.length; i++) {
+      if (this.state.price_bool[i] === true) {
+        data[2].option.push(price[i]);
+      }
+    }
+    for (var i = 0; i < this.state.place_bool.length; i++) {
+      if (this.state.place_bool[i] === true) {
+        data[3].option.push(location[i]);
+      }
+    }
+    for (var i = 0; i < this.state.keyword_bool.length; i++) {
+      if (this.state.keyword_bool[i] === true) {
+        data[4].option.push(keyword[i]);
+      }
+    }
+    console.log(data);
+    // }
 
     var TagTextStyle = {
       fontSize: 30,
