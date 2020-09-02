@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Container from 'components/layout/Container';
 import Header from 'components/layout/Header';
 import useDetail from 'hooks/useDetail';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import palette, { hexToRGB } from 'styles/palette';
 import Loader from 'components/common/Loader';
 import LazyImage from 'components/common/LazyImage';
@@ -100,9 +100,11 @@ const ImageViewer = styled.div`
   }
 `;
 
-interface DetailImageProps extends RouteComponentProps {}
+interface DetailImageProps extends RouteComponentProps {
+  mode: 'shop' | 'menu';
+}
 
-function DetailImage({ match }: DetailImageProps) {
+function DetailImage({ match, mode }: DetailImageProps) {
   const shopId: string = (match.params as any).shopId;
 
   const { shop, onShopRequest } = useDetail(shopId);
@@ -162,21 +164,14 @@ function DetailImage({ match }: DetailImageProps) {
                 ) : (
                   <button />
                 )}
-                {/* <img
-                  src={shop.data?.shopImage[selectedIndex].imageLink}
-                  alt="가게 사진"
-                  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-                    event.stopPropagation();
-                  }}
-                /> */}
                 <LazyImage
-                  src={shop.data?.shopImage[selectedIndex].imageLink}
+                  src={mode === 'shop' ? shop.data?.shopImage[selectedIndex].imageLink : shop.data?.menuImage[selectedIndex].imageLink}
                   alt="가게 사진"
                   onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                     event.stopPropagation();
                   }}
                 />
-                {selectedIndex < shop.data!.shopImage.length - 1 ? (
+                {selectedIndex < (mode === 'shop' ? shop.data!.shopImage : shop.data!.menuImage).length - 1 ? (
                   <button
                     onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
                       event.stopPropagation();
@@ -194,7 +189,7 @@ function DetailImage({ match }: DetailImageProps) {
         )}
         <ImageContainer>
           <div className="gridContainer">
-            {shop.data?.shopImage.map((image, index) => (
+            {(mode === 'shop' ? shop.data?.shopImage : shop.data?.menuImage).map((image, index) => (
               <img src={image.imageLink} alt="가게 사진" key={image._id} onClick={() => onImageClick(index)} />
             ))}
           </div>
@@ -204,4 +199,4 @@ function DetailImage({ match }: DetailImageProps) {
   );
 }
 
-export default DetailImage;
+export default withRouter(DetailImage);
