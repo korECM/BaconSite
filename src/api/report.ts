@@ -36,3 +36,14 @@ export async function reportReviewAPI(reviewId: string, comment: string) {
   );
   return response.data;
 }
+
+export async function reportImageAPI(imageId: string) {
+  const response = await axios.post<ReportInterface>(
+    apiLink() + `/shop/report/image/${imageId}`,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+  return response.data;
+}
