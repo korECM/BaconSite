@@ -20,6 +20,7 @@ import { getScore } from '../../lib/scoreUtil';
 import Comment from './Comment';
 import { MdPhotoLibrary } from 'react-icons/md';
 import Title from 'lib/meta';
+import ButtonGroup from 'components/common/ButtonGroup';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -254,6 +255,11 @@ const ReviewReport = styled.div`
   }
 `;
 
+const SlimButton = styled(Button)`
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
 interface DetailPageProps extends RouteComponentProps {}
 
 function DetailPage({ match, history, location }: DetailPageProps) {
@@ -448,6 +454,12 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     history.push(`/shop/image/${shop.data._id}`);
   }, [shop.data, history]);
 
+  const onMenuImageClick = useCallback(() => {
+    if (!shop.data) return;
+    if (shop.data.menuImage.length <= 1) return;
+    history.push(`/shop/menuImage/${shop.data._id}`);
+  }, [shop.data, history]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -635,11 +647,18 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             )}
           </div>
           {shop.data.menuImage.length > 0 && (
-            <div className="menuImages">
-              {shop.data.menuImage.map((menu) => (
-                <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" key={menu._id} />
-              ))}
-            </div>
+            <>
+              <div className="menuImages">
+                {shop.data.menuImage.slice(0, 3).map((menu) => (
+                  <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" key={menu._id} />
+                ))}
+              </div>
+              <ButtonGroup gap="0" direction="row" rightAlign>
+                <SlimButton theme="red" onClick={onMenuImageClick}>
+                  메뉴 더보기
+                </SlimButton>
+              </ButtonGroup>
+            </>
           )}
         </MenuBlock>
       )}
