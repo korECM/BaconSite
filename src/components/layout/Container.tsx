@@ -9,38 +9,42 @@ const ContainerBlock = styled.div`
 
   padding-bottom: 50px;
 
-  
   @media only screen and (min-width: 768px) {
     padding: 0 15%;
     padding-top: 35px;
-    
+
     padding-bottom: 50px;
   }
   @media only screen and (min-width: 1000px) {
     padding: 0 27.5%;
     padding-top: 35px;
-    
+
     padding-bottom: 50px;
   }
-  
+
   @media only screen and (min-width: 1600px) {
     padding: 0 35%;
     padding-top: 35px;
-    
+
     padding-bottom: 50px;
   }
-    
 
   ${(props: ContainerProps) =>
     css`
       color: ${props.color === 'red' ? palette.white : palette.mainRed};
     `}
-      
-${(props: ContainerProps) =>
-  !props.notFullHeight &&
-  css`
-    min-height: 100%;
-  `}
+
+  ${(props: ContainerProps) =>
+    !props.notFullHeight &&
+    css`
+      min-height: 100%;
+    `}
+
+  ${(props: ContainerProps) =>
+    props.noBottomPadding &&
+    css`
+      padding-bottom: 0;
+    `}
           
   ${(props: ContainerProps) =>
     css`
@@ -54,6 +58,7 @@ interface ContainerProps {
   children: React.ReactNode;
   color: Color;
   notFullHeight?: boolean;
+  noBottomPadding?: boolean;
 }
 
 function Container(props: ContainerProps) {
