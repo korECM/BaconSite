@@ -168,7 +168,7 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
             밥약
           </ButtonWithMargin>
           <ButtonWithMargin theme="white" onClick={() => onClick('spicy')} selected={keywords.spicy}>
-            안매워요
+            매워요
           </ButtonWithMargin>
         </ButtonSubGroup>
       </ButtonGroup>
