@@ -22,6 +22,7 @@ export enum Location {
 
 export interface ShopInterface {
   _id: string;
+  mainImage: string;
   shopImage: Image[];
   menuImage: Image[];
   menus: Menu[];
