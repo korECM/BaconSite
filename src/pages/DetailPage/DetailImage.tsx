@@ -12,7 +12,7 @@ import useReport from 'hooks/useReport';
 import ButtonGroup from 'components/common/ButtonGroup';
 import Button from 'components/common/Button';
 import BounceLoader from 'react-spinners/BounceLoader';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiOutlineFrown } from 'react-icons/ai';
 import useCheck from 'hooks/useCheck';
 
 const DetailImageBlock = styled.div`
@@ -141,6 +141,23 @@ const SuccessBlock = styled.div`
   }
 `;
 
+const FailBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 150px;
+  svg {
+    margin-top: 35px;
+    margin-bottom: 20px;
+    color: ${palette.mainRed};
+    font-size: 2.5rem;
+  }
+  div {
+    text-align: center;
+    margin-bottom: 45px;
+  }
+`;
+
 const LoaderBlock = styled.div`
   display: flex;
   justify-content: center;
@@ -224,8 +241,9 @@ function DetailImage({ match, mode, history }: DetailImageProps) {
           setSelectedIndex(-1);
         }, [500]);
       }, 1500);
+    } else if (report.error) {
     }
-  }, [report.data]);
+  }, [report.data, report.error]);
 
   if (!shop.data) {
     return (
@@ -304,7 +322,12 @@ function DetailImage({ match, mode, history }: DetailImageProps) {
       </Container>
       <Dialog mode="custom" onCancel={() => setShowOption(false)} visible={showOption} customPadding="1rem">
         <ReportBlock>
-          {report.loading ? (
+          {report.error ? (
+            <FailBlock>
+              <AiOutlineFrown />
+              <div>오류가 발생했습니다 : {report.error}</div>
+            </FailBlock>
+          ) : report.loading ? (
             <LoaderBlock>
               <BounceLoader color={palette.mainRed} size="30" />
             </LoaderBlock>
