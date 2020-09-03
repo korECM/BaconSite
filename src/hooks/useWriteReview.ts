@@ -47,5 +47,6 @@ export default function useWriteReview(shopId: string) {
     keywords,
     review,
     reviewRequest,
+    score,
   };
 }
