@@ -11,9 +11,8 @@ import Dialog from 'components/common/Dialog';
 import useReport from 'hooks/useReport';
 import ButtonGroup from 'components/common/ButtonGroup';
 import Button from 'components/common/Button';
-import BounceLoader from 'react-spinners/BounceLoader';
-import { AiOutlineCheckCircle, AiOutlineFrown } from 'react-icons/ai';
 import useCheck from 'hooks/useCheck';
+import ProcessModal from 'components/common/ProcessModal';
 
 const DetailImageBlock = styled.div`
   .imageHeader {
@@ -116,54 +115,6 @@ const ImageViewer = styled.div`
   }
 `;
 
-const ReportBlock = styled.div`
-  .text {
-    margin-top: 15px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-`;
-
-const SuccessBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 150px;
-  svg {
-    margin-top: 35px;
-    margin-bottom: 20px;
-    color: ${palette.mainRed};
-    font-size: 2.5rem;
-  }
-  div {
-    text-align: center;
-    margin-bottom: 45px;
-  }
-`;
-
-const FailBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 150px;
-  svg {
-    margin-top: 35px;
-    margin-bottom: 20px;
-    color: ${palette.mainRed};
-    font-size: 2.5rem;
-  }
-  div {
-    text-align: center;
-    margin-bottom: 45px;
-  }
-`;
-
-const LoaderBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
-`;
 
 interface DetailImageProps extends RouteComponentProps {
   mode: 'shop' | 'menu';
@@ -320,37 +271,24 @@ function DetailImage({ match, mode, history }: DetailImageProps) {
           </div>
         </ImageContainer>
       </Container>
-      <Dialog mode="custom" onCancel={() => setShowOption(false)} visible={showOption} customPadding="1rem">
-        <ReportBlock>
-          {report.error ? (
-            <FailBlock>
-              <AiOutlineFrown />
-              <div>오류가 발생했습니다 : {report.error}</div>
-            </FailBlock>
-          ) : report.loading ? (
-            <LoaderBlock>
-              <BounceLoader color={palette.mainRed} size="30" />
-            </LoaderBlock>
-          ) : showDone ? (
-            <SuccessBlock>
-              <AiOutlineCheckCircle />
-              <div>사진이 신고되었습니다</div>
-            </SuccessBlock>
-          ) : (
-            <>
-              <div className="text">사진을 신고하시겠습니까?</div>
-              <ButtonGroup direction="row" rightAlign gap="10px">
-                <Button theme="text" onClick={() => setShowOption(false)}>
-                  닫기
-                </Button>
-                <Button theme="red" onClick={onReport}>
-                  신고하기
-                </Button>
-              </ButtonGroup>
-            </>
-          )}
-        </ReportBlock>
-      </Dialog>
+      <ProcessModal
+        done={showDone}
+        onCancel={() => setShowOption(false)}
+        visible={showOption}
+        doneMessage="사진이 신고되었습니다"
+        error={report.error}
+        loading={report.loading}
+      >
+        <div className="text">사진을 신고하시겠습니까?</div>
+        <ButtonGroup direction="row" rightAlign gap="10px">
+          <Button theme="text" onClick={() => setShowOption(false)}>
+            닫기
+          </Button>
+          <Button theme="red" onClick={onReport}>
+            신고하기
+          </Button>
+        </ButtonGroup>
+      </ProcessModal>
       <Dialog
         cancelText="닫기"
         confirmText="로그인 하러 가기"
