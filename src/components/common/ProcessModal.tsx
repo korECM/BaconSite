@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { AiOutlineCheckCircle, AiOutlineFrown } from 'react-icons/ai';
 import Dialog from './Dialog';
@@ -69,6 +69,15 @@ interface ProcessModalProps {
 }
 
 function ProcessModal({ done, setDone, doneMessage, error, loading, onCancel, visible, children, afterDone }: ProcessModalProps) {
+  const [showError, setShowError] = useState(false);
+
+  const onCancelAction = useCallback(() => {
+    setTimeout(() => {
+      setShowError(false);
+    }, [500]);
+    onCancel();
+  }, [onCancel]);
+
   useEffect(() => {
     if (done) {
       setTimeout(() => {
@@ -81,10 +90,16 @@ function ProcessModal({ done, setDone, doneMessage, error, loading, onCancel, vi
     }
   }, [done, afterDone, onCancel, setDone]);
 
+  useEffect(() => {
+    if (loading) {
+      setShowError(true);
+    }
+  }, [loading]);
+
   return (
-    <Dialog mode="custom" onCancel={onCancel} visible={visible} customPadding="1rem">
+    <Dialog mode="custom" onCancel={onCancelAction} visible={visible} customPadding="1rem">
       <ReportBlock>
-        {error ? (
+        {showError && error ? (
           <FailBlock>
             <AiOutlineFrown />
             <div>오류가 발생했습니다 : {error}</div>
