@@ -192,6 +192,10 @@ const MenuBlock = styled.div`
   }
   .menuImages {
     margin-top: 30px;
+    height: 30vw;
+    max-height: 200px;
+    overflow-x: auto;
+    white-space: nowrap;
     .menuImage {
       width: 30%;
       height: 30vw;
@@ -683,7 +687,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           {shop.data.menuImage.length > 0 && (
             <>
               <div className="menuImages">
-                {shop.data.menuImage.slice(0, 3).map((menu) => (
+                {shop.data.menuImage.slice(0, 10).map((menu) => (
                   <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" key={menu._id} />
                 ))}
               </div>
