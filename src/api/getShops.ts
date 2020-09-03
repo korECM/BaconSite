@@ -4,6 +4,7 @@ import { Location, Keyword } from './getShop';
 
 export interface ShopsInterface {
   _id: string;
+  mainImage: string;
   shopImage: Image[];
   name: string;
   contact: string;

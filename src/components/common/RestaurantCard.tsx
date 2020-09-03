@@ -104,7 +104,7 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
     <RestaurantCardBlock style={appear}>
       <div
         style={{
-          backgroundImage: `url(${shop.shopImage.length ? shop.shopImage[0].imageLink : BlankImage})`,
+          backgroundImage: `url(${shop.mainImage ? shop.mainImage : shop.shopImage.length ? shop.shopImage[0].imageLink : BlankImage})`,
         }}
         className="image"
       />

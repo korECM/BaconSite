@@ -21,6 +21,7 @@ import { MdPhotoLibrary } from 'react-icons/md';
 import Title from 'lib/meta';
 import ButtonGroup from 'components/common/ButtonGroup';
 import ProcessModal from 'components/common/ProcessModal';
+import BlankImage from 'assets/blank.png';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -573,7 +574,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
         <ShopImage
-          imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
+          imageLink={shop.data.mainImage ? shop.data.mainImage : shop.data.shopImage.length ? shop.data.shopImage[0].imageLink : BlankImage}
           onClick={onShopImageClick}
           style={{ cursor: shop.data.shopImage.length > 0 ? 'pointer' : 'normal' }}
         >
