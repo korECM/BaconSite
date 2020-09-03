@@ -5,7 +5,7 @@ const ButtonGroupBlock = styled.div`
   display: flex;
   ${(props: ButtonGroupProps) =>
     css`
-      background-color: ${props.direction};
+      flex-direction: ${props.direction};
     `}
 
   ${(props: ButtonGroupProps) =>
