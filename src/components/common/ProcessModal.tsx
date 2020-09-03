@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { AiOutlineCheckCircle, AiOutlineFrown } from 'react-icons/ai';
 import Dialog from './Dialog';
@@ -62,11 +62,25 @@ interface ProcessModalProps {
   error: any;
   loading: boolean;
   done: boolean;
+  setDone: (state: boolean) => void;
   doneMessage: string;
   children?: React.ReactNode;
+  afterDone?: () => void;
 }
 
-function ProcessModal({ done, doneMessage, error, loading, onCancel, visible, children }: ProcessModalProps) {
+function ProcessModal({ done, setDone, doneMessage, error, loading, onCancel, visible, children, afterDone }: ProcessModalProps) {
+  useEffect(() => {
+    if (done) {
+      setTimeout(() => {
+        onCancel();
+        setTimeout(() => {
+          setDone(false);
+          if (afterDone) afterDone();
+        }, [500]);
+      }, 1500);
+    }
+  }, [done, afterDone, onCancel, setDone]);
+
   return (
     <Dialog mode="custom" onCancel={onCancel} visible={visible} customPadding="1rem">
       <ReportBlock>

@@ -184,13 +184,6 @@ function DetailImage({ match, mode, history }: DetailImageProps) {
   useEffect(() => {
     if (report.data?.message === 'success') {
       setShowDone(true);
-      setTimeout(() => {
-        setShowOption(false);
-        setTimeout(() => {
-          setShowDone(false);
-          setSelectedIndex(-1);
-        }, [500]);
-      }, 1500);
     } else if (report.error) {
     }
   }, [report.data, report.error]);
@@ -272,11 +265,15 @@ function DetailImage({ match, mode, history }: DetailImageProps) {
       </Container>
       <ProcessModal
         done={showDone}
+        setDone={setShowDone}
         onCancel={() => setShowOption(false)}
         visible={showOption}
         doneMessage="사진이 신고되었습니다"
         error={report.error}
         loading={report.loading}
+        afterDone={() => {
+          setSelectedIndex(-1);
+        }}
       >
         <div className="text">사진을 신고하시겠습니까?</div>
         <ButtonGroup direction="row" rightAlign gap="10px">
