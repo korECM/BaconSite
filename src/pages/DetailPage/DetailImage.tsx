@@ -64,7 +64,7 @@ const ImageViewer = styled.div`
     right: 0;
     bottom: 0;
     top: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
     width: 100%;
     height: 100%;
@@ -114,7 +114,6 @@ const ImageViewer = styled.div`
     }
   }
 `;
-
 
 interface DetailImageProps extends RouteComponentProps {
   mode: 'shop' | 'menu';
