@@ -21,6 +21,7 @@ import Comment from './Comment';
 import { MdPhotoLibrary } from 'react-icons/md';
 import Title from 'lib/meta';
 import ButtonGroup from 'components/common/ButtonGroup';
+import ProcessModal from 'components/common/ProcessModal';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -304,6 +305,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const [shopReportAlert, setShopReportAlert] = useState(false);
   const [reviewReportAlert, setReviewReportAlert] = useState(false);
 
+  const [reviewReportDone, setReviewReportDone] = useState(false);
+
+  const [shopReportDone, setShopReportDone] = useState(false);
+
   const [reviewReportNumber, setReviewReportNumber] = useState('');
 
   const [loginMessage, setLoginMessage] = useState('');
@@ -429,14 +434,12 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   };
 
   const postShopReport = useCallback(() => {
-    setShopReportAlert(false);
     if (shopReport.loading) return;
     postShopReportDispatch();
   }, [shopReport, postShopReportDispatch]);
 
   const postReviewReport = useCallback(
     (reviewId: string) => {
-      setReviewReportAlert(false);
       if (reviewReport.loading) return;
       postReviewReportDispatch(reviewId);
     },
@@ -487,6 +490,18 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   useEffect(() => {
     setCommentLikeOffset(Array.from(Array(reviews.data ? reviews.data.length : 0)).map(() => 0));
   }, [reviews.data]);
+
+  useEffect(() => {
+    if (reviewReport.data) {
+      setReviewReportDone(true);
+    }
+  }, [reviewReport.data]);
+
+  useEffect(() => {
+    if (shopReport.data) {
+      setShopReportDone(true);
+    }
+  }, [shopReport.data]);
 
   if (shop.loading) {
     return (
@@ -686,7 +701,15 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         onConfirm={() => goLogin()}
         visible={loginAlert}
       />
-      <Dialog mode="custom" customPadding="1rem" onCancel={() => setShopReportAlert(false)} visible={shopReportAlert}>
+      <ProcessModal
+        onCancel={() => setShopReportAlert(false)}
+        visible={shopReportAlert}
+        done={shopReportDone}
+        setDone={setShopReportDone}
+        doneMessage="신고가 정상적으로 접수되었습니다"
+        error={shopReport.error}
+        loading={shopReport.loading}
+      >
         <ShopReport>
           <div className="buttonGroup">
             <div>
@@ -724,8 +747,16 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             제출하기
           </Button>
         </ShopReport>
-      </Dialog>
-      <Dialog mode="custom" customPadding="1rem" onCancel={() => setReviewReportAlert(false)} visible={reviewReportAlert}>
+      </ProcessModal>
+      <ProcessModal
+        onCancel={() => setReviewReportAlert(false)}
+        visible={reviewReportAlert}
+        done={reviewReportDone}
+        setDone={setReviewReportDone}
+        doneMessage="신고가 정상적으로 접수되었습니다"
+        error={reviewReport.error}
+        loading={reviewReport.loading}
+      >
         <ReviewReport>
           <textarea placeholder="어떤 점이 불편하셨나요?&#13;&#10;(ex. 부적절한 표현을 사용했어요.)" rows={8} onChange={onReviewReportCommentChange}>
             {form.reviewReport.comment}
@@ -734,7 +765,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             제출하기
           </Button>
         </ReviewReport>
-      </Dialog>
+      </ProcessModal>
     </Container>
   );
 }
