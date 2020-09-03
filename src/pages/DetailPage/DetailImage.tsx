@@ -128,6 +128,7 @@ const SuccessBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 150px;
   svg {
     margin-top: 35px;
     margin-bottom: 20px;
@@ -144,7 +145,7 @@ const LoaderBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem 0;
+  height: 150px;
 `;
 
 interface DetailImageProps extends RouteComponentProps {
