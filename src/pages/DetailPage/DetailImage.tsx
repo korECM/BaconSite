@@ -11,9 +11,8 @@ import Dialog from 'components/common/Dialog';
 import useReport from 'hooks/useReport';
 import ButtonGroup from 'components/common/ButtonGroup';
 import Button from 'components/common/Button';
-import BounceLoader from 'react-spinners/BounceLoader';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
 import useCheck from 'hooks/useCheck';
+import ProcessModal from 'components/common/ProcessModal';
 
 const DetailImageBlock = styled.div`
   .imageHeader {
@@ -65,7 +64,7 @@ const ImageViewer = styled.div`
     right: 0;
     bottom: 0;
     top: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
     width: 100%;
     height: 100%;
@@ -114,37 +113,6 @@ const ImageViewer = styled.div`
       }
     }
   }
-`;
-
-const ReportBlock = styled.div`
-  .text {
-    margin-top: 15px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-`;
-
-const SuccessBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  svg {
-    margin-top: 35px;
-    margin-bottom: 20px;
-    color: ${palette.mainRed};
-    font-size: 2.5rem;
-  }
-  div {
-    text-align: center;
-    margin-bottom: 45px;
-  }
-`;
-
-const LoaderBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 0;
 `;
 
 interface DetailImageProps extends RouteComponentProps {
@@ -216,15 +184,9 @@ function DetailImage({ match, mode, history }: DetailImageProps) {
   useEffect(() => {
     if (report.data?.message === 'success') {
       setShowDone(true);
-      setTimeout(() => {
-        setShowOption(false);
-        setTimeout(() => {
-          setShowDone(false);
-          setSelectedIndex(-1);
-        }, [500]);
-      }, 1500);
+    } else if (report.error) {
     }
-  }, [report.data]);
+  }, [report.data, report.error]);
 
   if (!shop.data) {
     return (
@@ -301,32 +263,28 @@ function DetailImage({ match, mode, history }: DetailImageProps) {
           </div>
         </ImageContainer>
       </Container>
-      <Dialog mode="custom" onCancel={() => setShowOption(false)} visible={showOption} customPadding="1rem">
-        <ReportBlock>
-          {report.loading ? (
-            <LoaderBlock>
-              <BounceLoader color={palette.mainRed} size="30" />
-            </LoaderBlock>
-          ) : showDone ? (
-            <SuccessBlock>
-              <AiOutlineCheckCircle />
-              <div>사진이 신고되었습니다</div>
-            </SuccessBlock>
-          ) : (
-            <>
-              <div className="text">사진을 신고하시겠습니까?</div>
-              <ButtonGroup direction="row" rightAlign gap="10px">
-                <Button theme="text" onClick={() => setShowOption(false)}>
-                  닫기
-                </Button>
-                <Button theme="red" onClick={onReport}>
-                  신고하기
-                </Button>
-              </ButtonGroup>
-            </>
-          )}
-        </ReportBlock>
-      </Dialog>
+      <ProcessModal
+        done={showDone}
+        setDone={setShowDone}
+        onCancel={() => setShowOption(false)}
+        visible={showOption}
+        doneMessage="사진이 신고되었습니다"
+        error={report.error}
+        loading={report.loading}
+        afterDone={() => {
+          setSelectedIndex(-1);
+        }}
+      >
+        <div className="text">사진을 신고하시겠습니까?</div>
+        <ButtonGroup direction="row" rightAlign gap="10px">
+          <Button theme="text" onClick={() => setShowOption(false)}>
+            닫기
+          </Button>
+          <Button theme="red" onClick={onReport}>
+            신고하기
+          </Button>
+        </ButtonGroup>
+      </ProcessModal>
       <Dialog
         cancelText="닫기"
         confirmText="로그인 하러 가기"

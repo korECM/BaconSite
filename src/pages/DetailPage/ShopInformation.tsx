@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { ShopUIInterface } from '../../modules/detail';
-import { MdPhone, MdLocationOn, MdRestaurantMenu, MdBusiness } from 'react-icons/md';
+import { MdPhone, MdLocationOn, MdRestaurantMenu, MdBusiness, MdAccessTime } from 'react-icons/md';
 import palette from '../../styles/palette';
 import ShopInformationElement from './ShopInformationElement';
 import { categoryToString, locationToString } from '../../lib/shopUtil';
@@ -32,6 +32,16 @@ function ShopInformation({ shop }: ShopInformationProps) {
       data: shop.category,
       icon: <MdRestaurantMenu />,
       tag: <span>{categoryToString(shop.category)}</span>,
+    },
+    {
+      data: shop.open,
+      icon: <MdAccessTime />,
+      tag: (
+        <div className="time">
+          <span>{shop.open}</span>
+          {shop.closed && <span>{shop.closed}</span>}
+        </div>
+      ),
     },
     {
       data: shop.location,
