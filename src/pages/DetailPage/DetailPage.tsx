@@ -5,7 +5,6 @@ import styled, { css } from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import useDetail from '../../hooks/useDetail';
 import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit, MdInfoOutline, MdKeyboardArrowRight, MdRestaurantMenu } from 'react-icons/md';
-import ClockLoader from 'react-spinners/ClockLoader';
 import BounceLoader from 'react-spinners/BounceLoader';
 import palette, { hexToRGB } from '../../styles/palette';
 import Flag from '../../components/common/Flag';
@@ -309,6 +308,12 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [shopReportDone, setShopReportDone] = useState(false);
 
+  const [shopImageUploadShow, setShopImageUploadShow] = useState(false);
+  const [menuImageUploadShow, setMenuImageUploadShow] = useState(false);
+
+  const [shopImageUploadDone, setShopImageUploadDone] = useState(false);
+  const [menuImageUploadDone, setMenuImageUploadDone] = useState(false);
+
   const [reviewReportNumber, setReviewReportNumber] = useState('');
 
   const [loginMessage, setLoginMessage] = useState('');
@@ -359,6 +364,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const onShopFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (fileSizeAlert(shopFileRef)) {
       onShopImageUploadRequest(shopFileRef.current!.files!);
+      setShopImageUploadShow(true);
       shopFileRef.current!.value = '';
     }
   };
@@ -366,6 +372,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const onMenuFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (fileSizeAlert(menuFileRef)) {
       onMenuImageUploadRequest(menuFileRef.current!.files!);
+      setMenuImageUploadShow(true);
       menuFileRef.current!.value = '';
     }
   };
@@ -503,6 +510,18 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     }
   }, [shopReport.data]);
 
+  useEffect(() => {
+    if (shopImage.data?.locations) {
+      setShopImageUploadDone(true);
+    }
+  }, [shopImage.data]);
+
+  useEffect(() => {
+    if (menuImage.data?.locations) {
+      setMenuImageUploadDone(true);
+    }
+  }, [menuImage.data]);
+
   if (shop.loading) {
     return (
       <Container color="white">
@@ -578,13 +597,13 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         )}
         <ShopAction onClick={onShopImageUploadButtonClick}>
           <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={shopFileRef} onChange={onShopFileChange} />
-          {shopImage.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
-          <span>{shopImage.loading ? '사진 올리는 중' : '사진 올리기'}</span>
+          <MdAddAPhoto />
+          <span>사진 올리기</span>
         </ShopAction>
         <ShopAction onClick={onMenuImageUploadButtonClick}>
           <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={menuFileRef} onChange={onMenuFileChange} />
-          {menuImage.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
-          <span>{menuImage.loading ? '사진 올리는 중' : '메뉴판 올리기'}</span>
+          <MdAddAPhoto />
+          <span>메뉴판 올리기</span>
         </ShopAction>
         <ShopAction onClick={onWriteReviewButtonClick}>
           <MdEdit />
@@ -766,6 +785,24 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           </Button>
         </ReviewReport>
       </ProcessModal>
+      <ProcessModal
+        onCancel={() => setShopImageUploadShow(false)}
+        visible={shopImageUploadShow}
+        done={shopImageUploadDone}
+        setDone={setShopImageUploadDone}
+        doneMessage="사진이 정상적으로 업로드되었습니다"
+        error={shopImage.error}
+        loading={shopImage.loading}
+      />
+      <ProcessModal
+        onCancel={() => setMenuImageUploadShow(false)}
+        visible={menuImageUploadShow}
+        done={menuImageUploadDone}
+        setDone={setMenuImageUploadDone}
+        doneMessage="사진이 정상적으로 업로드되었습니다"
+        error={menuImage.error}
+        loading={menuImage.loading}
+      />
     </Container>
   );
 }
