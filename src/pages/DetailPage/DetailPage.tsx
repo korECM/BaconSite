@@ -5,7 +5,6 @@ import styled, { css } from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import useDetail from '../../hooks/useDetail';
 import { MdFavorite, MdFavoriteBorder, MdAddAPhoto, MdEdit, MdInfoOutline, MdKeyboardArrowRight, MdRestaurantMenu } from 'react-icons/md';
-import ClockLoader from 'react-spinners/ClockLoader';
 import BounceLoader from 'react-spinners/BounceLoader';
 import palette, { hexToRGB } from '../../styles/palette';
 import Flag from '../../components/common/Flag';
@@ -20,6 +19,9 @@ import { getScore } from '../../lib/scoreUtil';
 import Comment from './Comment';
 import { MdPhotoLibrary } from 'react-icons/md';
 import Title from 'lib/meta';
+import ButtonGroup from 'components/common/ButtonGroup';
+import ProcessModal from 'components/common/ProcessModal';
+import BlankImage from 'assets/blank.png';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -191,6 +193,10 @@ const MenuBlock = styled.div`
   }
   .menuImages {
     margin-top: 30px;
+    height: 30vw;
+    max-height: 200px;
+    overflow-x: auto;
+    white-space: nowrap;
     .menuImage {
       width: 30%;
       height: 30vw;
@@ -254,6 +260,11 @@ const ReviewReport = styled.div`
   }
 `;
 
+const SlimButton = styled(Button)`
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
 interface DetailPageProps extends RouteComponentProps {}
 
 function DetailPage({ match, history, location }: DetailPageProps) {
@@ -297,6 +308,16 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [shopReportAlert, setShopReportAlert] = useState(false);
   const [reviewReportAlert, setReviewReportAlert] = useState(false);
+
+  const [reviewReportDone, setReviewReportDone] = useState(false);
+
+  const [shopReportDone, setShopReportDone] = useState(false);
+
+  const [shopImageUploadShow, setShopImageUploadShow] = useState(false);
+  const [menuImageUploadShow, setMenuImageUploadShow] = useState(false);
+
+  const [shopImageUploadDone, setShopImageUploadDone] = useState(false);
+  const [menuImageUploadDone, setMenuImageUploadDone] = useState(false);
 
   const [reviewReportNumber, setReviewReportNumber] = useState('');
 
@@ -348,6 +369,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const onShopFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (fileSizeAlert(shopFileRef)) {
       onShopImageUploadRequest(shopFileRef.current!.files!);
+      setShopImageUploadShow(true);
       shopFileRef.current!.value = '';
     }
   };
@@ -355,6 +377,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const onMenuFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (fileSizeAlert(menuFileRef)) {
       onMenuImageUploadRequest(menuFileRef.current!.files!);
+      setMenuImageUploadShow(true);
       menuFileRef.current!.value = '';
     }
   };
@@ -423,14 +446,12 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   };
 
   const postShopReport = useCallback(() => {
-    setShopReportAlert(false);
     if (shopReport.loading) return;
     postShopReportDispatch();
   }, [shopReport, postShopReportDispatch]);
 
   const postReviewReport = useCallback(
     (reviewId: string) => {
-      setReviewReportAlert(false);
       if (reviewReport.loading) return;
       postReviewReportDispatch(reviewId);
     },
@@ -446,6 +467,12 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     if (!shop.data) return;
     if (shop.data.shopImage.length <= 1) return;
     history.push(`/shop/image/${shop.data._id}`);
+  }, [shop.data, history]);
+
+  const onMenuImageClick = useCallback(() => {
+    if (!shop.data) return;
+    if (shop.data.menuImage.length <= 1) return;
+    history.push(`/shop/menuImage/${shop.data._id}`);
   }, [shop.data, history]);
 
   useEffect(() => {
@@ -475,6 +502,30 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   useEffect(() => {
     setCommentLikeOffset(Array.from(Array(reviews.data ? reviews.data.length : 0)).map(() => 0));
   }, [reviews.data]);
+
+  useEffect(() => {
+    if (reviewReport.data) {
+      setReviewReportDone(true);
+    }
+  }, [reviewReport.data]);
+
+  useEffect(() => {
+    if (shopReport.data) {
+      setShopReportDone(true);
+    }
+  }, [shopReport.data]);
+
+  useEffect(() => {
+    if (shopImage.data?.locations) {
+      setShopImageUploadDone(true);
+    }
+  }, [shopImage.data]);
+
+  useEffect(() => {
+    if (menuImage.data?.locations) {
+      setMenuImageUploadDone(true);
+    }
+  }, [menuImage.data]);
 
   if (shop.loading) {
     return (
@@ -523,10 +574,11 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
         <ShopImage
-          imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
+          imageLink={shop.data.mainImage ? shop.data.mainImage : shop.data.shopImage.length ? shop.data.shopImage[0].imageLink : BlankImage}
           onClick={onShopImageClick}
+          style={{ cursor: shop.data.shopImage.length > 0 ? 'pointer' : 'normal' }}
         >
-          {shop.data.shopImage.length > 1 && <MdPhotoLibrary />}
+          {shop.data.shopImage.length > 0 && <MdPhotoLibrary />}
           <Flag
             titleColor={shop.data.scoreAverage ? palette.white : 'black'}
             descColor={palette.white}
@@ -550,13 +602,13 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         )}
         <ShopAction onClick={onShopImageUploadButtonClick}>
           <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={shopFileRef} onChange={onShopFileChange} />
-          {shopImage.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
-          <span>{shopImage.loading ? '사진 올리는 중' : '사진 올리기'}</span>
+          <MdAddAPhoto />
+          <span>사진 올리기</span>
         </ShopAction>
         <ShopAction onClick={onMenuImageUploadButtonClick}>
           <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={menuFileRef} onChange={onMenuFileChange} />
-          {menuImage.loading ? <ClockLoader color={palette.mainRed} size={27} /> : <MdAddAPhoto />}
-          <span>{menuImage.loading ? '사진 올리는 중' : '메뉴판 올리기'}</span>
+          <MdAddAPhoto />
+          <span>메뉴판 올리기</span>
         </ShopAction>
         <ShopAction onClick={onWriteReviewButtonClick}>
           <MdEdit />
@@ -634,11 +686,18 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             )}
           </div>
           {shop.data.menuImage.length > 0 && (
-            <div className="menuImages">
-              {shop.data.menuImage.map((menu) => (
-                <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" key={menu._id} />
-              ))}
-            </div>
+            <>
+              <div className="menuImages">
+                {shop.data.menuImage.slice(0, 10).map((menu) => (
+                  <img src={menu.imageLink} className="menuImage" alt="메뉴판 사진" key={menu._id} />
+                ))}
+              </div>
+              <ButtonGroup gap="0" direction="row" rightAlign>
+                <SlimButton theme="red" onClick={onMenuImageClick}>
+                  메뉴 더보기
+                </SlimButton>
+              </ButtonGroup>
+            </>
           )}
         </MenuBlock>
       )}
@@ -666,7 +725,15 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         onConfirm={() => goLogin()}
         visible={loginAlert}
       />
-      <Dialog mode="custom" customPadding="1rem" onCancel={() => setShopReportAlert(false)} visible={shopReportAlert}>
+      <ProcessModal
+        onCancel={() => setShopReportAlert(false)}
+        visible={shopReportAlert}
+        done={shopReportDone}
+        setDone={setShopReportDone}
+        doneMessage="신고가 정상적으로 접수되었습니다"
+        error={shopReport.error}
+        loading={shopReport.loading}
+      >
         <ShopReport>
           <div className="buttonGroup">
             <div>
@@ -704,8 +771,16 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             제출하기
           </Button>
         </ShopReport>
-      </Dialog>
-      <Dialog mode="custom" customPadding="1rem" onCancel={() => setReviewReportAlert(false)} visible={reviewReportAlert}>
+      </ProcessModal>
+      <ProcessModal
+        onCancel={() => setReviewReportAlert(false)}
+        visible={reviewReportAlert}
+        done={reviewReportDone}
+        setDone={setReviewReportDone}
+        doneMessage="신고가 정상적으로 접수되었습니다"
+        error={reviewReport.error}
+        loading={reviewReport.loading}
+      >
         <ReviewReport>
           <textarea placeholder="어떤 점이 불편하셨나요?&#13;&#10;(ex. 부적절한 표현을 사용했어요.)" rows={8} onChange={onReviewReportCommentChange}>
             {form.reviewReport.comment}
@@ -714,7 +789,25 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             제출하기
           </Button>
         </ReviewReport>
-      </Dialog>
+      </ProcessModal>
+      <ProcessModal
+        onCancel={() => setShopImageUploadShow(false)}
+        visible={shopImageUploadShow}
+        done={shopImageUploadDone}
+        setDone={setShopImageUploadDone}
+        doneMessage="사진이 정상적으로 업로드되었습니다"
+        error={shopImage.error}
+        loading={shopImage.loading}
+      />
+      <ProcessModal
+        onCancel={() => setMenuImageUploadShow(false)}
+        visible={menuImageUploadShow}
+        done={menuImageUploadDone}
+        setDone={setMenuImageUploadDone}
+        doneMessage="사진이 정상적으로 업로드되었습니다"
+        error={menuImage.error}
+        loading={menuImage.loading}
+      />
     </Container>
   );
 }

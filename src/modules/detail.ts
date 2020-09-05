@@ -199,6 +199,7 @@ const initialState: DetailState = {
     {
       _id: '',
       name: '',
+      mainImage: '',
       location: Location.None,
       latitude: 0,
       longitude: 0,

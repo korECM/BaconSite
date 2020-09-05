@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import Button from '../../components/common/Button';
-import DropBox from '../../components/common/DropBox';
 import useWriteReview from '../../hooks/useWriteReview';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
+import palette from 'styles/palette';
 
 const Title = styled.div`
   font-size: 20px;
@@ -41,10 +41,32 @@ const ScoreContainer = styled.div`
   span.text {
     font-size: 18px;
     text-align: center;
-    font-weight: 500;
+    font-weight: bolder;
   }
   .score {
     margin: 0 15px;
+  }
+  select {
+    width: 100px;
+    padding: 0.7em 0.5em;
+    margin: 0 10px;
+    padding-left: 40px;
+    padding-right: 30px;
+    color: ${palette.mainRed};
+    font-weight: bolder;
+    font-family: inherit;
+    background: url(https://bacon-shop-assets.s3.ap-northeast-2.amazonaws.com/downArrow.png) no-repeat 95% 50%;
+    background-color: white;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-radius: 10px;
+  }
+
+  select::-ms-expand {
+    /* for IE 11 */
+    display: none;
   }
 `;
 
@@ -90,7 +112,7 @@ const ScoreOptions = [
 function WriteReviewPage({ match, history }: RouteComponentProps) {
   const shopId = (match.params as any).shopId;
 
-  const { keywords, onChangeInputDispatch, onSubmit, onClick, reset, review, reviewRequest } = useWriteReview(shopId);
+  const { keywords, onChangeInputDispatch, onSubmit, onClick, reset, review, reviewRequest, score } = useWriteReview(shopId);
 
   const { user } = useCheck();
 
@@ -98,15 +120,15 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
     onChangeInputDispatch(event.target.name, event.target.value);
   };
 
-  const onDropBoxChange = (data: string) => {
-    onChangeInputDispatch('score', data);
+  const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onChangeInputDispatch('score', event.target.value);
   };
 
   useEffect(() => {
     reset();
   }, [reset]);
   useEffect(() => {
-    onDropBoxChange('4.5');
+    onChangeInputDispatch('score', '4.5');
     return () => {
       reset();
     };
@@ -146,13 +168,19 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
             밥약
           </ButtonWithMargin>
           <ButtonWithMargin theme="white" onClick={() => onClick('spicy')} selected={keywords.spicy}>
-            안매워요
+            매워요
           </ButtonWithMargin>
         </ButtonSubGroup>
       </ButtonGroup>
       <ScoreContainer>
         <span className="text">자네의 학점은</span>
-        <DropBox dataSet={ScoreOptions} onChange={onDropBoxChange} />
+        <select value={score} onChange={onSelectChange}>
+          {ScoreOptions.map((data) => (
+            <option value={data.value} key={data.value}>
+              {data.label}
+            </option>
+          ))}
+        </select>
         <span className="text">일세!</span>
       </ScoreContainer>
 

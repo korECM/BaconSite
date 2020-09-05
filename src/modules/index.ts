@@ -6,6 +6,7 @@ import user from './user';
 import shops from './shops';
 import auth from './auth';
 import myPage from './myPage';
+import report from './report';
 
 const rootReducer = combineReducers({
   detail,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   shops,
   auth,
   myPage,
+  report,
 });
 
 export default rootReducer;
