@@ -15,6 +15,7 @@ import React from 'react';
 import FullHeightFade from '../../components/common/FullHeightFade';
 import wondering_cat from './wondering_cat.png';
 import YesNoDraw from './YesNoDraw';
+import { findAllByTestId } from '@testing-library/react';
 
 const base = [
   {
@@ -125,6 +126,7 @@ const Divider = styled.div`
 
 let beClicked = false;
 let selected_name = 'false';
+let resultDataSet = [true, true, true, true, true];
 
 const moveHref = () => {
   beClicked = true;
@@ -175,13 +177,18 @@ class YesNoPage extends React.Component<Props, State> {
     const resultdata = this.state.result.slice();
     // resultdata.push(base.find((item) => item.id === id));
     resultdata.push(base[id - 1].name);
+    if (id % 2 == 1) {
+      resultDataSet[this.count - 1] = true;
+    } else {
+      resultDataSet[this.count - 1] = false;
+    }
 
     this.setState((prevState) => ({
       sequence: prevState.sequence + 1, // sequence 1씩 증
       views: [base[2 * this.count], base[2 * this.count + 1]],
     }));
 
-    console.log(resultdata);
+    console.log(resultDataSet);
   }
 
   render() {
