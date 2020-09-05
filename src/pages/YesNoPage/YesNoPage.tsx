@@ -81,8 +81,8 @@ const ImageContainer = styled.div`
   position: relative;
   vertical-align: middle;
 
-  height: 42vw;
-  width: 40vw;
+  height: 44vw;
+  width: 55vw;
   margin: auto;
   margin-top: 30px;
   margin-bottom: 50px;
@@ -204,7 +204,7 @@ class YesNoPage extends React.Component<Props, State> {
             <FullHeightFade>
               <Bounce>
                 <ImageContainer>
-                  <Image imageLink={'https://ifh.cc/g/6onhGJ.png'} />
+                  <Image imageLink={wondering_cat} />
                 </ImageContainer>
               </Bounce>
             </FullHeightFade>
@@ -218,5 +218,7 @@ class YesNoPage extends React.Component<Props, State> {
     );
   }
 }
+
+// imageLink={'https://ifh.cc/g/6onhGJ.png'}
 
 export default YesNoPage;
