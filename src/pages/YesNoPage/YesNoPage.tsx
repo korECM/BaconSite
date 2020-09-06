@@ -60,12 +60,12 @@ const base = [
   },
   {
     id: 9,
-    name: '친구와 함께',
+    name: '인별 감성★',
     img: 'wondering_cat.png',
   },
   {
     id: 10,
-    name: '연인과 함께',
+    name: '아무렴 맛만 있음 됨',
     img: 'wondering_cat.png',
   },
 ];
@@ -127,17 +127,21 @@ const Divider = styled.div`
 let beClicked = false;
 let selected_name = 'false';
 let resultDataSet = [true, true, true, true, true];
+//spicy,  10000이상,  front(+hs_station, front_far),  individual, atmosphere
+//!spicy, 10000이하,  back,                           !individual, !atmosphere
 
-const moveHref = () => {
-  beClicked = true;
-  selected_name = 'true';
-};
+// const moveHref = () => {
+//   beClicked = true;
+//   selected_name = 'true';
+// };
 
 interface Props extends RouteComponentProps {}
 
 interface DataInterface {
   option: string[];
 }
+
+let data = ['', '', '', '', ''];
 
 interface State {
   views: {
@@ -189,9 +193,69 @@ class YesNoPage extends React.Component<Props, State> {
     }));
 
     console.log(resultDataSet);
+
+    if (this.count === 5) {
+      data[0] = 'recommended';
+
+      if (resultDataSet[0] === true) {
+        data[4] = 'spicy';
+      }
+
+      if (resultDataSet[1] === false) {
+        data[2] = '5000,10000';
+      }
+
+      if (resultDataSet[2] === true) {
+        data[3] = 'front,front_far,hs_station';
+      } else {
+        data[3] = 'back';
+      }
+
+      if (resultDataSet[3] === true) {
+        if (data[4] === '') {
+          data[4] = 'individual';
+        } else {
+          data[4] = data[4] + ',individual';
+        }
+      }
+
+      if (resultDataSet[4] === true) {
+        if (data[4] === '') {
+          data[4] = 'atmosphere';
+        } else {
+          data[4] = data[4] + ',atmosphere';
+        }
+      }
+      //아니 근데 이러면 매운거 안먹고 싶어서 spicy선택 안했는데 individual만 선택해서 individual인데 spicy한거 나오면 어캄 하.. 고른 의미가 없잖아...
+
+      this.props.history.push({
+        pathname: '/result',
+        search: '?order=' + data[0] + '&category=' + data[1] + '&price=' + data[2] + '&location=' + data[3] + '&keyword=' + data[4],
+      });
+    }
   }
 
+  moveHref = (data: DataInterface[]) => {
+    beClicked = true;
+    selected_name = 'true';
+    this.props.history.push({
+      pathname: '/result',
+      search:
+        '?order=' +
+        data[0].option.join(',') +
+        '&category=' +
+        data[1].option.join(',') +
+        '&price=' +
+        data[2].option.join(',') +
+        '&location=' +
+        data[3].option.join(',') +
+        '&keyword=' +
+        data[4].option.join(','),
+    });
+  };
+
   render() {
+    const { moveHref } = this;
     const { views, end, round, sequence } = this.state;
     const path = './';
     console.log(this.state);
