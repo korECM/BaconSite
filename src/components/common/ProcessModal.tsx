@@ -38,10 +38,13 @@ const FailBlock = styled.div`
   align-items: center;
   height: 150px;
   svg {
-    margin-top: 35px;
-    margin-bottom: 20px;
+    /* margin-top: 35px;
+    margin-bottom: 20px; */
     color: ${palette.mainRed};
     font-size: 2.5rem;
+    width: 30px;
+    height: 30px;
+    margin: auto 0;
   }
   div {
     text-align: center;
@@ -64,11 +67,27 @@ interface ProcessModalProps {
   done: boolean;
   setDone: (state: boolean) => void;
   doneMessage: string;
+  errorMessage?: string;
+  errorMessageBlock?: React.ReactNode;
   children?: React.ReactNode;
   afterDone?: () => void;
+  icon?: React.ReactNode;
 }
 
-function ProcessModal({ done, setDone, doneMessage, error, loading, onCancel, visible, children, afterDone }: ProcessModalProps) {
+function ProcessModal({
+  done,
+  setDone,
+  doneMessage,
+  error,
+  loading,
+  onCancel,
+  visible,
+  children,
+  afterDone,
+  icon,
+  errorMessage,
+  errorMessageBlock,
+}: ProcessModalProps) {
   const [showError, setShowError] = useState(false);
 
   const onCancelAction = useCallback(() => {
@@ -102,7 +121,7 @@ function ProcessModal({ done, setDone, doneMessage, error, loading, onCancel, vi
         {showError && error ? (
           <FailBlock>
             <AiOutlineFrown />
-            <div>오류가 발생했습니다 : {error}</div>
+            {errorMessageBlock ? errorMessageBlock : <div>{errorMessage || `오류가 발생했습니다 : ${error}`}</div>}
           </FailBlock>
         ) : loading ? (
           <LoaderBlock>
@@ -110,7 +129,7 @@ function ProcessModal({ done, setDone, doneMessage, error, loading, onCancel, vi
           </LoaderBlock>
         ) : done ? (
           <SuccessBlock>
-            <AiOutlineCheckCircle />
+            {icon ? icon : <AiOutlineCheckCircle />}
             <div>{doneMessage}</div>
           </SuccessBlock>
         ) : children ? (
