@@ -7,6 +7,7 @@ import useWriteReview from '../../hooks/useWriteReview';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
 import palette from 'styles/palette';
+import useDetail from 'hooks/useDetail';
 
 const Title = styled.div`
   font-size: 20px;
@@ -114,6 +115,8 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
 
   const { keywords, onChangeInputDispatch, onSubmit, onClick, reset, review, reviewRequest, score } = useWriteReview(shopId);
 
+  const { checkReview, checkTodayReviewDispatch } = useDetail(shopId);
+
   const { user } = useCheck();
 
   const onChangeEvent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -123,6 +126,16 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
   const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     onChangeInputDispatch('score', event.target.value);
   };
+
+  useEffect(() => {
+    checkTodayReviewDispatch();
+  }, [shopId, checkTodayReviewDispatch]);
+
+  useEffect(() => {
+    if (checkReview.error) {
+      history.push(`/shop/${shopId}`);
+    }
+  }, [checkReview.error, shopId, history]);
 
   useEffect(() => {
     reset();

@@ -286,6 +286,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     setReviewReportCommentDispatch,
     postShopReportDispatch,
     postReviewReportDispatch,
+    checkTodayReviewDispatch,
     shop,
     reviews,
     shopImage,
@@ -294,6 +295,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     form,
     shopReport,
     reviewReport,
+    checkReview,
   } = useDetail(shopId);
 
   const { user } = useCheck();
@@ -323,6 +325,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [loginMessage, setLoginMessage] = useState('');
 
+  const [checkReviewLoading, setCheckReviewLoading] = useState(false);
+
+  const [checkReviewModalShow, setCheckReviewModalShow] = useState(false);
+
   const simpleDialogAlert = useCallback(
     (message: string) => {
       if (!user) {
@@ -337,8 +343,22 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const onWriteReviewButtonClick = useCallback(() => {
     if (!simpleDialogAlert('리뷰를 남기려면 로그인을 해야합니다')) return;
-    history.push(`comment/${(match.params as any).shopId}`);
-  }, [history, match.params, simpleDialogAlert]);
+    checkTodayReviewDispatch();
+    setCheckReviewLoading(true);
+    setCheckReviewModalShow(true);
+  }, [simpleDialogAlert, checkTodayReviewDispatch, setCheckReviewModalShow]);
+
+  useEffect(() => {
+    if (!checkReviewLoading) return;
+    if (checkReview.loading) return;
+    console.log('check response', checkReview.data);
+    if (checkReview.data) {
+      history.push(`comment/${(match.params as any).shopId}`);
+    } else {
+      console.log('오늘 댓글 더 못달아요ㅎㅋ');
+    }
+    setCheckReviewLoading(false);
+  }, [checkReview, history, match.params, checkReviewLoading]);
 
   const onShopImageUploadButtonClick = () => {
     if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
@@ -807,6 +827,22 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         doneMessage="사진이 정상적으로 업로드되었습니다"
         error={menuImage.error}
         loading={menuImage.loading}
+      />
+      <ProcessModal
+        onCancel={() => setCheckReviewModalShow(false)}
+        visible={checkReviewModalShow}
+        done={false}
+        setDone={(temp: boolean) => {}}
+        doneMessage=""
+        errorMessageBlock={
+          <div>
+            <span>리뷰는 한 식당에 대해</span>
+            <br />
+            <span style={{ marginTop: '5px', display: 'block' }}>하루 한 번만 작성 가능합니다</span>
+          </div>
+        }
+        error={checkReview.error}
+        loading={checkReview.loading}
       />
     </Container>
   );

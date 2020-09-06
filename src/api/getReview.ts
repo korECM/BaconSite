@@ -16,6 +16,10 @@ export interface User {
   name: string;
 }
 
+export interface CheckTodayReviewResponseInterface {
+  message: string;
+}
+
 export async function getReview(reviewId: string) {
   const response = await axios.get<ReviewInterface[]>(apiLink() + `/shop/review/${reviewId}`, {
     withCredentials: true,
@@ -25,6 +29,13 @@ export async function getReview(reviewId: string) {
 
 export async function getMyReview() {
   const response = await axios.get<ReviewInterface[]>(apiLink() + `/shop/myReview`, {
+    withCredentials: true,
+  });
+  return response.data;
+}
+
+export async function checkTodayReviewAvailableAPI(shopId: string) {
+  const response = await axios.get<CheckTodayReviewResponseInterface[]>(apiLink() + `/shop/review/checkToday/` + shopId, {
     withCredentials: true,
   });
   return response.data;
