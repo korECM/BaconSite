@@ -313,49 +313,41 @@ class FilterPage extends React.Component<Props, State> {
     };
 
     return (
-      <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-        <Fade>
-          <Container color="white">
-            <Title title="당신만을 위한 식당 - 푸딩" />
-            <Header category="modal" headerColor="white" />
-            <Fade>
-              <Bounce>
-                <TitleComment>필터링 검색</TitleComment>
-                <SubtitleComment>정렬</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{sortingList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <SubtitleComment>음식종류</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{foodList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <SubtitleComment>최저가격대</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{priceList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <SubtitleComment>위치</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{placeList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <SubtitleComment>키워드</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{keywordList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <Divider></Divider>
-                <Divider></Divider>
-                <Button theme="red" fullWidth onClick={() => moveHref(data)}>
-                  검색하기
-                </Button>
-              </Bounce>
-            </Fade>
-          </Container>
-        </Fade>
-      </Animated>
+      <Container color="white">
+        <Title title="당신만을 위한 식당 - 푸딩" />
+        <Header category="modal" headerColor="white" />
+        <TitleComment>필터링 검색</TitleComment>
+        <SubtitleComment>정렬</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{sortingList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>음식종류</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{foodList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>최저가격대</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{priceList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>위치</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{placeList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>키워드</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{keywordList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <Divider></Divider>
+        <Divider></Divider>
+        <Button theme="red" fullWidth onClick={() => moveHref(data)}>
+          검색하기
+        </Button>
+      </Container>
     );
   }
 }

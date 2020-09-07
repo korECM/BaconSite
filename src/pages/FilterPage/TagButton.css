@@ -29,13 +29,13 @@
   color: white;
 }
 
-.mainred:hovers {
+.mainred:hover {
   color: white;
   background-color: #db2a37;
   border: 1px solid #db2a37;
 }
 
-.roundButton:hovers {
+.roundButton:hover {
   color: white;
   background-color: #db2a37;
 }
