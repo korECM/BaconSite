@@ -494,7 +494,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const onShopImageClick = useCallback(() => {
     if (!shop.data) return;
-    if (shop.data.shopImage.length <= 1) return;
+    if (shop.data.shopImage.length < 1) return;
     history.push(`/shop/image/${shop.data._id}`);
   }, [shop.data, history]);
 
