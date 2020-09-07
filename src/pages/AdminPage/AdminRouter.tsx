@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import cx from 'classnames';
 import styled from 'styled-components';
 import { withRouter, RouteComponentProps, Route, Link } from 'react-router-dom';
 import AdminList from './AdminList';
 import AdminDetail from './AdminDetail';
 import palette from '../../styles/palette';
+import useCheck from 'hooks/useCheck';
 
 const AdminListBlock = styled.div`
   .header {
@@ -29,8 +30,13 @@ const AdminListBlock = styled.div`
   }
 `;
 
-function AdminRouter({ match, location }: RouteComponentProps) {
-  console.log(location);
+function AdminRouter({ match, location, history }: RouteComponentProps) {
+  const { user } = useCheck();
+  useEffect(() => {
+    if (!user || user.isAdmin === false) {
+      history.push('./');
+    }
+  }, [user, history]);
   return (
     <AdminListBlock>
       <div className="header">
