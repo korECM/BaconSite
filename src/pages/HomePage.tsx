@@ -12,7 +12,7 @@ import firstbutton from './firstbutton.jpg';
 import secondbutton from './secondbutton.jpg';
 import thirdbutton from './thirdbutton.jpg';
 import search from './search.png';
-import titlelogo from 'assets/fooding_titlelogo.png';
+import titlelogo from 'assets/fooding logo.svg';
 
 const TitleSlogan = styled.h1`
   font-size: 14px;
@@ -243,8 +243,8 @@ class HomePage extends React.Component<Props, State> {
     selected_name = 'true';
     if (data.name !== '') {
       this.props.history.push({
-        pathname: '/name',
-        search: '=' + data.name,
+        pathname: '/result',
+        search: 'name=' + data.name,
       });
     }
   };

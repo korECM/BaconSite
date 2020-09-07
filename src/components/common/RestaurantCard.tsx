@@ -5,7 +5,8 @@ import Flag from '../../components/common/Flag';
 import { ShopsInterface } from '../../api/getShops';
 import { getScore } from '../../lib/scoreUtil';
 import { locationToString, keywordToString } from '../../lib/shopUtil';
-import BlankImage from 'assets/blank.png';
+// import BlankImage from 'assets/blank.png';
+import GrayFooding from 'assets/fooding_gray.svg';
 import { useSpring, animated } from 'react-spring';
 
 const RestaurantCardBlock = styled(animated.button)`
@@ -104,7 +105,10 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
     <RestaurantCardBlock style={appear}>
       <div
         style={{
-          backgroundImage: `url(${shop.mainImage ? shop.mainImage : shop.shopImage.length ? shop.shopImage[0].imageLink : BlankImage})`,
+          backgroundColor: palette.middleLightGray,
+          backgroundImage: `url(${shop.mainImage ? shop.mainImage : shop.shopImage.length ? shop.shopImage[0].imageLink : GrayFooding})`,
+          backgroundSize: shop.mainImage || shop.shopImage.length > 0 ? 'cover' : '60%',
+          backgroundRepeat: 'no-repeat',
         }}
         className="image"
       />

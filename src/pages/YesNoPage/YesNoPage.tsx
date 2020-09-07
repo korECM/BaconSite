@@ -15,7 +15,6 @@ import React from 'react';
 import FullHeightFade from '../../components/common/FullHeightFade';
 import wondering_cat from './wondering_cat.png';
 import YesNoDraw from './YesNoDraw';
-import { findAllByTestId } from '@testing-library/react';
 
 const base = [
   {

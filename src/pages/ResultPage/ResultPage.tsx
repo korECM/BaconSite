@@ -41,7 +41,7 @@ function ResultPage({ location }: RouteComponentProps) {
       .map((data) => data.split('='));
     let options: getShopsInterface = {};
     param.forEach((option) => {
-      if (option[0] === 'location' || option[0] === 'category' || option[0] === 'price' || option[0] === 'keyword') {
+      if (option[0] === 'location' || option[0] === 'category' || option[0] === 'price' || option[0] === 'keyword' || option[0] === 'name') {
         options = {
           ...options,
           [option[0]]: option[1],
