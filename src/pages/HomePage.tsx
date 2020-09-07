@@ -243,8 +243,8 @@ class HomePage extends React.Component<Props, State> {
     selected_name = 'true';
     if (data.name !== '') {
       this.props.history.push({
-        pathname: '/name',
-        search: '=' + data.name,
+        pathname: '/result',
+        search: 'name=' + data.name,
       });
     }
   };
