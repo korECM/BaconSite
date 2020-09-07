@@ -12,7 +12,7 @@ import firstbutton from './firstbutton.jpg';
 import secondbutton from './secondbutton.jpg';
 import thirdbutton from './thirdbutton.jpg';
 import search from './search.png';
-import titlelogo from 'assets/fooding_titlelogo.png';
+import titlelogo from 'assets/fooding logo.svg';
 
 const TitleSlogan = styled.h1`
   font-size: 14px;

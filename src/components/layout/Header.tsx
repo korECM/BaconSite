@@ -6,7 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
 import FoodingTitleRed from 'assets/FoodingTitleRed.png';
 import FoodingTitleWhite from 'assets/FoodingTitleWhite.png';
-import JustFooding from 'assets/JustFooding.png';
+import JustFooding from 'assets/myfooding.svg';
 
 const HeaderBlock = styled.div`
   width: 100%;
