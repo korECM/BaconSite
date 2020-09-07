@@ -21,7 +21,7 @@ import { MdPhotoLibrary } from 'react-icons/md';
 import Title from 'lib/meta';
 import ButtonGroup from 'components/common/ButtonGroup';
 import ProcessModal from 'components/common/ProcessModal';
-import BlankImage from 'assets/blank.png';
+import GrayFooding from 'assets/fooding_gray.svg';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -32,6 +32,7 @@ const ShopTitle = styled.h1`
 
 interface ShopImageProps {
   imageLink: string;
+  isImageNotExisted?: boolean;
 }
 
 const ShopImageContainer = styled.div`
@@ -58,10 +59,18 @@ const ShopImage = styled.div`
   background-size: cover;
 
   ${(props: ShopImageProps) =>
+    props.isImageNotExisted &&
+    css`
+      background-size: 50%;
+      background-repeat: no-repeat;
+      background-color: ${palette.middleLightGray};
+    `}
+  ${(props: ShopImageProps) =>
     props.imageLink &&
     css`
       background-image: url(${props.imageLink});
     `}
+
 
   svg {
     color: white;
@@ -594,9 +603,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       <ShopTitle>{shop.data.name}</ShopTitle>
       <ShopImageContainer>
         <ShopImage
-          imageLink={shop.data.mainImage ? shop.data.mainImage : shop.data.shopImage.length ? shop.data.shopImage[0].imageLink : BlankImage}
+          imageLink={shop.data.mainImage ? shop.data.mainImage : shop.data.shopImage.length ? shop.data.shopImage[0].imageLink : GrayFooding}
           onClick={onShopImageClick}
           style={{ cursor: shop.data.shopImage.length > 0 ? 'pointer' : 'normal' }}
+          isImageNotExisted={!shop.data.mainImage && shop.data.shopImage.length === 0}
         >
           {shop.data.shopImage.length > 0 && <MdPhotoLibrary />}
           <Flag
