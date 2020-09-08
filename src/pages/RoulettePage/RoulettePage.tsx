@@ -3,12 +3,17 @@ import Container from '../../components/layout/Container';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import palette from '../../styles/palette';
-import { Wheel, WheelDataType } from 'react-custom-roulette';
+// import { Wheel, WheelDataType } from 'react-custom-roulette';
 import Button from '../../components/common/Button';
 import { withRouter } from 'react-router';
 import Title from 'lib/meta';
 import { MdClear, MdKeyboardArrowLeft } from 'react-icons/md';
 import FoodingTitleWhite from 'assets/FoodingTitleWhite.png';
+import { Wheel } from 'components/common/Wheel/Wheel';
+import { WheelData } from 'components/common/Wheel/types';
+import Header from 'components/layout/Header';
+
+type WheelDataType = WheelData;
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -124,6 +129,8 @@ interface State {
   // input: string;
   // RouletteItems: RouletteItemState[];
   beClicked: boolean;
+  available: boolean;
+  prize: number;
 }
 
 interface DetailPageProps extends RouteComponentProps {}
@@ -131,6 +138,8 @@ interface DetailPageProps extends RouteComponentProps {}
 class RoulettePage extends React.Component<Props, State> {
   state: State = {
     beClicked: false,
+    available: true,
+    prize: 0,
   };
 
   setSpin = (bool: boolean) => {
@@ -216,28 +225,42 @@ class RoulettePage extends React.Component<Props, State> {
       this.props.history.push({
         pathname: '/',
       });
-      window.location.reload(false);
+      // window.location.reload(false);
     };
 
-    const RouletteDraw = (
-      <Wheel
-        mustStartSpinning={this.state.beClicked}
-        prizeNumber={1}
-        data={data}
-        backgroundColors={['#ffffff']}
-        textColors={['#000000']}
-        outerBorderWidth={3}
-        innerBorderWidth={0}
-        radiusLineWidth={0}
-        fontSize={23}
-        onStopSpinning={() => {}}
-      />
-    );
+    // const RouletteDraw = (
+    //   <Wheel
+    //     mustStartSpinning={this.state.beClicked}
+    //     prizeNumber={1}
+    //     data={data}
+    //     backgroundColors={['#ffffff']}
+    //     textColors={['#000000']}
+    //     outerBorderWidth={3}
+    //     innerBorderWidth={0}
+    //     radiusLineWidth={0}
+    //     fontSize={23}
+    //     onStopSpinning={() => {}}
+    //   />
+    // );
+
+    const spinStartFunction = () => {
+      this.setState({
+        prize: Math.floor(Math.random() * data.length),
+      });
+      setSpin(true);
+      this.setState({
+        available: false,
+      });
+      setTimeout(() => {
+        setSpin(false);
+      }, 1000);
+    };
 
     return (
       <Container color="red">
         <Title title="돌려돌려 돌림판 - 푸딩" />
-        <HeaderBlock>
+        <Header category="modal" headerColor="red" />
+        {/* <HeaderBlock>
           <HeaderContainer>
             <button onClick={onLeftButtonClick} className="left">
               <MdKeyboardArrowLeft />
@@ -247,13 +270,37 @@ class RoulettePage extends React.Component<Props, State> {
               <MdClear />
             </button>
           </HeaderContainer>
-        </HeaderBlock>
+        </HeaderBlock> */}
         <EmptySpace></EmptySpace>
         <ResultComment>START 버튼을 눌러</ResultComment>
         <ResultComment>룰렛을 돌리세요!</ResultComment>
         <EmptySpace></EmptySpace>
-        <RouletteContainer>{RouletteDraw}</RouletteContainer>
-        <Button theme="white" big onClick={() => setSpin(true)}>
+        <RouletteContainer>
+          {
+            <Wheel
+              mustStartSpinning={this.state.beClicked}
+              prizeNumber={this.state.prize}
+              data={data}
+              backgroundColors={['#ffffff']}
+              textColors={['#000000']}
+              outerBorderWidth={3}
+              innerBorderWidth={0}
+              radiusLineWidth={0}
+              fontSize={23}
+              onStopSpinning={() => {
+                // useEffect Error 피하기위한 꼼수
+                console.log('stop');
+                setTimeout(() => {
+                  // if(this.state.beClicked)
+                  this.setState({
+                    available: true,
+                  });
+                }, 0);
+              }}
+            />
+          }
+        </RouletteContainer>
+        <Button theme="white" big onClick={spinStartFunction} disabled={!this.state.available}>
           start
         </Button>
       </Container>
