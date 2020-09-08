@@ -3,19 +3,16 @@ import styled, { css } from 'styled-components';
 import palette, { hexToRGB } from '../../styles/palette';
 
 const ButtonBlock = styled.button`
+  outline: none;
+  border: none;
 
-    outline : none;
-    border : none;
+  border-radius: 12.5px;
+  padding: 8.5px 27.5px;
 
-    border-radius : 12.5px;
-    padding : 8.5px 27.5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 
-    margin-bottom: 15px;
-    margin-top: 15px;
-
-
-
-  transition : background-color 0.2s ease;
+  transition: background-color 0.2s ease;
 
   ${(props: ButtonProps) =>
     props.fullWidth &&
@@ -30,20 +27,20 @@ const ButtonBlock = styled.button`
       -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
       box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
       :hover {
-        /* background-color: ${palette.mainRed};
+        background-color: ${palette.mainRed};
         color: ${palette.white};
-        cursor: pointer; */
+        cursor: pointer;
       }
     `}
 
     ${(props: ButtonProps) =>
-      props.theme === 'red' &&
-      css`
-        :hover {
-          background-color: ${hexToRGB(palette.mainRed, 0.7)};
-          color: ${palette.white};
-        }
-      `}
+    props.theme === 'red' &&
+    css`
+      :hover {
+        background-color: ${hexToRGB(palette.mainRed, 0.7)};
+        color: ${palette.white};
+      }
+    `}
 
   ${(props: ButtonProps) =>
     props.middle &&
@@ -55,13 +52,13 @@ const ButtonBlock = styled.button`
     `}
 
 ${(props: ButtonProps) =>
-  props.big &&
-  css`
-    padding: 31px;
-    font-size: 24px;
-    font-weight: 900;
-    width: 100%;
-  `}
+    props.big &&
+    css`
+      padding: 31px;
+      font-size: 24px;
+      font-weight: 900;
+      width: 100%;
+    `}
 
   ${(props: ButtonProps) =>
     props.theme === 'white' &&
@@ -70,31 +67,31 @@ ${(props: ButtonProps) =>
       color: ${palette.mainRed};
     `}
     ${(props: ButtonProps) =>
-      props.theme === 'red' &&
-      css`
-        background-color: ${palette.mainRed};
-        color: ${palette.white};
-      `}
+    props.theme === 'red' &&
+    css`
+      background-color: ${palette.mainRed};
+      color: ${palette.white};
+    `}
     ${(props: ButtonProps) =>
-      props.theme === 'gray' &&
-      css`
-        background-color: ${palette.gray};
-        color: ${palette.darkGray};
-      `}
+    props.theme === 'gray' &&
+    css`
+      background-color: ${palette.gray};
+      color: ${palette.darkGray};
+    `}
     ${(props: ButtonProps) =>
-      props.theme === 'text' &&
-      css`
-        background-color: transparent;
-        color: ${palette.mainRed};
-      `}
+    props.theme === 'text' &&
+    css`
+      background-color: transparent;
+      color: ${palette.mainRed};
+    `}
 
       ${(props: ButtonProps) =>
-        props.theme === 'border' &&
-        css`
-          background-color: transparent;
-          color: ${palette.mainRed};
-          border: 1px solid ${palette.mainRed};
-        `}
+    props.theme === 'border' &&
+    css`
+      background-color: transparent;
+      color: ${palette.mainRed};
+      border: 1px solid ${palette.mainRed};
+    `}
 
   ${(props: ButtonProps) =>
     props.selected &&
