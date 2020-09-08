@@ -113,8 +113,6 @@ const RouletteContainer = styled.div`
   justify-content: center;
   align-items: center;
   vertical-align: center;
-  padding-left: 3%;
-  padding-top: 3%;
 `;
 
 interface Props extends RouteComponentProps {}
@@ -219,6 +217,7 @@ class RoulettePage extends React.Component<Props, State> {
       this.props.history.push({
         pathname: '/roulettelist',
       });
+      window.location.reload(false);
     };
 
     const onRightButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
