@@ -19,12 +19,12 @@ import YesNoDraw from './YesNoDraw';
 const base = [
   {
     id: 1,
-    name: '매운 거 좋아',
+    name: '담백한 아시아 동양식!',
     img: 'wondering_cat.png',
   },
   {
     id: 2,
-    name: '매운 거 싫어',
+    name: '지구 반대편 서양식!',
     img: 'wondering_cat.png',
   },
   {
@@ -196,9 +196,12 @@ class YesNoPage extends React.Component<Props, State> {
     if (this.count === 5) {
       data[0] = 'recommended';
 
-      if (resultDataSet[0] === false) {
-        data[4] = 'spicy';
+      if (resultDataSet[0] === true) {
+        data[1] = 'korean,chinese,japanese,school,other';
+      } else {
+        data[1] = 'western,fusion';
       }
+      //서양식이 너무 적은거같아서 fusion은 서양이한테 줬음..ㅎ
 
       if (resultDataSet[1] === false) {
         data[2] = '5000,10000';
