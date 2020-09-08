@@ -94,7 +94,7 @@ const ResultComment = styled.h1`
   padding: 5px;
 `;
 
-const EmptySpace = styled.h1`
+const EmptySpace = styled.div`
   text-align: center;
   margin-top: 7px;
   margin-bottom: 0px;
@@ -102,7 +102,8 @@ const EmptySpace = styled.h1`
   padding: 25px;
 `;
 
-const RouletteContainer = styled.h1`
+const RouletteContainer = styled.div`
+  display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -209,7 +210,6 @@ class RoulettePage extends React.Component<Props, State> {
       this.props.history.push({
         pathname: '/roulettelist',
       });
-      window.location.reload(false);
     };
 
     const onRightButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
