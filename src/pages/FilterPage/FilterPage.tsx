@@ -104,7 +104,7 @@ interface State {
 
 class FilterPage extends React.Component<Props, State> {
   state: State = {
-    sorting_bool: [false, false, false],
+    sorting_bool: [true, false, false],
     sortings: ['평점순', '추천순', '리뷰순'],
     food_bool: [false, false, false, false, false, false, false],
     foods: ['한식', '중식', '일식', '양식', '분식', '퓨전', '기타'],
@@ -112,9 +112,11 @@ class FilterPage extends React.Component<Props, State> {
     prices: ['5천원 이하', '1만원 이하', '1만원 대', 'Flex 가능'],
     place_bool: [false, false, false, false],
     places: ['정문', '후문', '중대병원', '흑석역'],
-    keyword_bool: [false, false, false, false, false, false],
-    keywords: ['가성비', '분위기', '단체', '혼밥', '밥약', '맵찔'],
+    keyword_bool: [false, false, false, false, false],
+    keywords: ['가성비', '분위기', '단체', '혼밥', '밥약'],
   };
+
+  //키워드에서 '맵찔' 제거함.
 
   changeSortingColor(i: number) {
     console.log(i);
@@ -248,7 +250,7 @@ class FilterPage extends React.Component<Props, State> {
     let category = ['korean', 'chinese', 'japanese', 'western', 'school', 'fusion', 'other'];
     let price = ['5000', '10000', '15000', '20000'];
     let location = ['front', 'back', 'front_far', 'hs_station'];
-    let keyword = ['costRatio', 'atmosphere', 'group', 'individual', 'riceAppointment', 'spicy'];
+    let keyword = ['costRatio', 'atmosphere', 'group', 'individual', 'riceAppointment'];
 
     var selectCheck = true;
 
