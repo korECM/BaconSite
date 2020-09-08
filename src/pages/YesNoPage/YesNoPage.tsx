@@ -263,7 +263,6 @@ class YesNoPage extends React.Component<Props, State> {
         <FullHeightFade>
           <Container color="red">
             <Header category="modal" headerColor="red" />
-
             <FullHeightFade>
               <Bounce>
                 <ImageContainer>

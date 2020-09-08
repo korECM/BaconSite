@@ -205,7 +205,11 @@ class RoulettePage extends React.Component<Props, State> {
     }
 
     const onLeftButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      this.props.history.goBack();
+      // this.props.history.goBack();
+      this.props.history.push({
+        pathname: '/roulettelist',
+      });
+      window.location.reload(false);
     };
 
     const onRightButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
