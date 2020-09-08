@@ -8,6 +8,7 @@ import { Wheel, WheelDataType } from 'react-custom-roulette';
 import Button from '../../components/common/Button';
 import { withRouter } from 'react-router';
 import Title from 'lib/meta';
+import FullHeightFade from '../../components/common/FullHeightFade';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -26,6 +27,15 @@ const EmptySpace = styled.h1`
   margin-bottom: 0px;
   color: white;
   padding: 25px;
+`;
+
+const RouletteContainer = styled.h1`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  vertical-align: center;
+  padding-left: 3%;
+  padding-top: 3%;
 `;
 
 let beClicked = false;
@@ -119,29 +129,34 @@ class RoulettePage extends React.Component<Props, State> {
     }
 
     return (
-      <Container color="red">
-        <Title title="돌려돌려 돌림판 - 푸딩" />
-        <Header category="modal" headerColor="red" />
-        <EmptySpace></EmptySpace>
-        <ResultComment>START 버튼을 눌러</ResultComment>
-        <ResultComment>룰렛을 돌리세요!</ResultComment>
-        <EmptySpace></EmptySpace>
-        <Wheel
-          mustStartSpinning={!beClicked}
-          prizeNumber={1}
-          data={data}
-          backgroundColors={['#ffffff']}
-          textColors={['#000000']}
-          outerBorderWidth={3}
-          innerBorderWidth={0}
-          radiusLineWidth={0}
-          fontSize={23}
-          onStopSpinning={() => null}
-        />
-        <Button theme="white" big onClick={moveHref}>
-          start
-        </Button>
-      </Container>
+      <FullHeightFade>
+        <Container color="red">
+          <Title title="돌려돌려 돌림판 - 푸딩" />
+          <EmptySpace></EmptySpace>
+          <ResultComment>START 버튼을 눌러</ResultComment>
+          <ResultComment>룰렛을 돌리세요!</ResultComment>
+          <EmptySpace></EmptySpace>
+          <FullHeightFade>
+            <RouletteContainer>
+              <Wheel
+                mustStartSpinning={beClicked}
+                prizeNumber={1}
+                data={data}
+                backgroundColors={['#ffffff']}
+                textColors={['#000000']}
+                outerBorderWidth={3}
+                innerBorderWidth={0}
+                radiusLineWidth={0}
+                fontSize={23}
+                onStopSpinning={() => null}
+              />
+            </RouletteContainer>
+          </FullHeightFade>
+          <Button theme="white" big onClick={moveHref}>
+            start
+          </Button>
+        </Container>
+      </FullHeightFade>
     );
   }
 }

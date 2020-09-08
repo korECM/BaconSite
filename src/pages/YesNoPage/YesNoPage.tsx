@@ -196,7 +196,7 @@ class YesNoPage extends React.Component<Props, State> {
     if (this.count === 5) {
       data[0] = 'recommended';
 
-      if (resultDataSet[0] === true) {
+      if (resultDataSet[0] === false) {
         data[4] = 'spicy';
       }
 
