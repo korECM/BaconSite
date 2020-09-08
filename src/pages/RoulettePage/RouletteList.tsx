@@ -4,11 +4,8 @@ import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import { withRouter, RouteComponentProps, Route, Link } from 'react-router-dom';
 import palette from '../../styles/palette';
-import { Fade, Bounce } from 'react-awesome-reveal';
-import { Animated } from 'react-animated-css';
 import styled, { css } from 'styled-components';
 import Button from '../../components/common/Button';
-import FullHeightFade from '../../components/common/FullHeightFade';
 
 const ResultComment = styled.h1`
   font-size: 17px;
@@ -204,8 +201,8 @@ class RouletteList extends React.Component<Props, State> {
       });
     }
     // setTimeout(() => {
-      window.location.reload(false);
-      console.log('refresh done');
+    window.location.reload(false);
+    console.log('refresh done');
     // }, 100);
   };
 
@@ -250,36 +247,28 @@ class RouletteList extends React.Component<Props, State> {
     // alert(JSON.stringify(RouletteItemList.text));
 
     return (
-      <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
-        <FullHeightFade>
-          <Container color="white">
-            <Header category="modal" headerColor="white" />
-            <FullHeightFade>
-              <Bounce>
-                <EmptySpace></EmptySpace>
-                <div>
-                  <ResultComment>어떤 걸 먹을까?</ResultComment>
-                  <ResultComment>옵션 내용을 설정해주세요!</ResultComment>
-                  <EmptySpace></EmptySpace>
+      <Container color="white">
+        <Header category="modal" headerColor="white" />
+        <EmptySpace></EmptySpace>
+        <div>
+          <ResultComment>어떤 걸 먹을까?</ResultComment>
+          <ResultComment>옵션 내용을 설정해주세요!</ResultComment>
+          <EmptySpace></EmptySpace>
 
-                  <form onSubmit={onSubmit}>
-                    <ButtonContainer>
-                      <input onChange={onChange} value={input} />
-                      <button type="submit">ADD</button>
-                    </ButtonContainer>
-                    <WarningComment>※ 2 ~ 6개의 값을 입력해주세요.</WarningComment>
-                  </form>
-                  <Divider></Divider>
-                  <ul>{RouletteItemList}</ul>
-                </div>
-                <Button theme="red" onClick={() => moveHref(data)}>
-                  룰렛 돌리기
-                </Button>
-              </Bounce>
-            </FullHeightFade>
-          </Container>
-        </FullHeightFade>
-      </Animated>
+          <form onSubmit={onSubmit}>
+            <ButtonContainer>
+              <input onChange={onChange} value={input} />
+              <button type="submit">ADD</button>
+            </ButtonContainer>
+            <WarningComment>※ 2 ~ 6개의 값을 입력해주세요.</WarningComment>
+          </form>
+          <Divider></Divider>
+          <ul>{RouletteItemList}</ul>
+        </div>
+        <Button theme="red" onClick={() => moveHref(data)}>
+          룰렛 돌리기
+        </Button>
+      </Container>
     );
   }
 }
