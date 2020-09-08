@@ -21,6 +21,11 @@ const ResultComment = styled.h1`
   padding: 5px;
 `;
 
+const HomeContainer = styled.h1`
+  margin-right: 5%;
+  margin-left: 75%;
+`;
+
 const EmptySpace = styled.h1`
   text-align: center;
   margin-top: 7px;
@@ -38,7 +43,7 @@ const RouletteContainer = styled.h1`
   padding-top: 3%;
 `;
 
-let beClicked = false;
+// let beClicked = false;
 let selected_name = 'false';
 
 interface Props extends RouteComponentProps {}
@@ -50,20 +55,37 @@ interface RouletteItemState {
 }
 
 interface State {
-  input: string;
-  RouletteItems: RouletteItemState[];
+  // input: string;
+  // RouletteItems: RouletteItemState[];
+  beClicked: boolean;
 }
 
 interface DetailPageProps extends RouteComponentProps {}
 
 class RoulettePage extends React.Component<Props, State> {
+  state: State = {
+    beClicked: false,
+  };
+
   moveHref = () => {
-    beClicked = true;
+    this.setState({
+      beClicked: true,
+    });
+
+    // this.state.beClicked = true;
     selected_name = 'true';
+    console.log('click!');
+  };
+
+  moveHrefHome = () => {
+    this.props.history.push({
+      pathname: '/',
+    });
+    window.location.reload(false);
   };
 
   render() {
-    const { moveHref } = this;
+    const { moveHref, moveHrefHome } = this;
 
     let items = this.props.location.search
       .split('=')[1]
@@ -128,29 +150,36 @@ class RoulettePage extends React.Component<Props, State> {
       }
     }
 
+    const RouletteDraw = (
+      <Wheel
+        mustStartSpinning={this.state.beClicked}
+        prizeNumber={1}
+        data={data}
+        backgroundColors={['#ffffff']}
+        textColors={['#000000']}
+        outerBorderWidth={3}
+        innerBorderWidth={0}
+        radiusLineWidth={0}
+        fontSize={23}
+        onStopSpinning={() => null}
+      />
+    );
+
     return (
       <FullHeightFade>
         <Container color="red">
           <Title title="돌려돌려 돌림판 - 푸딩" />
+          <HomeContainer>
+            <Button theme="red" middle onClick={() => moveHrefHome()}>
+              Home
+            </Button>
+          </HomeContainer>
           <EmptySpace></EmptySpace>
           <ResultComment>START 버튼을 눌러</ResultComment>
           <ResultComment>룰렛을 돌리세요!</ResultComment>
           <EmptySpace></EmptySpace>
           <FullHeightFade>
-            <RouletteContainer>
-              <Wheel
-                mustStartSpinning={beClicked}
-                prizeNumber={1}
-                data={data}
-                backgroundColors={['#ffffff']}
-                textColors={['#000000']}
-                outerBorderWidth={3}
-                innerBorderWidth={0}
-                radiusLineWidth={0}
-                fontSize={23}
-                onStopSpinning={() => null}
-              />
-            </RouletteContainer>
+            <RouletteContainer>{RouletteDraw}</RouletteContainer>
           </FullHeightFade>
           <Button theme="white" big onClick={moveHref}>
             start
