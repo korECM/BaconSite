@@ -1,6 +1,5 @@
 import React from 'react';
 import Container from '../../components/layout/Container';
-import Header from '../../components/layout/Header';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import palette from '../../styles/palette';
@@ -8,7 +7,81 @@ import { Wheel, WheelDataType } from 'react-custom-roulette';
 import Button from '../../components/common/Button';
 import { withRouter } from 'react-router';
 import Title from 'lib/meta';
-import FullHeightFade from '../../components/common/FullHeightFade';
+import { MdClear, MdKeyboardArrowLeft } from 'react-icons/md';
+import FoodingTitleWhite from 'assets/FoodingTitleWhite.png';
+
+const HeaderBlock = styled.div`
+  width: 100%;
+  height: 60px;
+`;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  position: relative;
+  height: 100%;
+  align-items: center;
+
+  color: ${palette.white};
+
+  background-color: ${palette.mainRed};
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .titleLogo {
+    width: 109px;
+    height: 31px;
+    margin: 0 auto;
+  }
+
+  button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: inherit;
+    font-size: 2.5rem;
+    cursor: pointer;
+  }
+  .left {
+    position: absolute;
+    left: 0;
+    padding-left: 0;
+  }
+
+  .right {
+    position: absolute;
+    right: 0;
+    /* margin-left: auto; */
+    padding-right: 0;
+  }
+
+  .myPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      width: 27px;
+      height: 23px;
+    }
+    div {
+      font-size: 10px;
+      margin-top: 5px;
+    }
+  }
+
+  .title {
+    width: 109px;
+    height: 31px;
+    margin: 0 auto;
+
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+    color: ${palette.white};
+  }
+`;
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -19,11 +92,6 @@ const ResultComment = styled.h1`
   margin-bottom: 0px;
   color: white;
   padding: 5px;
-`;
-
-const HomeContainer = styled.h1`
-  margin-right: 5%;
-  margin-left: 75%;
 `;
 
 const EmptySpace = styled.h1`
@@ -42,9 +110,6 @@ const RouletteContainer = styled.h1`
   padding-left: 3%;
   padding-top: 3%;
 `;
-
-// let beClicked = false;
-let selected_name = 'false';
 
 interface Props extends RouteComponentProps {}
 
@@ -67,31 +132,20 @@ class RoulettePage extends React.Component<Props, State> {
     beClicked: false,
   };
 
-  moveHref = () => {
+  setSpin = (bool: boolean) => {
+    console.log(bool);
     this.setState({
-      beClicked: true,
+      beClicked: bool,
     });
-
-    // this.state.beClicked = true;
-    selected_name = 'true';
-    console.log('click!');
-  };
-
-  moveHrefHome = () => {
-    this.props.history.push({
-      pathname: '/',
-    });
-    window.location.reload(false);
   };
 
   render() {
-    const { moveHref, moveHrefHome } = this;
+    const { setSpin } = this;
 
     let items = this.props.location.search
       .split('=')[1]
       .split(',')
       .map((item) => decodeURIComponent(item));
-    console.log(items);
 
     let data: WheelDataType[] = Array.from({ length: Math.min(items.length, 6) }, (v) => ({
       option: 'dd',
@@ -150,6 +204,17 @@ class RoulettePage extends React.Component<Props, State> {
       }
     }
 
+    const onLeftButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      this.props.history.goBack();
+    };
+
+    const onRightButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      this.props.history.push({
+        pathname: '/',
+      });
+      window.location.reload(false);
+    };
+
     const RouletteDraw = (
       <Wheel
         mustStartSpinning={this.state.beClicked}
@@ -161,31 +226,33 @@ class RoulettePage extends React.Component<Props, State> {
         innerBorderWidth={0}
         radiusLineWidth={0}
         fontSize={23}
-        onStopSpinning={() => null}
+        onStopSpinning={() => {}}
       />
     );
 
     return (
-      <FullHeightFade>
-        <Container color="red">
-          <Title title="돌려돌려 돌림판 - 푸딩" />
-          <HomeContainer>
-            <Button theme="red" middle onClick={() => moveHrefHome()}>
-              Home
-            </Button>
-          </HomeContainer>
-          <EmptySpace></EmptySpace>
-          <ResultComment>START 버튼을 눌러</ResultComment>
-          <ResultComment>룰렛을 돌리세요!</ResultComment>
-          <EmptySpace></EmptySpace>
-          <FullHeightFade>
-            <RouletteContainer>{RouletteDraw}</RouletteContainer>
-          </FullHeightFade>
-          <Button theme="white" big onClick={moveHref}>
-            start
-          </Button>
-        </Container>
-      </FullHeightFade>
+      <Container color="red">
+        <Title title="돌려돌려 돌림판 - 푸딩" />
+        <HeaderBlock>
+          <HeaderContainer>
+            <button onClick={onLeftButtonClick} className="left">
+              <MdKeyboardArrowLeft />
+            </button>
+            <img className="titleLogo" src={FoodingTitleWhite} alt="title" />
+            <button onClick={onRightButtonClick} className="right">
+              <MdClear />
+            </button>
+          </HeaderContainer>
+        </HeaderBlock>
+        <EmptySpace></EmptySpace>
+        <ResultComment>START 버튼을 눌러</ResultComment>
+        <ResultComment>룰렛을 돌리세요!</ResultComment>
+        <EmptySpace></EmptySpace>
+        <RouletteContainer>{RouletteDraw}</RouletteContainer>
+        <Button theme="white" big onClick={() => setSpin(true)}>
+          start
+        </Button>
+      </Container>
     );
   }
 }
