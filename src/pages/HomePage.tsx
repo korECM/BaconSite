@@ -106,10 +106,14 @@ const Divider = styled.div`
 const SearchBox = styled.div`
   background-color: ${palette.white};
   width: full;
-  border-radius: 20px;
+  border-radius: 50px;
 
   justify-content: center;
   align-items: center;
+
+  border-color: ${palette.mainRed};
+  border-style: solid;
+  border-width: 2px;
 `;
 
 const SearchBoxContainer = styled.div`
@@ -128,11 +132,12 @@ const SearchBoxContainer = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  height: 50px;
+  height: 40px;
 
   input {
-    border-radius: 20px;
+    border-radius: 50px;
     border: none;
+
     outline: none;
     padding-left: 10px;
     width: 75%;
@@ -171,8 +176,8 @@ const ButtonContainer = styled.div`
     border-radius: 10px;
     border: none;
     outline: none;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-left: 10px;
     background: url(${search});
     background-position: center;
@@ -182,7 +187,7 @@ const ButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     vertical-align: center;
-    margin-top: 10px;
+    margin-top: 8px;
     margin-left: 3%;
 
     color: ${palette.white};
@@ -316,16 +321,14 @@ class HomePage extends React.Component<Props, State> {
         <RoundContainer theme="image" imageLink={thirdbutton}>
           상도동 신상 맛집 10곳
         </RoundContainer>
-        <SearchBoxContainer>
-          <SearchBox>
-            <form onSubmit={onSubmit}>
-              <ButtonContainer>
-                <button type="submit" onClick={() => moveHref(data)}></button>
-                <input placeholder="search" onChange={onChange} value={input} />
-              </ButtonContainer>
-            </form>
-          </SearchBox>
-        </SearchBoxContainer>
+        <SearchBox>
+          <form onSubmit={onSubmit}>
+            <ButtonContainer>
+              <button type="submit" onClick={() => moveHref(data)}></button>
+              <input placeholder="search" onChange={onChange} value={input} />
+            </ButtonContainer>
+          </form>
+        </SearchBox>
       </Container>
     );
   }
