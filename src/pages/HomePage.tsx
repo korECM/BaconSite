@@ -114,6 +114,7 @@ const SearchBox = styled.div`
   border-color: ${palette.mainRed};
   border-style: solid;
   border-width: 2px;
+  margin-top: 40px;
 `;
 
 const SearchBoxContainer = styled.div`
