@@ -203,6 +203,10 @@ class RouletteList extends React.Component<Props, State> {
         search: '?items=' + data.map((data) => data.option).join(','),
       });
     }
+    // setTimeout(() => {
+      window.location.reload(false);
+      console.log('refresh done');
+    // }, 100);
   };
 
   render() {

@@ -89,6 +89,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "GENERATE_SOURCEMAP=false node scripts/build.js",
+    "winBuild": "set NODE_ENV=production&& webpack --progress",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
