@@ -24,6 +24,13 @@ export async function reportShopAPI(shopId: string, data: ReportShopInterface) {
   return response.data;
 }
 
+export async function deleteReviewAPI(reviewId: string) {
+  const response = await axios.delete<ReportInterface>(apiLink() + `/shop/review/${reviewId}`, {
+    withCredentials: true,
+  });
+  return response.data;
+}
+
 export async function reportReviewAPI(reviewId: string, comment: string) {
   const response = await axios.post<ReportInterface>(
     apiLink() + `/shop/review/report/${reviewId}`,

@@ -148,6 +148,8 @@ function MyPage() {
                     commentLikeOffset={Array.from(Array(reviews.data?.length)).map(() => 0)}
                     likeComment={() => {}}
                     openReviewReport={() => {}}
+                    openDeleteReport={() => {}}
+                    userId={user._id}
                   />
                 </div>
               ))}
