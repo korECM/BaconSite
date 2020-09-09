@@ -8,7 +8,7 @@ import { ImageUploadResponseInterface, shopImageUpload, menuImageUpload } from '
 import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
 import { LikeCommentInterface, likeCommentAPI, unlikeCommentAPI } from '../api/likeComment';
-import { ReportInterface, reportShopAPI, reportReviewAPI } from '../api/report';
+import { ReportInterface, reportShopAPI, reportReviewAPI, deleteReviewAPI } from '../api/report';
 
 const RESET_DATA = 'detail/RESET_DATA' as const;
 
@@ -58,6 +58,10 @@ const POST_SHOP_REPORT = 'detail/POST_SHOP_REPORT' as const;
 const POST_SHOP_REPORT_SUCCESS = 'detail/POST_SHOP_REPORT_SUCCESS' as const;
 const POST_SHOP_REPORT_ERROR = 'detail/POST_SHOP_REPORT_ERROR' as const;
 
+const REVIEW_DELETE = 'detail/REVIEW_DELETE' as const;
+const REVIEW_DELETE_SUCCESS = 'detail/REVIEW_DELETE_SUCCESS' as const;
+const REVIEW_DELETE_ERROR = 'detail/REVIEW_DELETE_ERROR' as const;
+
 const POST_REVIEW_REPORT = 'detail/POST_REVIEW_REPORT' as const;
 const POST_REVIEW_REPORT_SUCCESS = 'detail/POST_REVIEW_REPORT_SUCCESS' as const;
 const POST_REVIEW_REPORT_ERROR = 'detail/POST_REVIEW_REPORT_ERROR' as const;
@@ -104,6 +108,9 @@ export const postReviewReportAsync = createAsyncAction(POST_REVIEW_REPORT, POST_
   ReportInterface,
   AxiosError
 >();
+
+export const ReviewDeleteReportAsync = createAsyncAction(REVIEW_DELETE, REVIEW_DELETE_SUCCESS, REVIEW_DELETE_ERROR)<void, ReportInterface, AxiosError>();
+
 export const checkTodayReviewAvailableAsync = createAsyncAction(
   CHECK_TODAY_REVIEW_AVAILABLE,
   CHECK_TODAY_REVIEW_AVAILABLE_SUCCESS,
@@ -145,6 +152,9 @@ type DetailAction =
   | ReturnType<typeof postShopReportAsync.request>
   | ReturnType<typeof postShopReportAsync.success>
   | ReturnType<typeof postShopReportAsync.failure>
+  | ReturnType<typeof ReviewDeleteReportAsync.request>
+  | ReturnType<typeof ReviewDeleteReportAsync.success>
+  | ReturnType<typeof ReviewDeleteReportAsync.failure>
   | ReturnType<typeof checkTodayReviewAvailableAsync.request>
   | ReturnType<typeof checkTodayReviewAvailableAsync.success>
   | ReturnType<typeof checkTodayReviewAvailableAsync.failure>
@@ -163,6 +173,7 @@ export const unlikeCommentThunk = createAsyncThunk(unlikeCommentAsync, unlikeCom
 export const getLocationThunk = createAsyncThunk(getLocationAsync, getLocation);
 export const postShopReportThunk = createAsyncThunk(postShopReportAsync, reportShopAPI);
 export const postReviewReportThunk = createAsyncThunk(postReviewReportAsync, reportReviewAPI);
+export const deleteReviewReportThunk = createAsyncThunk(ReviewDeleteReportAsync, deleteReviewAPI);
 export const checkTodayReviewAvailableThunk = createAsyncThunk(checkTodayReviewAvailableAsync, checkTodayReviewAvailableAPI);
 
 type Modify<T, R> = Omit<T, keyof R> & R;
@@ -195,6 +206,7 @@ type DetailState = {
   like: AsyncState<LikeInterface, number>;
   mapAddress: AsyncState<{ x: number; y: number }, number>;
   checkReview: AsyncState<CheckTodayReviewResponseInterface, number>;
+  deleteReview: AsyncState<ReportInterface, number>;
 };
 
 const initialState: DetailState = {
@@ -247,6 +259,7 @@ const initialState: DetailState = {
   like: asyncState.initial(),
   mapAddress: asyncState.initial(),
   checkReview: asyncState.initial(),
+  deleteReview: asyncState.initial(),
 };
 
 const detail = createReducer<DetailState, DetailAction>(initialState, {
@@ -431,6 +444,18 @@ const detail = createReducer<DetailState, DetailAction>(initialState, {
   [POST_REVIEW_REPORT_ERROR]: (state, { payload: error }) => ({
     ...state,
     reviewReport: asyncState.error(error.response?.status || 404),
+  }),
+  [REVIEW_DELETE]: (state) => ({
+    ...state,
+    deleteReview: asyncState.initial(),
+  }),
+  [REVIEW_DELETE_SUCCESS]: (state, { payload: data }) => ({
+    ...state,
+    deleteReview: asyncState.success(data),
+  }),
+  [REVIEW_DELETE_ERROR]: (state, { payload: error }) => ({
+    ...state,
+    deleteReview: asyncState.error(error.response?.status || 404),
   }),
   [CHECK_TODAY_REVIEW_AVAILABLE]: (state) => ({
     ...state,

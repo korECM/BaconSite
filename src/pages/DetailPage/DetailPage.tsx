@@ -296,6 +296,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     postShopReportDispatch,
     postReviewReportDispatch,
     checkTodayReviewDispatch,
+    deleteReviewReportDispatch,
     shop,
     reviews,
     shopImage,
@@ -305,6 +306,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     shopReport,
     reviewReport,
     checkReview,
+    deleteReview,
   } = useDetail(shopId);
 
   const { user } = useCheck();
@@ -324,6 +326,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [shopReportDone, setShopReportDone] = useState(false);
 
+  const [reviewDeleteAlert, setReviewDeleteAlert] = useState(false);
+
+  const [reviewDeleteDone, setReviewDeleteDone] = useState(false);
+
   const [shopImageUploadShow, setShopImageUploadShow] = useState(false);
   const [menuImageUploadShow, setMenuImageUploadShow] = useState(false);
 
@@ -331,6 +337,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const [menuImageUploadDone, setMenuImageUploadDone] = useState(false);
 
   const [reviewReportNumber, setReviewReportNumber] = useState('');
+
+  const [reviewDeleteNumber, setReviewDeleteNumber] = useState('');
 
   const [loginMessage, setLoginMessage] = useState('');
 
@@ -492,6 +500,11 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     setReviewReportNumber(reviewId);
   }, []);
 
+  const openReviewDelete = useCallback((reviewId: string) => {
+    setReviewDeleteAlert(true);
+    setReviewDeleteNumber(reviewId);
+  }, []);
+
   const onShopImageClick = useCallback(() => {
     if (!shop.data) return;
     if (shop.data.shopImage.length < 1) return;
@@ -537,6 +550,12 @@ function DetailPage({ match, history, location }: DetailPageProps) {
       setReviewReportDone(true);
     }
   }, [reviewReport.data]);
+
+  useEffect(() => {
+    if (deleteReview.data) {
+      setReviewDeleteDone(true);
+    }
+  }, [deleteReview.data]);
 
   useEffect(() => {
     if (shopReport.data) {
@@ -740,8 +759,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
               index={index}
               commentLikeOffset={commentLikeOffset}
               openReviewReport={openReviewReport}
+              openDeleteReport={openReviewDelete}
               likeComment={likeComment}
               key={review._id}
+              userId={user?._id}
             />
           ))}
       </CommentContainer>
@@ -818,6 +839,28 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           <Button theme="red" fullWidth onClick={() => postReviewReport(reviewReportNumber)} disabled={form.reviewReport.comment.length === 0}>
             제출하기
           </Button>
+        </ReviewReport>
+      </ProcessModal>
+      <ProcessModal
+        onCancel={() => setReviewDeleteAlert(false)}
+        visible={reviewDeleteAlert}
+        done={reviewDeleteDone}
+        setDone={setReviewDeleteDone}
+        doneMessage="댓글이 정상적으로 삭제되었습니다"
+        afterDone={() => window.location.reload(false)}
+        error={deleteReview.error}
+        loading={deleteReview.loading}
+      >
+        <ReviewReport>
+          <h1 style={{ marginTop: '20px', marginBottom: '40px', textAlign: 'center' }}>정말로 댓글을 삭제하시겠습니까?</h1>
+          <ButtonGroup direction="row" gap="10px" rightAlign>
+            <Button theme="text" onClick={() => setReviewDeleteAlert(false)}>
+              닫기
+            </Button>
+            <Button theme="red" onClick={() => deleteReviewReportDispatch(reviewDeleteNumber)}>
+              제출하기
+            </Button>
+          </ButtonGroup>
         </ReviewReport>
       </ProcessModal>
       <ProcessModal

@@ -3,90 +3,14 @@ import Container from '../../components/layout/Container';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import palette from '../../styles/palette';
-// import { Wheel, WheelDataType } from 'react-custom-roulette';
 import Button from '../../components/common/Button';
 import { withRouter } from 'react-router';
 import Title from 'lib/meta';
-import { MdClear, MdKeyboardArrowLeft } from 'react-icons/md';
-import FoodingTitleWhite from 'assets/FoodingTitleWhite.png';
 import { Wheel } from 'components/common/Wheel/Wheel';
 import { WheelData } from 'components/common/Wheel/types';
 import Header from 'components/layout/Header';
 
 type WheelDataType = WheelData;
-
-const HeaderBlock = styled.div`
-  width: 100%;
-  height: 60px;
-`;
-
-const HeaderContainer = styled.div`
-  display: flex;
-  position: relative;
-  height: 100%;
-  align-items: center;
-
-  color: ${palette.white};
-
-  background-color: ${palette.mainRed};
-
-  img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .titleLogo {
-    width: 109px;
-    height: 31px;
-    margin: 0 auto;
-  }
-
-  button {
-    border: none;
-    outline: none;
-    background-color: transparent;
-    color: inherit;
-    font-size: 2.5rem;
-    cursor: pointer;
-  }
-  .left {
-    position: absolute;
-    left: 0;
-    padding-left: 0;
-  }
-
-  .right {
-    position: absolute;
-    right: 0;
-    /* margin-left: auto; */
-    padding-right: 0;
-  }
-
-  .myPage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    img {
-      width: 27px;
-      height: 23px;
-    }
-    div {
-      font-size: 10px;
-      margin-top: 5px;
-    }
-  }
-
-  .title {
-    width: 109px;
-    height: 31px;
-    margin: 0 auto;
-
-    font-size: 20px;
-    font-weight: bolder;
-    text-align: center;
-    color: ${palette.white};
-  }
-`;
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -116,12 +40,6 @@ const RouletteContainer = styled.div`
 `;
 
 interface Props extends RouteComponentProps {}
-
-interface RouletteItemState {
-  id: number;
-  text: string;
-  done: boolean;
-}
 
 interface State {
   // input: string;
@@ -212,36 +130,6 @@ class RoulettePage extends React.Component<Props, State> {
       }
     }
 
-    const onLeftButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      // this.props.history.goBack();
-      this.props.history.push({
-        pathname: '/roulettelist',
-      });
-      window.location.reload(false);
-    };
-
-    const onRightButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      this.props.history.push({
-        pathname: '/',
-      });
-      // window.location.reload(false);
-    };
-
-    // const RouletteDraw = (
-    //   <Wheel
-    //     mustStartSpinning={this.state.beClicked}
-    //     prizeNumber={1}
-    //     data={data}
-    //     backgroundColors={['#ffffff']}
-    //     textColors={['#000000']}
-    //     outerBorderWidth={3}
-    //     innerBorderWidth={0}
-    //     radiusLineWidth={0}
-    //     fontSize={23}
-    //     onStopSpinning={() => {}}
-    //   />
-    // );
-
     const spinStartFunction = () => {
       this.setState({
         prize: Math.floor(Math.random() * data.length),
@@ -259,17 +147,6 @@ class RoulettePage extends React.Component<Props, State> {
       <Container color="red">
         <Title title="돌려돌려 돌림판 - 푸딩" />
         <Header category="modal" headerColor="red" />
-        {/* <HeaderBlock>
-          <HeaderContainer>
-            <button onClick={onLeftButtonClick} className="left">
-              <MdKeyboardArrowLeft />
-            </button>
-            <img className="titleLogo" src={FoodingTitleWhite} alt="title" />
-            <button onClick={onRightButtonClick} className="right">
-              <MdClear />
-            </button>
-          </HeaderContainer>
-        </HeaderBlock> */}
         <EmptySpace></EmptySpace>
         <ResultComment>START 버튼을 눌러</ResultComment>
         <ResultComment>룰렛을 돌리세요!</ResultComment>
@@ -290,7 +167,6 @@ class RoulettePage extends React.Component<Props, State> {
                 // useEffect Error 피하기위한 꼼수
                 console.log('stop');
                 setTimeout(() => {
-                  // if(this.state.beClicked)
                   this.setState({
                     available: true,
                   });
@@ -308,9 +184,3 @@ class RoulettePage extends React.Component<Props, State> {
 }
 
 export default withRouter(RoulettePage);
-
-{
-  /* <canvas width={50} height={50} color={'black'} background-color={'black'}>
-start누르세요
-</canvas> */
-}
