@@ -29,9 +29,7 @@ interface RadarProps {
 const RadarChart = React.lazy(() => import('./RadarProxy'));
 
 function Radar({ shop }: RadarProps) {
-  let max =
-    Math.max(shop.keyword.atmosphere, shop.keyword.costRatio, shop.keyword.group, shop.keyword.individual, shop.keyword.riceAppointment, shop.keyword.spicy) |
-    1;
+  let max = Math.max(shop.keyword.atmosphere, shop.keyword.costRatio, shop.keyword.group, shop.keyword.individual, shop.keyword.riceAppointment) | 1;
 
   return (
     <RadarContainer>
@@ -45,7 +43,7 @@ function Radar({ shop }: RadarProps) {
         <RadarChart
           height={220}
           data={{
-            labels: ['분위기', '가성비', '단체', '혼밥', '밥약', '매워요'],
+            labels: ['분위기', '가성비', '단체', '혼밥', '밥약'],
             datasets: [
               {
                 data: [
@@ -54,7 +52,7 @@ function Radar({ shop }: RadarProps) {
                   shop.keyword.group / max,
                   shop.keyword.individual / max,
                   shop.keyword.riceAppointment / max,
-                  shop.keyword.spicy / max,
+                  // shop.keyword.spicy / max,
                 ],
                 borderColor: hexToRGB(palette.mainRed, 0.8),
                 borderWidth: 1.5,
