@@ -60,7 +60,7 @@ export interface Keyword {
   group: number;
   individual: number;
   riceAppointment: number;
-  spicy: number;
+  // spicy: number;
 }
 
 export async function getShop(shopId: string) {
