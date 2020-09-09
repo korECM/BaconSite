@@ -21,12 +21,14 @@ const ButtonGroup = styled.div``;
 
 const ButtonSubGroup = styled.div`
   display: flex;
+  justify-content: center;
   margin-bottom: 20px;
   button {
     flex: 1;
     font-weight: 500;
     font-size: 12.5px;
     padding: 12.5px 10px;
+    max-width: 100px;
   }
 `;
 
@@ -158,8 +160,8 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
   }
 
   return (
-    <Container color="red">
-      <Header category="modal" headerColor="red" />
+    <Container color="white">
+      <Header category="modal" headerColor="white" />
       <Title>이 식당의 특징은?</Title>
       <ButtonGroup>
         <ButtonSubGroup>
@@ -169,20 +171,20 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
           <ButtonWithMargin theme="white" onClick={() => onClick('atmosphere')} selected={keywords.atmosphere}>
             분위기
           </ButtonWithMargin>
-          <ButtonWithMargin theme="white" onClick={() => onClick('group')} selected={keywords.group}>
-            단체
+          <ButtonWithMargin theme="white" onClick={() => onClick('riceAppointment')} selected={keywords.riceAppointment}>
+            밥약
           </ButtonWithMargin>
         </ButtonSubGroup>
         <ButtonSubGroup>
           <ButtonWithMargin theme="white" onClick={() => onClick('individual')} selected={keywords.individual}>
             혼밥
           </ButtonWithMargin>
-          <ButtonWithMargin theme="white" onClick={() => onClick('riceAppointment')} selected={keywords.riceAppointment}>
-            밥약
+          <ButtonWithMargin theme="white" onClick={() => onClick('group')} selected={keywords.group}>
+            단체
           </ButtonWithMargin>
-          <ButtonWithMargin theme="white" onClick={() => onClick('spicy')} selected={keywords.spicy}>
+          {/* <ButtonWithMargin theme="white" onClick={() => onClick('spicy')} selected={keywords.spicy}>
             매워요
-          </ButtonWithMargin>
+          </ButtonWithMargin> */}
         </ButtonSubGroup>
       </ButtonGroup>
       <ScoreContainer>
@@ -199,9 +201,7 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
 
       <Title>리뷰를 공유해주세요!</Title>
       <FlexContainer>
-        <TextAreaBlock rows={16} placeholder="내용을 작성해주세요." name="review" onChange={onChangeEvent}>
-          {review}
-        </TextAreaBlock>
+        <TextAreaBlock rows={16} placeholder="내용을 작성해주세요." name="review" onChange={onChangeEvent} value={review} />
       </FlexContainer>
       <FlexContainer>
         <SubmitButton theme="white" onClick={onSubmit}>
