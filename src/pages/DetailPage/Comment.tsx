@@ -76,11 +76,13 @@ interface CommentProps {
   review: ReviewInterface;
   index: number;
   openReviewReport: (reviewId: string) => void;
+  openDeleteReport: (reviewId: string) => void;
   likeComment: any;
   commentLikeOffset: number[];
+  userId: string | undefined;
 }
 
-function Comment({ review, index, openReviewReport, likeComment, commentLikeOffset }: CommentProps) {
+function Comment({ review, index, openReviewReport, openDeleteReport, likeComment, commentLikeOffset, userId }: CommentProps) {
   return (
     <CommentBlock theme="gray" delay={index * 150}>
       <div className="contentContainer">
@@ -95,6 +97,11 @@ function Comment({ review, index, openReviewReport, likeComment, commentLikeOffs
           <button onClick={() => openReviewReport(review._id)} className="report">
             신고하기
           </button>
+          {review.user._id === userId && (
+            <button onClick={() => openDeleteReport(review._id)} className="report">
+              삭제하기
+            </button>
+          )}
         </div>
       </div>
       <button onClick={() => likeComment(index)}>

@@ -48,7 +48,7 @@ export const keywordToString = (keyword: keyof Keyword) => {
       return '혼밥';
     case 'riceAppointment':
       return '밥약';
-    case 'spicy':
-      return '매워요';
+    // case 'spicy':
+    //   return '매워요';
   }
 };
