@@ -29,17 +29,20 @@ interface RadarProps {
 const RadarChart = React.lazy(() => import('./RadarProxy'));
 
 function Radar({ shop }: RadarProps) {
-  let max = Math.max(shop.keyword.atmosphere, shop.keyword.costRatio, shop.keyword.group, shop.keyword.individual, shop.keyword.riceAppointment);
-
+  let sum =
+    (Object.values(shop.keyword)
+      .filter((a) => typeof a === 'number')
+      .reduce((a: number, b: number) => a + b, 0) as number) + 1;
+  console.log(shop.keyword);
   let data =
-    max === 0
+    sum === 1
       ? [NaN, NaN, NaN, NaN, NaN]
       : [
-          shop.keyword.atmosphere / max || 0.01,
-          shop.keyword.costRatio / max || 0.01,
-          shop.keyword.group / max || 0.01,
-          shop.keyword.individual / max || 0.01,
-          shop.keyword.riceAppointment / max || 0.01,
+          shop.keyword.atmosphere / sum || 0.05,
+          shop.keyword.costRatio / sum || 0.05,
+          shop.keyword.group / sum || 0.05,
+          shop.keyword.individual / sum || 0.05,
+          shop.keyword.riceAppointment / sum || 0.05,
         ];
 
   console.log(data);
