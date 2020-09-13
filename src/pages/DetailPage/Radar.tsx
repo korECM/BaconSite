@@ -29,7 +29,23 @@ interface RadarProps {
 const RadarChart = React.lazy(() => import('./RadarProxy'));
 
 function Radar({ shop }: RadarProps) {
-  let max = Math.max(shop.keyword.atmosphere, shop.keyword.costRatio, shop.keyword.group, shop.keyword.individual, shop.keyword.riceAppointment) | 1;
+  let sum =
+    (Object.values(shop.keyword)
+      .filter((a) => typeof a === 'number')
+      .reduce((a: number, b: number) => a + b, 0) as number) + 1;
+  console.log(shop.keyword);
+  let data =
+    sum === 1
+      ? [NaN, NaN, NaN, NaN, NaN]
+      : [
+          shop.keyword.atmosphere / sum || 0.05,
+          shop.keyword.costRatio / sum || 0.05,
+          shop.keyword.group / sum || 0.05,
+          shop.keyword.individual / sum || 0.05,
+          shop.keyword.riceAppointment / sum || 0.05,
+        ];
+
+  console.log(data);
 
   return (
     <RadarContainer>
@@ -46,14 +62,7 @@ function Radar({ shop }: RadarProps) {
             labels: ['분위기', '가성비', '단체', '혼밥', '밥약'],
             datasets: [
               {
-                data: [
-                  shop.keyword.atmosphere / max,
-                  shop.keyword.costRatio / max,
-                  shop.keyword.group / max,
-                  shop.keyword.individual / max,
-                  shop.keyword.riceAppointment / max,
-                  // shop.keyword.spicy / max,
-                ],
+                data,
                 borderColor: hexToRGB(palette.mainRed, 0.8),
                 borderWidth: 1.5,
                 backgroundColor: hexToRGB(palette.mainRed, 0.2),

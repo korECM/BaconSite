@@ -114,7 +114,8 @@ const SearchBox = styled.div`
   border-color: ${palette.mainRed};
   border-style: solid;
   border-width: 2px;
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 `;
 
 const SearchBoxContainer = styled.div`
@@ -313,6 +314,14 @@ class HomePage extends React.Component<Props, State> {
             </Link>
           </ButtonBlock>
         </ButtonLine>
+        <SearchBox>
+          <form onSubmit={onSubmit}>
+            <ButtonContainer>
+              <button type="submit" onClick={() => moveHref(data)}></button>
+              <input placeholder="search" onChange={onChange} value={input} />
+            </ButtonContainer>
+          </form>
+        </SearchBox>
         <RoundContainer theme="image" imageLink={firstbutton}>
           중앙대 정문 맛집 5곳
         </RoundContainer>
@@ -322,14 +331,6 @@ class HomePage extends React.Component<Props, State> {
         <RoundContainer theme="image" imageLink={thirdbutton}>
           상도동 신상 맛집 10곳
         </RoundContainer>
-        <SearchBox>
-          <form onSubmit={onSubmit}>
-            <ButtonContainer>
-              <button type="submit" onClick={() => moveHref(data)}></button>
-              <input placeholder="search" onChange={onChange} value={input} />
-            </ButtonContainer>
-          </form>
-        </SearchBox>
       </Container>
     );
   }
