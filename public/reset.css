@@ -168,6 +168,14 @@ textarea {
     url(//cdn.jsdelivr.net/font-nanum/1.0/nanumgothic/v3/NanumGothic-Regular.woff) format('woff'),
     url(//cdn.jsdelivr.net/font-nanum/1.0/nanumgothic/v3/NanumGothic-Regular.ttf) format('truetype');
 }
+/* 
+@font-face {
+  font-family: 'fooding\ logo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url('../src/assets/fooding\ logo.svg') format('svg');
+} */
 
 /* @font-face {
   font-family: 'Nanum Gothic';
