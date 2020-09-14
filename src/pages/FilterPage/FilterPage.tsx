@@ -366,7 +366,7 @@ class FilterPage extends React.Component<Props, State> {
           <div style={TagTextStyle}>{categoryList}</div>
         </ButtonLine>
         <Divider></Divider>
-        <SubtitleComment>최저가격대</SubtitleComment>
+        <SubtitleComment>가격대</SubtitleComment>
         <ButtonLine>
           <div style={TagTextStyle}>{priceList}</div>
         </ButtonLine>
