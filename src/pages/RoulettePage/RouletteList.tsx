@@ -111,6 +111,16 @@ const ErrorMessage = styled.div`
   margin-bottom: 20px;
 `;
 
+const SearchBoxContainer = styled.div`
+  // margin-right: 30%;
+  margin-left: auto;
+
+  // flex: 1;
+  justify-content: flex-end;
+  align-items: flex-end;
+  vertical-align: flex-end;
+`;
+
 interface Props extends RouteComponentProps {}
 
 interface RouletteItemState {
@@ -266,7 +276,7 @@ class RouletteList extends React.Component<Props, State> {
           <ul>{RouletteItemList}</ul>
         </div>
         <Button theme="red" onClick={() => moveHref(data)}>
-          룰렛 돌리기
+          Start!
         </Button>
       </Container>
     );
