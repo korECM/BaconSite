@@ -180,7 +180,7 @@ class YesNoPage extends React.Component<Props, State> {
     const resultdata = this.state.result.slice();
     // resultdata.push(base.find((item) => item.id === id));
     resultdata.push(base[id - 1].name);
-    if (id % 2 == 1) {
+    if (id % 2 === 1) {
       resultDataSet[this.count - 1] = true;
     } else {
       resultDataSet[this.count - 1] = false;
