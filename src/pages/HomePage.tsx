@@ -275,9 +275,9 @@ class HomePage extends React.Component<Props, State> {
         <Divider></Divider>
         <ButtonLine>
           <ButtonBlock>
-            <Link to="/shop/5f26b992555be6865ede4e28">
-              <TextBox>테스트</TextBox>
-              <TextBox>가게</TextBox>
+            <Link to="/filter">
+              <TextBox>필터링</TextBox>
+              <TextBox>검색</TextBox>
             </Link>
           </ButtonBlock>
           <ButtonBlock>
@@ -294,26 +294,6 @@ class HomePage extends React.Component<Props, State> {
           </ButtonBlock>
         </ButtonLine>
         <Divider></Divider>
-        <ButtonLine>
-          <ButtonBlock>
-            <Link to="/rouletteList">
-              <TextBox>돌림판</TextBox>
-              <TextBox>리스트 받기</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/result?location=front,back&category=western,korean">
-              <TextBox>필터링</TextBox>
-              <TextBox>결과</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/filter">
-              <TextBox>필터링</TextBox>
-              <TextBox>검색</TextBox>
-            </Link>
-          </ButtonBlock>
-        </ButtonLine>
         <SearchBox>
           <form onSubmit={onSubmit}>
             <ButtonContainer>
