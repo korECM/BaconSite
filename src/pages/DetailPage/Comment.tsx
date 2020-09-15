@@ -83,6 +83,7 @@ interface CommentProps {
 }
 
 function Comment({ review, index, openReviewReport, openDeleteReport, likeComment, commentLikeOffset, userId }: CommentProps) {
+  console.log(review.user._id !== userId);
   return (
     <CommentBlock theme="gray" delay={index * 150}>
       <div className="contentContainer">
@@ -92,11 +93,12 @@ function Comment({ review, index, openReviewReport, openDeleteReport, likeCommen
           {[new Date(review.registerDate)].map((date) => (
             <div key={date.toString()}>{`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
           ))}
-          ``
           <div className="likeNum">좋아요 {review.likeNum + commentLikeOffset[index]}개</div>
-          <button onClick={() => openReviewReport(review._id)} className="report">
-            신고하기
-          </button>
+          {review.user._id !== userId && (
+            <button onClick={() => openReviewReport(review._id)} className="report">
+              신고하기
+            </button>
+          )}
           {review.user._id === userId && (
             <button onClick={() => openDeleteReport(review._id)} className="report">
               삭제하기
