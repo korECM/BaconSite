@@ -12,7 +12,7 @@ import { AiOutlineUser, AiOutlineLock, AiOutlineIdcard } from 'react-icons/ai';
 import useAuth from '../../hooks/useAuth';
 import useCheck from '../../hooks/useCheck';
 import StyledInput from '../../components/common/StyledInput';
-import LogoImage from 'assets/fooding_titlelogo.png';
+import titlelogo from 'assets/fooding_logo_outline.svg';
 import Title from 'lib/meta';
 
 const AuthPageBlock = styled.div`
@@ -239,7 +239,7 @@ function LoginPage({ history }: RouteComponentProps) {
       <AuthPageBlock>
         <Logo>
           <h1>뭐 먹을지 고민될 땐?</h1>
-          <img src={LogoImage} alt="logo" />
+          <img src={titlelogo} alt="logo" />
         </Logo>
         <AuthContainer onSubmit={onSubmit}>
           <AuthSelectBlock>
