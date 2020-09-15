@@ -28,14 +28,3 @@
   background-color: #db2a37;
   color: white;
 }
-
-.mainred:hover {
-  color: white;
-  background-color: #db2a37;
-  border: 1px solid #db2a37;
-}
-
-.roundButton:hover {
-  color: white;
-  background-color: #db2a37;
-}
