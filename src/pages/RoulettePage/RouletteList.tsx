@@ -51,9 +51,9 @@ const ButtonContainer = styled.div`
     font-weight: 800;
     color: black;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
 
   li {
@@ -67,10 +67,9 @@ const ButtonContainer = styled.div`
     font-size: 15px;
     font-weight: 900;
     color: black;
-
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
 
   button {
@@ -84,10 +83,9 @@ const ButtonContainer = styled.div`
     color: ${palette.white};
     font-size: 13px;
     font-weight: 900;
-
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
   button:nth-child(1) {
     padding-left: 0;

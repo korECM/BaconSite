@@ -2,17 +2,15 @@ import React from 'react';
 import Container from '../components/layout/Container';
 import Header from '../components/layout/Header';
 import { Link } from 'react-router-dom';
-import Button from '../components/common/Button';
 import RoundContainer from '../components/common/RoundContainer';
 import { RouteComponentProps } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
-import FullHeightFade from '../components/common/FullHeightFade';
 import firstbutton from './firstbutton.jpg';
 import secondbutton from './secondbutton.jpg';
 import thirdbutton from './thirdbutton.jpg';
 import search from './search.png';
-import titlelogo from 'assets/fooding logo.svg';
+import titlelogo from 'assets/fooding_logo_outline.svg';
 
 const TitleSlogan = styled.h1`
   font-size: 14px;
@@ -85,9 +83,9 @@ const ButtonBlock = styled.button`
   font-family: 'Nanum Gothic';
   font-weight: 200;
 
-  -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-  box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+  box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
 `;
 
 const TextBox = styled.h1`
@@ -151,9 +149,9 @@ const ButtonContainer = styled.div`
     font-family: 'Nanum Gothic';
     color: black;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
 
   li {
@@ -169,9 +167,9 @@ const ButtonContainer = styled.div`
     font-family: 'Nanum Gothic';
     color: black;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
 
   button {
@@ -275,9 +273,9 @@ class HomePage extends React.Component<Props, State> {
         <Divider></Divider>
         <ButtonLine>
           <ButtonBlock>
-            <Link to="/shop/5f26b992555be6865ede4e28">
-              <TextBox>테스트</TextBox>
-              <TextBox>가게</TextBox>
+            <Link to="/filter">
+              <TextBox>필터링</TextBox>
+              <TextBox>검색</TextBox>
             </Link>
           </ButtonBlock>
           <ButtonBlock>
@@ -290,27 +288,6 @@ class HomePage extends React.Component<Props, State> {
             <Link to="/rouletteList">
               <TextBox>돌려돌려</TextBox>
               <TextBox>돌림판</TextBox>
-            </Link>
-          </ButtonBlock>
-        </ButtonLine>
-        <Divider></Divider>
-        <ButtonLine>
-          <ButtonBlock>
-            <Link to="/rouletteList">
-              <TextBox>돌림판</TextBox>
-              <TextBox>리스트 받기</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/result?location=front,back&category=western,korean">
-              <TextBox>필터링</TextBox>
-              <TextBox>결과</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/filter">
-              <TextBox>필터링</TextBox>
-              <TextBox>검색</TextBox>
             </Link>
           </ButtonBlock>
         </ButtonLine>
