@@ -83,9 +83,9 @@ const ButtonBlock = styled.button`
   font-family: 'Nanum Gothic';
   font-weight: 200;
 
-  -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-  box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+  box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
 `;
 
 const TextBox = styled.h1`
@@ -149,9 +149,9 @@ const ButtonContainer = styled.div`
     font-family: 'Nanum Gothic';
     color: black;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
 
   li {
@@ -167,9 +167,9 @@ const ButtonContainer = styled.div`
     font-family: 'Nanum Gothic';
     color: black;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
 
   button {
