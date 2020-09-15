@@ -9,7 +9,7 @@ import { locationToString, keywordToString } from '../../lib/shopUtil';
 import GrayFooding from 'assets/fooding_gray.svg';
 import { useSpring, animated } from 'react-spring';
 
-const RestaurantCardBlock = styled(animated.button)`
+const RestaurantCardBlock = styled(animated.div)`
   border: none;
   outline: none;
   display: flex;
@@ -46,6 +46,7 @@ const RestaurantCardBlock = styled(animated.button)`
     align-items: center;
     text-align: left;
     margin: 0 10px;
+    color: black;
 
     .name {
       font-size: 15px;
