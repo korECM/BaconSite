@@ -20,7 +20,7 @@ import Comment from './Comment';
 import { MdPhotoLibrary } from 'react-icons/md';
 import Title from 'lib/meta';
 import ButtonGroup from 'components/common/ButtonGroup';
-import ProcessModal from 'components/common/ProcessModal';
+import ProcessModal, { AlertModal } from 'components/common/ProcessModal';
 import GrayFooding from 'assets/fooding_gray.svg';
 
 const ShopTitle = styled.h1`
@@ -346,6 +346,9 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [checkReviewModalShow, setCheckReviewModalShow] = useState(false);
 
+  const [imageSizeToBigShow, setImageSizeToBigShow] = useState(false);
+  const [imageCountToBigShow, setImageCountToBigShow] = useState(false);
+
   const simpleDialogAlert = useCallback(
     (message: string) => {
       if (!user) {
@@ -390,10 +393,16 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const fileSizeAlert = (fileRef: React.RefObject<HTMLInputElement>) => {
     const files = fileRef.current?.files;
     if (files?.length) {
+      if (files.length > 10) {
+        setImageCountToBigShow(true);
+        fileRef.current!.value = '';
+        return false;
+      }
       for (let index = 0; index < files.length; index++) {
         const file = files.item(index);
         if (file && file.size > 5 * 1024 * 1024) {
-          alert('사진의 크기가 5MB보다 큽니다');
+          setImageSizeToBigShow(true);
+          // alert('사진의 크기가 5MB보다 큽니다');
           fileRef.current!.value = '';
           return false;
         }
@@ -896,6 +905,28 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         }
         error={checkReview.error}
         loading={checkReview.loading}
+      />
+      <AlertModal
+        onCancel={() => setImageSizeToBigShow(false)}
+        visible={imageSizeToBigShow}
+        messageBlock={
+          <div>
+            <span>올리려는 사진의 크기가</span>
+            <br />
+            <span style={{ marginTop: '5px', display: 'block' }}>커서 올릴 수 없습니다</span>
+          </div>
+        }
+      />
+      <AlertModal
+        onCancel={() => setImageCountToBigShow(false)}
+        visible={imageCountToBigShow}
+        messageBlock={
+          <div>
+            <span>사진은 한 번에</span>
+            <br />
+            <span style={{ marginTop: '5px', display: 'block' }}>10개 씩 올릴 수 있습니다</span>
+          </div>
+        }
       />
     </Container>
   );

@@ -140,4 +140,30 @@ function ProcessModal({
   );
 }
 
+interface AlertModalProps {
+  onCancel: () => void;
+  visible: boolean;
+  message?: string;
+  messageBlock?: React.ReactNode;
+  icon?: React.ReactNode;
+}
+
+function AlertModal({ onCancel, visible, icon, message, messageBlock }: AlertModalProps) {
+  const onCancelAction = useCallback(() => {
+    onCancel();
+  }, [onCancel]);
+
+  return (
+    <Dialog mode="custom" onCancel={onCancelAction} visible={visible} customPadding="1rem">
+      <ReportBlock>
+        <FailBlock>
+          <AiOutlineFrown />
+          {messageBlock ? messageBlock : <div>{message}</div>}
+        </FailBlock>
+      </ReportBlock>
+    </Dialog>
+  );
+}
+
 export default ProcessModal;
+export { AlertModal };
