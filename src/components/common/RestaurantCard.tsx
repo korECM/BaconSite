@@ -102,8 +102,6 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
     delay: delay || 0,
   });
 
-  console.log(shop.foodCategory);
-
   return (
     <RestaurantCardBlock style={appear}>
       <div
