@@ -8,6 +8,7 @@ import { locationToString, keywordToString, foodCategoryToString } from '../../l
 // import BlankImage from 'assets/blank.png';
 import GrayFooding from 'assets/fooding_gray.svg';
 import { useSpring, animated } from 'react-spring';
+import { FoodCategory } from 'api/getShop';
 
 const RestaurantCardBlock = styled(animated.div)`
   border: none;
@@ -119,11 +120,14 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
         <div className="tags">
           <div className="tag">
             #
-            {shop.foodCategory.map((keyword) => (
-              <a>{foodCategoryToString(keyword)}</a>
-            ))}
+            {shop.foodCategory.map((keyword) => {
+              if (keyword === FoodCategory.Etc && shop.foodCategory.length > 1) {
+                return '';
+              }
+              return foodCategoryToString(keyword);
+            })}
           </div>
-          {shop.topKeyword.map((keyword) => (
+          {shop.topKeyword.slice(0, 1).map((keyword) => (
             <div className="tag" key={keyword}>
               #{keywordToString(keyword)}
             </div>
