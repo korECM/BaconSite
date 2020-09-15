@@ -20,6 +20,15 @@ export enum Location {
   None = '',
 }
 
+export enum FoodCategory {
+  Rice = 'rice',
+  Bread = 'bread',
+  Noodle = 'noodle',
+  Meat = 'meat',
+  Etc = 'etc',
+  None = '',
+}
+
 export interface ShopInterface {
   _id: string;
   mainImage: string;
@@ -30,6 +39,7 @@ export interface ShopInterface {
   contact: string;
   address: string;
   category: ShopCategory;
+  foodCategory: FoodCategory[];
   keyword: Keyword;
   open: string;
   closed: string;

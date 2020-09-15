@@ -1,4 +1,4 @@
-import { Location, ShopCategory, Keyword } from '../api/getShop';
+import { Location, ShopCategory, Keyword, FoodCategory } from '../api/getShop';
 
 export const categoryToString = (category: ShopCategory) => {
   switch (category) {
@@ -51,4 +51,8 @@ export const keywordToString = (keyword: keyof Keyword) => {
     // case 'spicy':
     //   return '매워요';
   }
+};
+
+export const foodCategoryToString = (category: FoodCategory): string => {
+  return '';
 };

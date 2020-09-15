@@ -1,6 +1,6 @@
 import { createAction, createReducer, createAsyncAction } from 'typesafe-actions';
 import { AxiosError } from 'axios';
-import { ShopInterface, getShop, Location, ShopCategory } from '../api/getShop';
+import { ShopInterface, getShop, Location, ShopCategory, FoodCategory } from '../api/getShop';
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { ReviewInterface, getReview, checkTodayReviewAvailableAPI, CheckTodayReviewResponseInterface } from '../api/getReview';
@@ -232,6 +232,7 @@ const initialState: DetailState = {
       contact: '',
       address: '',
       category: ShopCategory.None,
+      foodCategory: [],
       open: '',
       closed: '',
       shopImage: [],

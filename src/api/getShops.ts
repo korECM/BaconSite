@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiLink } from '../lib/getAPILink';
-import { Location, Keyword } from './getShop';
+import { Location, Keyword, FoodCategory } from './getShop';
 
 export interface ShopsInterface {
   _id: string;
@@ -10,6 +10,7 @@ export interface ShopsInterface {
   contact: string;
   address: string;
   category: string;
+  foodCategory: FoodCategory[];
   keyword: Keyword;
   open: string;
   closed: string;
@@ -28,8 +29,10 @@ export interface ShopsInterface {
 type KeywordElement = keyof Keyword;
 
 export interface getShopsInterface {
+  order?: string;
   location?: string;
   category?: string;
+  foodCategory?: string;
   price?: string;
   keyword?: string;
   name?: string;
@@ -45,9 +48,9 @@ export interface Image {
 export async function getShops(options: getShopsInterface) {
   const response = await axios.get<ShopsInterface[]>(
     apiLink() +
-      `/shop/?location=${options.location || ''}&category=${options.category || ''}&price=${options.price || ''}&keyword=${options.keyword || ''}&name=${
-        options.name || ''
-      }`,
+      `/shop/?location=${options.location || ''}&order=${options.order || ''}&category=${options.category || ''}&foodCategory=${
+        options.foodCategory || ''
+      }&price=${options.price || ''}&keyword=${options.keyword || ''}&name=${options.name || ''}`,
     {
       withCredentials: true,
     },

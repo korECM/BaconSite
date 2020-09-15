@@ -4,11 +4,6 @@ import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
 import { withRouter, RouteComponentProps, Route, Link } from 'react-router-dom';
 import palette, { hexToRGB } from '../../styles/palette';
-import Flag from '../../components/common/Flag';
-import RestaurantCard from '../../components/common/RestaurantCard';
-import Loader from '../../components/common/Loader';
-import { Fade, Bounce } from 'react-awesome-reveal';
-import { Animated } from 'react-animated-css';
 import React, { Component } from 'react';
 import Button from '../../components/common/Button';
 import './TagButton.css';
@@ -92,6 +87,8 @@ interface DataInterface {
 interface State {
   sorting_bool: boolean[];
   sortings: string[];
+  category_bool: boolean[];
+  categories: string[];
   food_bool: boolean[];
   foods: string[];
   price_bool: boolean[];
@@ -106,6 +103,8 @@ class FilterPage extends React.Component<Props, State> {
   state: State = {
     sorting_bool: [true, false, false],
     sortings: ['평점순', '추천순', '리뷰순'],
+    category_bool: [false, false, false, false, false],
+    categories: ['밥', '빵', '면', '고기', '기타'],
     food_bool: [false, false, false, false, false, false, false],
     foods: ['한식', '중식', '일식', '양식', '분식', '퓨전', '기타'],
     price_bool: [false, false, false, false],
@@ -122,6 +121,13 @@ class FilterPage extends React.Component<Props, State> {
     console.log(i);
     this.setState({
       sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? (item = false) : (item = true))),
+    });
+  }
+
+  changeCategoryColor(i: number) {
+    console.log(i);
+    this.setState({
+      category_bool: this.state.category_bool.map((item, index) => (index !== i ? item : !item)),
     });
   }
 
@@ -168,20 +174,23 @@ class FilterPage extends React.Component<Props, State> {
         data[0].option.join(',') +
         '&category=' +
         data[1].option.join(',') +
-        '&price=' +
+        '&foodCategory=' +
         data[2].option.join(',') +
-        '&location=' +
+        '&price=' +
         data[3].option.join(',') +
+        '&location=' +
+        data[4].option.join(',') +
         '&keyword=' +
-        data[4].option.join(','),
+        data[5].option.join(','),
     });
+    console.log(data);
   };
 
   // data.map((data) => data.option)
 
   render() {
     const { moveHref } = this;
-    const { sortings, foods, prices, places, keywords } = this.state;
+    const { sortings, foods, categories, prices, places, keywords } = this.state;
 
     const sortingList = sortings.map((sorting, i) => (
       <button
@@ -191,6 +200,17 @@ class FilterPage extends React.Component<Props, State> {
         style={{ height: 35, flex: 1 }}
       >
         <div style={TagTextStyle}>{sorting}</div>
+      </button>
+    ));
+
+    const categoryList = categories.map((category, i) => (
+      <button
+        className={`roundButton yHover ${this.state.category_bool[i] ? 'mainred' : ''}`}
+        key={category}
+        onClick={(e) => this.changeCategoryColor(i)}
+        style={{ height: 35, flex: 1 }}
+      >
+        <div style={TagTextStyle}>{category}</div>
       </button>
     ));
 
@@ -240,14 +260,16 @@ class FilterPage extends React.Component<Props, State> {
 
     let data: DataInterface[] = [
       { option: [] } /* order : rate, recommended, review*/,
-      { option: [] } /* category : korean, chinese, japanese, western, school, fusion, other, all*/,
+      { option: [] } /* food : korean, chinese, japanese, western, school, fusion, other, all*/,
+      { option: [] } /* category : rice, bread, noodle, meat, etc*/,
       { option: [] } /* price : 5000, 10000, 20000, all*/,
       { option: [] } /* location : front, back, hs_station, front_far, all*/,
       { option: [] } /* keyword : costRatio,atmosphere,group,individual,riceAppointment,spicy*/,
     ];
 
     let order = ['rate', 'recommended', 'review'];
-    let category = ['korean', 'chinese', 'japanese', 'western', 'school', 'fusion', 'other'];
+    let food = ['korean', 'chinese', 'japanese', 'western', 'school', 'fusion', 'other'];
+    let category = ['rice', 'bread', 'noodle', 'meat', 'etc'];
     let price = ['5000', '10000', '15000', '20000'];
     let location = ['front', 'back', 'front_far', 'hs_station'];
     let keyword = ['costRatio', 'atmosphere', 'group', 'individual', 'riceAppointment'];
@@ -284,7 +306,12 @@ class FilterPage extends React.Component<Props, State> {
     }
     for (var i = 0; i < this.state.food_bool.length; i++) {
       if (this.state.food_bool[i] === true) {
-        data[1].option.push(category[i]);
+        data[1].option.push(food[i]);
+      }
+    }
+    for (var i = 0; i < this.state.category_bool.length; i++) {
+      if (this.state.category_bool[i] === true) {
+        data[2].option.push(category[i]);
       }
     }
     // if (this.state.food_bool[this.state.food_bool.length - 1] === true) {
@@ -293,17 +320,17 @@ class FilterPage extends React.Component<Props, State> {
     // }
     for (var i = 0; i < this.state.price_bool.length; i++) {
       if (this.state.price_bool[i] === true) {
-        data[2].option.push(price[i]);
+        data[3].option.push(price[i]);
       }
     }
     for (var i = 0; i < this.state.place_bool.length; i++) {
       if (this.state.place_bool[i] === true) {
-        data[3].option.push(location[i]);
+        data[4].option.push(location[i]);
       }
     }
     for (var i = 0; i < this.state.keyword_bool.length; i++) {
       if (this.state.keyword_bool[i] === true) {
-        data[4].option.push(keyword[i]);
+        data[5].option.push(keyword[i]);
       }
     }
     console.log(data);
@@ -329,7 +356,12 @@ class FilterPage extends React.Component<Props, State> {
           <div style={TagTextStyle}>{foodList}</div>
         </ButtonLine>
         <Divider></Divider>
-        <SubtitleComment>최저가격대</SubtitleComment>
+        <SubtitleComment>주재료</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{categoryList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>가격대</SubtitleComment>
         <ButtonLine>
           <div style={TagTextStyle}>{priceList}</div>
         </ButtonLine>
