@@ -54,5 +54,18 @@ export const keywordToString = (keyword: keyof Keyword) => {
 };
 
 export const foodCategoryToString = (category: FoodCategory): string => {
-  return '';
+  switch (category) {
+    case FoodCategory.Rice:
+      return '밥';
+    case FoodCategory.Bread:
+      return '빵';
+    case FoodCategory.Noodle:
+      return '면';
+    case FoodCategory.Meat:
+      return '고기';
+    case FoodCategory.Etc:
+      return '기타';
+    default:
+      return '';
+  }
 };

@@ -4,7 +4,7 @@ import palette, { hexToRGB } from '../../styles/palette';
 import Flag from '../../components/common/Flag';
 import { ShopsInterface } from '../../api/getShops';
 import { getScore } from '../../lib/scoreUtil';
-import { locationToString, keywordToString } from '../../lib/shopUtil';
+import { locationToString, keywordToString, foodCategoryToString } from '../../lib/shopUtil';
 // import BlankImage from 'assets/blank.png';
 import GrayFooding from 'assets/fooding_gray.svg';
 import { useSpring, animated } from 'react-spring';
@@ -119,6 +119,12 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
         <div className="name">{shop.name}</div>
         <div className="loc">{locationToString(shop.location)}</div>
         <div className="tags">
+          <div className="tag">
+            #
+            {shop.foodCategory.map((keyword) => (
+              <a>{foodCategoryToString(keyword)}</a>
+            ))}
+          </div>
           {shop.topKeyword.map((keyword) => (
             <div className="tag" key={keyword}>
               #{keywordToString(keyword)}
