@@ -4,11 +4,6 @@ import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
 import { withRouter, RouteComponentProps, Route, Link } from 'react-router-dom';
 import palette, { hexToRGB } from '../../styles/palette';
-import Flag from '../../components/common/Flag';
-import RestaurantCard from '../../components/common/RestaurantCard';
-import Loader from '../../components/common/Loader';
-import { Fade, Bounce } from 'react-awesome-reveal';
-import { Animated } from 'react-animated-css';
 import React, { Component } from 'react';
 import Button from '../../components/common/Button';
 import './TagButton.css';
@@ -92,6 +87,8 @@ interface DataInterface {
 interface State {
   sorting_bool: boolean[];
   sortings: string[];
+  category_bool: boolean[];
+  categories: string[];
   food_bool: boolean[];
   foods: string[];
   price_bool: boolean[];
@@ -104,22 +101,33 @@ interface State {
 
 class FilterPage extends React.Component<Props, State> {
   state: State = {
-    sorting_bool: [false, false, false],
+    sorting_bool: [true, false, false],
     sortings: ['평점순', '추천순', '리뷰순'],
+    category_bool: [false, false, false, false, false],
+    categories: ['밥', '빵', '면', '고기', '기타'],
     food_bool: [false, false, false, false, false, false, false],
     foods: ['한식', '중식', '일식', '양식', '분식', '퓨전', '기타'],
     price_bool: [false, false, false, false],
     prices: ['5천원 이하', '1만원 이하', '1만원 대', 'Flex 가능'],
     place_bool: [false, false, false, false],
     places: ['정문', '후문', '중대병원', '흑석역'],
-    keyword_bool: [false, false, false, false, false, false],
-    keywords: ['가성비', '분위기', '단체', '혼밥', '밥약', '맵찔'],
+    keyword_bool: [false, false, false, false, false],
+    keywords: ['가성비', '분위기', '단체', '혼밥', '밥약'],
   };
+
+  //키워드에서 '맵찔' 제거함.
 
   changeSortingColor(i: number) {
     console.log(i);
     this.setState({
       sorting_bool: this.state.sorting_bool.map((item, index) => (index !== i ? (item = false) : (item = true))),
+    });
+  }
+
+  changeCategoryColor(i: number) {
+    console.log(i);
+    this.setState({
+      category_bool: this.state.category_bool.map((item, index) => (index !== i ? item : !item)),
     });
   }
 
@@ -166,20 +174,23 @@ class FilterPage extends React.Component<Props, State> {
         data[0].option.join(',') +
         '&category=' +
         data[1].option.join(',') +
-        '&price=' +
+        '&foodCategory=' +
         data[2].option.join(',') +
-        '&location=' +
+        '&price=' +
         data[3].option.join(',') +
+        '&location=' +
+        data[4].option.join(',') +
         '&keyword=' +
-        data[4].option.join(','),
+        data[5].option.join(','),
     });
+    console.log(data);
   };
 
   // data.map((data) => data.option)
 
   render() {
     const { moveHref } = this;
-    const { sortings, foods, prices, places, keywords } = this.state;
+    const { sortings, foods, categories, prices, places, keywords } = this.state;
 
     const sortingList = sortings.map((sorting, i) => (
       <button
@@ -189,6 +200,17 @@ class FilterPage extends React.Component<Props, State> {
         style={{ height: 35, flex: 1 }}
       >
         <div style={TagTextStyle}>{sorting}</div>
+      </button>
+    ));
+
+    const categoryList = categories.map((category, i) => (
+      <button
+        className={`roundButton yHover ${this.state.category_bool[i] ? 'mainred' : ''}`}
+        key={category}
+        onClick={(e) => this.changeCategoryColor(i)}
+        style={{ height: 35, flex: 1 }}
+      >
+        <div style={TagTextStyle}>{category}</div>
       </button>
     ));
 
@@ -238,17 +260,19 @@ class FilterPage extends React.Component<Props, State> {
 
     let data: DataInterface[] = [
       { option: [] } /* order : rate, recommended, review*/,
-      { option: [] } /* category : korean, chinese, japanese, western, school, fusion, other, all*/,
+      { option: [] } /* food : korean, chinese, japanese, western, school, fusion, other, all*/,
+      { option: [] } /* category : rice, bread, noodle, meat, etc*/,
       { option: [] } /* price : 5000, 10000, 20000, all*/,
       { option: [] } /* location : front, back, hs_station, front_far, all*/,
       { option: [] } /* keyword : costRatio,atmosphere,group,individual,riceAppointment,spicy*/,
     ];
 
     let order = ['rate', 'recommended', 'review'];
-    let category = ['korean', 'chinese', 'japanese', 'western', 'school', 'fusion', 'other'];
+    let food = ['korean', 'chinese', 'japanese', 'western', 'school', 'fusion', 'other'];
+    let category = ['rice', 'bread', 'noodle', 'meat', 'etc'];
     let price = ['5000', '10000', '15000', '20000'];
     let location = ['front', 'back', 'front_far', 'hs_station'];
-    let keyword = ['costRatio', 'atmosphere', 'group', 'individual', 'riceAppointment', 'spicy'];
+    let keyword = ['costRatio', 'atmosphere', 'group', 'individual', 'riceAppointment'];
 
     var selectCheck = true;
 
@@ -260,50 +284,57 @@ class FilterPage extends React.Component<Props, State> {
       return result;
     }
 
-    if (orOperation(this.state.sorting_bool) === false) {
-      selectCheck = false;
-    } else if (orOperation(this.state.food_bool) === false) {
-      selectCheck = false;
-    } else if (orOperation(this.state.price_bool) === false) {
-      selectCheck = false;
-    } else if (orOperation(this.state.place_bool) === false) {
-      selectCheck = false;
-    } else if (orOperation(this.state.keyword_bool) === false) {
-      selectCheck = false;
-    }
+    //아래는 select가 한개라도 안된 항목이 있을 시 검색 자체가 불가능하도록 설정할 때 필요한 코드
 
-    if (selectCheck === true) {
-      for (var i = 0; i < this.state.sorting_bool.length; i++) {
-        if (this.state.sorting_bool[i] === true) {
-          data[0].option.push(order[i]);
-        }
+    // if (orOperation(this.state.sorting_bool) === false) {
+    //   selectCheck = false;
+    // } else if (orOperation(this.state.food_bool) === false) {
+    //   selectCheck = false;
+    // } else if (orOperation(this.state.price_bool) === false) {
+    //   selectCheck = false;
+    // } else if (orOperation(this.state.place_bool) === false) {
+    //   selectCheck = false;
+    // } else if (orOperation(this.state.keyword_bool) === false) {
+    //   selectCheck = false;
+    // }
+
+    // if (selectCheck === true) {
+    for (var i = 0; i < this.state.sorting_bool.length; i++) {
+      if (this.state.sorting_bool[i] === true) {
+        data[0].option.push(order[i]);
       }
-      for (var i = 0; i < this.state.food_bool.length; i++) {
-        if (this.state.food_bool[i] === true) {
-          data[1].option.push(category[i]);
-        }
-      }
-      // if (this.state.food_bool[this.state.food_bool.length - 1] === true) {
-      //   /*ALL이 TRUE면 */
-      //   data[1].option = [];
-      // }
-      for (var i = 0; i < this.state.price_bool.length; i++) {
-        if (this.state.price_bool[i] === true) {
-          data[2].option.push(price[i]);
-        }
-      }
-      for (var i = 0; i < this.state.place_bool.length; i++) {
-        if (this.state.place_bool[i] === true) {
-          data[3].option.push(location[i]);
-        }
-      }
-      for (var i = 0; i < this.state.keyword_bool.length; i++) {
-        if (this.state.keyword_bool[i] === true) {
-          data[4].option.push(keyword[i]);
-        }
-      }
-      console.log(data);
     }
+    for (var i = 0; i < this.state.food_bool.length; i++) {
+      if (this.state.food_bool[i] === true) {
+        data[1].option.push(food[i]);
+      }
+    }
+    for (var i = 0; i < this.state.category_bool.length; i++) {
+      if (this.state.category_bool[i] === true) {
+        data[2].option.push(category[i]);
+      }
+    }
+    // if (this.state.food_bool[this.state.food_bool.length - 1] === true) {
+    //   /*ALL이 TRUE면 */
+    //   data[1].option = [];
+    // }
+    for (var i = 0; i < this.state.price_bool.length; i++) {
+      if (this.state.price_bool[i] === true) {
+        data[3].option.push(price[i]);
+      }
+    }
+    for (var i = 0; i < this.state.place_bool.length; i++) {
+      if (this.state.place_bool[i] === true) {
+        data[4].option.push(location[i]);
+      }
+    }
+    for (var i = 0; i < this.state.keyword_bool.length; i++) {
+      if (this.state.keyword_bool[i] === true) {
+        data[5].option.push(keyword[i]);
+      }
+    }
+    console.log(data);
+    // }
 
     var TagTextStyle = {
       fontSize: 30,
@@ -311,49 +342,46 @@ class FilterPage extends React.Component<Props, State> {
     };
 
     return (
-      <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-        <Fade>
-          <Container color="white">
-            <Title title="당신만을 위한 식당 - 푸딩" />
-            <Header category="modal" headerColor="white" />
-            <Fade>
-              <Bounce>
-                <TitleComment>필터링 검색</TitleComment>
-                <SubtitleComment>정렬</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{sortingList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <SubtitleComment>음식종류</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{foodList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <SubtitleComment>최저가격대</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{priceList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <SubtitleComment>위치</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{placeList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <SubtitleComment>키워드</SubtitleComment>
-                <ButtonLine>
-                  <div style={TagTextStyle}>{keywordList}</div>
-                </ButtonLine>
-                <Divider></Divider>
-                <Divider></Divider>
-                <Divider></Divider>
-                <Button theme="red" fullWidth onClick={() => moveHref(data)}>
-                  검색하기
-                </Button>
-              </Bounce>
-            </Fade>
-          </Container>
-        </Fade>
-      </Animated>
+      <Container color="white">
+        <Title title="당신만을 위한 식당 - 푸딩" />
+        <Header category="modal" headerColor="white" />
+        <TitleComment>필터링 검색</TitleComment>
+        <SubtitleComment>정렬</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{sortingList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>음식종류</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{foodList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>주재료</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{categoryList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>가격대</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{priceList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>위치</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{placeList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <SubtitleComment>키워드</SubtitleComment>
+        <ButtonLine>
+          <div style={TagTextStyle}>{keywordList}</div>
+        </ButtonLine>
+        <Divider></Divider>
+        <Divider></Divider>
+        <Divider></Divider>
+        <Button theme="red" fullWidth onClick={() => moveHref(data)}>
+          검색하기
+        </Button>
+      </Container>
     );
   }
 }

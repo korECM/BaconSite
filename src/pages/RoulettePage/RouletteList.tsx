@@ -4,11 +4,8 @@ import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import { withRouter, RouteComponentProps, Route, Link } from 'react-router-dom';
 import palette from '../../styles/palette';
-import { Fade, Bounce } from 'react-awesome-reveal';
-import { Animated } from 'react-animated-css';
 import styled, { css } from 'styled-components';
 import Button from '../../components/common/Button';
-import FullHeightFade from '../../components/common/FullHeightFade';
 
 const ResultComment = styled.h1`
   font-size: 17px;
@@ -54,9 +51,9 @@ const ButtonContainer = styled.div`
     font-weight: 800;
     color: black;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
 
   li {
@@ -70,10 +67,9 @@ const ButtonContainer = styled.div`
     font-size: 15px;
     font-weight: 900;
     color: black;
-
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
 
   button {
@@ -87,10 +83,9 @@ const ButtonContainer = styled.div`
     color: ${palette.white};
     font-size: 13px;
     font-weight: 900;
-
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
   }
   button:nth-child(1) {
     padding-left: 0;
@@ -112,6 +107,16 @@ const ErrorMessage = styled.div`
   height: 16px;
   font-weight: lighter;
   margin-bottom: 20px;
+`;
+
+const SearchBoxContainer = styled.div`
+  // margin-right: 30%;
+  margin-left: auto;
+
+  // flex: 1;
+  justify-content: flex-end;
+  align-items: flex-end;
+  vertical-align: flex-end;
 `;
 
 interface Props extends RouteComponentProps {}
@@ -203,6 +208,10 @@ class RouletteList extends React.Component<Props, State> {
         search: '?items=' + data.map((data) => data.option).join(','),
       });
     }
+    // setTimeout(() => {
+    window.location.reload(false);
+    console.log('refresh done');
+    // }, 100);
   };
 
   render() {
@@ -246,36 +255,28 @@ class RouletteList extends React.Component<Props, State> {
     // alert(JSON.stringify(RouletteItemList.text));
 
     return (
-      <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
-        <FullHeightFade>
-          <Container color="white">
-            <Header category="modal" headerColor="white" />
-            <FullHeightFade>
-              <Bounce>
-                <EmptySpace></EmptySpace>
-                <div>
-                  <ResultComment>어떤 걸 먹을까?</ResultComment>
-                  <ResultComment>옵션 내용을 설정해주세요!</ResultComment>
-                  <EmptySpace></EmptySpace>
+      <Container color="white">
+        <Header category="modal" headerColor="white" />
+        <EmptySpace></EmptySpace>
+        <div>
+          <ResultComment>어떤 걸 먹을까?</ResultComment>
+          <ResultComment>옵션 내용을 설정해주세요!</ResultComment>
+          <EmptySpace></EmptySpace>
 
-                  <form onSubmit={onSubmit}>
-                    <ButtonContainer>
-                      <input onChange={onChange} value={input} />
-                      <button type="submit">ADD</button>
-                    </ButtonContainer>
-                    <WarningComment>※ 2 ~ 6개의 값을 입력해주세요.</WarningComment>
-                  </form>
-                  <Divider></Divider>
-                  <ul>{RouletteItemList}</ul>
-                </div>
-                <Button theme="red" onClick={() => moveHref(data)}>
-                  룰렛 돌리기
-                </Button>
-              </Bounce>
-            </FullHeightFade>
-          </Container>
-        </FullHeightFade>
-      </Animated>
+          <form onSubmit={onSubmit}>
+            <ButtonContainer>
+              <input onChange={onChange} value={input} />
+              <button type="submit">ADD</button>
+            </ButtonContainer>
+            <WarningComment>※ 2 ~ 6개의 값을 입력해주세요.</WarningComment>
+          </form>
+          <Divider></Divider>
+          <ul>{RouletteItemList}</ul>
+        </div>
+        <Button theme="red" onClick={() => moveHref(data)}>
+          Start!
+        </Button>
+      </Container>
     );
   }
 }

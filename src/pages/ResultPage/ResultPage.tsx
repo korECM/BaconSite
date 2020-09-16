@@ -41,7 +41,15 @@ function ResultPage({ location }: RouteComponentProps) {
       .map((data) => data.split('='));
     let options: getShopsInterface = {};
     param.forEach((option) => {
-      if (option[0] === 'location' || option[0] === 'category' || option[0] === 'price' || option[0] === 'keyword') {
+      if (
+        option[0] === 'location' ||
+        option[0] === 'category' ||
+        option[0] === 'price' ||
+        option[0] === 'keyword' ||
+        option[0] === 'name' ||
+        option[0] === 'order' ||
+        option[0] === 'foodCategory'
+      ) {
         options = {
           ...options,
           [option[0]]: option[1],
@@ -62,7 +70,7 @@ function ResultPage({ location }: RouteComponentProps) {
           <RestaurantCardContainer>
             {shops.data.map((shop, index) => (
               <Link to={`/shop/${shop._id}`} key={shop._id}>
-                <RestaurantCard shop={shop} delay={index} />
+                <RestaurantCard shop={shop} delay={index * 75} />
               </Link>
             ))}
           </RestaurantCardContainer>

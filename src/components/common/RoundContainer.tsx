@@ -10,6 +10,8 @@ const RoundContainerBlock = styled.div`
   align-items: center;
 
   margin: 15px 0;
+  margin-left: 5%;
+  margin-right: 5%;
 
   border-radius: 12.5px;
 
@@ -19,14 +21,8 @@ const RoundContainerBlock = styled.div`
 
   animation-duration: 0.35s;
   animation-name: appear;
-  ${(props: RoundContainerProps) =>
-    props.delay &&
-    css`
-      /* animation-delay: ${props.delay / 150}s; */
-    `}
 
   ${(props: RoundContainerProps) =>
-    props.theme &&
     props.theme === 'gray' &&
     css`
       background-color: ${palette.middleLightGray};

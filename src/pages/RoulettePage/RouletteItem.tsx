@@ -7,7 +7,7 @@ const ButtonContainer = styled.div`
   height: 100%;
 
   b {
-    border-radius: 30px;
+    border-radius: 20px;
     border: none;
     outline: none;
     padding-left: 30px;
@@ -26,9 +26,9 @@ const ButtonContainer = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 10px 9px -9px rgba(0, 0, 0, 0.05);
 
     display: flex;
     align-items: center;

@@ -43,7 +43,7 @@ interface WriteReviewState {
     group: boolean;
     individual: boolean;
     riceAppointment: boolean;
-    spicy: boolean;
+    // spicy: boolean;
   };
   score: string;
   review: string;
@@ -57,7 +57,7 @@ const initialState: WriteReviewState = {
     group: false,
     individual: false,
     riceAppointment: false,
-    spicy: false,
+    // spicy: false,
   },
   score: '',
   review: '',
@@ -99,7 +99,7 @@ const writeReview = createReducer<WriteReviewState, WriteReviewAction>(initialSt
       group: false,
       individual: false,
       riceAppointment: false,
-      spicy: false,
+      // spicy: false,
     },
   }),
 });
