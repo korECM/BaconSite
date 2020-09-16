@@ -4,11 +4,13 @@ import palette, { hexToRGB } from '../../styles/palette';
 import Flag from '../../components/common/Flag';
 import { ShopsInterface } from '../../api/getShops';
 import { getScore } from '../../lib/scoreUtil';
-import { locationToString, keywordToString } from '../../lib/shopUtil';
-import BlankImage from 'assets/blank.png';
+import { locationToString, keywordToString, foodCategoryToString } from '../../lib/shopUtil';
+// import BlankImage from 'assets/blank.png';
+import GrayFooding from 'assets/fooding_gray.svg';
 import { useSpring, animated } from 'react-spring';
+import { FoodCategory } from 'api/getShop';
 
-const RestaurantCardBlock = styled(animated.button)`
+const RestaurantCardBlock = styled(animated.div)`
   border: none;
   outline: none;
   display: flex;
@@ -45,6 +47,7 @@ const RestaurantCardBlock = styled(animated.button)`
     align-items: center;
     text-align: left;
     margin: 0 10px;
+    color: black;
 
     .name {
       font-size: 15px;
@@ -104,7 +107,10 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
     <RestaurantCardBlock style={appear}>
       <div
         style={{
-          backgroundImage: `url(${shop.shopImage.length ? shop.shopImage[0].imageLink : BlankImage})`,
+          backgroundColor: palette.middleLightGray,
+          backgroundImage: `url(${shop.mainImage ? shop.mainImage : shop.shopImage.length ? shop.shopImage[0].imageLink : GrayFooding})`,
+          backgroundSize: shop.mainImage || shop.shopImage.length > 0 ? 'cover' : '60%',
+          backgroundRepeat: 'no-repeat',
         }}
         className="image"
       />
@@ -112,7 +118,16 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
         <div className="name">{shop.name}</div>
         <div className="loc">{locationToString(shop.location)}</div>
         <div className="tags">
-          {shop.topKeyword.map((keyword) => (
+          <div className="tag">
+            #
+            {shop.foodCategory.map((keyword) => {
+              if (keyword === FoodCategory.Etc && shop.foodCategory.length > 1) {
+                return '';
+              }
+              return foodCategoryToString(keyword);
+            })}
+          </div>
+          {shop.topKeyword.slice(0, 1).map((keyword) => (
             <div className="tag" key={keyword}>
               #{keywordToString(keyword)}
             </div>

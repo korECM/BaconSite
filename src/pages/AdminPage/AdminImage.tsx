@@ -8,11 +8,12 @@ import { apiLink } from '../../lib/getAPILink';
 import { Image } from '../../api/getShop';
 import { AdminElementInterface } from './AdminDetail';
 import palette, { hexToRGB } from '../../styles/palette';
+import ButtonGroup from 'components/common/ButtonGroup';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 const AdminShopImageBlock = styled.div`
-  display: flex;
-  width: calc(100% - 20px);
-  height: 140px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
   background-color: ${hexToRGB(palette.middleLightGray, 0.5)};
   border-radius: 15px;
   padding: 10px;
@@ -20,7 +21,7 @@ const AdminShopImageBlock = styled.div`
   align-items: center;
   .imageContainer {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     margin: 0 10px;
     height: 100%;
@@ -28,23 +29,26 @@ const AdminShopImageBlock = styled.div`
       margin: auto 0;
       cursor: pointer;
       img {
-        width: 35vw;
-        max-height: 100px;
+        width: 45vw;
+        max-height: 120px;
       }
     }
     button {
-      margin-top: auto;
-      margin-bottom: 0;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 12px;
     }
   }
 `;
 
-interface AdminImageProps extends AdminElementInterface {
+interface AdminImageProps extends AdminElementInterface, RouteComponentProps {
   images: Image[];
   type: 'shop' | 'menu';
 }
 
-function AdminImage({ images, reload, type, confirmAlert }: AdminImageProps) {
+function AdminImage({ images, reload, type, confirmAlert, match }: AdminImageProps) {
+  const shopId: string = (match.params as any).shopId;
+
   const onDelete = useCallback(
     (imageId: string) => {
       const request = async () => {
@@ -58,6 +62,25 @@ function AdminImage({ images, reload, type, confirmAlert }: AdminImageProps) {
     [reload, type, confirmAlert],
   );
 
+  const setMainImage = useCallback(
+    (imageLink: string) => {
+      const request = async () => {
+        await axios.post(
+          `${apiLink()}/shop/mainImage/${shopId}`,
+          {
+            imageLink,
+          },
+          {
+            withCredentials: true,
+          },
+        );
+        await reload();
+      };
+      if (confirmAlert()) request();
+    },
+    [reload, confirmAlert, shopId],
+  );
+
   return (
     <AdminShopImageBlock>
       {images.map((image) => (
@@ -65,13 +88,20 @@ function AdminImage({ images, reload, type, confirmAlert }: AdminImageProps) {
           <a href={image.imageLink}>
             <img src={image.imageLink} alt="가게 관련 사진" />
           </a>
-          <Button theme="red" onClick={() => onDelete(image._id)}>
-            삭제
-          </Button>
+          <ButtonGroup direction="column" gap="5px">
+            {type === 'shop' && (
+              <Button theme="red" onClick={() => setMainImage(image.imageLink)}>
+                가게 사진 설정
+              </Button>
+            )}
+            <Button theme="red" onClick={() => onDelete(image._id)}>
+              삭제
+            </Button>
+          </ButtonGroup>
         </div>
       ))}
     </AdminShopImageBlock>
   );
 }
 
-export default AdminImage;
+export default withRouter(AdminImage);

@@ -7,12 +7,10 @@ import palette from '../../styles/palette';
 import Flag from '../../components/common/Flag';
 import RestaurantCard from '../../components/common/RestaurantCard';
 import Loader from '../../components/common/Loader';
-import { Fade, Bounce } from 'react-awesome-reveal';
-import { Animated } from 'react-animated-css';
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import useShops from '../../hooks/useShops';
 import { getShopsInterface } from '../../api/getShops';
+import Title from 'lib/meta';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -43,7 +41,15 @@ function ResultPage({ location }: RouteComponentProps) {
       .map((data) => data.split('='));
     let options: getShopsInterface = {};
     param.forEach((option) => {
-      if (option[0] === 'location' || option[0] === 'category' || option[0] === 'price' || option[0] === 'keyword') {
+      if (
+        option[0] === 'location' ||
+        option[0] === 'category' ||
+        option[0] === 'price' ||
+        option[0] === 'keyword' ||
+        option[0] === 'name' ||
+        option[0] === 'order' ||
+        option[0] === 'foodCategory'
+      ) {
         options = {
           ...options,
           [option[0]]: option[1],
@@ -54,9 +60,7 @@ function ResultPage({ location }: RouteComponentProps) {
   }, [location, onGetShops]);
   return (
     <Container color="red">
-      <Helmet>
-        <title>당신만을 위한 식당 - 푸딩</title>
-      </Helmet>
+      <Title title="당신만을 위한 식당 - 푸딩" />
       <Header category="modal" headerColor="red" />
       {shops.loading ? (
         <Loader color="white" />
@@ -66,7 +70,7 @@ function ResultPage({ location }: RouteComponentProps) {
           <RestaurantCardContainer>
             {shops.data.map((shop, index) => (
               <Link to={`/shop/${shop._id}`} key={shop._id}>
-                <RestaurantCard shop={shop} delay={index} />
+                <RestaurantCard shop={shop} delay={index * 75} />
               </Link>
             ))}
           </RestaurantCardContainer>

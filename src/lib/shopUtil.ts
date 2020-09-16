@@ -1,4 +1,4 @@
-import { Location, ShopCategory, Keyword } from '../api/getShop';
+import { Location, ShopCategory, Keyword, FoodCategory } from '../api/getShop';
 
 export const categoryToString = (category: ShopCategory) => {
   switch (category) {
@@ -48,7 +48,24 @@ export const keywordToString = (keyword: keyof Keyword) => {
       return '혼밥';
     case 'riceAppointment':
       return '밥약';
-    case 'spicy':
-      return '매워요';
+    // case 'spicy':
+    //   return '매워요';
+  }
+};
+
+export const foodCategoryToString = (category: FoodCategory, withPostFix: boolean = false): string => {
+  switch (category) {
+    case FoodCategory.Bread:
+      return withPostFix ? '빵을' : '빵';
+    case FoodCategory.Meat:
+      return withPostFix ? '고기를' : '고기';
+    case FoodCategory.Noodle:
+      return withPostFix ? '면을' : '면';
+    case FoodCategory.Rice:
+      return withPostFix ? '밥을' : '밥';
+    case FoodCategory.Etc:
+      return withPostFix ? '그 외 기타를' : '그 외 기타';
+    default:
+      return '';
   }
 };

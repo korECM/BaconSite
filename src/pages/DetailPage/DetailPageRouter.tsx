@@ -4,8 +4,7 @@ import { withRouter, RouteComponentProps, Route } from 'react-router-dom';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import Loader from '../../components/common/Loader';
-// import DetailPage from './DetailPage';
-// import WriteReviewPage from './WriteReviewPage';
+import DetailImage from './DetailImage';
 
 const DetailPage = React.lazy(() => import(/* webpackChunkName: "detail", webpackPrefetch: true */ './DetailPage'));
 const WriteReviewPage = React.lazy(() => import(/* webpackChunkName: "detail", webpackPrefetch: true */ './WriteReviewPage'));
@@ -27,6 +26,8 @@ function DetailPageRouter({ match }: RouteComponentProps) {
       >
         <Route exact path={`${match.path}/:shopId`} component={DetailPage} />
         <Route path={`${match.path}/comment/:shopId`} component={WriteReviewPage} />
+        <Route path={`${match.path}/image/:shopId`} render={() => <DetailImage mode="shop" />} />
+        <Route path={`${match.path}/menuImage/:shopId`} render={() => <DetailImage mode="menu" />} />
       </Suspense>
     </DetailPageRouterBlock>
   );

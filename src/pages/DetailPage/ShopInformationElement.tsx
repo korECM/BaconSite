@@ -6,8 +6,20 @@ const ShopInformationBlock = styled(animated.div)`
   display: flex;
   margin: 20px 0;
   a,
-  span {
+  span,
+  div {
     margin-left: 10px;
+  }
+
+  .time {
+    display: flex;
+    flex-direction: column;
+    span {
+      margin-left: 0;
+    }
+    span + span {
+      margin-top: 10px;
+    }
   }
 `;
 

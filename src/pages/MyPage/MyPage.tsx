@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback } from 'react';
-import classNames from 'classnames/bind';
 import styled from 'styled-components';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
@@ -7,7 +6,6 @@ import palette from '../../styles/palette';
 import { AiTwotoneHeart, AiFillEdit } from 'react-icons/ai';
 import RestaurantCard from '../../components/common/RestaurantCard';
 import { Link, Redirect } from 'react-router-dom';
-import { Location } from '../../api/getShop';
 import useMyPage from '../../hooks/useMyPage';
 import Comment from '../DetailPage/Comment';
 import useCheck from '../../hooks/useCheck';
@@ -150,6 +148,8 @@ function MyPage() {
                     commentLikeOffset={Array.from(Array(reviews.data?.length)).map(() => 0)}
                     likeComment={() => {}}
                     openReviewReport={() => {}}
+                    openDeleteReport={() => {}}
+                    userId={user._id}
                   />
                 </div>
               ))}

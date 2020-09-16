@@ -14,7 +14,7 @@ interface RequestInterface {
     group: boolean;
     individual: boolean;
     riceAppointment: boolean;
-    spicy: boolean;
+    // spicy: boolean;
   };
 }
 

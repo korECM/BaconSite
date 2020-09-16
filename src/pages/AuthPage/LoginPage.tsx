@@ -12,8 +12,8 @@ import { AiOutlineUser, AiOutlineLock, AiOutlineIdcard } from 'react-icons/ai';
 import useAuth from '../../hooks/useAuth';
 import useCheck from '../../hooks/useCheck';
 import StyledInput from '../../components/common/StyledInput';
-import { Helmet } from 'react-helmet-async';
-import LogoImage from 'assets/fooding_titlelogo.png';
+import titlelogo from 'assets/fooding_logo_outline.svg';
+import Title from 'lib/meta';
 
 const AuthPageBlock = styled.div`
   padding: 0 5%;
@@ -234,14 +234,12 @@ function LoginPage({ history }: RouteComponentProps) {
 
   return (
     <Container color="white">
-      <Helmet>
-        <title>{mode === 'login' ? '로그인' : '회원가입'} - 푸딩</title>
-      </Helmet>
       <Header category="modal" headerColor="white" />
+      <Title title={`${mode === 'login' ? '로그인' : '회원가입'} - 푸딩`} />
       <AuthPageBlock>
         <Logo>
           <h1>뭐 먹을지 고민될 땐?</h1>
-          <img src={LogoImage} alt="logo" />
+          <img src={titlelogo} alt="logo" />
         </Logo>
         <AuthContainer onSubmit={onSubmit}>
           <AuthSelectBlock>

@@ -11,6 +11,7 @@ import AdminShopInformation from './AdminShopInformation';
 import AdminMenuInformation from './AdminMenuInformation';
 import AdminImage from './AdminImage';
 import AdminReviewInformation from './AdminReviewInformation';
+import BlankImage from 'assets/blank.png';
 
 const ShopImageContainer = styled.div`
   height: 60vw;
@@ -104,7 +105,7 @@ function AdminDetail({ match, location }: RouteComponentProps) {
     <Container color="white">
       <ShopImageContainer>
         <ShopImage
-          imageLink={shop.data.shopImage.length > 0 ? shop.data.shopImage[0].imageLink : 'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'}
+          imageLink={shop.data.mainImage ? shop.data.mainImage : shop.data.shopImage.length ? shop.data.shopImage[0].imageLink : BlankImage}
         ></ShopImage>
       </ShopImageContainer>
       <Header>

@@ -20,8 +20,18 @@ export enum Location {
   None = '',
 }
 
+export enum FoodCategory {
+  Rice = 'rice',
+  Bread = 'bread',
+  Noodle = 'noodle',
+  Meat = 'meat',
+  Etc = 'etc',
+  None = '',
+}
+
 export interface ShopInterface {
   _id: string;
+  mainImage: string;
   shopImage: Image[];
   menuImage: Image[];
   menus: Menu[];
@@ -29,6 +39,7 @@ export interface ShopInterface {
   contact: string;
   address: string;
   category: ShopCategory;
+  foodCategory: FoodCategory[];
   keyword: Keyword;
   open: string;
   closed: string;
@@ -59,7 +70,7 @@ export interface Keyword {
   group: number;
   individual: number;
   riceAppointment: number;
-  spicy: number;
+  // spicy: number;
 }
 
 export async function getShop(shopId: string) {

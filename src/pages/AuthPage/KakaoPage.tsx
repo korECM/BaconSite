@@ -12,7 +12,6 @@ import StyledInput from '../../components/common/StyledInput';
 import { AiOutlineIdcard } from 'react-icons/ai';
 import gender from 'assets/gender.png';
 import Button from '../../components/common/Button';
-import { Helmet } from 'react-helmet-async';
 
 const InputBlock = styled.div`
   padding: 0 5%;
@@ -166,9 +165,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
   if (kakao.data!.status === 303) {
     return (
       <Container color="white">
-        <Helmet>
-          <title>카카오 로그인 - 푸딩</title>
-        </Helmet>
+        <Title title="카카오 로그인 - 푸딩" />
         <Header category="modal" headerColor="white" />
         <InputBlock>
           <Title>카카오 로그인</Title>
