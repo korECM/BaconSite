@@ -297,7 +297,7 @@ class HomePage extends React.Component<Props, State> {
           <form onSubmit={onSubmit}>
             <ButtonContainer>
               <button type="submit" onClick={() => moveHref(data)}></button>
-              <input placeholder="search" onChange={onChange} value={input} />
+              <input placeholder="식당 or 메뉴를 검색하세요!" onChange={onChange} value={input} />
             </ButtonContainer>
           </form>
         </SearchBox>
