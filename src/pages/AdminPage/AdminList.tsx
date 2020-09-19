@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import useShops from '../../hooks/useShops';
 import palette, { hexToRGB } from '../../styles/palette';
@@ -75,4 +76,4 @@ function AdminList() {
   );
 }
 
-export default AdminList;
+export default withRouter(AdminList);

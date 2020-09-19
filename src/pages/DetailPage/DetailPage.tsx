@@ -867,7 +867,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
               닫기
             </Button>
             <Button theme="red" onClick={() => deleteReviewReportDispatch(reviewDeleteNumber)}>
-              제출하기
+              삭제하기
             </Button>
           </ButtonGroup>
         </ReviewReport>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { apiLink } from '../lib/getAPILink';
+import { ReviewWriteInterface } from './writeReview';
 
 export interface ReviewInterface {
   _id: string;
@@ -36,6 +37,13 @@ export async function getMyReview() {
 
 export async function checkTodayReviewAvailableAPI(shopId: string) {
   const response = await axios.get<CheckTodayReviewResponseInterface[]>(apiLink() + `/shop/review/checkToday/` + shopId, {
+    withCredentials: true,
+  });
+  return response.data;
+}
+
+export async function deleteReviewAPI(reviewId: string) {
+  const response = await axios.delete<ReviewWriteInterface>(apiLink() + `/shop/review/${reviewId}`, {
     withCredentials: true,
   });
   return response.data;

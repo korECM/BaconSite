@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
@@ -9,6 +9,12 @@ import { Link, Redirect } from 'react-router-dom';
 import useMyPage from '../../hooks/useMyPage';
 import Comment from '../DetailPage/Comment';
 import useCheck from '../../hooks/useCheck';
+import Report from 'pages/DetailPage/Report';
+import { generalReportStateToString } from 'lib/report';
+import useDetail from 'hooks/useDetail';
+import ProcessModal from 'components/common/ProcessModal';
+import ButtonGroup from 'components/common/ButtonGroup';
+import Button from 'components/common/Button';
 
 const MyPageBlock = styled.div``;
 const NameBlock = styled.div`
@@ -52,6 +58,23 @@ const InHeader = styled.div`
   }
 `;
 
+const GrayHeader = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  padding: 20px 30px;
+  font-size: 17px;
+
+  margin-bottom: 20px;
+  svg {
+    margin-right: 10px;
+    font-size: 1.5rem;
+  }
+  span {
+    font-weight: bolder;
+  }
+`;
+
 const LikeBlock = styled.div`
   margin-top: 15px;
 
@@ -71,7 +94,18 @@ const LikeBlock = styled.div`
 
 const ReviewBlock = styled.div`
   background-color: ${palette.white};
-  // 해야 AllButton margin 적용 됨
+  /* 해야 AllButton margin 적용 됨 */
+  padding-bottom: 0.1px;
+  .comments {
+    padding: 0 20px;
+    .commentWrapper + .commentWrapper {
+      margin-top: 15px;
+    }
+  }
+`;
+
+const ReportBlock = styled.div`
+  margin-top: 30px;
   padding-bottom: 0.1px;
   .comments {
     padding: 0 20px;
@@ -91,14 +125,44 @@ const AllButton = styled(Link)`
   cursor: pointer;
 `;
 
+const ReviewReport = styled.div`
+  textarea {
+    resize: none;
+    margin: 10px 0;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 25px;
+
+    border: 1px solid ${palette.middleGray};
+  }
+`;
+
 function MyPage() {
-  const { getMyShop, getMyReview, logoutDispatch, shops, reviews } = useMyPage();
+  const { getMyShop, getMyReview, logoutDispatch, getMyReport, shops, reviews, reports } = useMyPage();
+  const { deleteReview, deleteReviewReportDispatch } = useDetail('');
+  const [reviewDeleteNumber, setReviewDeleteNumber] = useState('');
+  const [reviewDeleteDone, setReviewDeleteDone] = useState(false);
   const { user } = useCheck();
+
+  const [reviewDeleteAlert, setReviewDeleteAlert] = useState(false);
+
+  const openReviewDelete = useCallback((reviewId: string) => {
+    setReviewDeleteAlert(true);
+    setReviewDeleteNumber(reviewId);
+  }, []);
 
   useEffect(() => {
     getMyShop();
     getMyReview();
-  }, [getMyShop, getMyReview]);
+    getMyReport();
+  }, [getMyShop, getMyReview, getMyReport]);
+
+  useEffect(() => {
+    if (deleteReview.data) {
+      setReviewDeleteDone(true);
+    }
+  }, [deleteReview.data]);
 
   if (!user) {
     return <Redirect to="/" />;
@@ -148,7 +212,7 @@ function MyPage() {
                     commentLikeOffset={Array.from(Array(reviews.data?.length)).map(() => 0)}
                     likeComment={() => {}}
                     openReviewReport={() => {}}
-                    openDeleteReport={() => {}}
+                    openDeleteReport={openReviewDelete}
                     userId={user._id}
                   />
                 </div>
@@ -158,7 +222,51 @@ function MyPage() {
             전체보기 {'>'}
           </AllButton>
         </ReviewBlock>
+        <ReportBlock>
+          <GrayHeader>
+            <AiFillEdit />
+            <span>신고 처리 및 정보 수정 현황</span>
+          </GrayHeader>
+          <div className="comments">
+            {reports.data &&
+              reports.data.map((report, index) => (
+                <div className="commentWrapper" key={report.registerDate}>
+                  <Report
+                    title={report.title}
+                    text={report.text.length > 0 ? report.text : '\u00A0'}
+                    date={report.registerDate}
+                    state={generalReportStateToString(report.state)}
+                  />
+                </div>
+              ))}
+          </div>
+          <AllButton to="" className="allButton">
+            전체보기 {'>'}
+          </AllButton>
+        </ReportBlock>
       </MyPageBlock>
+      <ProcessModal
+        onCancel={() => setReviewDeleteAlert(false)}
+        visible={reviewDeleteAlert}
+        done={reviewDeleteDone}
+        setDone={setReviewDeleteDone}
+        doneMessage="댓글이 정상적으로 삭제되었습니다"
+        afterDone={() => window.location.reload(false)}
+        error={deleteReview.error}
+        loading={deleteReview.loading}
+      >
+        <ReviewReport>
+          <h1 style={{ marginTop: '20px', marginBottom: '40px', textAlign: 'center' }}>정말로 댓글을 삭제하시겠습니까?</h1>
+          <ButtonGroup direction="row" gap="10px" rightAlign>
+            <Button theme="text" onClick={() => setReviewDeleteAlert(false)}>
+              닫기
+            </Button>
+            <Button theme="red" onClick={() => deleteReviewReportDispatch(reviewDeleteNumber)}>
+              삭제하기
+            </Button>
+          </ButtonGroup>
+        </ReviewReport>
+      </ProcessModal>
     </Container>
   );
 }

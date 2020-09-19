@@ -54,8 +54,9 @@ const CommentBlock = styled(RoundContainer)`
       color: ${palette.middleGray};
       cursor: pointer;
     }
-    .likeNum {
-      font-weight: bold;
+    .state {
+      margin-left: 10px;
+      color: ${palette.mainRed};
     }
   }
 
@@ -73,54 +74,27 @@ const CommentBlock = styled(RoundContainer)`
 `;
 
 interface CommentProps {
-  review: ReviewInterface;
-  index: number;
-  openReviewReport: (reviewId: string) => void;
-  openDeleteReport: (reviewId: string) => void;
-  likeComment: any;
-  commentLikeOffset: number[];
-  userId: string | undefined;
+  title: string;
+  text: string;
+  date: Date | string;
+  state: string;
 }
 
-function Comment({ review, index, openReviewReport, openDeleteReport, likeComment, commentLikeOffset, userId }: CommentProps) {
-  console.log(review.user._id !== userId);
+function Report({ date, state, text, title }: CommentProps) {
   return (
-    <CommentBlock theme="gray" delay={index * 150}>
+    <CommentBlock theme="gray">
       <div className="contentContainer">
-        <div className="name">{review.user.name}</div>
-        <div className="content">{review.comment}</div>
+        <div className="name">{title}</div>
+        <div className="content">{text}</div>
         <div className="detail">
-          {[new Date(review.registerDate)].map((date) => (
+          {[new Date(date)].map((date) => (
             <div key={date.toString()}>{`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
           ))}
-          <div className="likeNum">좋아요 {review.likeNum + commentLikeOffset[index]}개</div>
-          {review.user._id !== userId && (
-            <button onClick={() => openReviewReport(review._id)} className="report">
-              신고하기
-            </button>
-          )}
-          {review.user._id === userId && (
-            <button onClick={() => openDeleteReport(review._id)} className="report">
-              삭제하기
-            </button>
-          )}
+          <div className="state">{state}</div>
         </div>
       </div>
-      <button onClick={() => likeComment(index)}>
-        {commentLikeOffset[index] === 0 ? (
-          review.didLike ? (
-            <MdFavorite style={{ color: palette.mainRed }} />
-          ) : (
-            <MdFavoriteBorder />
-          )
-        ) : commentLikeOffset[index] === 1 ? (
-          <MdFavorite style={{ color: palette.mainRed }} />
-        ) : (
-          <MdFavoriteBorder />
-        )}
-      </button>
     </CommentBlock>
   );
 }
 
-export default Comment;
+export default Report;

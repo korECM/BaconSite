@@ -39,22 +39,22 @@ const base = [
   },
   {
     id: 5,
-    name: '정문 근처',
+    name: '현재 R&D관과 가까움',
     img: 'wondering_cat.png',
   },
   {
     id: 6,
-    name: '후문 근처',
+    name: '현재 310관과 가까움',
     img: 'wondering_cat.png',
   },
   {
     id: 7,
-    name: '혼밥',
+    name: '요즘 대세인 혼밥',
     img: 'wondering_cat.png',
   },
   {
     id: 8,
-    name: '혼밥 아님',
+    name: '시대에 뒤떨어진 합밥',
     img: 'wondering_cat.png',
   },
   {
@@ -109,15 +109,15 @@ const Image = styled.div`
 `;
 
 const SimpleImage = styled.img`
-  width: 100%;
+  width: 80%;
   object-fit: contain;
 `;
 
 const SimpleImageContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 120px;
-  margin-bottom: 50px;
+  margin-top: 60px;
+  margin-bottom: 20px;
   padding: 0 30px;
 `;
 

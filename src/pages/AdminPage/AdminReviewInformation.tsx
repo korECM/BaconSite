@@ -6,7 +6,7 @@ import Button from '../../components/common/Button';
 import axios from 'axios';
 import { apiLink } from '../../lib/getAPILink';
 import { AdminElementInterface } from './AdminDetail';
-import { ReviewInterface } from '../../api/getReview';
+import { ReviewInterface } from '../../api/review';
 import ButtonGroup from '../../components/common/ButtonGroup';
 
 const CommentContainer = styled.div`

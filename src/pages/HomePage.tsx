@@ -55,12 +55,12 @@ const Categories = styled.h1`
 
 const ButtonLine = styled.h1`
   display: 100%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 0%;
+  margin-right: 0%;
   font-family: 'Nanum Gothic';
   font-weight: 200;
   color: white;
-  padding-bottom: 3px;
+  padding-bottom: 0px;
 
   vertical-align: center;
 `;
@@ -74,7 +74,10 @@ const ButtonBlock = styled.button`
   width: 27%;
   height: 90px;
 
-  margin: 3%;
+  margin-bottom: 0%;
+  margin-top: 0%;
+  margin-left: 3%;
+  margin-right: 3%;
 
   background-color: ${palette.mainRed};
   color: ${palette.white};
@@ -98,7 +101,7 @@ const TextBox = styled.h1`
 
 const Divider = styled.div`
   border-bottom: 0px solid rgba(138, 138, 138, 0.5);
-  margin-bottom: 17px;
+  margin-bottom: 60px;
 `;
 
 const SearchBox = styled.div`
@@ -113,7 +116,7 @@ const SearchBox = styled.div`
   border-style: solid;
   border-width: 2px;
   margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const SearchBoxContainer = styled.div`
@@ -269,7 +272,6 @@ class HomePage extends React.Component<Props, State> {
         <TitleLogo>
           <img src={titlelogo} alt="titlelogo" />
         </TitleLogo>
-        <Categories>Categories</Categories>
         <Divider></Divider>
         <ButtonLine>
           <ButtonBlock>
@@ -295,7 +297,7 @@ class HomePage extends React.Component<Props, State> {
           <form onSubmit={onSubmit}>
             <ButtonContainer>
               <button type="submit" onClick={() => moveHref(data)}></button>
-              <input placeholder="search" onChange={onChange} value={input} />
+              <input placeholder="식당 or 메뉴를 검색하세요!" onChange={onChange} value={input} />
             </ButtonContainer>
           </form>
         </SearchBox>
