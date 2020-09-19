@@ -109,14 +109,14 @@ const Image = styled.div`
 `;
 
 const SimpleImage = styled.img`
-  width: 100%;
+  width: 80%;
   object-fit: contain;
 `;
 
 const SimpleImageContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 60px;
   margin-bottom: 20px;
   padding: 0 30px;
 `;
