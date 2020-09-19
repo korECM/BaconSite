@@ -98,7 +98,7 @@ const TextBox = styled.h1`
 
 const Divider = styled.div`
   border-bottom: 0px solid rgba(138, 138, 138, 0.5);
-  margin-bottom: 17px;
+  margin-bottom: 40px;
 `;
 
 const SearchBox = styled.div`
@@ -269,7 +269,6 @@ class HomePage extends React.Component<Props, State> {
         <TitleLogo>
           <img src={titlelogo} alt="titlelogo" />
         </TitleLogo>
-        <Categories>Categories</Categories>
         <Divider></Divider>
         <ButtonLine>
           <ButtonBlock>
