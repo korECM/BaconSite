@@ -18,6 +18,11 @@ function loadUser() {
     // TODO: localStorage는 없고 쿠키만 있는 경우 로그인 안되는 오류 존재
     const user = localStorage.getItem('user');
     if (!user) {
+      (store.dispatch as ThunkDispatch<
+        RootState,
+        void,
+        ReturnType<typeof checkAsync.request> | ReturnType<typeof checkAsync.success> | ReturnType<typeof checkAsync.failure>
+      >)(checkThunk());
       const trackingId = 'UA-177861548-1'; // Replace with your Google Analytics tracking ID
       ReactGA.initialize(trackingId);
       ReactGA.set({
