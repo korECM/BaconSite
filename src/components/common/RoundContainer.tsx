@@ -9,9 +9,9 @@ const RoundContainerBlock = styled.div`
   justify-content: center;
   align-items: center;
 
-  margin: 15px 0;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin: 20px 0;
+  margin-left: 0%;
+  margin-right: 0%;
 
   border-radius: 12.5px;
 

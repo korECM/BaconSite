@@ -55,8 +55,8 @@ const Categories = styled.h1`
 
 const ButtonLine = styled.h1`
   display: 100%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 0%;
+  margin-right: 0%;
   font-family: 'Nanum Gothic';
   font-weight: 200;
   color: white;
@@ -101,7 +101,7 @@ const TextBox = styled.h1`
 
 const Divider = styled.div`
   border-bottom: 0px solid rgba(138, 138, 138, 0.5);
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 `;
 
 const SearchBox = styled.div`
