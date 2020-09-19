@@ -80,8 +80,8 @@ const ImageContainer = styled.div`
   position: relative;
   vertical-align: middle;
 
-  height: 44vw;
-  width: 55vw;
+  /* height: calc(); */
+  width: 100%;
   margin: auto;
   margin-top: 30px;
   margin-bottom: 50px;
@@ -91,8 +91,6 @@ const ImageContainer = styled.div`
 
 const Image = styled.div`
   position: absolute;
-  display: center;
-  align: center;
 
   top: 0;
   left: 0;
@@ -108,6 +106,19 @@ const Image = styled.div`
     css`
       background-image: url(${props.imageLink});
     `}
+`;
+
+const SimpleImage = styled.img`
+  width: 100%;
+  object-fit: contain;
+`;
+
+const SimpleImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 120px;
+  margin-bottom: 50px;
+  padding: 0 30px;
 `;
 
 const ActionContainer = styled.div`
@@ -268,9 +279,12 @@ class YesNoPage extends React.Component<Props, State> {
             <Header category="modal" headerColor="red" />
             <FullHeightFade>
               <Bounce>
-                <ImageContainer>
+                <SimpleImageContainer>
+                  <SimpleImage src={wondering_cat} />
+                </SimpleImageContainer>
+                {/* <ImageContainer>
                   <Image imageLink={wondering_cat} />
-                </ImageContainer>
+                </ImageContainer> */}
               </Bounce>
             </FullHeightFade>
             {views.map((view, index) => {
