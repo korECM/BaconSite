@@ -11,7 +11,7 @@ import React, { useEffect } from 'react';
 import useShops from '../../hooks/useShops';
 import { getShopsInterface } from '../../api/getShops';
 import Title from 'lib/meta';
-import noResultCat from './noResultCat.png';
+import noResultCat from 'assets/noResultCat.png';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -34,7 +34,7 @@ const NoResultComment = styled.h1`
 `;
 
 const SimpleImage = styled.img`
-  width: 60%;
+  height: 150px;
   object-fit: contain;
 `;
 
