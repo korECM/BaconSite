@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styled from 'styled-components';
 import RoundContainer from '../../components/common/RoundContainer';
 import palette from '../../styles/palette';
-import { ReviewInterface } from '../../api/getReview';
+import { ReviewInterface } from '../../api/review';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 
 const CommentBlock = styled(RoundContainer)`

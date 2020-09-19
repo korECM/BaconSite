@@ -3,12 +3,12 @@ import { AxiosError } from 'axios';
 import { ShopInterface, getShop, Location, ShopCategory, FoodCategory } from '../api/getShop';
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
-import { ReviewInterface, getReview, checkTodayReviewAvailableAPI, CheckTodayReviewResponseInterface } from '../api/getReview';
+import { ReviewInterface, getReview, checkTodayReviewAvailableAPI, CheckTodayReviewResponseInterface, deleteReviewAPI } from '../api/review';
 import { ImageUploadResponseInterface, shopImageUpload, menuImageUpload } from '../api/uploadImage';
 import { LikeInterface, likeShopAPI, unlikeShopAPI } from '../api/likeShop';
 import { LocationInterface, getLocation } from '../api/getLocation';
 import { LikeCommentInterface, likeCommentAPI, unlikeCommentAPI } from '../api/likeComment';
-import { ReportInterface, reportShopAPI, reportReviewAPI, deleteReviewAPI } from '../api/report';
+import { ReportInterface, reportShopAPI, reportReviewAPI } from '../api/report';
 
 const RESET_DATA = 'detail/RESET_DATA' as const;
 

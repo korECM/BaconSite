@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import createAsyncThunk from '../lib/createAsyncThunk';
 import { AsyncState, asyncState } from '../lib/reducerUtils';
 import { getMyShops, ShopsInterface } from '../api/getShops';
-import { getMyReview, ReviewInterface } from '../api/getReview';
+import { getMyReview, ReviewInterface } from '../api/review';
 
 const MY_SHOP = 'myPage/MY_SHOP' as const;
 const MY_SHOP_SUCCESS = 'myPage/MY_SHOP_SUCCESS' as const;
