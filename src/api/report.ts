@@ -53,19 +53,19 @@ export interface ImageReportResponse {
 }
 
 export async function getShopReportAPI() {
-  const response = await axios.get<ShopReportResponse>(apiLink() + `/report/shop`, {
+  const response = await axios.get<ShopReportResponse[]>(apiLink() + `/report/shop`, {
     withCredentials: true,
   });
   return response.data;
 }
 export async function getReviewReportAPI() {
-  const response = await axios.get<ReviewReportResponse>(apiLink() + `/report/review`, {
+  const response = await axios.get<ReviewReportResponse[]>(apiLink() + `/report/review`, {
     withCredentials: true,
   });
   return response.data;
 }
 export async function getImageReportAPI() {
-  const response = await axios.get<ImageReportResponse>(apiLink() + `/report/image`, {
+  const response = await axios.get<ImageReportResponse[]>(apiLink() + `/report/image`, {
     withCredentials: true,
   });
   return response.data;
