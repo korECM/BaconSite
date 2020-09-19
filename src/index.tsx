@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux';
 import Thunk, { ThunkDispatch } from 'redux-thunk';
 import rootReducer, { RootState } from './modules';
 import { BrowserRouter } from 'react-router-dom';
-import { setUser, checkThunk, checkAsync } from './modules/user';
+import { setUser, checkThunk, checkAsync, logoutAsync, logoutThunk } from './modules/user';
 import { UserInterface } from './api/auth';
 import ReactGA from 'react-ga';
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(Thunk)));
@@ -21,8 +21,8 @@ function loadUser() {
       (store.dispatch as ThunkDispatch<
         RootState,
         void,
-        ReturnType<typeof checkAsync.request> | ReturnType<typeof checkAsync.success> | ReturnType<typeof checkAsync.failure>
-      >)(checkThunk());
+        ReturnType<typeof logoutAsync.request> | ReturnType<typeof logoutAsync.success> | ReturnType<typeof logoutAsync.failure>
+      >)(logoutThunk());
       const trackingId = 'UA-177861548-1'; // Replace with your Google Analytics tracking ID
       ReactGA.initialize(trackingId);
       ReactGA.set({
