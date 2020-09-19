@@ -60,7 +60,7 @@ const ButtonLine = styled.h1`
   font-family: 'Nanum Gothic';
   font-weight: 200;
   color: white;
-  padding-bottom: 3px;
+  padding-bottom: 0px;
 
   vertical-align: center;
 `;
@@ -74,7 +74,10 @@ const ButtonBlock = styled.button`
   width: 27%;
   height: 90px;
 
-  margin: 3%;
+  margin-bottom: 0%;
+  margin-top: 0%;
+  margin-left: 3%;
+  margin-right: 3%;
 
   background-color: ${palette.mainRed};
   color: ${palette.white};
@@ -113,7 +116,7 @@ const SearchBox = styled.div`
   border-style: solid;
   border-width: 2px;
   margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const SearchBoxContainer = styled.div`
