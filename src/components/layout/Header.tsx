@@ -5,7 +5,7 @@ import palette from '../../styles/palette';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useCheck from '../../hooks/useCheck';
 import FoodingTitleRed from 'assets/fooding_title_outline_red.svg';
-import FoodingTitleWhite from 'assets/FoodingTitleWhite.png';
+import FoodingTitleWhite from 'assets/fooding_title_white.svg';
 import JustFooding from 'assets/myfooding.svg';
 
 const HeaderBlock = styled.div`
