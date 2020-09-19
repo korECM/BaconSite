@@ -9,6 +9,8 @@ import { Link, Redirect } from 'react-router-dom';
 import useMyPage from '../../hooks/useMyPage';
 import Comment from '../DetailPage/Comment';
 import useCheck from '../../hooks/useCheck';
+import Report from 'pages/DetailPage/Report';
+import { generalReportStateToString } from 'lib/report';
 
 const MyPageBlock = styled.div``;
 const NameBlock = styled.div`
@@ -52,6 +54,23 @@ const InHeader = styled.div`
   }
 `;
 
+const GrayHeader = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  padding: 20px 30px;
+  font-size: 17px;
+
+  margin-bottom: 20px;
+  svg {
+    margin-right: 10px;
+    font-size: 1.5rem;
+  }
+  span {
+    font-weight: bolder;
+  }
+`;
+
 const LikeBlock = styled.div`
   margin-top: 15px;
 
@@ -71,7 +90,18 @@ const LikeBlock = styled.div`
 
 const ReviewBlock = styled.div`
   background-color: ${palette.white};
-  // 해야 AllButton margin 적용 됨
+  /* 해야 AllButton margin 적용 됨 */
+  padding-bottom: 0.1px;
+  .comments {
+    padding: 0 20px;
+    .commentWrapper + .commentWrapper {
+      margin-top: 15px;
+    }
+  }
+`;
+
+const ReportBlock = styled.div`
+  margin-top: 30px;
   padding-bottom: 0.1px;
   .comments {
     padding: 0 20px;
@@ -92,13 +122,14 @@ const AllButton = styled(Link)`
 `;
 
 function MyPage() {
-  const { getMyShop, getMyReview, logoutDispatch, shops, reviews } = useMyPage();
+  const { getMyShop, getMyReview, logoutDispatch, getMyReport, shops, reviews, reports } = useMyPage();
   const { user } = useCheck();
 
   useEffect(() => {
     getMyShop();
     getMyReview();
-  }, [getMyShop, getMyReview]);
+    getMyReport();
+  }, [getMyShop, getMyReview, getMyReport]);
 
   if (!user) {
     return <Redirect to="/" />;
@@ -158,6 +189,23 @@ function MyPage() {
             전체보기 {'>'}
           </AllButton>
         </ReviewBlock>
+        <ReportBlock>
+          <GrayHeader>
+            <AiFillEdit />
+            <span>신고 처리 및 정보 수정 현황</span>
+          </GrayHeader>
+          <div className="comments">
+            {reports.data &&
+              reports.data.map((report, index) => (
+                <div className="commentWrapper" key={report.registerDate}>
+                  <Report title={report.title} text={report.text} date={report.registerDate} state={generalReportStateToString(report.state)} />
+                </div>
+              ))}
+          </div>
+          <AllButton to="" className="allButton">
+            전체보기 {'>'}
+          </AllButton>
+        </ReportBlock>
       </MyPageBlock>
     </Container>
   );

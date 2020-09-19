@@ -43,12 +43,26 @@ export function reportTypeToString(report: number) {
   return '';
 }
 
+export function generalReportStateToString(report: string) {
+  switch (report) {
+    case 'issued':
+      return '신고 접수됨';
+    case 'confirmed':
+      return '신고 처리 중';
+    case 'done':
+      return '신고 처리됨';
+    case 'rejected':
+      return '신고 보류';
+  }
+  return '';
+}
+
 export function shopReportStateToString(report: ShopReportState) {
   switch (report) {
     case ShopReportState.Issued:
       return '신고 접수됨';
     case ShopReportState.Confirmed:
-      return '신고 확인 중';
+      return '신고 처리 중';
     case ShopReportState.Done:
       return '신고 처리됨';
     case ShopReportState.Rejected:

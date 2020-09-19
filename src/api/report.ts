@@ -171,3 +171,17 @@ export async function reportImageAPI(imageId: string) {
   );
   return response.data;
 }
+
+export interface MyReportResponse {
+  title: string;
+  text: string;
+  registerDate: string;
+  state: string;
+}
+
+export async function getMyReport() {
+  const response = await axios.get<MyReportResponse[]>(apiLink() + `/report/my`, {
+    withCredentials: true,
+  });
+  return response.data;
+}
