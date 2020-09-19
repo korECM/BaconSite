@@ -11,6 +11,7 @@ import React, { useEffect } from 'react';
 import useShops from '../../hooks/useShops';
 import { getShopsInterface } from '../../api/getShops';
 import Title from 'lib/meta';
+import noResultCat from './noResultCat.png';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -20,6 +21,39 @@ const ResultComment = styled.h1`
   margin-bottom: 0px;
   color: white;
   padding: 45px;
+`;
+
+const NoResultComment = styled.h1`
+  font-size: 17px;
+  font-family: 'Nanum Gothic';
+  font-weight: 900;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: white;
+`;
+
+const SimpleImage = styled.img`
+  width: 60%;
+  object-fit: contain;
+`;
+
+const SimpleImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0 30px;
+`;
+
+const Divider = styled.div`
+  border-bottom: 0px solid rgba(138, 138, 138, 0.5);
+  margin-bottom: 60px;
+`;
+
+const TopDivider = styled.div`
+  border-bottom: 0px solid rgba(138, 138, 138, 0.5);
+  margin-bottom: 60px;
 `;
 
 const RestaurantCardContainer = styled.div`
@@ -66,14 +100,30 @@ function ResultPage({ location }: RouteComponentProps) {
         <Loader color="white" />
       ) : shops.data ? (
         <>
-          <ResultComment>검색 결과를 찾았습니다!</ResultComment>
-          <RestaurantCardContainer>
-            {shops.data.map((shop, index) => (
-              <Link to={`/shop/${shop._id}`} key={shop._id}>
-                <RestaurantCard shop={shop} delay={index * 75} />
-              </Link>
-            ))}
-          </RestaurantCardContainer>
+          {shops.data.length === 0 ? (
+            <>
+              <TopDivider></TopDivider>
+              <NoResultComment>앗, 검색 결과가 없습니다!</NoResultComment>
+              <Divider></Divider>
+              <SimpleImageContainer>
+                <SimpleImage src={noResultCat} />
+              </SimpleImageContainer>
+              <Divider></Divider>
+              <NoResultComment>다른 옵션으로</NoResultComment>
+              <NoResultComment>다시 검색해주세요</NoResultComment>
+            </>
+          ) : (
+            <>
+              <ResultComment>검색 결과를 찾았습니다!</ResultComment>
+              <RestaurantCardContainer>
+                {shops.data.map((shop, index) => (
+                  <Link to={`/shop/${shop._id}`} key={shop._id}>
+                    <RestaurantCard shop={shop} delay={index * 75} />
+                  </Link>
+                ))}
+              </RestaurantCardContainer>
+            </>
+          )}
         </>
       ) : (
         <div>불러오는 중 에러 발생</div>
