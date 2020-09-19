@@ -12,6 +12,7 @@ import StyledInput from '../../components/common/StyledInput';
 import { AiOutlineIdcard } from 'react-icons/ai';
 import gender from 'assets/gender.png';
 import Button from '../../components/common/Button';
+import Title from 'lib/meta';
 
 const InputBlock = styled.div`
   padding: 0 5%;
@@ -19,9 +20,10 @@ const InputBlock = styled.div`
   text-align: center;
 `;
 
-const Title = styled.div`
+const TitleBlock = styled.div`
   color: ${palette.mainRed};
   font-size: 25px;
+  font-weight: bold;
   margin: 50px 0;
 `;
 
@@ -168,7 +170,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
         <Title title="카카오 로그인 - 푸딩" />
         <Header category="modal" headerColor="white" />
         <InputBlock>
-          <Title>카카오 로그인</Title>
+          <TitleBlock>카카오 로그인</TitleBlock>
           <StyledInput name="name" type="text" onChange={onChangeInput} placeholder="닉네임" value={name} icon={<AiOutlineIdcard />} />
           <GenderWrapper>
             <img src={gender} alt="gender 이미지" />

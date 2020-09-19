@@ -1,17 +1,15 @@
-// import React, { useEffect, useRef, useCallback } from 'react';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
 import { withRouter, RouteComponentProps, Route, Link } from 'react-router-dom';
-import palette from '../../styles/palette';
-import Flag from '../../components/common/Flag';
 import RestaurantCard from '../../components/common/RestaurantCard';
 import Loader from '../../components/common/Loader';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useShops from '../../hooks/useShops';
 import { getShopsInterface } from '../../api/getShops';
 import Title from 'lib/meta';
-import noResultCat from './noResultCat.png';
+import noResultCat from 'assets/NoResultCat.png';
+import noResultCat2 from 'assets/NoResultCat2.png';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -34,7 +32,7 @@ const NoResultComment = styled.h1`
 `;
 
 const SimpleImage = styled.img`
-  width: 60%;
+  height: 150px;
   object-fit: contain;
 `;
 
@@ -68,6 +66,8 @@ const RestaurantCardContainer = styled.div`
 function ResultPage({ location }: RouteComponentProps) {
   const { onGetShops, shops } = useShops();
 
+  const [isSearch, setIsSearch] = useState(false);
+
   useEffect(() => {
     const param = location.search
       .split('?')[1]
@@ -88,6 +88,8 @@ function ResultPage({ location }: RouteComponentProps) {
           ...options,
           [option[0]]: option[1],
         };
+      } else if (option[0] === 'search') {
+        setIsSearch(true);
       }
     });
     onGetShops(options);
@@ -106,10 +108,10 @@ function ResultPage({ location }: RouteComponentProps) {
               <NoResultComment>앗, 검색 결과가 없습니다!</NoResultComment>
               <Divider></Divider>
               <SimpleImageContainer>
-                <SimpleImage src={noResultCat} />
+                <SimpleImage src={isSearch ? noResultCat2 : noResultCat} />
               </SimpleImageContainer>
               <Divider></Divider>
-              <NoResultComment>다른 옵션으로</NoResultComment>
+              {isSearch ? <NoResultComment>다른 검색어로</NoResultComment> : <NoResultComment>다른 옵션으로</NoResultComment>}
               <NoResultComment>다시 검색해주세요</NoResultComment>
             </>
           ) : (
