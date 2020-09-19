@@ -9,6 +9,23 @@ export interface ReportShopInterface {
   type: boolean[];
   comment: string;
 }
+export interface ShopID {
+  foodCategory: string[];
+  _id: string;
+  name: string;
+  mainImage: string;
+  contact: string;
+  address: string;
+  category: string;
+  open: string;
+  closed: string;
+  location: string;
+  keyword: string;
+  latitude: number;
+  longitude: number;
+  price: number;
+  registerDate: string;
+}
 
 export enum ShopReportState {
   Issued = 'issued',
@@ -29,27 +46,59 @@ export enum ImageReportState {
 }
 
 export interface ShopReportResponse {
+  _id: string;
   comment: string;
   type: number[];
-  shopId: string;
+  shopId: ShopID;
   userId: string;
   registerDate: Date;
   state: ShopReportState;
 }
 
 export interface ReviewReportResponse {
+  _id: string;
   comment: string;
-  reviewId: string;
-  userId: string;
+  reviewId: ReviewID;
+  userId: UserID;
   registerDate: Date;
   state: ReviewReportState;
 }
 
 export interface ImageReportResponse {
+  _id: string;
   imageId: string;
   userId: string;
   registerDate: Date;
   state: ImageReportState;
+}
+
+export interface ReviewID {
+  like: any[];
+  _id: string;
+  user: User;
+  shop: string;
+  comment: string;
+  registerDate: string;
+  __v: number;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+}
+
+export interface UserID {
+  likeShop: any[];
+  _id: string;
+  name: string;
+  email: string;
+  provider: string;
+  gender: string;
+  snsId: string;
+  isAdmin: boolean;
+  kakaoNameSet: boolean;
+  registerDate: string;
+  __v: number;
 }
 
 export async function getShopReportAPI() {
