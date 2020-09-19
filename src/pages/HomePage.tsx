@@ -264,7 +264,7 @@ class HomePage extends React.Component<Props, State> {
 
     return (
       <Container color="white">
-        <Header category="main" headerColor="none" />
+        <Header category="main" headerColor="none" withOutHeaderIcon />
         <TitleSlogan>뭐 먹을지 고민될 땐?</TitleSlogan>
         <TitleLogo>
           <img src={titlelogo} alt="titlelogo" />
