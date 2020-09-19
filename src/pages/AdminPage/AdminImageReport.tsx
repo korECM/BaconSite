@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { getReviewReportAPI, ReviewReportResponse } from 'api/report';
+import { getImageReportAPI, getReviewReportAPI, ImageReportResponse, ReviewReportResponse } from 'api/report';
 import { dateToString } from 'lib/date';
 import palette from 'styles/palette';
 import { deleteReviewAPI } from 'api/review';
 import { apiLink } from 'lib/getAPILink';
-import { reviewReportStateToString } from 'lib/report';
+import { imageReportStateToString, reviewReportStateToString } from 'lib/report';
 import { withRouter } from 'react-router-dom';
 
-const AdminReviewReportBlock = styled.div``;
+const AdminImageReportBlock = styled.div``;
 
 const ReportContainer = styled.div``;
 
@@ -48,21 +48,31 @@ const Report = styled.div`
     margin-right: 10px;
     background-color: transparent;
   }
+
+  img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    object-position: center;
+  }
 `;
 
-function AdminReviewReport() {
-  const [report, setReport] = useState<ReviewReportResponse[]>([]);
+function AdminImageReport() {
+  const [report, setReport] = useState<ImageReportResponse[]>([]);
 
   const request = async () => {
-    const response = await getReviewReportAPI();
+    const response = await getImageReportAPI();
     setReport(response);
   };
 
-  const deleteComment = async (report: ReviewReportResponse) => {
+  const deleteImage = async (report: ImageReportResponse) => {
     try {
-      await deleteReviewAPI(report.reviewId._id);
+      await axios.delete(apiLink() + `/shop/${report.imageId.type}Image/${report.imageId._id}`, {
+        withCredentials: true,
+      });
+
       await axios.put(
-        apiLink() + `/report/review/${report._id}`,
+        apiLink() + `/report/image/${report._id}`,
         {
           state: 'done',
         },
@@ -76,10 +86,10 @@ function AdminReviewReport() {
     }
   };
 
-  const rejectReport = async (report: ReviewReportResponse) => {
+  const rejectReport = async (report: ImageReportResponse) => {
     try {
       await axios.put(
-        apiLink() + `/report/review/${report._id}`,
+        apiLink() + `/report/image/${report._id}`,
         {
           state: 'reject',
         },
@@ -98,28 +108,26 @@ function AdminReviewReport() {
   }, []);
 
   return (
-    <AdminReviewReportBlock>
+    <AdminImageReportBlock>
       <ReportContainer>
         {report.map((report) => (
           <Report key={`${report.registerDate}`}>
-            <div>신고한 사람 : {report.userId.name}</div>
-            <div className="comment">
-              <div>댓글 작성자 : {report.reviewId.user.name}</div>
-              <div>내용 : {report.reviewId.comment}</div>
-            </div>
-            <div>신고 사유 : {report.comment}</div>
-            <div>상태 : {reviewReportStateToString(report.state)}</div>
-            <div>신고일 : {dateToString(report.registerDate)}</div>
             <div>
-              <button onClick={() => deleteComment(report)}>댓글 삭제</button>
+              <img src={report.imageId.imageLink} alt="사진" />
+            </div>
+            <div>가게 이름 : {report.imageId.shopId.name}</div>
+            <div>신고일 : {dateToString(report.registerDate)}</div>
+            <div>상태 : {imageReportStateToString(report.state)}</div>
+            <div>
+              <button onClick={() => deleteImage(report)}>사진 삭제</button>
               <button onClick={() => rejectReport(report)}>신고 거절</button>
-              <a href={`/shop/${report.reviewId.shop}`}>신고한 가게</a>
+              <a href={`/shop/${report.imageId.shopId._id}`}>신고한 가게</a>
             </div>
           </Report>
         ))}
       </ReportContainer>
-    </AdminReviewReportBlock>
+    </AdminImageReportBlock>
   );
 }
 
-export default withRouter(AdminReviewReport);
+export default withRouter(AdminImageReport);

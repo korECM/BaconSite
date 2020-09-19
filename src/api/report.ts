@@ -66,10 +66,24 @@ export interface ReviewReportResponse {
 
 export interface ImageReportResponse {
   _id: string;
-  imageId: string;
+  imageId: ImageID;
   userId: string;
   registerDate: Date;
   state: ImageReportState;
+}
+
+export interface ImageID {
+  _id: string;
+  imageLink: string;
+  shopId: ShopID;
+  type: string;
+  registerDate: string;
+  __v: number;
+}
+
+export interface ShopID {
+  _id: string;
+  name: string;
 }
 
 export interface ReviewID {

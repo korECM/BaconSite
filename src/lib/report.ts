@@ -1,4 +1,4 @@
-import { ReviewReportState, ShopReportState } from 'api/report';
+import { ImageReportState, ReviewReportState, ShopReportState } from 'api/report';
 
 {
   /* <div>
@@ -64,6 +64,18 @@ export function reviewReportStateToString(report: ReviewReportState) {
     case ReviewReportState.Done:
       return '신고 처리됨';
     case ReviewReportState.Rejected:
+      return '신고 보류';
+  }
+  return '';
+}
+
+export function imageReportStateToString(report: ImageReportState) {
+  switch (report) {
+    case ImageReportState.Issued:
+      return '신고 접수됨';
+    case ImageReportState.Done:
+      return '신고 처리됨';
+    case ImageReportState.Rejected:
       return '신고 보류';
   }
   return '';
