@@ -257,7 +257,8 @@ function LoginPage({ history }: RouteComponentProps) {
             )}
             <StyledInput name="password" type="password" placeholder="비밀번호" onChange={changeInputDispatch} value={form.password} icon={<AiOutlineLock />} />
             {mode === 'login' ? (
-              <FooterText>비밀번호 찾기</FooterText>
+              // <FooterText>비밀번호 찾기</FooterText>
+              <></>
             ) : (
               <>
                 <StyledInput
