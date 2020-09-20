@@ -668,8 +668,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         <SimpleImageContainer>
           <SimpleImage src={noResultCat} />
         </SimpleImageContainer>
-        {/* <NoResultComment>주소를</NoResultComment> */}
-        <NoResultComment>주소를 확인해주세요</NoResultComment>
+        <NoResultComment>주소가 맞는지</NoResultComment>
+        <NoResultComment>다시 한번 확인해주세요</NoResultComment>
       </Container>
     );
   }
