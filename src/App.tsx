@@ -18,6 +18,7 @@ const LoginPageRouter = React.lazy(() => import(/* webpackChunkName: "login", we
 const YesNoPageRouter = React.lazy(() => import(/* webpackChunkName: "yesno", webpackPrefetch: true */ './pages/YesNoPage/YesNoPageRouter'));
 const FilterPageRouter = React.lazy(() => import(/* webpackChunkName: "filter", webpackPrefetch: true */ './pages/FilterPage/FilterPageRouter'));
 const MyPageRouter = React.lazy(() => import(/* webpackChunkName: "myPage", webpackPrefetch: true */ './pages/MyPage/MyPage'));
+const Page404 = React.lazy(() => import(/* webpackChunkName: "404", webpackPrefetch: true */ './pages/Page404'));
 
 const history = createBrowserHistory();
 
@@ -50,6 +51,7 @@ function App() {
         <Route component={RouletteListRouter} path="/rouletteList" />
         <Route component={FilterPageRouter} path="/filter" />
         <Route component={MyPageRouter} path="/myPage" />
+        <Route component={Page404} />
       </Switch>
     </Suspense>
   );

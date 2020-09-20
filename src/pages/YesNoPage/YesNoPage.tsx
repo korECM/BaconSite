@@ -113,8 +113,8 @@ const SimpleImage = styled.img`
 const SimpleImageContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 120px;
+  margin-bottom: 50px;
   padding: 0 30px;
 `;
 
