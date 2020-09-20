@@ -291,6 +291,7 @@ const SimpleImage = styled.img`
   width: 80%;
   max-height: 500px;
   height: auto;
+  min-height: 250px;
   object-fit: contain;
 `;
 
