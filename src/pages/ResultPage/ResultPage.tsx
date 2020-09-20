@@ -128,7 +128,17 @@ function ResultPage({ location }: RouteComponentProps) {
           )}
         </>
       ) : (
-        <div>불러오는 중 에러 발생</div>
+        <>
+          <TopDivider></TopDivider>
+          <NoResultComment>앗, 결과를 받아올 수 없었어요!</NoResultComment>
+          <Divider></Divider>
+          <SimpleImageContainer>
+            <SimpleImage src={noResultCat} />
+          </SimpleImageContainer>
+          <Divider></Divider>
+          <NoResultComment>잠시 후에</NoResultComment>
+          <NoResultComment>다시 시도해주세요</NoResultComment>
+        </>
       )}
     </Container>
   );

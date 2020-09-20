@@ -23,6 +23,7 @@ import ButtonGroup from 'components/common/ButtonGroup';
 import ProcessModal, { AlertModal } from 'components/common/ProcessModal';
 import GrayFooding from 'assets/fooding_gray.svg';
 import imageCompression from 'browser-image-compression';
+import noResultCat from 'assets/NoResultCat.png';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -273,6 +274,33 @@ const ReviewReport = styled.div`
 const SlimButton = styled(Button)`
   padding-left: 20px;
   padding-right: 20px;
+`;
+
+const NoResultComment = styled.h1`
+  font-size: 17px;
+  font-family: 'Nanum Gothic';
+  font-weight: 900;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: ${palette.mainRed};
+`;
+
+const SimpleImage = styled.img`
+  height: 150px;
+  object-fit: contain;
+`;
+
+const SimpleImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0 30px;
+`;
+
+const TopDivider = styled.div`
+  margin-bottom: 60px;
 `;
 
 interface DetailPageProps extends RouteComponentProps {}
@@ -630,14 +658,18 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     );
   }
 
-  if (shop.error === 406) {
+  if (shop.error === 406 || shop.error === 400) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
-        <ShopTitle>존재하지 않는 가게에요</ShopTitle>
-        <ShopImageContainer>
-          <ShopImage imageLink={'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
-        </ShopImageContainer>
+        <TopDivider></TopDivider>
+        <NoResultComment>앗, 존재하지 않는 가게에요!</NoResultComment>
+        <TopDivider></TopDivider>
+        <SimpleImageContainer>
+          <SimpleImage src={noResultCat} />
+        </SimpleImageContainer>
+        <NoResultComment>주소가 맞는지</NoResultComment>
+        <NoResultComment>다시 한번 확인해주세요</NoResultComment>
       </Container>
     );
   }
@@ -646,10 +678,14 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
-        <ShopTitle>서버로부터 데이터를 받아오는데 실패했어요</ShopTitle>
-        <ShopImageContainer>
-          <ShopImage imageLink={'http://with.ibk.co.kr/file/webzine/403/wz_403_3_5_1551325876.jpg'} />
-        </ShopImageContainer>
+        <TopDivider></TopDivider>
+        <NoResultComment>앗, 결과를 받아올 수 없었어요!</NoResultComment>
+        <TopDivider></TopDivider>
+        <SimpleImageContainer>
+          <SimpleImage src={noResultCat} />
+        </SimpleImageContainer>
+        <NoResultComment>잠시 후에</NoResultComment>
+        <NoResultComment>다시 시도해주세요</NoResultComment>
       </Container>
     );
   }
