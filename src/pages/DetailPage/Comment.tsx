@@ -83,7 +83,6 @@ interface CommentProps {
 }
 
 function Comment({ review, index, openReviewReport, openDeleteReport, likeComment, commentLikeOffset, userId }: CommentProps) {
-  console.log(review.user._id !== userId);
   return (
     <CommentBlock theme="gray" delay={index * 150}>
       <div className="contentContainer">

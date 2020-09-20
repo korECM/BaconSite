@@ -69,9 +69,6 @@ const base = [
   },
 ];
 
-// dataset array shuffle randomly
-console.log(base);
-
 interface ShopImageProps {
   imageLink: string;
 }
@@ -202,8 +199,6 @@ class YesNoPage extends React.Component<Props, State> {
       views: [base[2 * this.count], base[2 * this.count + 1]],
     }));
 
-    console.log(resultDataSet);
-
     if (this.count === 5) {
       data[0] = 'recommended';
 
@@ -271,7 +266,6 @@ class YesNoPage extends React.Component<Props, State> {
     const { moveHref } = this;
     const { views, end, round, sequence } = this.state;
     const path = './';
-    console.log(this.state);
     return (
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
         <FullHeightFade>

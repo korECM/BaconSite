@@ -9,7 +9,6 @@ const LoginPageRouterBlock = styled.div`
 `;
 
 function LoginPageRouter({ match }: RouteComponentProps) {
-  console.log(`${match.path}/kakao/callback`);
   return (
     <LoginPageRouterBlock>
       <Route exact path={`${match.path}/login`} component={LoginPage} />

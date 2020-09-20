@@ -33,7 +33,6 @@ function Radar({ shop }: RadarProps) {
     (Object.values(shop.keyword)
       .filter((a) => typeof a === 'number')
       .reduce((a: number, b: number) => a + b, 0) as number) + 1;
-  console.log(shop.keyword);
   let data =
     sum === 1
       ? [NaN, NaN, NaN, NaN, NaN]
@@ -44,8 +43,6 @@ function Radar({ shop }: RadarProps) {
           shop.keyword.individual / sum || 0.05,
           shop.keyword.riceAppointment / sum || 0.05,
         ];
-
-  console.log(data);
 
   return (
     <RadarContainer>
