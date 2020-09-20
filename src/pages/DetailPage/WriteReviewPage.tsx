@@ -201,7 +201,7 @@ function WriteReviewPage({ match, history }: RouteComponentProps) {
 
       <Title>리뷰를 공유해주세요!</Title>
       <FlexContainer>
-        <TextAreaBlock rows={16} placeholder="내용을 작성해주세요." name="review" onChange={onChangeEvent} value={review} />
+        <TextAreaBlock maxLength={500} rows={16} placeholder="내용을 작성해주세요." name="review" onChange={onChangeEvent} value={review} />
       </FlexContainer>
       <FlexContainer>
         <SubmitButton theme="white" onClick={onSubmit}>
