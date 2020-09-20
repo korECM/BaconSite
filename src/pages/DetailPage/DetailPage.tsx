@@ -23,7 +23,8 @@ import ButtonGroup from 'components/common/ButtonGroup';
 import ProcessModal, { AlertModal } from 'components/common/ProcessModal';
 import GrayFooding from 'assets/fooding_gray.svg';
 import imageCompression from 'browser-image-compression';
-import noResultCat from 'assets/NoResultCat.png';
+import Cat500 from 'assets/Cat500.svg';
+import Cat404 from 'assets/Cat404.svg';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -287,7 +288,9 @@ const NoResultComment = styled.h1`
 `;
 
 const SimpleImage = styled.img`
-  height: 150px;
+  width: 80%;
+  max-height: 500px;
+  height: auto;
   object-fit: contain;
 `;
 
@@ -666,7 +669,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         <NoResultComment>앗, 존재하지 않는 가게에요!</NoResultComment>
         <TopDivider></TopDivider>
         <SimpleImageContainer>
-          <SimpleImage src={noResultCat} />
+          <SimpleImage src={Cat404} />
         </SimpleImageContainer>
         <NoResultComment>주소가 맞는지</NoResultComment>
         <NoResultComment>다시 한번 확인해주세요</NoResultComment>
@@ -682,7 +685,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         <NoResultComment>앗, 결과를 받아올 수 없었어요!</NoResultComment>
         <TopDivider></TopDivider>
         <SimpleImageContainer>
-          <SimpleImage src={noResultCat} />
+          <SimpleImage src={Cat500} />
         </SimpleImageContainer>
         <NoResultComment>잠시 후에</NoResultComment>
         <NoResultComment>다시 시도해주세요</NoResultComment>
