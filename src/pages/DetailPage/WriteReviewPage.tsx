@@ -58,7 +58,7 @@ const ScoreContainer = styled.div`
     color: ${palette.mainRed};
     font-weight: bolder;
     font-family: inherit;
-    background: url(https://bacon-shop-assets.s3.ap-northeast-2.amazonaws.com/downArrow.png) no-repeat 95% 50%;
+    background: url(https://d3ojewq8movb4o.cloudfront.net/downArrow.png) no-repeat 95% 50%;
     background-color: white;
     -webkit-appearance: none;
     -moz-appearance: none;
