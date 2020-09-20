@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import useShops from '../../hooks/useShops';
 import { getShopsInterface } from '../../api/getShops';
 import Title from 'lib/meta';
-import noResultCat from 'assets/noResultCat.png';
+import noResultCat from 'assets/NoResultCat.png';
 import noResultCat2 from 'assets/NoResultCat2.png';
 
 const ResultComment = styled.h1`

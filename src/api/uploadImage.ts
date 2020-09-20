@@ -5,11 +5,12 @@ export interface ImageUploadResponseInterface {
   locations: string[];
 }
 
-export async function shopImageUpload(shopId: string, files: FileList) {
+export async function shopImageUpload(shopId: string, files: (File | Blob)[]) {
   const formData = new FormData();
 
   for (let index = 0; index < files.length; index++) {
-    const file = files.item(index);
+    // const file = files.item(index);
+    const file = files[index];
     if (file) formData.append('imgFile', file);
   }
 
@@ -27,11 +28,12 @@ export async function shopImageUpload(shopId: string, files: FileList) {
   return response.data;
 }
 
-export async function menuImageUpload(shopId: string, files: FileList) {
+export async function menuImageUpload(shopId: string, files: (File | Blob)[]) {
   const formData = new FormData();
 
   for (let index = 0; index < files.length; index++) {
-    const file = files.item(index);
+    // const file = files.item(index);
+    const file = files[index];
     if (file) formData.append('imgFile', file);
   }
 
