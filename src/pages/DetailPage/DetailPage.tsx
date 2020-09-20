@@ -22,6 +22,7 @@ import Title from 'lib/meta';
 import ButtonGroup from 'components/common/ButtonGroup';
 import ProcessModal, { AlertModal } from 'components/common/ProcessModal';
 import GrayFooding from 'assets/fooding_gray.svg';
+import imageCompression from 'browser-image-compression';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -390,42 +391,78 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     menuFileRef.current?.click();
   };
 
-  const fileSizeAlert = (fileRef: React.RefObject<HTMLInputElement>) => {
-    const files = fileRef.current?.files;
+  // const fileSizeAlert = (fileRef: React.RefObject<HTMLInputElement>) => {
+  //   const files = fileRef.current?.files;
+  //   if (files?.length) {
+  //     if (files.length > 10) {
+  //       setImageCountToBigShow(true);
+  //       fileRef.current!.value = '';
+  //       return false;
+  //     }
+  //     for (let index = 0; index < files.length; index++) {
+  //       const file = files.item(index);
+  //       if (file && file.size > 5 * 1024 * 1024) {
+  //         setImageSizeToBigShow(true);
+  //         // alert('사진의 크기가 5MB보다 큽니다');
+  //         fileRef.current!.value = '';
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //   }
+  //   return false;
+  // };
+
+  const onShopFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    let files = shopFileRef.current?.files;
+    let resizedFile: (File | Blob)[] = [];
     if (files?.length) {
-      if (files.length > 10) {
-        setImageCountToBigShow(true);
-        fileRef.current!.value = '';
-        return false;
-      }
-      for (let index = 0; index < files.length; index++) {
-        const file = files.item(index);
-        if (file && file.size > 5 * 1024 * 1024) {
-          setImageSizeToBigShow(true);
-          // alert('사진의 크기가 5MB보다 큽니다');
-          fileRef.current!.value = '';
-          return false;
+      setShopImageUploadShow(true);
+      for (const imageFile of Array.from(files)) {
+        console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+        console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+
+        let options = {
+          maxSizeMB: 1,
+        };
+        try {
+          const compressedFile = await imageCompression(imageFile, options);
+          console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+          console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+          resizedFile.push(compressedFile);
+        } catch (error) {
+          console.error(error);
         }
       }
-      return true;
     }
-    return false;
+    onShopImageUploadRequest(resizedFile);
+    shopFileRef.current!.value = '';
   };
 
-  const onShopFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (fileSizeAlert(shopFileRef)) {
-      onShopImageUploadRequest(shopFileRef.current!.files!);
-      setShopImageUploadShow(true);
-      shopFileRef.current!.value = '';
-    }
-  };
-
-  const onMenuFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (fileSizeAlert(menuFileRef)) {
-      onMenuImageUploadRequest(menuFileRef.current!.files!);
+  const onMenuFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    let files = menuFileRef.current?.files;
+    let resizedFile: (File | Blob)[] = [];
+    if (files?.length) {
       setMenuImageUploadShow(true);
-      menuFileRef.current!.value = '';
+      for (const imageFile of Array.from(files)) {
+        console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+        console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+
+        let options = {
+          maxSizeMB: 0.5,
+        };
+        try {
+          const compressedFile = await imageCompression(imageFile, options);
+          console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+          console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+          resizedFile.push(compressedFile);
+        } catch (error) {
+          console.error(error);
+        }
+      }
     }
+    onMenuImageUploadRequest(resizedFile);
+    menuFileRef.current!.value = '';
   };
 
   const onLikeButton = () => {
@@ -879,7 +916,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         setDone={setShopImageUploadDone}
         doneMessage="사진이 정상적으로 업로드되었습니다"
         error={shopImage.error}
-        loading={shopImage.loading}
+        loading={true && shopImageUploadDone === false}
       />
       <ProcessModal
         onCancel={() => setMenuImageUploadShow(false)}
@@ -888,7 +925,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         setDone={setMenuImageUploadDone}
         doneMessage="사진이 정상적으로 업로드되었습니다"
         error={menuImage.error}
-        loading={menuImage.loading}
+        loading={true && menuImageUploadDone === false}
       />
       <ProcessModal
         onCancel={() => setCheckReviewModalShow(false)}
