@@ -22,6 +22,7 @@ const NoResultComment = styled.h1`
 const SimpleImage = styled.img`
   width: 80%;
   max-height: 500px;
+  min-height: 250px;
   height: auto;
   object-fit: contain;
 `;
