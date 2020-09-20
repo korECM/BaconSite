@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import palette from '../../styles/palette';
-import { AiTwotoneHeart, AiFillEdit } from 'react-icons/ai';
+import { AiTwotoneHeart, AiFillEdit, AiOutlineClose } from 'react-icons/ai';
 import RestaurantCard from '../../components/common/RestaurantCard';
 import { Link, Redirect } from 'react-router-dom';
 import useMyPage from '../../hooks/useMyPage';
@@ -26,6 +26,7 @@ const NameBlock = styled.div`
   background-color: ${palette.white};
   .name {
     font-size: 12px;
+    color: black;
     span {
       font-size: 20px;
     }
@@ -71,7 +72,6 @@ const GrayHeader = styled.div`
     font-size: 1.5rem;
   }
   span {
-    font-weight: bolder;
   }
 `;
 
@@ -115,14 +115,17 @@ const ReportBlock = styled.div`
   }
 `;
 
-const AllButton = styled(Link)`
+const AllButton = styled.button`
   color: ${palette.mainRed};
+  border: none;
+  outline: none;
   display: block;
   width: 100px;
   margin: 30px auto;
   font-size: 12.5px;
   text-align: center;
   cursor: pointer;
+  background-color: transparent;
 `;
 
 const ReviewReport = styled.div`
@@ -138,12 +141,69 @@ const ReviewReport = styled.div`
   }
 `;
 
+const AllHeaderBlock = styled.div`
+  border: none;
+  border-radius: 10px;
+  background-color: ${palette.mainRed};
+  margin: 25px 0;
+  padding: 12.5px 0;
+  display: flex;
+  align-items: center;
+  color: white;
+  .heart {
+    margin-left: 20px;
+    margin-right: 10px;
+    font-size: 1.25rem;
+  }
+  span {
+    font-size: 12.5px;
+  }
+`;
+
+const AllBlock = styled.div`
+  .shopsContainer {
+    margin-top: 25px;
+    background-color: transparent;
+    .shops {
+      a {
+        display: block;
+      }
+      a + a {
+        margin-top: 15px;
+      }
+    }
+  }
+  .comments {
+    .commentWrapper + .commentWrapper {
+      margin-top: 15px;
+    }
+  }
+`;
+
+const AllModeCloseButton = styled(AiOutlineClose)`
+  outline: none;
+  border: none;
+
+  padding: 10px;
+
+  margin-left: auto;
+  margin-right: 10px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  cursor: pointer;
+`;
+
 function MyPage() {
   const { getMyShop, getMyReview, logoutDispatch, getMyReport, shops, reviews, reports } = useMyPage();
   const { deleteReview, deleteReviewReportDispatch } = useDetail('');
   const [reviewDeleteNumber, setReviewDeleteNumber] = useState('');
   const [reviewDeleteDone, setReviewDeleteDone] = useState(false);
+
+  type AllMode = 'none' | 'shops' | 'reviews' | 'reports';
+
   const { user } = useCheck();
+  const [allMode, setAllMode] = useState<AllMode>('none');
 
   const [reviewDeleteAlert, setReviewDeleteAlert] = useState(false);
 
@@ -171,17 +231,93 @@ function MyPage() {
   return (
     <Container color="white">
       <Header category="modal" headerColor="white" titleColor={palette.mainRed} titleText="마이푸딩" />
-      <MyPageBlock>
-        <NameBlock>
-          <div className="name">
-            <span>{user.name}</span>님, 반가워요!
-          </div>
-          <button onClick={logoutDispatch}>로그아웃</button>
-        </NameBlock>
-        <LikeBlock>
-          <InHeader>
-            <AiTwotoneHeart /> 가고싶어요
-          </InHeader>
+      {allMode !== 'none' && (
+        <AllHeaderBlock>
+          <AiTwotoneHeart className="heart" />
+          {allMode === 'shops' && <span>나중에 가려고 킵해둔 식당</span>}
+          {allMode === 'reviews' && <span>{user.name}님의 리뷰</span>}
+          {allMode === 'reports' && <span>내가 딱 잡아낸 신고와 정보 처리 현황</span>}
+          <AllModeCloseButton onClick={() => setAllMode('none')} />
+        </AllHeaderBlock>
+      )}
+      {allMode === 'none' && (
+        <MyPageBlock>
+          <NameBlock>
+            <div className="name">
+              <span>{user.name}</span>님, 반가워요!
+            </div>
+            <button onClick={logoutDispatch}>로그아웃</button>
+          </NameBlock>
+          <LikeBlock>
+            <InHeader>
+              <AiTwotoneHeart /> 가고싶어요
+            </InHeader>
+            <div className="shopsContainer">
+              <div className="shops">
+                {shops.data &&
+                  shops.data.slice(0, 2).map((shop, index) => (
+                    <Link to={`/shop/${shop._id}`} key={shop._id}>
+                      <RestaurantCard shop={shop} delay={index} />
+                    </Link>
+                  ))}
+              </div>
+              <AllButton className="allButton" onClick={() => setAllMode('shops')}>
+                전체보기 {'>'}
+              </AllButton>
+            </div>
+          </LikeBlock>
+          <ReviewBlock>
+            <InHeader>
+              <AiFillEdit />
+              {user.name}
+              <span>님의 리뷰</span>
+            </InHeader>
+            <div className="comments">
+              {reviews.data &&
+                reviews.data.slice(0, 2).map((review, index) => (
+                  <div className="commentWrapper" key={review._id}>
+                    <Comment
+                      review={review}
+                      index={index}
+                      commentLikeOffset={Array.from(Array(reviews.data?.length)).map(() => 0)}
+                      likeComment={() => {}}
+                      openReviewReport={() => {}}
+                      openDeleteReport={openReviewDelete}
+                      userId={user._id}
+                    />
+                  </div>
+                ))}
+            </div>
+            <AllButton className="allButton" onClick={() => setAllMode('reviews')}>
+              전체보기 {'>'}
+            </AllButton>
+          </ReviewBlock>
+          <ReportBlock>
+            <GrayHeader>
+              <AiFillEdit />
+              <span>신고 처리 및 정보 수정 현황</span>
+            </GrayHeader>
+            <div className="comments">
+              {reports.data &&
+                reports.data.slice(0, 2).map((report, index) => (
+                  <div className="commentWrapper" key={report.registerDate}>
+                    <Report
+                      title={report.title}
+                      text={report.text.length > 0 ? report.text : '\u00A0'}
+                      date={report.registerDate}
+                      state={generalReportStateToString(report.state)}
+                    />
+                  </div>
+                ))}
+            </div>
+            <AllButton className="allButton" onClick={() => setAllMode('reports')}>
+              전체보기 {'>'}
+            </AllButton>
+          </ReportBlock>
+        </MyPageBlock>
+      )}
+      {allMode === 'shops' && (
+        <AllBlock>
           <div className="shopsContainer">
             <div className="shops">
               {shops.data &&
@@ -191,20 +327,14 @@ function MyPage() {
                   </Link>
                 ))}
             </div>
-            <AllButton to="" className="allButton">
-              전체보기 {'>'}
-            </AllButton>
           </div>
-        </LikeBlock>
-        <ReviewBlock>
-          <InHeader>
-            <AiFillEdit />
-            {user.name}
-            <span>님의 리뷰</span>
-          </InHeader>
+        </AllBlock>
+      )}
+      {allMode === 'reviews' && (
+        <AllBlock>
           <div className="comments">
             {reviews.data &&
-              reviews.data.map((review, index) => (
+              reviews.data.slice(0, 2).map((review, index) => (
                 <div className="commentWrapper" key={review._id}>
                   <Comment
                     review={review}
@@ -218,15 +348,10 @@ function MyPage() {
                 </div>
               ))}
           </div>
-          <AllButton to="" className="allButton">
-            전체보기 {'>'}
-          </AllButton>
-        </ReviewBlock>
-        <ReportBlock>
-          <GrayHeader>
-            <AiFillEdit />
-            <span>신고 처리 및 정보 수정 현황</span>
-          </GrayHeader>
+        </AllBlock>
+      )}
+      {allMode === 'reports' && (
+        <AllBlock>
           <div className="comments">
             {reports.data &&
               reports.data.map((report, index) => (
@@ -240,11 +365,8 @@ function MyPage() {
                 </div>
               ))}
           </div>
-          <AllButton to="" className="allButton">
-            전체보기 {'>'}
-          </AllButton>
-        </ReportBlock>
-      </MyPageBlock>
+        </AllBlock>
+      )}
       <ProcessModal
         onCancel={() => setReviewDeleteAlert(false)}
         visible={reviewDeleteAlert}

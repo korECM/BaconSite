@@ -116,7 +116,6 @@ function KakaoPage({ location, history }: RouteComponentProps) {
   useEffect(() => {
     if (user) {
       console.log('check 성공');
-      console.log(user);
       try {
         localStorage.setItem('user', JSON.stringify(user));
         let redir = localStorage.getItem('redir');

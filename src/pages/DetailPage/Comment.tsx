@@ -11,7 +11,7 @@ const CommentBlock = styled(RoundContainer)`
 
   text-align: left;
   align-items: center;
-  padding: 5px 20px;
+  padding: 7.5px 25px;
   padding-right: 10px;
 
   margin: 0;
@@ -31,12 +31,12 @@ const CommentBlock = styled(RoundContainer)`
   }
   .content {
     margin-top: 5px;
-    font-size: 11.5px;
+    font-size: 10px;
     line-height: 1.5;
   }
 
   .detail {
-    margin-top: 5px;
+    margin-top: 7.5px;
     font-size: 10px;
     display: flex;
     align-items: center;
@@ -83,7 +83,6 @@ interface CommentProps {
 }
 
 function Comment({ review, index, openReviewReport, openDeleteReport, likeComment, commentLikeOffset, userId }: CommentProps) {
-  console.log(review.user._id !== userId);
   return (
     <CommentBlock theme="gray" delay={index * 150}>
       <div className="contentContainer">

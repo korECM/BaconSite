@@ -100,7 +100,6 @@ class YesNoDraw extends React.Component<Props> {
   render() {
     const { id, name, img } = this.props;
     const path = './';
-    console.log(this.state);
 
     return (
       <div
