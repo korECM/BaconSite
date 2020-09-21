@@ -125,19 +125,19 @@ class YesNoDraw extends React.Component<Props> {
         }}
       >
         {id % 2 === 1 ? (
-          <FullHeightFade>
+          <Fade>
             <SimpleImageContainer>
               <SimpleImage src={img} />
             </SimpleImageContainer>
-          </FullHeightFade>
+          </Fade>
         ) : (
           <></>
         )}
-        <FullHeightFade>
+        <Fade>
           <Button theme="white" big onClick={moveHref}>
             {name}
           </Button>
-        </FullHeightFade>
+        </Fade>
       </div>
     );
   }
