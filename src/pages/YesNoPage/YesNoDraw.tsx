@@ -90,6 +90,7 @@ interface Props {
   id: number;
   name: string;
   img: string;
+  show: boolean;
   onChange: (e: number) => void;
 }
 
@@ -102,6 +103,7 @@ class YesNoDraw extends React.Component<Props> {
     id: 1,
     name: '',
     img: '',
+    show: false,
     onChange: handleChange,
   };
 
@@ -111,13 +113,14 @@ class YesNoDraw extends React.Component<Props> {
   }
 
   render() {
-    const { id, name, img } = this.props;
+    const { id, name, img, show } = this.props;
     const path = './';
 
     return (
       <Bounce>
         <div
           className="yesNoDraw"
+          style={{ display: show ? 'block' : 'none' }}
           onClick={() => {
             this.handleClick(id);
           }}

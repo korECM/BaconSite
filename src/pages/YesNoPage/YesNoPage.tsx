@@ -125,6 +125,7 @@ class YesNoPage extends React.Component<Props, State> {
   componentDidMount() {
     let imageList = [country, flex, instagram, location, friends];
     imageList.forEach((image) => {
+      console.log('load');
       new Image().src = image;
     });
   }
@@ -226,9 +227,19 @@ class YesNoPage extends React.Component<Props, State> {
         <FullHeightFade>
           <Container color="red">
             <Header category="modal" headerColor="red" />
-            {views.map((view, index) => {
+            {base.map((view, index) => (
+              <YesNoDraw
+                show={index === 2 * this.count || index === 2 * this.count + 1}
+                key={index}
+                id={view.id}
+                name={view.name}
+                img={view.img}
+                onChange={(id) => this.handleChange(id)}
+              />
+            ))}
+            {/* {views.map((view, index) => {
               return <YesNoDraw key={index} id={view.id} name={view.name} img={view.img} onChange={(id) => this.handleChange(id)} />;
-            })}
+            })} */}
             <ActionContainer></ActionContainer>
           </Container>
         </FullHeightFade>
