@@ -117,34 +117,28 @@ class YesNoDraw extends React.Component<Props> {
     const path = './';
 
     return (
-      <Bounce>
-        <div
-          className="yesNoDraw"
-          style={{ display: show ? 'block' : 'none' }}
-          onClick={() => {
-            this.handleClick(id);
-          }}
-        >
-          {id % 2 === 1 ? (
-            <FullHeightFade>
-              <Bounce>
-                <SimpleImageContainer>
-                  <SimpleImage src={img} />
-                </SimpleImageContainer>
-              </Bounce>
-            </FullHeightFade>
-          ) : (
-            <></>
-          )}
-          <FullHeightFade>
-            <Bounce>
-              <Button theme="white" big onClick={moveHref}>
-                {name}
-              </Button>
-            </Bounce>
-          </FullHeightFade>
-        </div>
-      </Bounce>
+      <div
+        className="yesNoDraw"
+        style={{ display: show ? 'block' : 'none' }}
+        onClick={() => {
+          this.handleClick(id);
+        }}
+      >
+        {id % 2 === 1 ? (
+          <Fade>
+            <SimpleImageContainer>
+              <SimpleImage src={img} />
+            </SimpleImageContainer>
+          </Fade>
+        ) : (
+          <></>
+        )}
+        <Fade>
+          <Button theme="white" big onClick={moveHref}>
+            {name}
+          </Button>
+        </Fade>
+      </div>
     );
   }
 }

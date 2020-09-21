@@ -224,10 +224,9 @@ class YesNoPage extends React.Component<Props, State> {
     const { views } = this.state;
     return (
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
-        <FullHeightFade>
+        <Fade>
           <Container color="red">
             <Header category="modal" headerColor="red" />
-<<<<<<< Updated upstream
             {base.map((view, index) => (
               <YesNoDraw
                 show={index === 2 * this.count || index === 2 * this.count + 1}
@@ -241,18 +240,9 @@ class YesNoPage extends React.Component<Props, State> {
             {/* {views.map((view, index) => {
               return <YesNoDraw key={index} id={view.id} name={view.name} img={view.img} onChange={(id) => this.handleChange(id)} />;
             })} */}
-=======
-            {views.map((view, index) => {
-              return (
-                <Bounce>
-                  <YesNoDraw key={index} id={view.id} name={view.name} img={view.img} onChange={(id) => this.handleChange(id)} />
-                </Bounce>
-              );
-            })}
->>>>>>> Stashed changes
             <ActionContainer></ActionContainer>
           </Container>
-        </FullHeightFade>
+        </Fade>
       </Animated>
     );
   }
