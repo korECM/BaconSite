@@ -224,7 +224,7 @@ class YesNoPage extends React.Component<Props, State> {
     const { views } = this.state;
     return (
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
-        <Fade>
+        <FullHeightFade>
           <Container color="red">
             <Header category="modal" headerColor="red" />
             {base.map((view, index) => (
@@ -242,7 +242,7 @@ class YesNoPage extends React.Component<Props, State> {
             })} */}
             <ActionContainer></ActionContainer>
           </Container>
-        </Fade>
+        </FullHeightFade>
       </Animated>
     );
   }
