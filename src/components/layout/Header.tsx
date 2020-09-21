@@ -141,7 +141,12 @@ function Header(props: HeaderProps) {
           {/* <button className="left">
             <img src={logo} style={{ width: '40px', height: '40px' }} alt="logo" />
           </button> */}
-          {!props.withOutHeaderIcon && <img className="titleLogo" src={props.headerColor === 'red' ? FoodingTitleWhite : FoodingTitleRed} alt="title" />}
+          <img
+            style={{ display: props.withOutHeaderIcon ? 'none' : 'inline-block' }}
+            className="titleLogo"
+            src={props.headerColor === 'red' ? FoodingTitleWhite : FoodingTitleRed}
+            alt="title"
+          />
           <button onClick={onRightButtonClick} className="right myPage">
             <img src={JustFooding} alt="mypage" />
             <div>마이푸딩</div>
