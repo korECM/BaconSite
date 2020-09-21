@@ -10,7 +10,7 @@ import { Animated } from 'react-animated-css';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import FullHeightFade from '../../components/common/FullHeightFade';
-import wondering_cat from './wondering_cat.png';
+import wondering_cat from 'assets/wondering_cat.png';
 import noResultCat from 'assets/NoResultCat.svg';
 import noResultCat2 from 'assets/NoResultCat2.svg';
 import YesNoDraw from './YesNoDraw';
