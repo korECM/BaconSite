@@ -4,68 +4,69 @@ import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import palette from '../../styles/palette';
-import Flag from '../../components/common/Flag';
-import Button from '../../components/common/Button';
-import Loader from '../../components/common/Loader';
 // import Button from './button';
 import { Fade, Bounce } from 'react-awesome-reveal';
 import { Animated } from 'react-animated-css';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import FullHeightFade from '../../components/common/FullHeightFade';
-import wondering_cat from './wondering_cat.png';
+import country from 'assets/country.svg';
+import flex from 'assets/flex.svg';
+import friends from 'assets/friends.svg';
+import instagram from 'assets/instagram.svg';
+import location from 'assets/location.svg';
 import YesNoDraw from './YesNoDraw';
 
 const base = [
   {
     id: 1,
     name: '담백한 아시아 동양식!',
-    img: 'wondering_cat.png',
+    img: country,
   },
   {
     id: 2,
     name: '지구 반대편 서양식!',
-    img: 'wondering_cat.png',
+    img: country,
   },
   {
     id: 3,
     name: 'FLEX 가능!',
-    img: 'wondering_cat.png',
+    img: flex,
   },
   {
     id: 4,
     name: 'FLEX 불가능ㅠ',
-    img: 'wondering_cat.png',
+    img: flex,
   },
   {
     id: 5,
     name: '현재 R&D관과 가까움',
-    img: 'wondering_cat.png',
+    img: location,
   },
   {
     id: 6,
     name: '현재 310관과 가까움',
-    img: 'wondering_cat.png',
+    img: location,
   },
   {
     id: 7,
     name: '요즘 대세인 혼밥',
-    img: 'wondering_cat.png',
+    img: friends,
   },
   {
     id: 8,
     name: '시대에 뒤떨어진 합밥',
-    img: 'wondering_cat.png',
+    img: friends,
   },
   {
     id: 9,
     name: '인별 감성★',
-    img: 'wondering_cat.png',
+    img: instagram,
   },
   {
     id: 10,
     name: '아무렴 맛만 있음 됨',
-    img: 'wondering_cat.png',
+    img: instagram,
   },
 ];
 
@@ -73,62 +74,12 @@ interface ShopImageProps {
   imageLink: string;
 }
 
-const ImageContainer = styled.div`
-  position: relative;
-  vertical-align: middle;
-
-  /* height: calc(); */
-  width: 100%;
-  margin: auto;
-  margin-top: 30px;
-  margin-bottom: 50px;
-
-  background-color: transparent;
-`;
-
-const Image = styled.div`
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
-  ${(props: ShopImageProps) =>
-    props.imageLink &&
-    css`
-      background-image: url(${props.imageLink});
-    `}
-`;
-
-const SimpleImage = styled.img`
-  height: 150px;
-  object-fit: contain;
-`;
-
-const SimpleImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 120px;
-  margin-bottom: 50px;
-  padding: 0 30px;
-`;
-
 const ActionContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
   color: ${palette.mainRed};
   height: 80px;
-`;
-
-const Divider = styled.div`
-  border-bottom: 0.1px solid rgba(138, 138, 138, 0.5);
-  margin-bottom: 30px;
 `;
 
 let beClicked = false;
@@ -186,7 +137,6 @@ class YesNoPage extends React.Component<Props, State> {
   async handleChange(id: number) {
     this.count++;
     const resultdata = this.state.result.slice();
-    // resultdata.push(base.find((item) => item.id === id));
     resultdata.push(base[id - 1].name);
     if (id % 2 === 1) {
       resultDataSet[this.count - 1] = true;
@@ -263,24 +213,12 @@ class YesNoPage extends React.Component<Props, State> {
   };
 
   render() {
-    const { moveHref } = this;
-    const { views, end, round, sequence } = this.state;
-    const path = './';
+    const { views } = this.state;
     return (
       <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true} style={{ height: '100%' }}>
         <FullHeightFade>
           <Container color="red">
             <Header category="modal" headerColor="red" />
-            <FullHeightFade>
-              <Bounce>
-                <SimpleImageContainer>
-                  <SimpleImage src={wondering_cat} />
-                </SimpleImageContainer>
-                {/* <ImageContainer>
-                  <Image imageLink={wondering_cat} />
-                </ImageContainer> */}
-              </Bounce>
-            </FullHeightFade>
             {views.map((view, index) => {
               return <YesNoDraw key={index} id={view.id} name={view.name} img={view.img} onChange={(id) => this.handleChange(id)} />;
             })}
@@ -291,7 +229,5 @@ class YesNoPage extends React.Component<Props, State> {
     );
   }
 }
-
-// imageLink={'https://ifh.cc/g/6onhGJ.png'}
 
 export default YesNoPage;

@@ -6,10 +6,10 @@ import RoundContainer from '../components/common/RoundContainer';
 import { RouteComponentProps } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
-import firstbutton from './firstbutton.jpg';
-import secondbutton from './secondbutton.jpg';
-import thirdbutton from './thirdbutton.jpg';
-import search from './search.png';
+import firstbutton from 'assets/firstbutton.jpg';
+import secondbutton from 'assets/secondbutton.jpg';
+import thirdbutton from 'assets/thirdbutton.jpg';
+import search from 'assets/search.png';
 import titlelogo from 'assets/fooding_logo_outline.svg';
 
 const TitleSlogan = styled.h1`
@@ -22,15 +22,6 @@ const TitleSlogan = styled.h1`
   color: black;
 `;
 
-const postbuttonsub = styled.h1`
-  font-size: 14px;
-  font-family: 'Nanum Gothic';
-  font-weight: 700;
-  text-align: center;
-  margin-top: 50px;
-  margin-bottom: 20px;
-  color: black;
-`;
 
 const TitleLogo = styled.div`
   display: flex;

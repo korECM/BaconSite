@@ -18,6 +18,19 @@ interface ShopImageProps {
   imageLink: string;
 }
 
+const SimpleImage = styled.img`
+  height: 150px;
+  object-fit: contain;
+`;
+
+const SimpleImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 120px;
+  margin-bottom: 50px;
+  padding: 0 30px;
+`;
+
 const ImageContainer = styled.div`
   position: relative;
   vertical-align: middle;
@@ -102,20 +115,33 @@ class YesNoDraw extends React.Component<Props> {
     const path = './';
 
     return (
-      <div
-        className="yesNoDraw"
-        onClick={() => {
-          this.handleClick(id);
-        }}
-      >
-        <FullHeightFade>
-          <Bounce>
-            <Button theme="white" big onClick={moveHref}>
-              {name}
-            </Button>
-          </Bounce>
-        </FullHeightFade>
-      </div>
+      <Bounce>
+        <div
+          className="yesNoDraw"
+          onClick={() => {
+            this.handleClick(id);
+          }}
+        >
+          {id % 2 === 1 ? (
+            <FullHeightFade>
+              <Bounce>
+                <SimpleImageContainer>
+                  <SimpleImage src={img} />
+                </SimpleImageContainer>
+              </Bounce>
+            </FullHeightFade>
+          ) : (
+            <></>
+          )}
+          <FullHeightFade>
+            <Bounce>
+              <Button theme="white" big onClick={moveHref}>
+                {name}
+              </Button>
+            </Bounce>
+          </FullHeightFade>
+        </div>
+      </Bounce>
     );
   }
 }
