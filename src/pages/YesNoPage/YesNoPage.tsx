@@ -10,61 +10,63 @@ import { Animated } from 'react-animated-css';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import FullHeightFade from '../../components/common/FullHeightFade';
-import wondering_cat from 'assets/wondering_cat.png';
-import noResultCat from 'assets/NoResultCat.svg';
-import noResultCat2 from 'assets/NoResultCat2.svg';
+import country from 'assets/country.svg';
+import flex from 'assets/flex.svg';
+import friends from 'assets/friends.svg';
+import instagram from 'assets/instagram.svg';
+import location from 'assets/location.svg';
 import YesNoDraw from './YesNoDraw';
 
 const base = [
   {
     id: 1,
     name: '담백한 아시아 동양식!',
-    img: wondering_cat,
+    img: country,
   },
   {
     id: 2,
     name: '지구 반대편 서양식!',
-    img: wondering_cat,
+    img: country,
   },
   {
     id: 3,
     name: 'FLEX 가능!',
-    img: noResultCat,
+    img: flex,
   },
   {
     id: 4,
     name: 'FLEX 불가능ㅠ',
-    img: noResultCat,
+    img: flex,
   },
   {
     id: 5,
     name: '현재 R&D관과 가까움',
-    img: noResultCat2,
+    img: location,
   },
   {
     id: 6,
     name: '현재 310관과 가까움',
-    img: noResultCat2,
+    img: location,
   },
   {
     id: 7,
     name: '요즘 대세인 혼밥',
-    img: wondering_cat,
+    img: friends,
   },
   {
     id: 8,
     name: '시대에 뒤떨어진 합밥',
-    img: wondering_cat,
+    img: friends,
   },
   {
     id: 9,
     name: '인별 감성★',
-    img: noResultCat2,
+    img: instagram,
   },
   {
     id: 10,
     name: '아무렴 맛만 있음 됨',
-    img: noResultCat2,
+    img: instagram,
   },
 ];
 
@@ -217,13 +219,9 @@ class YesNoPage extends React.Component<Props, State> {
         <FullHeightFade>
           <Container color="red">
             <Header category="modal" headerColor="red" />
-            <Bounce>
-              <Fade>
-                {views.map((view, index) => {
-                  return <YesNoDraw key={index} id={view.id} name={view.name} img={view.img} onChange={(id) => this.handleChange(id)} />;
-                })}
-              </Fade>
-            </Bounce>
+            {views.map((view, index) => {
+              return <YesNoDraw key={index} id={view.id} name={view.name} img={view.img} onChange={(id) => this.handleChange(id)} />;
+            })}
             <ActionContainer></ActionContainer>
           </Container>
         </FullHeightFade>
