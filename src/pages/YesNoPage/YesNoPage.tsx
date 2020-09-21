@@ -20,52 +20,52 @@ const base = [
   {
     id: 1,
     name: '담백한 아시아 동양식!',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 2,
     name: '지구 반대편 서양식!',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 3,
     name: 'FLEX 가능!',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 4,
     name: 'FLEX 불가능ㅠ',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 5,
     name: '현재 R&D관과 가까움',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 6,
     name: '현재 310관과 가까움',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 7,
     name: '요즘 대세인 혼밥',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 8,
     name: '시대에 뒤떨어진 합밥',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 9,
     name: '인별 감성★',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
   {
     id: 10,
     name: '아무렴 맛만 있음 됨',
-    img: 'wondering_cat.png',
+    img: wondering_cat,
   },
 ];
 
@@ -271,16 +271,6 @@ class YesNoPage extends React.Component<Props, State> {
         <FullHeightFade>
           <Container color="red">
             <Header category="modal" headerColor="red" />
-            <FullHeightFade>
-              <Bounce>
-                <SimpleImageContainer>
-                  <SimpleImage src={wondering_cat} />
-                </SimpleImageContainer>
-                {/* <ImageContainer>
-                  <Image imageLink={wondering_cat} />
-                </ImageContainer> */}
-              </Bounce>
-            </FullHeightFade>
             {views.map((view, index) => {
               return <YesNoDraw key={index} id={view.id} name={view.name} img={view.img} onChange={(id) => this.handleChange(id)} />;
             })}
