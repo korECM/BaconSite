@@ -122,6 +122,13 @@ class YesNoPage extends React.Component<Props, State> {
     end: false,
   };
 
+  componentDidMount() {
+    let imageList = [country, flex, instagram, location, friends];
+    imageList.forEach((image) => {
+      new Image().src = image;
+    });
+  }
+
   handleReset() {
     this.setState({
       views: [base[0], base[1]],
