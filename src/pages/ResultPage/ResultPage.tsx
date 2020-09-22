@@ -19,6 +19,7 @@ const ResultComment = styled.h1`
   margin-bottom: 0px;
   color: white;
   padding: 45px;
+  text-align: center;
 `;
 
 const NoResultComment = styled.h1`
