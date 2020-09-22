@@ -167,10 +167,18 @@ class FilterPage extends React.Component<Props, State> {
   }
 
   changeKeywordColor(i: number) {
-    console.log(i);
+    // console.log(i);
+    let trueKeyCount = 1;
+    this.state.keyword_bool.map((item, index) => (item === true ? trueKeyCount++ : trueKeyCount));
+    console.log(trueKeyCount);
     this.setState({
-      keyword_bool: this.state.keyword_bool.map((item, index) => (index !== i ? item : !item)),
+      keyword_bool: this.state.keyword_bool.map((item, index) =>
+        index !== i ? (trueKeyCount < 3 ? item : item) : trueKeyCount < 3 || item == true ? !item : item,
+      ),
     });
+    trueKeyCount = 1;
+    this.state.keyword_bool.map((item, index) => (item === true ? trueKeyCount++ : trueKeyCount));
+    console.log(trueKeyCount);
   }
 
   moveHref = (data: DataInterface[]) => {
