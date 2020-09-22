@@ -31,8 +31,8 @@ export default function useDetail(shopId: string) {
   const onReviewRequest = useCallback(() => dispatch(getReviewThunk(shopId)), [shopId, dispatch]);
   const resetDataAction = useCallback(() => dispatch(resetData()), [dispatch]);
 
-  const onShopImageUploadRequest = useCallback((files: (File | Blob)[]) => dispatch(postShopImageThunk(shopId, files)), [shopId, dispatch]);
-  const onMenuImageUploadRequest = useCallback((files: (File | Blob)[]) => dispatch(postMenuImageThunk(shopId, files)), [shopId, dispatch]);
+  const onShopImageUploadRequest = useCallback((files: File[]) => dispatch(postShopImageThunk(shopId, files)), [shopId, dispatch]);
+  const onMenuImageUploadRequest = useCallback((files: File[]) => dispatch(postMenuImageThunk(shopId, files)), [shopId, dispatch]);
 
   const onLikeShop = useCallback(() => dispatch(likeShopThunk(shopId)), [dispatch, shopId]);
   const onUnlikeShop = useCallback(() => dispatch(unlikeShopThunk(shopId)), [dispatch, shopId]);

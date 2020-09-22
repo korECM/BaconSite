@@ -5,7 +5,7 @@ export interface ImageUploadResponseInterface {
   locations: string[];
 }
 
-export async function shopImageUpload(shopId: string, files: (File | Blob)[]) {
+export async function shopImageUpload(shopId: string, files: File[]) {
   const formData = new FormData();
 
   for (let index = 0; index < files.length; index++) {
