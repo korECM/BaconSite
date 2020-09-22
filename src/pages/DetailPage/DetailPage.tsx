@@ -447,21 +447,20 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const onShopFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let files = shopFileRef.current?.files;
-    let resizedFile: (File | Blob)[] = [];
+    let resizedFile: File[] = [];
     if (files?.length) {
       setShopImageUploadShow(true);
       for (const imageFile of Array.from(files)) {
         console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
         console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
-
         let options = {
-          maxSizeMB: 1,
+          maxSizeMB: 0.5,
         };
         try {
           const compressedFile = await imageCompression(imageFile, options);
           console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
           console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
-          resizedFile.push(compressedFile);
+          resizedFile.push(new File([compressedFile], (compressedFile as any).name));
         } catch (error) {
           console.error(error);
         }
@@ -473,7 +472,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const onMenuFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let files = menuFileRef.current?.files;
-    let resizedFile: (File | Blob)[] = [];
+    let resizedFile: File[] = [];
     if (files?.length) {
       setMenuImageUploadShow(true);
       for (const imageFile of Array.from(files)) {
@@ -487,7 +486,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           const compressedFile = await imageCompression(imageFile, options);
           console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
           console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
-          resizedFile.push(compressedFile);
+          resizedFile.push(new File([compressedFile], (compressedFile as any).name));
         } catch (error) {
           console.error(error);
         }
