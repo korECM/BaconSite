@@ -75,6 +75,15 @@ const Divider = styled.div`
   margin-bottom: 17px;
 `;
 
+const WarningComment = styled.h1`
+  text-align: right;
+  margin-top: -25px;
+  margin-bottom: 0px;
+  color: ${palette.darkGray};
+  padding: 10px;
+  font-size: 13px;
+`;
+
 let beClicked = false;
 let selected_name = 'false';
 
@@ -372,6 +381,7 @@ class FilterPage extends React.Component<Props, State> {
         </ButtonLine>
         <Divider></Divider>
         <SubtitleComment>키워드</SubtitleComment>
+        <WarningComment>※ 최대 2개의 키워드를 선택할 수 있습니다.</WarningComment>
         <ButtonLine>
           <div style={TagTextStyle}>{keywordList}</div>
         </ButtonLine>
