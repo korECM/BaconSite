@@ -75,6 +75,15 @@ const Divider = styled.div`
   margin-bottom: 17px;
 `;
 
+const WarningComment = styled.h1`
+  text-align: right;
+  margin-top: -25px;
+  margin-bottom: 0px;
+  color: ${palette.darkGray};
+  padding: 10px;
+  font-size: 13px;
+`;
+
 let beClicked = false;
 let selected_name = 'false';
 
@@ -158,10 +167,18 @@ class FilterPage extends React.Component<Props, State> {
   }
 
   changeKeywordColor(i: number) {
-    console.log(i);
+    // console.log(i);
+    let trueKeyCount = 1;
+    this.state.keyword_bool.map((item, index) => (item === true ? trueKeyCount++ : trueKeyCount));
+    console.log(trueKeyCount);
     this.setState({
-      keyword_bool: this.state.keyword_bool.map((item, index) => (index !== i ? item : !item)),
+      keyword_bool: this.state.keyword_bool.map((item, index) =>
+        index !== i ? (trueKeyCount < 3 ? item : item) : trueKeyCount < 3 || item == true ? !item : item,
+      ),
     });
+    trueKeyCount = 1;
+    this.state.keyword_bool.map((item, index) => (item === true ? trueKeyCount++ : trueKeyCount));
+    console.log(trueKeyCount);
   }
 
   moveHref = (data: DataInterface[]) => {
@@ -372,6 +389,7 @@ class FilterPage extends React.Component<Props, State> {
         </ButtonLine>
         <Divider></Divider>
         <SubtitleComment>키워드</SubtitleComment>
+        <WarningComment>※ 최대 2개의 키워드를 선택할 수 있습니다.</WarningComment>
         <ButtonLine>
           <div style={TagTextStyle}>{keywordList}</div>
         </ButtonLine>
