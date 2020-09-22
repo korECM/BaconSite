@@ -9,6 +9,7 @@ import { locationToString, keywordToString, foodCategoryToString } from '../../l
 import GrayFooding from 'assets/fooding_gray.svg';
 import { useSpring, animated } from 'react-spring';
 import { FoodCategory } from 'api/getShop';
+import { originToThumbnail } from 'lib/imageUrlTransform';
 
 const RestaurantCardBlock = styled(animated.div)`
   border: none;
@@ -108,7 +109,9 @@ function RestaurantCard({ shop, delay }: RestaurantCardProps) {
       <div
         style={{
           backgroundColor: palette.middleLightGray,
-          backgroundImage: `url(${shop.mainImage ? shop.mainImage : shop.shopImage.length ? shop.shopImage[0].imageLink : GrayFooding})`,
+          backgroundImage: `url(${
+            shop.mainImage ? originToThumbnail(shop.mainImage) : shop.shopImage.length ? originToThumbnail(shop.shopImage[0].imageLink) : GrayFooding
+          })`,
           backgroundSize: shop.mainImage || shop.shopImage.length > 0 ? 'cover' : '60%',
           backgroundRepeat: 'no-repeat',
         }}
