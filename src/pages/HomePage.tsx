@@ -9,8 +9,10 @@ import palette from '../styles/palette';
 import firstbutton from 'assets/firstbutton.jpg';
 import secondbutton from 'assets/secondbutton.jpg';
 import thirdbutton from 'assets/thirdbutton.jpg';
+import toustousbutton from 'assets/toustousbutton.jpg';
 import search from 'assets/search.png';
 import titlelogo from 'assets/fooding_logo_outline.svg';
+import './TagButton.css';
 
 const TitleSlogan = styled.h1`
   font-size: 14px;
@@ -21,7 +23,6 @@ const TitleSlogan = styled.h1`
   margin-bottom: 20px;
   color: black;
 `;
-
 
 const TitleLogo = styled.div`
   display: flex;
@@ -90,6 +91,16 @@ const TextBox = styled.h1`
   padding-bottom: 3px;
 `;
 
+const BottomTextBox = styled.span`
+  font-size: 13px;
+  font-family: 'Nanum Gothic';
+  font-weight: 200;
+  color: white;
+  padding-left: 5px;
+  width: 50%;
+  margin-right: 20%;
+`;
+
 const Divider = styled.div`
   border-bottom: 0px solid rgba(138, 138, 138, 0.5);
   margin-bottom: 60px;
@@ -111,13 +122,20 @@ const SearchBox = styled.div`
 `;
 
 const SearchBoxContainer = styled.div`
-  padding-top: 10%;
-  padding-bottom: 10%;
+  // padding-top: 10%;
+  // padding-bottom: 10%;
   padding-left: 5%;
   padding-right: 5%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: default(flex-start);
+  align-items: center;
+
+  margin-top: -50px;
 
   background-color: ${palette.mainRed};
   width: full;
+  height: 80px;
 
   justify-content: center;
   align-items: center;
@@ -194,6 +212,14 @@ const ButtonContainer = styled.div`
   }
 `;
 
+const BottomContainer = styled.div`
+  width: 100%;
+
+  justify-content: center;
+  align-items: center;
+  vertical-align: center;
+`;
+
 interface Props extends RouteComponentProps {}
 
 interface RouletteItemState {
@@ -257,51 +283,63 @@ class HomePage extends React.Component<Props, State> {
     };
 
     return (
-      <Container color="white">
-        <Header category="main" headerColor="none" withOutHeaderIcon />
-        <TitleSlogan>뭐 먹을지 고민될 땐?</TitleSlogan>
-        <TitleLogo>
-          <img src={titlelogo} alt="titlelogo" />
-        </TitleLogo>
-        <Divider></Divider>
-        <ButtonLine>
-          <ButtonBlock>
-            <Link to="/filter">
-              <TextBox>필터링</TextBox>
-              <TextBox>검색</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/yesno">
-              <TextBox>선택장애</TextBox>
-              <TextBox>Yes or No</TextBox>
-            </Link>
-          </ButtonBlock>
-          <ButtonBlock>
-            <Link to="/rouletteList">
-              <TextBox>돌려돌려</TextBox>
-              <TextBox>돌림판</TextBox>
-            </Link>
-          </ButtonBlock>
-        </ButtonLine>
-        <SearchBox>
-          <form onSubmit={onSubmit}>
-            <ButtonContainer>
-              <button type="submit" onClick={() => moveHref(data)}></button>
-              <input placeholder="식당 or 메뉴를 검색하세요!" onChange={onChange} value={input} />
-            </ButtonContainer>
-          </form>
-        </SearchBox>
-        <RoundContainer theme="image" imageLink={firstbutton}>
-          중앙대 정문 맛집 5곳
-        </RoundContainer>
-        <RoundContainer theme="image" imageLink={secondbutton}>
-          <a href="https://blog.naver.com/crystalnam03/222068892248">인스타 감성 저격 카페 5곳</a>
-        </RoundContainer>
-        <RoundContainer theme="image" imageLink={thirdbutton}>
-          상도동 신상 맛집 10곳
-        </RoundContainer>
-      </Container>
+      <>
+        <Container color="white">
+          <Header category="main" headerColor="none" withOutHeaderIcon />
+          <TitleSlogan>뭐 먹을지 고민될 땐?</TitleSlogan>
+          <TitleLogo>
+            <img src={titlelogo} alt="titlelogo" />
+          </TitleLogo>
+          <Divider></Divider>
+          <ButtonLine>
+            <ButtonBlock>
+              <Link to="/filter">
+                <TextBox>필터링</TextBox>
+                <TextBox>검색</TextBox>
+              </Link>
+            </ButtonBlock>
+            <ButtonBlock>
+              <Link to="/yesno">
+                <TextBox>선택장애</TextBox>
+                <TextBox>Yes or No</TextBox>
+              </Link>
+            </ButtonBlock>
+            <ButtonBlock>
+              <Link to="/rouletteList">
+                <TextBox>돌려돌려</TextBox>
+                <TextBox>돌림판</TextBox>
+              </Link>
+            </ButtonBlock>
+          </ButtonLine>
+          <SearchBox>
+            <form onSubmit={onSubmit}>
+              <ButtonContainer>
+                <button type="submit" onClick={() => moveHref(data)}></button>
+                <input placeholder="식당 or 메뉴를 검색하세요!" onChange={onChange} value={input} />
+              </ButtonContainer>
+            </form>
+          </SearchBox>
+          <RoundContainer theme="image" imageLink={toustousbutton}>
+            <a href="https://blog.naver.com/crystalnam03/222068892248">중앙대 근처 건강 웰빙 맛집 6곳</a>
+          </RoundContainer>
+          <RoundContainer theme="image" imageLink={secondbutton}>
+            서비스 준비중입니다.
+          </RoundContainer>
+          <RoundContainer theme="image" imageLink={thirdbutton}>
+            서비스 준비중입니다.
+          </RoundContainer>
+        </Container>
+        <SearchBoxContainer>
+          <BottomTextBox>
+            <span>찾는 식당이 안보이세요?</span>
+          </BottomTextBox>
+          <button className="roundButton yHover " style={{ height: 35, flex: 1, float: 'right' }}>
+            <a href="https://forms.gle/G2AGwkTyaXeN7C1T6" style={{ height: 35, flex: 1 }}>
+              식당등록하기
+            </a>
+          </button>
+        </SearchBoxContainer>
+      </>
     );
   }
 }
