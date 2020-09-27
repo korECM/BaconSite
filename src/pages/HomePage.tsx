@@ -333,7 +333,7 @@ class HomePage extends React.Component<Props, State> {
             <span>찾는 식당이 안보이세요?</span>
           </BottomTextBox>
           <button className="roundButton yHover " style={{ height: 35, flex: 1, float: 'right' }}>
-            <a href="https://blog.naver.com/crystalnam03/222068892248" style={{ height: 35, flex: 1 }}>
+            <a href="https://forms.gle/G2AGwkTyaXeN7C1T6" style={{ height: 35, flex: 1 }}>
               식당등록하기
             </a>
           </button>
