@@ -122,24 +122,20 @@ const SearchBox = styled.div`
 `;
 
 const SearchBoxContainer = styled.div`
-  // padding-top: 10%;
-  // padding-bottom: 10%;
   padding-left: 5%;
   padding-right: 5%;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: default(flex-start);
+  justify-content: flex-start;
   align-items: center;
 
   margin-top: -50px;
 
   background-color: ${palette.mainRed};
-  width: full;
   height: 80px;
 
   justify-content: center;
   align-items: center;
-  vertical-align: center;
 `;
 
 const ButtonContainer = styled.div`
@@ -212,12 +208,21 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const BottomContainer = styled.div`
-  width: 100%;
+const AddText = styled.div`
+  font-size: 13px;
+  font-family: 'Nanum Gothic';
+  font-weight: 200;
+  color: white;
+  @media only screen and (min-width: 320px) {
+    margin-right: 50px;
+  }
 
-  justify-content: center;
-  align-items: center;
-  vertical-align: center;
+  @media only screen and (min-width: 350px) {
+    margin-right: 100px;
+  }
+  @media only screen and (min-width: 500px) {
+    margin-right: 30px;
+  }
 `;
 
 interface Props extends RouteComponentProps {}
@@ -330,14 +335,14 @@ class HomePage extends React.Component<Props, State> {
           </RoundContainer>
         </Container>
         <SearchBoxContainer>
-          <BottomTextBox>
-            <span>찾는 식당이 안보이세요?</span>
-          </BottomTextBox>
-          <button className="roundButton yHover " style={{ height: 35, flex: 1, float: 'right' }}>
-            <a href="https://forms.gle/G2AGwkTyaXeN7C1T6" style={{ height: 35, flex: 1 }}>
-              식당등록하기
-            </a>
-          </button>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
+            <AddText>
+              <span>찾는 식당이 안보이세요?</span>
+            </AddText>
+            <button className="roundButton yHover " style={{ height: '35px', width: '100px' }}>
+              <a href="https://forms.gle/G2AGwkTyaXeN7C1T6">식당등록하기</a>
+            </button>
+          </div>
         </SearchBoxContainer>
       </>
     );
