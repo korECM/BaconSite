@@ -324,13 +324,13 @@ class HomePage extends React.Component<Props, State> {
               </ButtonContainer>
             </form>
           </SearchBox>
-          <RoundContainer theme="image" imageLink={'https:/d3ojewq8movb4o.cloudfront.net/toustous.jpg'}>
+          <RoundContainer theme="image" imageLink={'https://d3ojewq8movb4o.cloudfront.net/toustous.jpg'}>
             <a href="https://blog.naver.com/crystalnam03/222068892248">중앙대 근처 건강 웰빙 맛집 6곳</a>
           </RoundContainer>
-          <RoundContainer theme="image" imageLink={'https:/d3ojewq8movb4o.cloudfront.net/onetwothree.jpg'}>
+          <RoundContainer theme="image" imageLink={'https://d3ojewq8movb4o.cloudfront.net/onetwothree.jpg'}>
             서비스 준비중입니다.
           </RoundContainer>
-          <RoundContainer theme="image" imageLink={'https:/d3ojewq8movb4o.cloudfront.net/thirdbutton.jpg'}>
+          <RoundContainer theme="image" imageLink={'https://d3ojewq8movb4o.cloudfront.net/thirdbutton.jpg'}>
             서비스 준비중입니다.
           </RoundContainer>
         </Container>
