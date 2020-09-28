@@ -6,10 +6,10 @@ import RoundContainer from '../components/common/RoundContainer';
 import { RouteComponentProps } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import palette from '../styles/palette';
-import firstbutton from 'assets/firstbutton.jpg';
-import secondbutton from 'assets/secondbutton.jpg';
-import thirdbutton from 'assets/thirdbutton.jpg';
-import toustousbutton from 'assets/toustousbutton.jpg';
+// import firstbutton from 'assets/firstbutton.jpg';
+// import secondbutton from 'assets/secondbutton.jpg';
+// import thirdbutton from 'assets/thirdbutton.jpg';
+// import toustousbutton from 'assets/toustousbutton.jpg';
 import search from 'assets/search.png';
 import titlelogo from 'assets/fooding_logo_outline.svg';
 import './TagButton.css';
@@ -319,13 +319,13 @@ class HomePage extends React.Component<Props, State> {
               </ButtonContainer>
             </form>
           </SearchBox>
-          <RoundContainer theme="image" imageLink={toustousbutton}>
+          <RoundContainer theme="image" imageLink={'https:/d3ojewq8movb4o.cloudfront.net/toustous.jpg'}>
             <a href="https://blog.naver.com/crystalnam03/222068892248">중앙대 근처 건강 웰빙 맛집 6곳</a>
           </RoundContainer>
-          <RoundContainer theme="image" imageLink={secondbutton}>
+          <RoundContainer theme="image" imageLink={'https:/d3ojewq8movb4o.cloudfront.net/onetwothree.jpg'}>
             서비스 준비중입니다.
           </RoundContainer>
-          <RoundContainer theme="image" imageLink={thirdbutton}>
+          <RoundContainer theme="image" imageLink={'https:/d3ojewq8movb4o.cloudfront.net/thirdbutton.jpg'}>
             서비스 준비중입니다.
           </RoundContainer>
         </Container>
