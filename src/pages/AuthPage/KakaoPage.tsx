@@ -98,6 +98,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
   };
 
   const [redir, setRedir] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     onKakaoInit();
@@ -127,12 +128,15 @@ function KakaoPage({ location, history }: RouteComponentProps) {
   useEffect(() => {
     if (user) {
       console.log('check 성공');
+      setError(false);
       try {
         localStorage.setItem('user', JSON.stringify(user));
         history.push(redir || '/');
       } catch (error) {
         console.error('localStorage 사용 불가');
       }
+    } else {
+      setError(true);
     }
   }, [user, history, redir]);
 
@@ -164,7 +168,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     );
   }
 
-  if (kakao.data === null) {
+  if (kakao.data === null || error) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
@@ -203,7 +207,6 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     <Container color="white">
       <Header category="modal" headerColor="white" />
       카카오 로그인 성공
-      <Redirect to={redir || '/'} />
     </Container>
   );
 }
