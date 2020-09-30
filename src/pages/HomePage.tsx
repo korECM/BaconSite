@@ -292,9 +292,11 @@ function HomePage({ history }: RouteComponentProps) {
         </SearchBox>
         {posts.data &&
           posts.data.map((post) => (
-            <RoundContainer theme="image" imageLink={post.image} key={`${post.registerDate}`}>
-              <a href={post.link}>{post.title}</a>
-            </RoundContainer>
+            <a href={post.link}>
+              <RoundContainer theme="image" imageLink={post.image} key={`${post.registerDate}`}>
+                <span>{post.title}</span>
+              </RoundContainer>
+            </a>
           ))}
       </Container>
       <SearchBoxContainer>
