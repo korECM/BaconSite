@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../components/layout/Container';
 import Header from '../components/layout/Header';
 import { Link, withRouter } from 'react-router-dom';
@@ -9,6 +9,7 @@ import palette from '../styles/palette';
 import search from 'assets/search.png';
 import titlelogo from 'assets/fooding_logo_outline.svg';
 import './TagButton.css';
+import useMainPost from 'hooks/useMain';
 
 const TitleSlogan = styled.h1`
   font-size: 14px;
@@ -224,6 +225,12 @@ const AddText = styled.div`
 function HomePage({ history }: RouteComponentProps) {
   const [input, setInput] = useState('');
 
+  const { getMainPost, posts } = useMainPost();
+
+  useEffect(() => {
+    getMainPost();
+  }, [getMainPost]);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (input !== '' && input.length < 10) {
@@ -283,15 +290,12 @@ function HomePage({ history }: RouteComponentProps) {
             </ButtonContainer>
           </form>
         </SearchBox>
-        <RoundContainer theme="image" imageLink={'https://d3ojewq8movb4o.cloudfront.net/toustous.jpg'}>
-          <a href="https://blog.naver.com/crystalnam03/222068892248">중앙대 근처 건강 웰빙 맛집 6곳</a>
-        </RoundContainer>
-        <RoundContainer theme="image" imageLink={'https://d3ojewq8movb4o.cloudfront.net/onetwothree.jpg'}>
-          서비스 준비중입니다.
-        </RoundContainer>
-        <RoundContainer theme="image" imageLink={'https://d3ojewq8movb4o.cloudfront.net/thirdbutton.jpg'}>
-          서비스 준비중입니다.
-        </RoundContainer>
+        {posts.data &&
+          posts.data.map((post) => (
+            <RoundContainer theme="image" imageLink={post.image} key={`${post.registerDate}`}>
+              <a href={post.link}>{post.title}</a>
+            </RoundContainer>
+          ))}
       </Container>
       <SearchBoxContainer>
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
