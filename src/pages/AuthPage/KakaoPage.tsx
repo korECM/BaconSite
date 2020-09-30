@@ -97,7 +97,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     onKakaoRequestWithName(id);
   };
 
-  const [redir, setRedir] = useState(null);
+  const [redir, setRedir] = useState<string | null>(null);
 
   useEffect(() => {
     onKakaoInit();
