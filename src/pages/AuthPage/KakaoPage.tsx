@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
-import { RouteComponentProps } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 import useKakao from '../../hooks/useKakao';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
@@ -97,9 +97,20 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     onKakaoRequestWithName(id);
   };
 
+  const [redir, setRedir] = useState(null);
+
   useEffect(() => {
     onKakaoInit();
   }, [onKakaoInit]);
+
+  useEffect(() => {
+    try {
+      let redir = localStorage.getItem('redir');
+      if (redir) setRedir(redir);
+    } catch (error) {
+      console.error('local storage 사용 불가');
+    }
+  }, []);
 
   useEffect(() => {
     if (kakaoName.data) {
@@ -118,13 +129,12 @@ function KakaoPage({ location, history }: RouteComponentProps) {
       console.log('check 성공');
       try {
         localStorage.setItem('user', JSON.stringify(user));
-        let redir = localStorage.getItem('redir');
         history.push(redir || '/');
       } catch (error) {
         console.error('localStorage 사용 불가');
       }
     }
-  }, [user, history]);
+  }, [user, history, redir]);
 
   useEffect(() => {
     if (name.length === 0) {
@@ -193,6 +203,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     <Container color="white">
       <Header category="modal" headerColor="white" />
       카카오 로그인 성공
+      <Redirect to={redir || '/'} />
     </Container>
   );
 }
