@@ -29,8 +29,8 @@ const AdminShopImageBlock = styled.div`
       margin: auto 0;
       cursor: pointer;
       img {
-        width: 45vw;
-        max-height: 120px;
+        width: 150px;
+        height: 150px;
       }
     }
     button {
