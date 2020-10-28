@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux';
 import Thunk, { ThunkDispatch } from 'redux-thunk';
 import rootReducer, { RootState } from './modules';
 import { BrowserRouter } from 'react-router-dom';
-import { setUser, checkThunk, checkAsync, logoutAsync, logoutThunk } from './modules/user';
+import { setUser, checkThunk, checkAsync, checkWitSetAsync, checkWitSetThunk } from './modules/user';
 import { UserInterface } from './api/auth';
 import ReactGA from 'react-ga';
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(Thunk)));
@@ -18,11 +18,12 @@ function loadUser() {
     // TODO: localStorage는 없고 쿠키만 있는 경우 로그인 안되는 오류 존재
     const user = localStorage.getItem('user');
     if (!user) {
-      // (store.dispatch as ThunkDispatch<
-      //   RootState,
-      //   void,
-      //   ReturnType<typeof logoutAsync.request> | ReturnType<typeof logoutAsync.success> | ReturnType<typeof logoutAsync.failure>
-      // >)(logoutThunk());
+      console.log("No User Index");
+      (store.dispatch as ThunkDispatch<
+        RootState,
+        void,
+        ReturnType<typeof checkWitSetAsync.request> | ReturnType<typeof checkWitSetAsync.success> | ReturnType<typeof checkWitSetAsync.failure>
+      >)(checkWitSetThunk());
       const trackingId = 'UA-177861548-1'; // Replace with your Google Analytics tracking ID
       ReactGA.initialize(trackingId);
       ReactGA.set({
