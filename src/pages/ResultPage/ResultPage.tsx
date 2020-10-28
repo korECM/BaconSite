@@ -10,6 +10,7 @@ import { getShopsInterface } from '../../api/getShops';
 import Title from 'lib/meta';
 import noResultCat from 'assets/NoResultCat.svg';
 import noResultCat2 from 'assets/NoResultCat2.svg';
+import ScrollToTopController from 'components/common/ScrollToTopController';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -101,10 +102,11 @@ function ResultPage({ location }: RouteComponentProps) {
       <Header category="modal" headerColor="red" />
       {shops.loading ? (
         <Loader color="white" />
-      ) : shops.data ? (
-        <>
+        ) : shops.data ? (
+          <>
           {shops.data.length === 0 ? (
             <>
+            <ScrollToTopController/>
               <TopDivider></TopDivider>
               <NoResultComment>앗, 검색 결과가 없습니다!</NoResultComment>
               <Divider></Divider>
@@ -117,6 +119,7 @@ function ResultPage({ location }: RouteComponentProps) {
             </>
           ) : (
             <>
+            <ScrollToTopController/>
               <ResultComment>검색 결과를 찾았습니다!</ResultComment>
               <RestaurantCardContainer>
                 {shops.data.map((shop, index) => (

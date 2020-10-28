@@ -334,7 +334,7 @@ function MyPage() {
         <AllBlock>
           <div className="comments">
             {reviews.data &&
-              reviews.data.slice(0, 2).map((review, index) => (
+              reviews.data.map((review, index) => (
                 <div className="commentWrapper" key={review._id}>
                   <Comment
                     review={review}

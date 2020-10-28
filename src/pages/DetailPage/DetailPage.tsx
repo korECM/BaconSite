@@ -25,6 +25,7 @@ import GrayFooding from 'assets/fooding_gray.svg';
 import imageCompression from 'browser-image-compression';
 import Cat500 from 'assets/Cat500.svg';
 import Cat404 from 'assets/Cat404.svg';
+import { useScrollTop } from 'components/common/ScrollToTopController';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -315,8 +316,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const {
     onShopRequest,
     onReviewRequest,
-    onShopImageUploadRequest,
-    onMenuImageUploadRequest,
+    // onShopImageUploadRequest,
+    // onMenuImageUploadRequest,
     resetDataAction,
     onLikeShop,
     onUnlikeShop,
@@ -332,8 +333,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     deleteReviewReportDispatch,
     shop,
     reviews,
-    shopImage,
-    menuImage,
+    // shopImage,
+    // menuImage,
     mapAddress,
     form,
     shopReport,
@@ -347,8 +348,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   const [likeOffset, setLikeOffset] = useState(0);
   const [commentLikeOffset, setCommentLikeOffset] = useState<number[]>([]);
 
-  const shopFileRef = useRef<HTMLInputElement>(null);
-  const menuFileRef = useRef<HTMLInputElement>(null);
+  // const shopFileRef = useRef<HTMLInputElement>(null);
+  // const menuFileRef = useRef<HTMLInputElement>(null);
 
   const [loginAlert, setLoginAlert] = useState(false);
 
@@ -363,11 +364,11 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [reviewDeleteDone, setReviewDeleteDone] = useState(false);
 
-  const [shopImageUploadShow, setShopImageUploadShow] = useState(false);
-  const [menuImageUploadShow, setMenuImageUploadShow] = useState(false);
+  // const [shopImageUploadShow, setShopImageUploadShow] = useState(false);
+  // const [menuImageUploadShow, setMenuImageUploadShow] = useState(false);
 
-  const [shopImageUploadDone, setShopImageUploadDone] = useState(false);
-  const [menuImageUploadDone, setMenuImageUploadDone] = useState(false);
+  // const [shopImageUploadDone, setShopImageUploadDone] = useState(false);
+  // const [menuImageUploadDone, setMenuImageUploadDone] = useState(false);
 
   const [reviewReportNumber, setReviewReportNumber] = useState('');
 
@@ -379,8 +380,8 @@ function DetailPage({ match, history, location }: DetailPageProps) {
 
   const [checkReviewModalShow, setCheckReviewModalShow] = useState(false);
 
-  const [imageSizeToBigShow, setImageSizeToBigShow] = useState(false);
-  const [imageCountToBigShow, setImageCountToBigShow] = useState(false);
+  // const [imageSizeToBigShow, setImageSizeToBigShow] = useState(false);
+  // const [imageCountToBigShow, setImageCountToBigShow] = useState(false);
 
   const simpleDialogAlert = useCallback(
     (message: string) => {
@@ -413,15 +414,21 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     setCheckReviewLoading(false);
   }, [checkReview, history, match.params, checkReviewLoading]);
 
-  const onShopImageUploadButtonClick = () => {
+  const onImageUploadButtonClick = () => {
     if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
-    shopFileRef.current?.click();
+    history.push(`imageUpload/${(match.params as any).shopId}`);
+    // shopFileRef.current?.click();
   };
 
-  const onMenuImageUploadButtonClick = () => {
-    if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
-    menuFileRef.current?.click();
-  };
+  // const onShopImageUploadButtonClick = () => {
+  //   if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
+  //   // shopFileRef.current?.click();
+  // };
+
+  // const onMenuImageUploadButtonClick = () => {
+  //   if (!simpleDialogAlert('이미지를 올리려면 로그인을 해야합니다')) return;
+  //   // menuFileRef.current?.click();
+  // };
 
   // const fileSizeAlert = (fileRef: React.RefObject<HTMLInputElement>) => {
   //   const files = fileRef.current?.files;
@@ -445,56 +452,56 @@ function DetailPage({ match, history, location }: DetailPageProps) {
   //   return false;
   // };
 
-  const onShopFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    let files = shopFileRef.current?.files;
-    let resizedFile: File[] = [];
-    if (files?.length) {
-      setShopImageUploadShow(true);
-      for (const imageFile of Array.from(files)) {
-        console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-        console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
-        let options = {
-          maxSizeMB: 0.5,
-        };
-        try {
-          const compressedFile = await imageCompression(imageFile, options);
-          console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-          console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
-          resizedFile.push(new File([compressedFile], (compressedFile as any).name));
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    }
-    onShopImageUploadRequest(resizedFile);
-    shopFileRef.current!.value = '';
-  };
+  // const onShopFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   let files = shopFileRef.current?.files;
+  //   let resizedFile: File[] = [];
+  //   if (files?.length) {
+  //     setShopImageUploadShow(true);
+  //     for (const imageFile of Array.from(files)) {
+  //       console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+  //       console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+  //       let options = {
+  //         maxSizeMB: 0.5,
+  //       };
+  //       try {
+  //         const compressedFile = await imageCompression(imageFile, options);
+  //         console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+  //         console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+  //         resizedFile.push(new File([compressedFile], (compressedFile as any).name));
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     }
+  //   }
+  //   onShopImageUploadRequest(resizedFile);
+  //   shopFileRef.current!.value = '';
+  // };
 
-  const onMenuFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    let files = menuFileRef.current?.files;
-    let resizedFile: File[] = [];
-    if (files?.length) {
-      setMenuImageUploadShow(true);
-      for (const imageFile of Array.from(files)) {
-        console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-        console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+  // const onMenuFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   let files = menuFileRef.current?.files;
+  //   let resizedFile: File[] = [];
+  //   if (files?.length) {
+  //     setMenuImageUploadShow(true);
+  //     for (const imageFile of Array.from(files)) {
+  //       console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+  //       console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
 
-        let options = {
-          maxSizeMB: 0.5,
-        };
-        try {
-          const compressedFile = await imageCompression(imageFile, options);
-          console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-          console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
-          resizedFile.push(new File([compressedFile], (compressedFile as any).name));
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    }
-    onMenuImageUploadRequest(resizedFile);
-    menuFileRef.current!.value = '';
-  };
+  //       let options = {
+  //         maxSizeMB: 0.5,
+  //       };
+  //       try {
+  //         const compressedFile = await imageCompression(imageFile, options);
+  //         console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+  //         console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+  //         resizedFile.push(new File([compressedFile], (compressedFile as any).name));
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     }
+  //   }
+  //   onMenuImageUploadRequest(resizedFile);
+  //   menuFileRef.current!.value = '';
+  // };
 
   const onLikeButton = () => {
     if (!simpleDialogAlert('좋아요를 누르려면 로그인을 해야합니다')) return;
@@ -594,9 +601,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     history.push(`/shop/menuImage/${shop.data._id}`);
   }, [shop.data, history]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useScrollTop();
 
   useEffect(() => {
     return () => {
@@ -640,17 +645,17 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     }
   }, [shopReport.data]);
 
-  useEffect(() => {
-    if (shopImage.data?.locations) {
-      setShopImageUploadDone(true);
-    }
-  }, [shopImage.data]);
+  // useEffect(() => {
+  //   if (shopImage.data?.locations) {
+  //     setShopImageUploadDone(true);
+  //   }
+  // }, [shopImage.data]);
 
-  useEffect(() => {
-    if (menuImage.data?.locations) {
-      setMenuImageUploadDone(true);
-    }
-  }, [menuImage.data]);
+  // useEffect(() => {
+  //   if (menuImage.data?.locations) {
+  //     setMenuImageUploadDone(true);
+  //   }
+  // }, [menuImage.data]);
 
   if (shop.loading) {
     return (
@@ -734,7 +739,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <span>{shop.data.likerCount + likeOffset}</span>
           </ShopAction>
         )}
-        <ShopAction onClick={onShopImageUploadButtonClick}>
+        {/* <ShopAction onClick={onShopImageUploadButtonClick}>
           <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={shopFileRef} onChange={onShopFileChange} />
           <MdAddAPhoto />
           <span>사진 올리기</span>
@@ -743,6 +748,10 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={menuFileRef} onChange={onMenuFileChange} />
           <MdAddAPhoto />
           <span>메뉴판 올리기</span>
+        </ShopAction> */}
+        <ShopAction onClick={onImageUploadButtonClick}>
+          <MdAddAPhoto />
+          <span>사진 올리기</span>
         </ShopAction>
         <ShopAction onClick={onWriteReviewButtonClick}>
           <MdEdit />
@@ -948,7 +957,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
           </ButtonGroup>
         </ReviewReport>
       </ProcessModal>
-      <ProcessModal
+      {/* <ProcessModal
         onCancel={() => setShopImageUploadShow(false)}
         visible={shopImageUploadShow}
         done={shopImageUploadDone}
@@ -965,7 +974,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         doneMessage="사진이 정상적으로 업로드되었습니다"
         error={menuImage.error}
         loading={true && menuImageUploadDone === false}
-      />
+      /> */}
       <ProcessModal
         onCancel={() => setCheckReviewModalShow(false)}
         visible={checkReviewModalShow}
@@ -982,7 +991,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         error={checkReview.error}
         loading={checkReview.loading}
       />
-      <AlertModal
+      {/* <AlertModal
         onCancel={() => setImageSizeToBigShow(false)}
         visible={imageSizeToBigShow}
         messageBlock={
@@ -1003,7 +1012,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
             <span style={{ marginTop: '5px', display: 'block' }}>10개 씩 올릴 수 있습니다</span>
           </div>
         }
-      />
+      /> */}
     </Container>
   );
 }
