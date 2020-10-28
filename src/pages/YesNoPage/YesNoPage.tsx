@@ -55,7 +55,7 @@ const base = [
   },
   {
     id: 8,
-    name: '시대에 뒤떨어진 합밥',
+    name: '함께 식사하는 합밥',
     img: friends,
   },
   {
