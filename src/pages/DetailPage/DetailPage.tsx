@@ -25,6 +25,7 @@ import GrayFooding from 'assets/fooding_gray.svg';
 import imageCompression from 'browser-image-compression';
 import Cat500 from 'assets/Cat500.svg';
 import Cat404 from 'assets/Cat404.svg';
+import { useScrollTop } from 'components/common/ScrollToTopController';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
@@ -594,9 +595,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
     history.push(`/shop/menuImage/${shop.data._id}`);
   }, [shop.data, history]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useScrollTop();
 
   useEffect(() => {
     return () => {
