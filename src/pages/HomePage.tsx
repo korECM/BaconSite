@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Container from '../components/layout/Container';
 import Header from '../components/layout/Header';
 import { Link, withRouter } from 'react-router-dom';
@@ -10,6 +10,9 @@ import search from 'assets/search.png';
 import titlelogo from 'assets/fooding_logo_outline.svg';
 import './TagButton.css';
 import useMainPost from 'hooks/useMain';
+import axios from 'axios';
+import { apiLink } from 'lib/getAPILink';
+import debounce from 'lodash/debounce';
 
 const TitleSlogan = styled.h1`
   font-size: 14px;
@@ -239,13 +242,31 @@ function HomePage({ history }: RouteComponentProps) {
     }
   };
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>): void => {
+  const debounceSearch = useCallback(
+    debounce(async (keyword: string) => {
+      if (keyword.length === 0) {
+      } else {
+        try {
+          const response = await axios.get<string[]>(apiLink() + `/shop/search/${keyword}`, {
+            withCredentials: true,
+          });
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }, 300),
+    [],
+  );
+
+  const onChange = async (e: React.FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     setInput(value);
+    debounceSearch(value);
   };
 
   const moveHref = (input: string) => {
-    if (input !== '') {
+    if (input.length > 0) {
       history.push({
         pathname: '/result',
         search: 'name=' + input + '&search=true',
@@ -292,7 +313,7 @@ function HomePage({ history }: RouteComponentProps) {
         </SearchBox>
         {posts.data &&
           posts.data.map((post) => (
-            <a href={post.link}>
+            <a href={post.link} key={post.image}>
               <RoundContainer theme="image" imageLink={post.image} key={`${post.registerDate}`}>
                 <span>{post.title}</span>
               </RoundContainer>
