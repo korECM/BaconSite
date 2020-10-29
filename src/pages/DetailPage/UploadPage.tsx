@@ -200,23 +200,31 @@ function UploadPage({ match, history }: RouteComponentProps) {
     onShopRequest();
   }, [onShopRequest, user, goLogin]);
 
+  const resetUpload = useCallback(() => {
+    setUploading(false);
+    setResizedFile([]);
+    setFileList([]);
+  }, []);
+
   useEffect(() => {
     if (shopImage.data?.locations) {
       setShopImageUploadDone(true);
-      setUploading(false);
-      setResizedFile([]);
-      setFileList([]);
+      resetUpload();
+    } else if (shopImage.error) {
+      setShopImageUploadDone(true);
+      resetUpload();
     }
-  }, [shopImage.data]);
+  }, [shopImage, resetUpload]);
 
   useEffect(() => {
     if (menuImage.data?.locations) {
       setMenuImageUploadDone(true);
-      setUploading(false);
-      setResizedFile([]);
-      setFileList([]);
+      resetUpload();
+    } else if (menuImage.error) {
+      setMenuImageUploadDone(true);
+      resetUpload();
     }
-  }, [menuImage.data]);
+  }, [menuImage, resetUpload]);
 
   const onShopFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let files = fileRef.current?.files;
