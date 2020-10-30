@@ -14,27 +14,19 @@ import Loader from 'components/common/Loader';
 import Cat500 from 'assets/Cat500.svg';
 import Cat404 from 'assets/Cat404.svg';
 import useCheck from 'hooks/useCheck';
+import { MdCameraAlt } from 'react-icons/md';
 
 const ShopTitle = styled.h1`
   font-size: 31px;
   font-weight: 900;
   margin-top: 10px;
   margin-bottom: 20px;
+  color: black; 
 `;
 
 const ButtonMiddle = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const CategoryContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  button {
-    margin: 0 10px;
-    flex: 1;
-  }
-  margin: 20px 0;
 `;
 
 const PreviewImageHolder = styled.div`
@@ -85,8 +77,8 @@ const PreviewImageDelete = styled.div`
   position: absolute;
   top: 5px;
   right: -10px;
-  background: #fff;
-  color: #db2a37;
+  background: ${palette.mainRed};
+  color: ${palette.white};
   border-radius: 50%;
   text-align: center;
   cursor: pointer;
@@ -146,12 +138,115 @@ const TopDivider = styled.div`
   margin-bottom: 60px;
 `;
 
+const ButtonCategoryContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 40px;
+
+  margin-bottom: 10px;
+
+  button {
+    border: none;
+    outline: none;
+    background-color: ${palette.white};
+    color: ${palette.darkGray};
+    padding: 10px 20px;
+    flex: 1;
+    max-width: 175px;
+    font-size: 12.5px;
+  }
+
+  button:nth-child(1) {
+    border-radius: 12.5px 0 0 12.5px;
+  }
+  button:nth-child(2) {
+    border-radius: 0 12.5px 12.5px 0;
+  }
+
+  button.active {
+    background-color: ${palette.mainRed};
+    color: ${palette.white};
+  }
+`;
+
+const ButtonSubmitContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  button {
+    width: 140px;
+    padding: 8.5px;
+    &:nth-child(1) {
+      border: 1px ${palette.mainRed} solid;
+      &:disabled {
+        border: none;
+      }
+    }
+  }
+  /* margin: 20px 0; */
+`;
+
+const EmptyImageContainer = styled.div`
+  background-color: white;
+  position: relative;
+
+  height: calc(30vw + 15px);
+  width: 100%;
+
+  @media only screen and (min-width: 1000px) {
+    height: calc(20vw + 15px);
+  }
+
+  @media only screen and (min-width: 1600px) {
+    height: calc(10vw + 15px);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 22.5%;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-top-color: #ffffff;
+    border-bottom: 0;
+    margin-left: -15px;
+    margin-bottom: -15px;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: ${palette.middleGray};
+
+    svg {
+      font-size: 2.75rem;
+    }
+
+    span {
+      margin-top: 10px;
+      font-size: 14px;
+
+      &.small {
+        font-size: 11px;
+      }
+    }
+  }
+`;
+
 interface CustomFileList {
   file: File;
   previewImage: string;
 }
 
 type Category = 'shop' | 'menu';
+
+const MAX_UPLOAD_NUM = 10;
 
 function UploadPage({ match, history }: RouteComponentProps) {
   const shopId = (match.params as any).shopId;
@@ -229,7 +324,7 @@ function UploadPage({ match, history }: RouteComponentProps) {
   const onShopFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let files = fileRef.current?.files;
     if (files?.length) {
-      for (const imageFile of Array.from(files)) {
+      for (const imageFile of Array.from(files).slice(0, MAX_UPLOAD_NUM)) {
         let reader = new FileReader();
         reader.onloadend = () => {
           setFileList((image) =>
@@ -248,7 +343,7 @@ function UploadPage({ match, history }: RouteComponentProps) {
     let files = fileRef.current?.files;
     if (files?.length) {
       setUploading(true);
-      for (const imageFile of Array.from(files)) {
+      for (const imageFile of Array.from(files).slice(0, MAX_UPLOAD_NUM)) {
         console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
         let options = {
           maxSizeMB: 0.5,
@@ -271,7 +366,7 @@ function UploadPage({ match, history }: RouteComponentProps) {
 
   useEffect(() => {
     if (fileList.length === 0 || resizedFile.length === 0) return;
-    if (resizedFile.length === fileList.length) {
+    if (resizedFile.length === fileList.slice(0, MAX_UPLOAD_NUM).length) {
       if (category === 'shop') {
         setShopImageUploadShow(true);
         onShopImageUploadRequest(resizedFile);
@@ -308,7 +403,7 @@ function UploadPage({ match, history }: RouteComponentProps) {
         }
       }
     } else {
-      return '업로드';
+      return '업로드 >>';
     }
   }, [resizedFile, fileList, uploading, percent]);
 
@@ -374,34 +469,42 @@ function UploadPage({ match, history }: RouteComponentProps) {
       />
       <ShopTitle>{shop.data.name}</ShopTitle>
       <input type="file" accept="image/*" name="imgFile" multiple style={{ display: 'none' }} ref={fileRef} onChange={onShopFileChange} />
-      <ButtonMiddle>
-        <Button theme="red" onClick={imageSelectClicked} disabled={uploading}>
-          사진 고르기
-        </Button>
-      </ButtonMiddle>
+      <ButtonCategoryContainer>
+        <button onClick={() => setCategoryButton('shop')} className={category === 'shop' ? 'active' : ''}>
+          가게 사진
+        </button>
+
+        <button onClick={() => setCategoryButton('menu')} className={category === 'menu' ? 'active' : ''}>
+          메뉴판 사진
+        </button>
+      </ButtonCategoryContainer>
       <PreviewImageHolder>
-        {fileList &&
-          fileList.length > 0 &&
+        {fileList && fileList.length > 0 ? (
           fileList.map((file, index) => (
             <PreviewImageContainer key={file.previewImage.length}>
               <PreviewImageDelete onClick={() => previewImageDelete(index)}>X</PreviewImageDelete>
               <PreviewImage src={file.previewImage} alt="업로드 사진" />
             </PreviewImageContainer>
-          ))}
+          ))
+        ) : (
+          <EmptyImageContainer onClick={imageSelectClicked}>
+            <div>
+              <MdCameraAlt />
+              <span>사진을 선택해주세요</span>
+              <span className="small">한 번에 10장까지 업로드 할 수 있습니다</span>
+            </div>
+          </EmptyImageContainer>
+        )}
       </PreviewImageHolder>
-      <CategoryContainer>
-        <Button theme={category === 'shop' ? 'border' : 'gray'} onClick={() => setCategoryButton('shop')}>
-          가게 사진
+      <ButtonSubmitContainer>
+        <Button theme="white" onClick={imageSelectClicked} disabled={uploading}>
+          사진 고르기
         </Button>
-        <Button theme={category === 'menu' ? 'border' : 'gray'} onClick={() => setCategoryButton('menu')}>
-          메뉴판 사진
-        </Button>
-      </CategoryContainer>
-      <ButtonGroup direction="row" gap="0">
         <Button theme="red" fullWidth onClick={onUploadButtonClick} disabled={fileList.length === 0 || uploading}>
           {imageUploadMessage()}
         </Button>
-      </ButtonGroup>
+      </ButtonSubmitContainer>
+      <ButtonMiddle></ButtonMiddle>
       <ProcessModal
         onCancel={() => setMenuImageUploadShow(false)}
         visible={menuImageUploadShow}
