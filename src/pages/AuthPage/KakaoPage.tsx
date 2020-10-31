@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
-import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { Link, Redirect, RouteComponentProps } from 'react-router-dom';
 import useKakao from '../../hooks/useKakao';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
@@ -13,6 +13,7 @@ import { AiOutlineIdcard } from 'react-icons/ai';
 import gender from 'assets/gender.png';
 import Button from '../../components/common/Button';
 import Title from 'lib/meta';
+import noResultCat from 'assets/NoResultCat.svg';
 
 const InputBlock = styled.div`
   padding: 0 5%;
@@ -59,6 +60,25 @@ const GenderWrapper = styled.div`
   button + button {
     border-left: none;
     border-radius: 0 10px 10px 0;
+  }
+`;
+
+const SimpleImage = styled.img`
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 40px;
+`;
+
+const SimpleImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  padding: 0 30px;
+
+  div {
+    text-align: center;
   }
 `;
 
@@ -125,20 +145,28 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     }
   }, [kakao, check]);
 
-  useEffect(() => {
-    if (user) {
-      console.log('check 성공');
-      setError(false);
+  const rediretForSuccess = useCallback(
+    (user) => {
       try {
         localStorage.setItem('user', JSON.stringify(user));
         history.push(redir || '/');
       } catch (error) {
         console.error('localStorage 사용 불가');
       }
+    },
+    [history, redir],
+  );
+
+  useEffect(() => {
+    if (user) {
+      console.log('check 성공');
+      setError(false);
+      rediretForSuccess(user);
     } else {
       setError(true);
     }
-  }, [user, history, redir]);
+    console.log(user);
+  }, [user, rediretForSuccess]);
 
   useEffect(() => {
     if (name.length === 0) {
@@ -159,20 +187,25 @@ function KakaoPage({ location, history }: RouteComponentProps) {
     setErrorMessageDispatch('');
   }, [name, setValidDispatch, setErrorMessageDispatch, genderInput]);
 
-  if (kakao.loading) {
+  if (kakao.error) {
+    return (
+      <Container color="white">
+        <Header category="modal" headerColor="white" />
+        <SimpleImageContainer>
+          <SimpleImage src={noResultCat} />
+          <div>로그인 중 오류가 발생했어요</div>
+          <Button theme="red">
+            <Link to="/auth/login">다시 로그인하러 가기</Link>
+          </Button>
+        </SimpleImageContainer>
+      </Container>
+    );
+  }
+  if (kakao.data === null || kakao.loading) {
     return (
       <Container color="white">
         <Header category="modal" headerColor="white" />
         <Loader />
-      </Container>
-    );
-  }
-
-  if (kakao.data === null || error) {
-    return (
-      <Container color="white">
-        <Header category="modal" headerColor="white" />
-        <div>기술상의 문제로 현재 로그인할 수 없습니다</div>
       </Container>
     );
   }
@@ -206,7 +239,7 @@ function KakaoPage({ location, history }: RouteComponentProps) {
   return (
     <Container color="white">
       <Header category="modal" headerColor="white" />
-      카카오 로그인 성공
+      <Loader />
     </Container>
   );
 }
