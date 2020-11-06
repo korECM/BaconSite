@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styled from 'styled-components';
 import Container from 'components/layout/Container';
@@ -179,6 +179,8 @@ function SearchPage({ history }: RouteComponentProps) {
   const onKeywordClick = useCallback(
     (keyword: string) => {
       console.log(keyword);
+      setValue('');
+      setData([]);
       history.push({
         pathname: '/shop/' + keyword,
       });
