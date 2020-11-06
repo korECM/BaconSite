@@ -87,6 +87,8 @@ const FunctionContainer = styled.div`
     .function {
       width: 20%;
       margin: 0 5px;
+      animation: fadeInScaleOut 0.3s ease-in;
+      animation-fill-mode: forwards;
       .imgHolder {
         display: flex;
         justify-content: center;
@@ -148,6 +150,8 @@ const CategoryContainer = styled.div`
   align-content: space-between;
   .category {
     width: 25%;
+    /* animation: fadeInScaleOut 0.3s ease-in; */
+    animation-fill-mode: forwards;
     .imgHolder {
       width: 48px;
       height: 48px;
@@ -363,25 +367,25 @@ function HomePage({ history, match }: RouteComponentProps) {
         <FunctionContainer>
           <div className="functionTitle">뭐 먹을지 고민될 땐, 푸딩이 정해드릴게요!</div>
           <div className="functionRow">
-            <Link className="function" to="/filter">
+            <Link className="function" to="/filter" style={{ animationDelay: '0' }}>
               <div className="imgHolder">
                 <img src={Filter} alt="" />
               </div>
               <div className="name">필터검색</div>
             </Link>
-            <Link className="function" to="/yesno">
+            <Link className="function" to="/yesno" style={{ animationDuration: '0.35s' }}>
               <div className="imgHolder">
                 <img src={YesNo} alt="" />
               </div>
               <div className="name">양자택일</div>
             </Link>
-            <Link className="function" to="/rouletteList">
+            <Link className="function" to="/rouletteList" style={{ animationDuration: '0.4s' }}>
               <div className="imgHolder">
                 <img src={Roulette} alt="" />
               </div>
               <div className="name">돌림판</div>
             </Link>
-            <div className="function" onClick={myPageButtonClick}>
+            <div className="function" onClick={myPageButtonClick} style={{ animationDuration: '0.45s' }}>
               <div className="imgHolder red">
                 <img src={MyPage} alt="" />
               </div>
@@ -396,9 +400,14 @@ function HomePage({ history, match }: RouteComponentProps) {
           <input placeholder="검색어를 입력하세요" />
         </SearchBar>
         <CategoryContainer>
-          {CategoryArray.map((category) =>
+          {CategoryArray.map((category, index) =>
             category.img.length > 0 ? (
-              <Link className="category" key={category.name} to={`/result?detailCategory=${category.search}&isDetailCategory=true`}>
+              <Link
+                className="category"
+                key={category.name}
+                to={`/result?detailCategory=${category.search}&isDetailCategory=true`}
+                style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}
+              >
                 <div className="imgHolder">
                   <img src={category.img} alt={category.name} />
                 </div>
