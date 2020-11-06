@@ -68,10 +68,16 @@ class RoulettePage extends React.Component<Props, State> {
   render() {
     const { setSpin } = this;
 
-    let items = this.props.location.search
-      .split('=')[1]
-      .split(',')
-      .map((item) => decodeURIComponent(item));
+    let items: string[] = [];
+
+    if (this.props.location.search.split('=').length <= 1) {
+      this.props.history.push('/rouletteList');
+    } else {
+      items = this.props.location.search
+        .split('=')[1]
+        .split(',')
+        .map((item) => decodeURIComponent(item));
+    }
 
     let data: WheelDataType[] = Array.from({ length: Math.min(items.length, 6) }, (v) => ({
       option: 'dd',
