@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { apiLink } from '../lib/getAPILink';
 import { Location, Keyword, FoodCategory } from './getShop';
 
@@ -33,6 +33,7 @@ export interface getShopsInterface {
   location?: string;
   category?: string;
   foodCategory?: string;
+  detailCategory?: string;
   price?: string;
   keyword?: string;
   name?: string;
@@ -45,16 +46,23 @@ export interface Image {
   imageLink: string;
 }
 
-export async function getShops(options: getShopsInterface) {
-  const response = await axios.get<ShopsInterface[]>(
-    apiLink() +
-      `/shop/?location=${options.location || ''}&order=${options.order || ''}&category=${options.category || ''}&foodCategory=${
-        options.foodCategory || ''
-      }&price=${options.price || ''}&keyword=${options.keyword || ''}&name=${options.name || ''}`,
-    {
+export async function getShops(options: getShopsInterface, isDetail?: boolean) {
+  let response: AxiosResponse<ShopsInterface[]>;
+  if (isDetail) {
+    response = await axios.get<ShopsInterface[]>(apiLink() + `/shop/detailCategory?detailCategory=${options.detailCategory || ''}`, {
       withCredentials: true,
-    },
-  );
+    });
+  } else {
+    response = await axios.get<ShopsInterface[]>(
+      apiLink() +
+        `/shop/?location=${options.location || ''}&order=${options.order || ''}&category=${options.category || ''}&foodCategory=${
+          options.foodCategory || ''
+        }&price=${options.price || ''}&keyword=${options.keyword || ''}&name=${options.name || ''}`,
+      {
+        withCredentials: true,
+      },
+    );
+  }
   return response.data;
 }
 

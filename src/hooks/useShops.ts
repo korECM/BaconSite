@@ -8,7 +8,7 @@ export default function useShops() {
   const { shops } = useSelector((state: RootState) => state.shops);
   const dispatch = useDispatch();
 
-  const onGetShops = useCallback((options: getShopsInterface) => dispatch(getShopsThunk(options)), [dispatch]);
+  const onGetShops = useCallback((options: getShopsInterface, isDetail?: boolean) => dispatch(getShopsThunk(options, isDetail)), [dispatch]);
 
   return {
     shops,

@@ -5,6 +5,7 @@ const palette = {
   middleLightGray: '#ECECEC',
   middleGray: '#8A8A8A',
   darkGray: '#5D5D5D',
+  deppDarkGray: '#1D1D1D',
   white: '#FFFFFF',
 };
 

@@ -71,6 +71,8 @@ function ResultPage({ location }: RouteComponentProps) {
   const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
+    let isDetail = false;
+
     const param = location.search
       .split('?')[1]
       .split('&')
@@ -84,6 +86,7 @@ function ResultPage({ location }: RouteComponentProps) {
         option[0] === 'keyword' ||
         option[0] === 'name' ||
         option[0] === 'order' ||
+        option[0] === 'detailCategory' ||
         option[0] === 'foodCategory'
       ) {
         options = {
@@ -92,9 +95,11 @@ function ResultPage({ location }: RouteComponentProps) {
         };
       } else if (option[0] === 'search') {
         setIsSearch(true);
+      } else if (option[0] === 'isDetailCategory') {
+        isDetail = true;
       }
     });
-    onGetShops(options);
+    onGetShops(options, isDetail);
   }, [location, onGetShops]);
   return (
     <Container color="red">
@@ -102,11 +107,11 @@ function ResultPage({ location }: RouteComponentProps) {
       <Header category="modal" headerColor="red" />
       {shops.loading ? (
         <Loader color="white" />
-        ) : shops.data ? (
-          <>
+      ) : shops.data ? (
+        <>
           {shops.data.length === 0 ? (
             <>
-            <ScrollToTopController/>
+              <ScrollToTopController />
               <TopDivider></TopDivider>
               <NoResultComment>앗, 검색 결과가 없습니다!</NoResultComment>
               <Divider></Divider>
@@ -119,7 +124,7 @@ function ResultPage({ location }: RouteComponentProps) {
             </>
           ) : (
             <>
-            <ScrollToTopController/>
+              <ScrollToTopController />
               <ResultComment>검색 결과를 찾았습니다!</ResultComment>
               <RestaurantCardContainer>
                 {shops.data.map((shop, index) => (
