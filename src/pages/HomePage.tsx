@@ -155,12 +155,15 @@ const CategoryContainer = styled.div`
     .imgHolder {
       width: 48px;
       height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       margin: 0 auto;
       border-radius: 50%;
       background-color: ${palette.white};
       img {
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
       }
     }
     .name {
