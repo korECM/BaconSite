@@ -137,7 +137,6 @@ const CategoryContainer = styled.div`
   align-content: space-between;
   .category {
     width: 25%;
-    /* animation: fadeInScaleOut 0.3s ease-in; */
     animation-fill-mode: forwards;
     .imgHolder {
       width: 48px;
