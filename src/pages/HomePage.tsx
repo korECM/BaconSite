@@ -22,7 +22,6 @@ import Chicken from 'assets/chicken.svg';
 import Stew from 'assets/stew.svg';
 import Pig from 'assets/pig.svg';
 import Bakery from 'assets/bakery.svg';
-import RedCircle from 'assets/redCircle.svg';
 import './TagButton.css';
 import useMainPost from 'hooks/useMain';
 import useCheck from 'hooks/useCheck';
@@ -34,21 +33,8 @@ const BackgroundImage = styled.div`
   top: -225px;
   left: 0;
   right: 0;
-  background-image: url(${RedCircle});
-  background-repeat: no-repeat;
-  background-position-x: center;
-  height: 505px;
-`;
-const BackgroundImage2 = styled.div`
-  position: absolute;
-  bottom: -700px;
-  left: 0;
-  right: 0;
-  height: 260px;
-  clip: rect(0, 100vw, 260px, 0);
-  background-image: url(${RedCircle});
-  background-repeat: no-repeat;
-  background-position-x: center;
+  background-color: ${palette.mainRed};
+  height: 470px;
 `;
 
 const MainLogo = styled.div`
@@ -56,7 +42,8 @@ const MainLogo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 30px 0;
+  margin-top: 12.5px;
+  margin-bottom: 15px;
   img {
     width: 54px;
     height: 48px;
@@ -120,8 +107,8 @@ const SearchBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 35px 0;
-  height: 40px;
+  margin: 30px 0;
+  height: 35px;
   border-radius: 50px;
   background-color: ${palette.white};
   svg {
@@ -162,8 +149,8 @@ const CategoryContainer = styled.div`
       border-radius: 50%;
       background-color: ${palette.white};
       img {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
       }
     }
     .name {
@@ -179,14 +166,20 @@ const CategoryContainer = styled.div`
 const InstarContainer = styled.div`
   background-color: ${palette.white};
   border-radius: 15px;
-  margin: 30px 0;
+  margin-top: 30px;
+  margin-bottom: 35px;
   padding-bottom: 7.5px;
+
+  -webkit-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 5px 5px 20px -1px rgba(0, 0, 0, 0.05);
 
   .title {
     font-weight: bolder;
     text-align: center;
     padding-top: 25px;
     padding-bottom: 5px;
+    font-size: 14.5px;
   }
   .posts {
     margin: 0 20px;
@@ -247,16 +240,26 @@ const AddShopContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
-  padding-top: 90px;
+  background-color: ${palette.mainRed};
+  padding-top: 50px;
+  transform: translateY(-50px);
   .subTitle {
     font-weight: bolder;
-    padding-bottom: 10px;
-    font-size: 13px;
+    padding-bottom: 5px;
+    font-size: 12px;
+  }
+
+  button {
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 7.5px 25px;
   }
 
   .info {
-    margin-top: 25px;
+    margin-top: 27.5px;
     font-size: 11px;
+    padding-bottom: 50px;
     .bold {
       font-weight: bolder;
     }
@@ -357,106 +360,107 @@ function HomePage({ history, match }: RouteComponentProps) {
   useScrollTop();
 
   return (
-    <Container color="white">
-      <div>
-        <BackgroundImage></BackgroundImage>
-        <BackgroundImage2></BackgroundImage2>
-      </div>
-      <div style={{ position: 'relative' }}>
-        <MainLogo>
-          <img src={MainLogoSvg} alt="logo" />
-          <img src={MainLogoTitleSvg} alt="logoTitle" className="title" />
-        </MainLogo>
-        <FunctionContainer>
-          <div className="functionTitle">뭐 먹을지 고민될 땐, 푸딩이 정해드릴게요!</div>
-          <div className="functionRow">
-            <Link className="function" to="/filter" style={{ animationDelay: '0' }}>
-              <div className="imgHolder">
-                <img src={Filter} alt="" />
-              </div>
-              <div className="name">필터검색</div>
-            </Link>
-            <Link className="function" to="/yesno" style={{ animationDuration: '0.35s' }}>
-              <div className="imgHolder">
-                <img src={YesNo} alt="" />
-              </div>
-              <div className="name">양자택일</div>
-            </Link>
-            <Link className="function" to="/rouletteList" style={{ animationDuration: '0.4s' }}>
-              <div className="imgHolder">
-                <img src={Roulette} alt="" />
-              </div>
-              <div className="name">돌림판</div>
-            </Link>
-            <div className="function" onClick={myPageButtonClick} style={{ animationDuration: '0.45s' }}>
-              <div className="imgHolder red">
-                <img src={MyPage} alt="" />
-              </div>
-              <div className="name">{user ? '마이푸딩' : '로그인'}</div>
-            </div>
-          </div>
-        </FunctionContainer>
-        <SearchBar onClick={searchBarClick}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z" />
-          </svg>
-          <input placeholder="검색어를 입력하세요" />
-        </SearchBar>
-        <CategoryContainer>
-          {CategoryArray.map((category, index) =>
-            category.img.length > 0 ? (
-              <Link
-                className="category"
-                key={category.name}
-                to={`/result?detailCategory=${category.search}&isDetailCategory=true`}
-                style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}
-              >
+    <>
+      <Container color="white">
+        <div>
+          <BackgroundImage></BackgroundImage>
+        </div>
+        <div style={{ position: 'relative' }}>
+          <MainLogo>
+            <img src={MainLogoSvg} alt="logo" />
+            <img src={MainLogoTitleSvg} alt="logoTitle" className="title" />
+          </MainLogo>
+          <FunctionContainer>
+            <div className="functionTitle">뭐 먹을지 고민될 땐, 푸딩이 정해드릴게요!</div>
+            <div className="functionRow">
+              <Link className="function" to="/filter" style={{ animationDelay: '0' }}>
                 <div className="imgHolder">
-                  <img src={category.img} alt={category.name} />
+                  <img src={Filter} alt="" />
                 </div>
-                <div className="name">{category.name}</div>
+                <div className="name">필터검색</div>
               </Link>
-            ) : (
-              <div className="category" key={category.name} style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}>
+              <Link className="function" to="/yesno" style={{ animationDuration: '0.35s' }}>
                 <div className="imgHolder">
-                  <img alt={category.name} style={{ visibility: 'hidden' }} />
+                  <img src={YesNo} alt="" />
                 </div>
-                <div className="name">{category.name}</div>
+                <div className="name">양자택일</div>
+              </Link>
+              <Link className="function" to="/rouletteList" style={{ animationDuration: '0.4s' }}>
+                <div className="imgHolder">
+                  <img src={Roulette} alt="" />
+                </div>
+                <div className="name">돌림판</div>
+              </Link>
+              <div className="function" onClick={myPageButtonClick} style={{ animationDuration: '0.45s' }}>
+                <div className="imgHolder red">
+                  <img src={MyPage} alt="" />
+                </div>
+                <div className="name">{user ? '마이푸딩' : '로그인'}</div>
               </div>
-            ),
-          )}
-        </CategoryContainer>
-        <InstarContainer>
-          <div className="title">FOODING’s PICK!</div>
-          <div className="posts">
-            {posts.data ? (
-              posts.data.map((post) => (
-                <a href={post.link} key={post.image}>
-                  <RoundContainer theme="image" imageLink={post.image} key={`${post.registerDate}`}>
-                    <span>{post.title}</span>
-                  </RoundContainer>
-                </a>
-              ))
-            ) : (
-              <div className="loaderContainer">
-                <div className="loader loader-black loader-1"></div>
-              </div>
+            </div>
+          </FunctionContainer>
+          <SearchBar onClick={searchBarClick}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+              <path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z" />
+            </svg>
+            <input placeholder="검색어를 입력하세요" />
+          </SearchBar>
+          <CategoryContainer>
+            {CategoryArray.map((category, index) =>
+              category.img.length > 0 ? (
+                <Link
+                  className="category"
+                  key={category.name}
+                  to={`/result?detailCategory=${category.search}&isDetailCategory=true`}
+                  style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}
+                >
+                  <div className="imgHolder">
+                    <img src={category.img} alt={category.name} />
+                  </div>
+                  <div className="name">{category.name}</div>
+                </Link>
+              ) : (
+                <div className="category" key={category.name} style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}>
+                  <div className="imgHolder">
+                    <img alt={category.name} style={{ visibility: 'hidden' }} />
+                  </div>
+                  <div className="name">{category.name}</div>
+                </div>
+              ),
             )}
-          </div>
-        </InstarContainer>
-        <AddShopContainer>
-          <div className="subTitle">찾는 식당이 푸딩에 등록되어 있지 않나요?</div>
-          <a href="https://forms.gle/G2AGwkTyaXeN7C1T6">
-            <Button theme="white">식당 등록하기</Button>
-          </a>
-          <div className="info">
-            © 2020
-            <span className="bold"> Teaspoon </span>
-            All rights reserved.
-          </div>
-        </AddShopContainer>
-      </div>
-    </Container>
+          </CategoryContainer>
+          <InstarContainer>
+            <div className="title">FOODING’s PICK!</div>
+            <div className="posts">
+              {posts.data ? (
+                posts.data.map((post) => (
+                  <a href={post.link} key={post.image}>
+                    <RoundContainer theme="image" imageLink={post.image} key={`${post.registerDate}`}>
+                      <span>{post.title}</span>
+                    </RoundContainer>
+                  </a>
+                ))
+              ) : (
+                <div className="loaderContainer">
+                  <div className="loader loader-black loader-1"></div>
+                </div>
+              )}
+            </div>
+          </InstarContainer>
+        </div>
+      </Container>
+      <AddShopContainer>
+        <div className="subTitle">찾는 식당이 푸딩에 등록되어 있지 않나요?</div>
+        <a href="https://forms.gle/G2AGwkTyaXeN7C1T6">
+          <Button theme="white">식당 등록하기</Button>
+        </a>
+        <div className="info">
+          © 2020
+          <span className="bold"> Teaspoon </span>
+          All rights reserved.
+        </div>
+      </AddShopContainer>
+    </>
   );
 }
 
