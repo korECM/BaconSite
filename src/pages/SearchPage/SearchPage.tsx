@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import styled from 'styled-components';
 import Container from 'components/layout/Container';
@@ -91,6 +91,8 @@ function SearchPage({ history }: RouteComponentProps) {
   const [value, setValue] = useState('');
   const [data, setData] = useState<DataInterface[]>([]);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const debounceSearch = useCallback(
     debounce(async (keyword: string) => {
       if (keyword.length === 0) {
@@ -171,7 +173,7 @@ function SearchPage({ history }: RouteComponentProps) {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = event.currentTarget;
       setValue(value);
-      debounceSearch(value);
+      if (value.trim().length > 0) debounceSearch(value.trim());
     },
     [debounceSearch],
   );
@@ -207,6 +209,10 @@ function SearchPage({ history }: RouteComponentProps) {
 
   useScrollTop();
 
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.focus();
+  }, []);
+
   return (
     <Container color="white">
       <Header category="modal" headerColor="white" />
@@ -214,7 +220,7 @@ function SearchPage({ history }: RouteComponentProps) {
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
           <path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z" />
         </svg>
-        <input placeholder="검색어를 입력하세요" onChange={onInputChange} value={value} />
+        <input placeholder="검색어를 입력하세요" onChange={onInputChange} value={value} ref={inputRef} />
       </SearchBar>
       <ResultContainer>
         {data.map((d, index) => (
