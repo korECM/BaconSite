@@ -6,6 +6,7 @@ import { withRouter, RouteComponentProps, Route, Link } from 'react-router-dom';
 import palette from '../../styles/palette';
 import styled, { css } from 'styled-components';
 import Button from '../../components/common/Button';
+import useShops from '../../hooks/useShops';
 
 const ResultComment = styled.h1`
   font-size: 17px;
@@ -119,6 +120,8 @@ const SearchBoxContainer = styled.div`
   vertical-align: flex-end;
 `;
 
+const randomchar = ['r', 'a', 'n', 'd', 'o', 'm'];
+
 interface Props extends RouteComponentProps {}
 
 interface RouletteItemState {
@@ -195,6 +198,7 @@ class RouletteList extends React.Component<Props, State> {
   };
 
   moveHref = (data: DataInterface[]) => {
+
     beClicked = true;
     selected_name = 'true';
     const { RouletteItems, input } = this.state;
@@ -202,6 +206,13 @@ class RouletteList extends React.Component<Props, State> {
     const nextRouletteItems: RouletteItemState[] = RouletteItems.concat(newItem);
     if (RouletteItems.length < 2) {
       console.log('2개 이상 입력하셔야 합니다.');
+      if(RouletteItems.length === 0) {
+        console.log('완전랜덤');
+        this.props.history.push({
+          pathname: '/roulette',
+          search: '?items=' + 'r,a,n,d,o,m',
+        });
+      }
     } else {
       this.props.history.push({
         pathname: '/roulette',
@@ -250,6 +261,21 @@ class RouletteList extends React.Component<Props, State> {
         }
       }
       console.log(data);
+    }
+
+    if (beClicked === true && RouletteItems.length == 0) {
+      for (var i = 0; i < 6; i++) {
+        data[i].option = randomchar[i];
+        if (i % 2 == 0) {
+          data[i].style.backgroundColor = '#dddddd';
+          data[i].style.textColor = '#5d5d5d';
+          data[i].font = 'Nanum Gothic';
+        } else {
+          data[i].style.backgroundColor = 'white';
+          data[i].style.textColor = '#5d5d5d';
+          data[i].font = 'Nanum Gothic';
+        }
+      }
     }
 
     // alert(JSON.stringify(RouletteItemList.text));
