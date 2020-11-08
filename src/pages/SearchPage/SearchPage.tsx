@@ -171,7 +171,7 @@ function SearchPage({ history }: RouteComponentProps) {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = event.currentTarget;
       setValue(value);
-      debounceSearch(value);
+      if (value.trim().length > 0) debounceSearch(value.trim());
     },
     [debounceSearch],
   );

@@ -417,7 +417,7 @@ function HomePage({ history, match }: RouteComponentProps) {
                 <div className="name">{category.name}</div>
               </Link>
             ) : (
-              <div className="category" key={category.name}>
+              <div className="category" key={category.name} style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}>
                 <div className="imgHolder">
                   <img alt={category.name} style={{ visibility: 'hidden' }} />
                 </div>
