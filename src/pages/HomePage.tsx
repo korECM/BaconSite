@@ -33,26 +33,8 @@ const BackgroundImage = styled.div`
   top: -225px;
   left: 0;
   right: 0;
-<<<<<<< Updated upstream
   background-color: ${palette.mainRed};
   height: 470px;
-=======
-  background-image: url(${RedCircle});
-  background-repeat: no-repeat;
-  background-position-x: center;
-  height: 505px;
-`;
-const BackgroundImage2 = styled.div`
-  position: absolute;
-  bottom: -700px;
-  left: 0;
-  right: 0;
-  clip: rect(0, 100vw, 250px, 0);
-  background-image: url(${RedCircle});
-  background-repeat: no-repeat;
-  background-position-x: center;
-  height: 260px;
->>>>>>> Stashed changes
 `;
 
 const MainLogo = styled.div`
@@ -257,15 +239,9 @@ const AddShopContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
-<<<<<<< Updated upstream
   background-color: ${palette.mainRed};
   padding-top: 50px;
   transform: translateY(-50px);
-=======
-  width:full;
-  background-color: ${palette.mainRed};
-  padding-top: 90px;
->>>>>>> Stashed changes
   .subTitle {
     font-weight: bolder;
     padding-bottom: 5px;
@@ -383,7 +359,6 @@ function HomePage({ history, match }: RouteComponentProps) {
   useScrollTop();
 
   return (
-<<<<<<< Updated upstream
     <>
       <Container color="white">
         <div>
@@ -398,61 +373,6 @@ function HomePage({ history, match }: RouteComponentProps) {
             <div className="functionTitle">뭐 먹을지 고민될 땐, 푸딩이 정해드릴게요!</div>
             <div className="functionRow">
               <Link className="function" to="/filter" style={{ animationDelay: '0' }}>
-=======
-    <Container color="white">
-      <div>
-        <BackgroundImage></BackgroundImage>
-      </div>
-      <div style={{ position: 'relative' }}>
-        <MainLogo>
-          <img src={MainLogoSvg} alt="logo" />
-          <img src={MainLogoTitleSvg} alt="logoTitle" className="title" />
-        </MainLogo>
-        <FunctionContainer>
-          <div className="functionTitle">뭐 먹을지 고민될 땐, 푸딩이 정해드릴게요!</div>
-          <div className="functionRow">
-            <Link className="function" to="/filter" style={{ animationDelay: '0' }}>
-              <div className="imgHolder">
-                <img src={Filter} alt="" />
-              </div>
-              <div className="name">필터검색</div>
-            </Link>
-            <Link className="function" to="/yesno" style={{ animationDuration: '0.35s' }}>
-              <div className="imgHolder">
-                <img src={YesNo} alt="" />
-              </div>
-              <div className="name">양자택일</div>
-            </Link>
-            <Link className="function" to="/rouletteList" style={{ animationDuration: '0.4s' }}>
-              <div className="imgHolder">
-                <img src={Roulette} alt="" />
-              </div>
-              <div className="name">돌림판</div>
-            </Link>
-            <div className="function" onClick={myPageButtonClick} style={{ animationDuration: '0.45s' }}>
-              <div className="imgHolder red">
-                <img src={MyPage} alt="" />
-              </div>
-              <div className="name">{user ? '마이푸딩' : '로그인'}</div>
-            </div>
-          </div>
-        </FunctionContainer>
-        <SearchBar onClick={searchBarClick}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z" />
-          </svg>
-          <input placeholder="검색어를 입력하세요" />
-        </SearchBar>
-        <CategoryContainer>
-          {CategoryArray.map((category, index) =>
-            category.img.length > 0 ? (
-              <Link
-                className="category"
-                key={category.name}
-                to={`/result?detailCategory=${category.search}&isDetailCategory=true`}
-                style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}
-              >
->>>>>>> Stashed changes
                 <div className="imgHolder">
                   <img src={Filter} alt="" />
                 </div>
@@ -507,7 +427,6 @@ function HomePage({ history, match }: RouteComponentProps) {
                 </div>
               ),
             )}
-<<<<<<< Updated upstream
           </CategoryContainer>
           <InstarContainer>
             <div className="title">FOODING’s PICK!</div>
@@ -541,27 +460,6 @@ function HomePage({ history, match }: RouteComponentProps) {
         </div>
       </AddShopContainer>
     </>
-=======
-          </div>
-        </InstarContainer>
-        <AddShopContainer>
-          <div className="subTitle">찾는 식당이 푸딩에 등록되어 있지 않나요?</div>
-          <a href="https://forms.gle/G2AGwkTyaXeN7C1T6">
-            <Button theme="white">식당 등록하기</Button>
-          </a>
-          <div className="info">
-            © 2020
-            <span className="bold"> Teaspoon </span>
-            All rights reserved.
-          </div>
-          
-        </AddShopContainer>
-      </div>
-      <div style={{ position: 'fixed' }}>
-        <BackgroundImage2></BackgroundImage2>
-      </div>
-    </Container>
->>>>>>> Stashed changes
   );
 }
 
