@@ -117,9 +117,9 @@ interface Props {
 
 const STARTED_SPINNING = 'started-spinning';
 
-const START_SPINNING_TIME = 2600;
-const CONTINUE_SPINNING_TIME = 750;
-const STOP_SPINNING_TIME = 8000;
+const START_SPINNING_TIME = 1500;
+const CONTINUE_SPINNING_TIME = 0;
+const STOP_SPINNING_TIME = 3500;
 
 export const Wheel = ({
   mustStartSpinning,
