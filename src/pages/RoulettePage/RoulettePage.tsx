@@ -149,6 +149,20 @@ class RoulettePage extends React.Component<Props, State> {
       }, 1000);
     };
 
+    const spinEndFunction = () => {
+      this.setState({
+        prize: Math.floor(Math.random() * data.length),
+      });
+      setSpin(false);
+      this.setState({
+        available: false,
+      });
+      setTimeout(() => {
+        setSpin(true);
+        setSpin(false);
+      }, 0);
+    };
+
     return (
       <Container color="red">
         <Title title="돌려돌려 돌림판 - 푸딩" />
