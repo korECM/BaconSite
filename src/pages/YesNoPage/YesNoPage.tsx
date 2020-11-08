@@ -178,20 +178,18 @@ class YesNoPage extends React.Component<Props, State> {
       }
 
       if (resultDataSet[3] === true) {
-        if (data[4] === '') {
+        if (resultDataSet[4] === true) {
+          data[4] = 'individual,atmosphere';
+        }else{
           data[4] = 'individual';
-        } else {
-          data[4] = data[4] + ',individual';
+        }
+      }else{
+        if (resultDataSet[4] === true) {
+          data[4] = 'atmosphere';
         }
       }
 
-      if (resultDataSet[4] === true) {
-        if (data[4] === '') {
-          data[4] = 'atmosphere';
-        } else {
-          data[4] = data[4] + ',atmosphere';
-        }
-      }
+      
       //아니 근데 이러면 매운거 안먹고 싶어서 spicy선택 안했는데 individual만 선택해서 individual인데 spicy한거 나오면 어캄 하.. 고른 의미가 없잖아...
 
       this.props.history.push({
