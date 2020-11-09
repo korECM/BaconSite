@@ -12,6 +12,7 @@ import YesNo from 'assets/yesno.svg';
 import Roulette from 'assets/roulette.svg';
 import MyPage from 'assets/fooding.svg';
 import Korean from 'assets/korean.svg';
+import Meat from 'assets/meat.svg';
 import School from 'assets/school.svg';
 import Fastfood from 'assets/fastfood.svg';
 import Pizza from 'assets/pizza.svg';
@@ -277,6 +278,7 @@ const CategoryArray: Category[] = [
     img: Korean,
     search: 'korean',
   },
+
   {
     name: '분식',
     img: School,
@@ -323,14 +325,14 @@ const CategoryArray: Category[] = [
     search: 'pig',
   },
   {
+    name: '고깃집',
+    img: Meat,
+    search: 'meat',
+  },
+  {
     name: '베이커리',
     img: Bakery,
     search: 'bakery',
-  },
-  {
-    name: '',
-    img: '',
-    search: '',
   },
 ];
 
