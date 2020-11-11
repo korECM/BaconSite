@@ -11,6 +11,8 @@ import Title from 'lib/meta';
 import noResultCat from 'assets/NoResultCat.svg';
 import noResultCat2 from 'assets/NoResultCat2.svg';
 import ScrollToTopController from 'components/common/ScrollToTopController';
+import palette from 'styles/palette';
+import { Location } from 'api/getShop';
 
 const ResultComment = styled.h1`
   font-family: 'Nanum Gothic';
@@ -65,10 +67,47 @@ const RestaurantCardContainer = styled.div`
   }
 `;
 
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 35px;
+  padding-bottom: 15px;
+  .buttonElement {
+    border: none;
+    outline: none;
+    flex: 1;
+    max-width: 150px;
+    padding: 10px;
+    background-color: ${palette.white};
+    color: black;
+    font-weight: lighter;
+    font-size: 13px;
+    font-family: 'Nanum Gothic';
+
+    /* transition: background-color 0.3s; */
+
+    &:nth-child(1) {
+      border-radius: 10px 0 0 10px;
+    }
+    &:nth-child(3) {
+      border-radius: 0 10px 10px 0;
+    }
+    &.selected {
+      background-color: ${palette.middleLightGray};
+      font-weight: bolder;
+    }
+  }
+`;
+
 function ResultPage({ location }: RouteComponentProps) {
   const { onGetShops, shops } = useShops();
 
   const [isSearch, setIsSearch] = useState(false);
+
+  type LocationFilter = 'all' | 'front' | 'back';
+
+  const [locationFilter, setLocationFilter] = useState<LocationFilter>('all');
 
   useEffect(() => {
     let isDetail = false;
@@ -125,13 +164,32 @@ function ResultPage({ location }: RouteComponentProps) {
           ) : (
             <>
               <ScrollToTopController />
-              <ResultComment>검색 결과를 찾았습니다!</ResultComment>
+              <FilterContainer>
+                <button onClick={() => setLocationFilter('all')} className={`buttonElement ${locationFilter === 'all' ? 'selected' : ''}`}>
+                  전체
+                </button>
+                <button onClick={() => setLocationFilter('front')} className={`buttonElement ${locationFilter === 'front' ? 'selected' : ''}`}>
+                  정문
+                </button>
+                <button onClick={() => setLocationFilter('back')} className={`buttonElement ${locationFilter === 'back' ? 'selected' : ''}`}>
+                  후문
+                </button>
+              </FilterContainer>
               <RestaurantCardContainer>
-                {shops.data.map((shop, index) => (
-                  <Link to={`/shop/${shop._id}`} key={shop._id}>
-                    <RestaurantCard shop={shop} delay={index * 75} />
-                  </Link>
-                ))}
+                {shops.data
+                  .filter((shop) => {
+                    if (locationFilter === 'all') return true;
+                    else if (locationFilter === 'front') {
+                      return ([Location.Front, Location.FrontFar, Location.HsStation] as Location[]).includes(shop.location);
+                    } else if (locationFilter === 'back') {
+                      return ([Location.Back] as Location[]).includes(shop.location);
+                    }
+                  })
+                  .map((shop, index) => (
+                    <Link to={`/shop/${shop._id}`} key={shop._id}>
+                      <RestaurantCard shop={shop} delay={index * 50} />
+                    </Link>
+                  ))}
               </RestaurantCardContainer>
             </>
           )}
