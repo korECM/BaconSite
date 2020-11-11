@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import RouletteItem from './RouletteItem';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
@@ -7,6 +7,7 @@ import palette from '../../styles/palette';
 import styled, { css } from 'styled-components';
 import Button from '../../components/common/Button';
 import useShops from '../../hooks/useShops';
+import { getShopsInterface } from '../../api/getShops';
 
 const ResultComment = styled.h1`
   font-size: 17px;
@@ -144,16 +145,19 @@ interface State {
 let beClicked = false;
 let selected_name = 'false';
 
-class RouletteList extends React.Component<Props, State> {
-  nextRouletteId: number = 0;
+function RouletteList( {history}: RouteComponentProps): JSX.Element {
+    const [input, setInput] = useState<State['input']>('');
+    const [RouletteItems, setRouletteItems] = useState<State['RouletteItems']>([]);
 
-  state: State = {
-    input: '',
-    RouletteItems: [],
-  };
+    const { onGetShops, shops } = useShops();
 
-  onToggle = (id: number): void => {
-    const { RouletteItems } = this.state;
+    useEffect(() => {
+        onGetShops({});
+    }, [onGetShops]);
+
+  let nextRouletteId = 0;
+
+  const onToggle = (id: number): void => {
     const nextRouletteItems: RouletteItemState[] = RouletteItems.map((item) => {
       if (item.id === id) {
         item.done = !item.done;
@@ -161,60 +165,49 @@ class RouletteList extends React.Component<Props, State> {
       return item;
     });
 
-    this.setState({
-      RouletteItems: nextRouletteItems,
-    });
+    setRouletteItems(nextRouletteItems);
   };
 
-  // TODO: 공백일 때 입력 안되도록 해야합니당 -> (O)
-  // TODO: 6개 넘으면 크래시나요 -> (O)
-  onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const { RouletteItems, input } = this.state;
-    const newItem: RouletteItemState = { id: this.nextRouletteId++, text: input, done: false };
+    const newItem: RouletteItemState = { id: nextRouletteId++, text: input, done: false };
     const nextRouletteItems: RouletteItemState[] = RouletteItems.concat(newItem);
     if (input !== '' && RouletteItems.length < 6) {
-      this.setState({
-        input: '',
-        RouletteItems: nextRouletteItems,
-      });
+        setInput('');
+        setRouletteItems(nextRouletteItems);
     }
+
     console.log('push add button');
   };
 
-  onRemove = (id: number): void => {
-    const { RouletteItems } = this.state;
+  const onRemove = (id: number): void => {
     const nextRouletteItems: RouletteItemState[] = RouletteItems.filter((item) => item.id !== id);
-    this.setState({
-      RouletteItems: nextRouletteItems,
-    });
+    
+    setRouletteItems(nextRouletteItems);
   };
 
-  onChange = (e: React.FormEvent<HTMLInputElement>): void => {
+  const onChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const { value } = e.currentTarget;
-    this.setState({
-      input: value,
-    });
+    setInput(value);
   };
 
-  moveHref = (data: DataInterface[]) => {
+  const moveHref = (data: DataInterface[]) => {
 
     beClicked = true;
     selected_name = 'true';
-    const { RouletteItems, input } = this.state;
-    const newItem: RouletteItemState = { id: this.nextRouletteId++, text: input, done: false };
+    const newItem: RouletteItemState = { id: nextRouletteId++, text: input, done: false };
     const nextRouletteItems: RouletteItemState[] = RouletteItems.concat(newItem);
     if (RouletteItems.length < 2) {
       console.log('2개 이상 입력하셔야 합니다.');
-      if(RouletteItems.length === 0) {
-        console.log('완전랜덤');
-        this.props.history.push({
-          pathname: '/roulette',
-          search: '?items=' + 'r,a,n,d,o,m',
-        });
-      }
+      // if(RouletteItems.length === 0) {
+      //   console.log('완전랜덤');
+      //   this.props.history.push({
+      //     pathname: '/roulette',
+      //     search: '?items=' + 'r,a,n,d,o,m',
+      //   });
+      // }
     } else {
-      this.props.history.push({
+      history.push({
         pathname: '/roulette',
         search: '?items=' + data.map((data) => data.option).join(','),
       });
@@ -225,9 +218,50 @@ class RouletteList extends React.Component<Props, State> {
     // }, 100);
   };
 
-  render() {
-    const { onSubmit, onChange, onToggle, onRemove, moveHref } = this;
-    const { input, RouletteItems } = this.state;
+  const moveHrefRandom = (data: DataInterface[]) => {
+    beClicked = true;
+    selected_name = 'true';
+    const newItem: RouletteItemState = { id: nextRouletteId++, text: input, done: false };
+    const nextRouletteItems: RouletteItemState[] = RouletteItems.concat(newItem);
+    if (RouletteItems.length === 0) {
+        //랜덤으로 아이템을 구성하는 부분//
+        const randomShop = ['', '', '', '', '', ''];
+        let shopList = [''];
+
+        if(shops.data){
+            shops.data.map((shop) => shopList.push(shop.name));
+            console.log(shopList);
+
+            var length = shopList.length;
+
+            while(length) {
+                var index = Math.floor((length--) * Math.random());
+                var temp = shopList[length];
+
+                shopList[length] = shopList[index];
+                shopList[index] = temp;
+            }
+
+            for (var i = 0; i < 6; i++) {
+                randomShop[i] = shopList[i];
+            }
+            console.log(randomShop);
+        }
+
+        console.log('완전랜덤');
+        history.push({
+          pathname: '/roulette',
+          search: '?items=' + randomShop.join(','),
+        });
+    }
+    // setTimeout(() => {
+    window.location.reload(false);
+    console.log('refresh done');
+    // }, 100);
+  };
+
+    // const { onSubmit, onChange, onToggle, onRemove, moveHref } = this;
+    // const { input, RouletteItems } = this.state;
 
     const RouletteItemList: React.ReactElement[] = RouletteItems.map((Roulette) => (
       <RouletteItem key={Roulette.id} done={Roulette.done} onToggle={() => onToggle(Roulette.id)} onRemove={() => onRemove(Roulette.id)} text={Roulette.text} />
@@ -302,9 +336,11 @@ class RouletteList extends React.Component<Props, State> {
         <Button theme="red" onClick={() => moveHref(data)}>
           Start!
         </Button>
+        <Button theme="red" onClick={() => moveHrefRandom(data)}>
+          전체랜덤 돌리기
+        </Button>
       </Container>
     );
-  }
 }
 
 export default withRouter(RouletteList);
