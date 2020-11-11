@@ -4,6 +4,7 @@ import palette from '../../styles/palette';
 
 const ContainerBlock = styled.div`
   padding: 0 7.5%;
+  position: relative;
 
   @media only screen and (min-width: 768px) {
     padding-left: 15%;
