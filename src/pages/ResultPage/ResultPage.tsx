@@ -76,6 +76,7 @@ const FilterContainer = styled.div`
   .buttonElement {
     border: none;
     outline: none;
+    margin: 0;
     flex: 1;
     max-width: 150px;
     padding: 10px;
