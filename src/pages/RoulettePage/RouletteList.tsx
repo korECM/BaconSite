@@ -242,8 +242,14 @@ function RouletteList( {history}: RouteComponentProps): JSX.Element {
                 shopList[index] = temp;
             }
 
+            var j = 0;
+
             for (var i = 0; i < 6; i++) {
-                randomShop[i] = shopList[i];
+                if(shopList[j] == ''){
+                    j++
+                }
+                randomShop[i] = shopList[j];
+                j++;
             }
             console.log(randomShop);
         }
