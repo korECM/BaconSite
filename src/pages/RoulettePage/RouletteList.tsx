@@ -319,6 +319,7 @@ function RouletteList( {history}: RouteComponentProps): JSX.Element {
       }
       console.log(data);
     }
+    
 
     if (beClicked === true && RouletteItems.length == 0) {
       for (var i = 0; i < 6; i++) {
