@@ -1,4 +1,4 @@
-import { Location, ShopCategory, Keyword, FoodCategory } from '../api/getShop';
+import { Location, ShopCategory, Keyword, FoodCategory, DetailFoodCategory } from '../api/getShop';
 
 export const categoryToString = (category: ShopCategory) => {
   switch (category) {
@@ -16,6 +16,60 @@ export const categoryToString = (category: ShopCategory) => {
       return '분식';
     case ShopCategory.other:
       return '기타';
+    default:
+      return '';
+  }
+};
+
+export const foodCategoryEnumToString = (category: FoodCategory) => {
+  switch (category) {
+    case FoodCategory.Rice:
+      return '밥';
+    case FoodCategory.Bread:
+      return '빵';
+    case FoodCategory.Noodle:
+      return '면';
+    case FoodCategory.Meat:
+      return '고기';
+    case FoodCategory.Etc:
+      return '기타';
+    default:
+      return '';
+  }
+};
+
+export const detailFoodCategoryToString = (category: DetailFoodCategory) => {
+  switch (category) {
+    case DetailFoodCategory.Asian:
+      return '아시안';
+    case DetailFoodCategory.Bakery:
+      return '빵';
+    case DetailFoodCategory.Chicken:
+      return '치킨';
+    case DetailFoodCategory.Chinese:
+      return '중식';
+    case DetailFoodCategory.Empty:
+      return '';
+    case DetailFoodCategory.Fastfood:
+      return '패스트푸드';
+    case DetailFoodCategory.Japanese:
+      return '일식';
+    case DetailFoodCategory.Korean:
+      return '한식';
+    case DetailFoodCategory.Meat:
+      return '고깃집';
+    case DetailFoodCategory.Pig:
+      return '족발・보쌈';
+    case DetailFoodCategory.Pizza:
+      return '피자';
+    case DetailFoodCategory.School:
+      return '분식';
+    case DetailFoodCategory.Steamed:
+      return '찜';
+    case DetailFoodCategory.Stew:
+      return '탕';
+    case DetailFoodCategory.Western:
+      return '양식';
     default:
       return '';
   }

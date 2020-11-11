@@ -9,6 +9,7 @@ import useCheck from 'hooks/useCheck';
 import AdminShopReport from './AdminShopReport';
 import AdminReviewReport from './AdminReviewReport';
 import AdminImageReport from './AdminImageReport';
+import AdminCreateShop from './AdminCreateShop';
 
 const AdminListBlock = styled.div`
   .header {
@@ -60,11 +61,15 @@ function AdminRouter({ match, location, history }: RouteComponentProps) {
         <Link to="/admin/report/image" className={cx('item', { selected: location.pathname === '/admin/report/image' })}>
           사진 신고
         </Link>
+        <Link to="/admin/create" className={cx('item', { selected: location.pathname === '/admin/create' })}>
+          가게 생성
+        </Link>
       </div>
       <Route exact path={`${match.path}/list`} component={AdminList} />
       <Route exact path={`${match.path}/report/shop`} component={AdminShopReport} />
       <Route exact path={`${match.path}/report/review`} component={AdminReviewReport} />
       <Route exact path={`${match.path}/report/image`} component={AdminImageReport} />
+      <Route exact path={`${match.path}/create`} component={AdminCreateShop} />
       <Route path={`${match.path}/shop/:shopId`} component={AdminDetail} />
     </AdminListBlock>
   );

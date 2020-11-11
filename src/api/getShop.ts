@@ -29,6 +29,24 @@ export enum FoodCategory {
   None = '',
 }
 
+export enum DetailFoodCategory {
+  Chicken = 'chicken',
+  Meat = 'meat',
+  Empty = '',
+  Fastfood = 'fastfood',
+  Korean = 'korean',
+  Pig = 'pig',
+  Steamed = 'steamed',
+  Stew = 'stew',
+  Asian = 'asian',
+  Bakery = 'bakery',
+  Chinese = 'chinese',
+  Japanese = 'japanese',
+  Pizza = 'pizza',
+  School = 'school',
+  Western = 'western',
+}
+
 export interface ShopInterface {
   _id: string;
   mainImage: string;
@@ -40,12 +58,14 @@ export interface ShopInterface {
   address: string;
   category: ShopCategory;
   foodCategory: FoodCategory[];
+  detailFoodCategory: DetailFoodCategory[];
   keyword: Keyword;
   open: string;
   closed: string;
   location: Location;
   latitude: number;
   longitude: number;
+  price: number;
   registerDate: Date;
   scoreAverage: number;
   reviewCount: number;
