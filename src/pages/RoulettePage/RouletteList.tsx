@@ -19,6 +19,23 @@ const ResultComment = styled.h1`
   padding: 5px;
 `;
 
+const ButtonContainer2 = styled.h1`
+    width: 100%;
+    position: relative;
+`;
+
+const StartButton = styled.h1`
+        position:absolute;
+        top:0px;
+        left:0%;
+`;
+
+const RandomButton = styled.h1`
+        position: absolute;
+        top:0px;
+        right:0%;
+`;
+
 const EmptySpace = styled.h1`
   text-align: center;
   margin-top: 7px;
@@ -339,12 +356,18 @@ function RouletteList( {history}: RouteComponentProps): JSX.Element {
           <Divider></Divider>
           <ul>{RouletteItemList}</ul>
         </div>
-        <Button theme="red" onClick={() => moveHref(data)}>
-          Start!
-        </Button>
-        <Button theme="red" onClick={() => moveHrefRandom(data)}>
-          전체랜덤 돌리기
-        </Button>
+        <ButtonContainer2>
+            <StartButton>
+                <Button theme="red" onClick={() => moveHref(data)}>
+                Start!
+                </Button>
+            </StartButton>
+            <RandomButton>
+                <Button theme="red" onClick={() => moveHrefRandom(data)}>
+                진짜 아무거나 추천받기
+                </Button>
+            </RandomButton>
+        </ButtonContainer2>
       </Container>
     );
 }
