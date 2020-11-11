@@ -90,12 +90,12 @@ interface RestaurantCardProps {
 function RestaurantCard({ shop, delay }: RestaurantCardProps) {
   const appear = useSpring({
     from: {
-      transform: `translateY(50px) scale(0.9)`,
-      opacity: 0,
+      // transform: `translateY(50px) scale(0.9)`,
+      // opacity: 0,
     },
     to: {
-      transform: `translateY(0px) scale(1)`,
-      opacity: 1,
+      // transform: `translateY(0px) scale(1)`,
+      // opacity: 1,
     },
     config: {
       tension: 350,
