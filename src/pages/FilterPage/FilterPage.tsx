@@ -112,8 +112,8 @@ class FilterPage extends React.Component<Props, State> {
   state: State = {
     sorting_bool: [true, false, false],
     sortings: ['평점순', '추천순', '리뷰순'],
-    category_bool: [false, false, false, false, false],
-    categories: ['밥', '빵', '면', '고기', '기타'],
+    category_bool: [false, false, false, false],
+    categories: ['밥', '빵', '면', '고기'],
     food_bool: [false, false, false, false, false, false, false],
     foods: ['한식', '중식', '일식', '양식', '분식', '퓨전', '기타'],
     price_bool: [false, false, false, false],
