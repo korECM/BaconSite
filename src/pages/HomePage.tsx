@@ -413,7 +413,7 @@ function HomePage({ history, match }: RouteComponentProps) {
                   className="category"
                   key={category.name}
                   to={`/result?detailCategory=${category.search}&isDetailCategory=true`}
-                  style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}
+                  style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.025}s ease` }}
                 >
                   <div className="imgHolder">
                     <img src={category.img} alt={category.name} />
@@ -421,7 +421,7 @@ function HomePage({ history, match }: RouteComponentProps) {
                   <div className="name">{category.name}</div>
                 </Link>
               ) : (
-                <div className="category" key={category.name} style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.05}s ease` }}>
+                <div className="category" key={category.name} style={{ animation: `fadeInScaleOut2 ${0.3 + index * 0.025}s ease` }}>
                   <div className="imgHolder">
                     <img alt={category.name} style={{ visibility: 'hidden' }} />
                   </div>
