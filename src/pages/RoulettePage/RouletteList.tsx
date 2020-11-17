@@ -161,6 +161,7 @@ interface State {
 
 let beClicked = false;
 let selected_name = 'false';
+let nextRouletteId = 0;
 
 function RouletteList( {history}: RouteComponentProps): JSX.Element {
     const [input, setInput] = useState<State['input']>('');
@@ -172,7 +173,7 @@ function RouletteList( {history}: RouteComponentProps): JSX.Element {
         onGetShops({});
     }, [onGetShops]);
 
-  let nextRouletteId = 0;
+  
 
   const onToggle = (id: number): void => {
     const nextRouletteItems: RouletteItemState[] = RouletteItems.map((item) => {
@@ -198,10 +199,13 @@ function RouletteList( {history}: RouteComponentProps): JSX.Element {
   };
 
   const onRemove = (id: number): void => {
+      console.log(id);
+      console.log(RouletteItems);
     const nextRouletteItems: RouletteItemState[] = RouletteItems.filter((item) => item.id !== id);
-    
+
     setRouletteItems(nextRouletteItems);
-  };
+    console.log(nextRouletteItems);
+    };
 
   const onChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const { value } = e.currentTarget;
@@ -228,10 +232,10 @@ function RouletteList( {history}: RouteComponentProps): JSX.Element {
         pathname: '/roulette',
         search: '?items=' + data.map((data) => data.option).join(','),
       });
+      window.location.reload(false);
+    console.log('refresh done');
     }
     // setTimeout(() => {
-    window.location.reload(false);
-    console.log('refresh done');
     // }, 100);
   };
 
