@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import Container from '../../components/layout/Container';
 import Header from '../../components/layout/Header';
 import styled, { css } from 'styled-components';
@@ -14,6 +15,7 @@ import Radar from './Radar';
 import useCheck from '../../hooks/useCheck';
 import Dialog from '../../components/common/Dialog';
 import KakaoMap from '../../components/common/KakaoMap';
+import KakaoShareButton from '../../components/common/KakaoShareButton';
 import Button from '../../components/common/Button';
 import { getScore } from '../../lib/scoreUtil';
 import Comment from './Comment';
