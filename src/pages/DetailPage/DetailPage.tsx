@@ -16,6 +16,7 @@ import useCheck from '../../hooks/useCheck';
 import Dialog from '../../components/common/Dialog';
 import KakaoMap from '../../components/common/KakaoMap';
 import KakaoShareButton from '../../components/common/KakaoShareButton';
+import KakaoShareLayout from './KakaoShare';
 import Button from '../../components/common/Button';
 import { getScore } from '../../lib/scoreUtil';
 import Comment from './Comment';
@@ -724,6 +725,13 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         }}
       />
       <ShopTitle>{shop.data.name}</ShopTitle>
+      {/* <div className="layout">
+        <Helmet>
+          <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+        </Helmet>
+        <KakaoShareButton/>
+      </div>  */}
+      <KakaoShareLayout/>
       <ShopImageContainer>
         <ShopImage
           imageLink={shop.data.mainImage ? shop.data.mainImage : shop.data.shopImage.length ? shop.data.shopImage[0].imageLink : GrayFooding}

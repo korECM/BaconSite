@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import KakaotalkImg from 'assets/kakao.png'
 
 interface KakaoMapProps {
     latitude: number;
@@ -16,6 +17,13 @@ const KakaoShareButton = () => {
     createKakaoButton()
   }, [])
   const createKakaoButton = () => {
+    // const script = document.createElement('script');
+    // script.async = true;
+    // script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js';
+    // document.head.appendChild(script);
+
+    // script.onload = () => {
+
     console.log('카카오 초기화...한거...?')
     // kakao sdk script이 정상적으로 불러와졌으면 window.Kakao로 접근이 가능합니다
     if (window.kakao) {
@@ -69,7 +77,7 @@ const KakaoShareButton = () => {
     <div className="kakao-share-button">
       {/* Kakao share button */}
       <button id="kakao-link-btn">
-        <img src="../../assets/kakao.png" alt="kakao-share-icon" />
+        <img src= {KakaotalkImg} style={{ height: 35, flex: 1 }} alt="kakao-share-icon" />
       </button>
     </div>
   )
