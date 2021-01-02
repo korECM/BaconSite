@@ -310,6 +310,18 @@ const TopDivider = styled.div`
   margin-bottom: 60px;
 `;
 
+const Layout = () => {
+  return (
+    <div className="layout">
+      {/* Include Kakao sdk */}
+      <Helmet>
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+      </Helmet>
+      <KakaoShareButton/>
+    </div>
+  )
+}
+
 interface DetailPageProps extends RouteComponentProps {}
 
 function DetailPage({ match, history, location }: DetailPageProps) {
@@ -712,6 +724,13 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         }}
       />
       <ShopTitle>{shop.data.name}</ShopTitle>
+      <div className="layout">
+        {/* Include Kakao sdk */}
+        <Helmet>
+          <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+        </Helmet>
+        <KakaoShareButton/>
+    </div>
       <ShopImageContainer>
         <ShopImage
           imageLink={shop.data.mainImage ? shop.data.mainImage : shop.data.shopImage.length ? shop.data.shopImage[0].imageLink : GrayFooding}
