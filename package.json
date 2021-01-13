@@ -95,7 +95,9 @@
     "start": "node scripts/start.js",
     "build": "GENERATE_SOURCEMAP=false node scripts/build.js",
     "winBuild": "set NODE_ENV=production&& webpack --progress",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "workbox" : "workbox generateSW workbox-config.js",
+    "prod" : "npm-run-all build workbox"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -177,9 +179,11 @@
     "@types/styled-components": "^5.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "npm-run-all": "^4.1.5",
     "react-dev-utils": "^10.2.1",
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "workbox-cli": "^6.0.2"
   }
 }
