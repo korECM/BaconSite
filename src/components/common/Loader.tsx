@@ -12,8 +12,8 @@ const LoaderBlock = styled.div`
   /* margin-left: -100px; */
   /* width: 200px; */
   width: 100%;
-  height: 100vh;
-  /* height: 200px; */
+   100vh;
+  /*  200px; */
   transform: translateX(-30px);
 `;
 
