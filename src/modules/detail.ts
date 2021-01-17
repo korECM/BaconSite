@@ -242,7 +242,6 @@ const initialState: DetailState = {
       menus: [],
       didLike: false,
       likerCount: 0,
-      reviewCount: 0,
       scoreAverage: 0,
       keyword: {
         atmosphere: 0,

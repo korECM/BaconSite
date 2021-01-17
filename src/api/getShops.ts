@@ -22,7 +22,6 @@ export interface ShopsInterface {
   menuImage: Image[];
   topKeyword: KeywordElement[];
   scoreAverage: number;
-  reviewCount: number;
   likerCount: number;
 }
 
