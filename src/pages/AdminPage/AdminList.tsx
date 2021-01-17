@@ -63,7 +63,7 @@ function AdminList() {
               </div>
               <div className="info">
                 <div>Like : {shop.likerCount}</div>
-                <div>Review : {shop.reviewCount}</div>
+                {/* <div>Review : {shop.reviewCount}</div> */}
               </div>
               <div className="href">
                 <a href={`/admin/shop/${shop._id}/data`}>가게 정보 수정</a>

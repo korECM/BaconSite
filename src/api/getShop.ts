@@ -68,7 +68,6 @@ export interface ShopInterface {
   price: number;
   registerDate: Date;
   scoreAverage: number;
-  reviewCount: number;
   likerCount: number;
   didLike: boolean;
 }
