@@ -731,7 +731,7 @@ function DetailPage({ match, history, location }: DetailPageProps) {
         </Helmet>
         <KakaoShareButton/>
       </div>  */}
-      <KakaoShareLayout/>
+      {/* <KakaoShareLayout/> */}
       <ShopImageContainer>
         <ShopImage
           imageLink={shop.data.mainImage ? shop.data.mainImage : shop.data.shopImage.length ? shop.data.shopImage[0].imageLink : GrayFooding}
